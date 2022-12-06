@@ -1,0 +1,45 @@
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+###
+
+POST http://localhost:5000/api/hopdong
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0MzI1ODJ9.id1spxEw6n5WNAiz8HKiQSqOGudy8HINHOy-69V7MHw
+
+{
+  "congty": "ABC",
+  "maso": "cty01"
+}
+
+###
+
+GET http://localhost:5000/api/hopdong/view
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0MzI1ODJ9.id1spxEw6n5WNAiz8HKiQSqOGudy8HINHOy-69V7MHw
+
+
+###
+
+PUT http://localhost:5000/api/chiphikhac/62fe1a5af369450af479fac1
+Content-Type: application/json
+Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NjAwMjYxNTh9.k7hR1zdTrDe0jyTypzIga0fX1j5pMtXB6kVaiBvUOQg
+
+{
+  "noidung": "Hop Dong Caapj nhaat",
+  "sotien": 10000,
+  "ghichu": "TO LEARN"
+}
+
+
+###
+
+DELETE http://localhost:5000/api/chiphikhac/62fe1a5af369450af479fac1
+Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NjAwMjYxNTh9.k7hR1zdTrDe0jyTypzIga0fX1j5pMtXB6kVaiBvUOQg
+

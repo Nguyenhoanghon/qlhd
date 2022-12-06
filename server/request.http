@@ -5,12 +5,6 @@ Content-Type: application/json
 {
   "username": "Hon",
   "password": "123",
-  "fullname": "Nguyễn Hoàng Hôn",
-  "email": "nhhon110100@gmail.com",
-  "sex": 1,
-  "roleId": 1,
-  "role": "Admin",
-  "status": 1
 }
 
 
@@ -20,7 +14,7 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "CEO",
   "password": "123"
 }
 

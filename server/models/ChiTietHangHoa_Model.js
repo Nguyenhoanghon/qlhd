@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const ChiTietHangHoaSchema = new Schema({
+const CTHH_Model = new Schema({
     tenhang: {
         type: String,
         required: true
@@ -11,37 +11,41 @@ const ChiTietHangHoaSchema = new Schema({
         required: true
     },
     dongiaFOB: {
-        type: Number,
-        required: true
+        type: Number
+    },
+    tygiaUSD:{
+        type:Number
     },
     dongiakho: {
-        type: Number,
-        required: true
+        type: Number
     },
     thanhtiengiakho: { //cần tính
-        type: Number,
-        required: true
+        type: Number
     },
     dongiaban: {
-        type: Number,
-        required: true
+        type: Number
     },
     thanhtiengiaban: { //cần tính
-        type: Number,
-        required: true
+        type: Number
+    },
+    baohanh:{
+        type: Boolean
     },
     ghichu: {
-        type: String,
-        required: true
+        type: String
     },
-    crateAt: {
+    createAt: {
         type: Date,
         default: Date.now
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'users'
+    },
+    hopdong: {
+        type: Schema.Types.ObjectId,
+        ref: 'hopdongs'
     }
 })
 
-module.exports = mongoose.model('ChiTietHangHoa', ChiTietHangHoaSchema)
+module.exports = mongoose.model('CTHH_Models', CTHH_Model)

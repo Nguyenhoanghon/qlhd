@@ -42,14 +42,14 @@ function App() {
 							render={props => <Auth {...props} authRoute='register' />}
 						/>
 						<>
-						<CTHHContextProvider>
+						{/* <CTHHContextProvider>
 							<ProtectedRoute exact path='/chitiethanghoa' component={CTHH} />
-						</CTHHContextProvider>
+						</CTHHContextProvider> */}
 
 						
-						<CTHHContextProvider>
+						{/* {<CTHHContextProvider>
 							<ProtectedRoute exact path='/PTHD' component={PTHD} />
-						</CTHHContextProvider>
+						</CTHHContextProvider>} */}
 						
 
 						<UserContextProvider>

@@ -11,28 +11,16 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
-	fullname: {
-		type: String
-	},
 	email: {
 		type: String
 	},
-	sex: {
-		type: Number
-	},
-	roleId: {
-		type: String
-	},
-	role: {
-		type: String
-	},
-	status: {
-		type: Number
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now
-	}
+	roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role"
+      }
+    ]
+
 })
 
 module.exports = mongoose.model('users', UserSchema)

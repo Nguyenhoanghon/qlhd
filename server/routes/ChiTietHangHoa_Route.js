@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const verifyToken = require('../middleware/Auth')
-const ChiTietHangHoa = require('../models/ChiTietHangHoa_Model')
+const CTHH_Models = require('../models/ChiTietHangHoa_Model')
 
 // @route GET api/ChiTietHangHoa
 // @desc Get ChiTietHangHoa
 // @access Private
 router.get('/', verifyToken, async(req, res) => {
     try {
-        const ChiTietHangHoas = await ChiTietHangHoa.find({ user: req.userId }).populate('user', [
+        const HH_Selected = await CTHH_Models.find({ user: req.userId, Hopdong: req.HopdongId }).populate('user', [
             'username'
         ])
-        res.json({ success: true, ChiTietHangHoas })
+        res.json({ success: true, HH_Selected })
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
@@ -27,31 +27,40 @@ router.post('/insert', verifyToken, async(req, res) => {
         tenhang,
         soluong,
         dongiaFOB,
-        dongiakho,
+        tygiaUSD,
+        //dongiakho,//nhap hoac tinh
         //thanhtiengiakho, cần tính
         dongiaban,
         //thanhtiengiaban, cần tính
-        ghichu
+        baohanh,
+        ghichu  
     } = req.body
-    let thanhtiengiakho = req.body.soluong * req.body.dongiakho
+    if(req.body.tygiaUSD != 0)
+        dongiakho = req.body.dongiaFOB*req.body.tygiaUSD
+    else
+        dongiakho = req.body.dongiakho
+    let thanhtiengiakho = req.body.soluong * dongiakho
     let thanhtiengiaban = req.body.soluong * req.body.dongiaban
         // Simple validation
-    if (!tenhang)
+    if (!tenhang || !soluong)
         return res
             .status(400)
-            .json({ success: false, message: 'Cần nhập tên hàng' })
+            .json({ success: false, message: 'Cần nhập tên hàng hoặc số lượng đang bỏ trống ' })
 
     try {
-        const newChiTietHangHoa = new ChiTietHangHoa({
+        const newChiTietHangHoa = new CTHH_Models({
             tenhang,
             soluong,
             dongiaFOB,
+            tygiaUSD,
             dongiakho,
             thanhtiengiakho, //cần tính
             dongiaban,
-            thanhtiengiaban, //cần tính
+            thanhtiengiaban,
+            baohanh, //cần tính
             ghichu,
-            user: req.userId
+            user: req.userId,
+            hopdong:req.hopdongId
         })
 
         await newChiTietHangHoa.save()

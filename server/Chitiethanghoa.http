@@ -1,46 +1,40 @@
-POST http://localhost:5000/api/auth/register
-Content-Type: application/json
-
-{
-  "username": "HoangHon",
-  "password": "jim"
-}
-
 ###
 
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "HoangHon",
-  "password": "jim"
+  "username": "admin",
+  "password": "123"
 }
 
-### Test thêm chi phí thu bảo lãnh
+### Test thêm chi tiết hàng hóa
 POST http://localhost:5000/api/chitiethanghoa/insert
 Content-Type: application/json
-Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NTk3OTY3OTB9.zgU34WZI9r-xvlFvqJ3k47veTbD6fJSUQ5l3zbvgwlA
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0NTY0MDl9.036oHLeojIvBKhCLhzFjcEtE65syT8yWO2_XedLZp0E
 
 {
   "tenhang":"Cần có dữ liệu mẫu 2",
   "soluong": 10,
   "dongiaFOB":1000,
-  "dongiakho":1200,
+  "tygiaUSD":2400,
+  "dongiakho":0,
   //thanhtiengiakho, //cần tính
   "dongiaban":1500,
   //thanhtiengiaban, //cần tính
+  "baohanh":true,
   "ghichu":"Còn thiếu Tổng tiền nhập kho và bán của hàng hóa"
 }
 
 ###test get chiphithubaolanh
 
 GET http://localhost:5000/api/chitiethanghoa
-Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NTk3OTY3OTB9.zgU34WZI9r-xvlFvqJ3k47veTbD6fJSUQ5l3zbvgwlA
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0NDkwMzV9.WM0Yz7-o1iFx-X2FEySuB3cgHdp1rsoqHlbObS6sPeM
 ###
 
-PUT http://localhost:5000/api/chitiethanghoa/6309f1f2d1e37b4c606c9725
+PUT http://localhost:5000/api/chitiethanghoa/6381c64a89943c5b0c4f2a7e
 Content-Type: application/json
-Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NTk3OTY3OTB9.zgU34WZI9r-xvlFvqJ3k47veTbD6fJSUQ5l3zbvgwlA
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0NDkwMzV9.WM0Yz7-o1iFx-X2FEySuB3cgHdp1rsoqHlbObS6sPeM
 
 {
   "tenhang":"Cần có dữ liệu mẫu CẬP NHẬT",
@@ -55,7 +49,7 @@ Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmV
 
 ###
 
-DELETE http://localhost:5000/api/chitiethanghoa/6309f1f2d1e37b4c606c9725
-Authorization: HoangHon eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVlNTVmNmZhYzcyZTE0MjRhMGEyMTkiLCJpYXQiOjE2NTk3OTQzNzR9.eG_Ys9DqeY-7wAKjNqlLineYRPlpewNgNDuJS9_ISQM
+DELETE http://localhost:5000/api/chitiethanghoa/6381c56089943c5b0c4f2a73
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzgxODRkNzgwYjk4NTQwMjBjNTUzMzUiLCJpYXQiOjE2Njk0NDkwMzV9.WM0Yz7-o1iFx-X2FEySuB3cgHdp1rsoqHlbObS6sPeM
 
 
