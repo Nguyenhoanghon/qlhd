@@ -3,9 +3,10 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "123",
-  "email": "admin@gmail.com"
+  "username": "CE",
+  "email": "CE@gmail.com",
+  "password": "bcrypt.hashSync(req.body.password, 8)",
+  "roles[]":"CEO"
 }
 
 ###
@@ -14,14 +15,14 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "123"
+  "username": "CE",
+  "password": "bcrypt.hashSync(req.body.password, 8)"
 }
 
 ###
 
 GET http://localhost:5000/api/users
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzhmMTgyNTkxNWQzZjQxZTQ1ZDIyOWUiLCJpYXQiOjE2NzAzMjMwMDd9.2LnfC9zLc42tocLoZGxyVrFMW4xGH_mOpRwusDoriq4
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTAxNWM1NmYyYjMyM2FlY2QwOGEyOCIsImlhdCI6MTY3MDM4NzM0NCwiZXhwIjoxNjcwNDczNzQ0fQ.e6RofcyonodQ7vifa7snKWqnt7ycEuyGr8c5dcEymk4
 
 ###
 
