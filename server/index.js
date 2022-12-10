@@ -2,11 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./config/db.config");
-
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -21,9 +20,12 @@ const db = require("./models");
 const Role = db.role;
 
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    //.connect(`mongodb+srv://nhhon:XtojfLH4zntc5dxv@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
+    useCreateIndex: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
@@ -43,7 +45,7 @@ app.get("/", (req, res) => {
 require("./routes/Auth.routes")(app);
 require("./routes/User.routes")(app);
 
-//app.use("/api/auth");
+
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
@@ -54,12 +56,12 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-         name: "User"
+         name: "user"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
-        console.log("added role 'Nhanvien' ");
+        console.log("added role 'user' ");
       });
       new Role({
         name: "AM"
@@ -101,3 +103,4 @@ function initial() {
     }
   });
 }
+

@@ -1,7 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -13,8 +12,8 @@ module.exports = function(app) {
 
   app.get("/api/test/all", controller.allAccess);
 
-  app.get("/api/users", [authJwt.verifyToken], authJwt.isCEO, 
-    controller.getUsers ); //gọi tới hàm get user với quyền CEO
+  app.get("/api/test/user", [authJwt.verifyToken],
+    controller.userBoard);
 
   app.get(
     "/api/test/AM",

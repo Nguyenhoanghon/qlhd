@@ -3,29 +3,57 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "CE",
-  "email": "CE@gmail.com",
-  "password": "bcrypt.hashSync(req.body.password, 8)",
-  "roles[]":"CEO"
+  "username": "AM4",
+  "email": "AM4@gmail.com",
+  "password": "123",
+  "role[]":"USER" //chưa gọi được hàm checkRole
 }
-
+/private/var/folders/rd/b9cq4znj0l77619jb019bzn40000gn/T/AppTranslocation/EEA3D692-7B30-4F8F-B8D5-5BD6CE2AF12D/d/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
 ###
 
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "CE",
-  "password": "bcrypt.hashSync(req.body.password, 8)"
+  "username": "CEO",
+  "password": "123"
+}
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "CEO",
+  "password": "123"
 }
 
-###
-
+### Quyền CEO
 GET http://localhost:5000/api/users
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTAxNWM1NmYyYjMyM2FlY2QwOGEyOCIsImlhdCI6MTY3MDM4NzM0NCwiZXhwIjoxNjcwNDczNzQ0fQ.e6RofcyonodQ7vifa7snKWqnt7ycEuyGr8c5dcEymk4
+Authorization: CEO eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5OWFkMjgxM2JkMjZiNmIzYjQ3ZiIsImlhdCI6MTY3MDYxODc1NywiZXhwIjoxNjcwNzA1MTU3fQ._-v6fVL-4gHyHXTukTGBiCfGfIiuqoH3jlFDgiLBKg0
+
+### Quyền Director
+GET http://localhost:5000/api/users
+Authorization: Director eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5YWUxMjgxM2JkMjZiNmIzYjQ5ZCIsImlhdCI6MTY3MDU1NTI0NywiZXhwIjoxNjcwNjQxNjQ3fQ.0epFX2MFt5vZRcxTigmEPD-zSPT1ya-AAb4QVT4LKmA
+
+### Quyền Manager
+GET http://localhost:5000/api/users
+Authorization: Manager eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5YTVjMjgxM2JkMjZiNmIzYjQ5MyIsImlhdCI6MTY3MDU1NTQ3MywiZXhwIjoxNjcwNjQxODczfQ.ueRkTkiOaa7KPzkCWz3lI1MNYCi2dCMAdRTWUXLloEE
+
+### Quyền AM
+GET http://localhost:5000/api/users
+Authorization: AM eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5YTI4MjgxM2JkMjZiNmIzYjQ4YiIsImlhdCI6MTY3MDU1NTUxMywiZXhwIjoxNjcwNjQxOTEzfQ.C0erHdOYfvGLz0_PysPRXzhH1B4yVHvTA_D-67q5nvM
+
+### Quyền User
+GET http://localhost:5000/api/users
+Authorization: User eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5YWUxMjgxM2JkMjZiNmIzYjQ5ZCIsImlhdCI6MTY3MDU1NTI0NywiZXhwIjoxNjcwNjQxNjQ3fQ.0epFX2MFt5vZRcxTigmEPD-zSPT1ya-AAb4QVT4LKmA
+
 
 ###
+GET http://localhost:5000/api/auth
+Authorization: CEO eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTE5OWFkMjgxM2JkMjZiNmIzYjQ3ZiIsImlhdCI6MTY3MDU0MDA3OSwiZXhwIjoxNjcwNjI2NDc5fQ.HjEwGFVFvaB-aCnYyJycAxQ66fW9qiOtLWAmux3Y4N0
 
+###
 PUT http://localhost:5000/api/users/638f1825915d3f41e45d229e
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzhmMTgyNTkxNWQzZjQxZTQ1ZDIyOWUiLCJpYXQiOjE2NzAzMjMwMDd9.2LnfC9zLc42tocLoZGxyVrFMW4xGH_mOpRwusDoriq4

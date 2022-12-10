@@ -5,8 +5,10 @@ const User = db.user;
 const Role = db.role;
 
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
-
+  //let token = req.headers["x-access-token"];
+  //const token = req.header('Authorization')
+  const authHeader = req.header('Authorization')
+	const token = authHeader && authHeader.split(' ')[1]
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
@@ -19,8 +21,8 @@ verifyToken = (req, res, next) => {
     next();
   });
 };
-
-isAdmin = (req, res, next) => {
+//Check Role CEO
+isCEO = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -38,20 +40,20 @@ isAdmin = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
+          if (roles[i].name === "CEO") {
             next();
             return;
           }
         }
 
-        res.status(403).send({ message: "Require Admin Role!" });
+        res.status(403).send({ message: "Require CEO Role!" });
         return;
       }
     );
   });
 };
 
-isModerator = (req, res, next) => {
+isDirector = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -69,13 +71,106 @@ isModerator = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "Director" || roles[i].name === "CEO") {
             next();
             return;
           }
         }
 
-        res.status(403).send({ message: "Require Moderator Role!" });
+        res.status(403).send({ message: "Require Director Role!" });
+        return;
+      }
+    );
+  });
+};
+
+isManager = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "Manager" || roles[i].name === "Director" || roles[i].name === "CEO") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require Manager Role!" });
+        return;
+      }
+    );
+  });
+};
+
+isAM = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "AM" || roles[i].name === "Manager" || roles[i].name === "Director" || roles[i].name === "CEO") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require AM Role!" });
+        return;
+      }
+    );
+  });
+};
+
+isUser = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "User" || roles[i].name === "AM" || roles[i].name === "Manager" || roles[i].name === "Director" || roles[i].name === "CEO") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require User Role!" });
         return;
       }
     );
@@ -84,7 +179,10 @@ isModerator = (req, res, next) => {
 
 const authJwt = {
   verifyToken,
-  isAdmin,
-  isModerator
+  isCEO,
+  isDirector,
+  isManager,
+  isAM,
+  isUser
 };
 module.exports = authJwt;
