@@ -10,18 +10,22 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+///
+app.use(express.json());
+
 const db = require("./models");
 const Role = db.role;
 
 db.mongoose
-    .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    //.connect(`mongodb+srv://nhhon:XtojfLH4zntc5dxv@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
+    //.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    .connect(`mongodb+srv://nhhon:XtojfLH4zntc5dxv@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -41,10 +45,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome Server" });
 });
 
-// routes
-require("./routes/Auth.routes")(app);
-require("./routes/User.routes")(app);
+//Controllers
+//const MiscExpenseController = require("./controllers/MiscExpense_Controller");
 
+// routes
+require("./routes/Auth_routes")(app);
+require("./routes/User_routes")(app);
+require("./routes/Contract_routes")(app);
+require("./routes/MiscExpense_routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
@@ -56,12 +64,12 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-         name: "user"
+        name: "User"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
-        console.log("added role 'user' ");
+        console.log("Đã thêm quyền 'User' ");
       });
       new Role({
         name: "AM"
@@ -69,7 +77,7 @@ function initial() {
         if (err) {
           console.log("error", err);
         }
-        console.log("added role 'AM'");
+        console.log("Đã thêm quyền 'AM'");
       });
 
       new Role({
@@ -79,7 +87,7 @@ function initial() {
           console.log("error", err);
         }
 
-        console.log("added role 'Manager'");
+        console.log("Đã thêm quyền 'Manager'");
       });
 
       new Role({
@@ -89,16 +97,16 @@ function initial() {
           console.log("error", err);
         }
 
-        console.log("added role 'Director' ");
+        console.log("Đã thêm quyền 'Director' ");
       });
       new Role({
-        name: "CEO"
+        name: "Admin"
       }).save(err => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added role 'CEO' ");
+        console.log("Đã thêm quyền 'Admin' ");
       });   
     }
   });

@@ -74,7 +74,7 @@ exports.login = (req, res) => {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "Invalid User or Invalid Passord !" });
+        return res.status(404).send({ message: " Tên đăng nhập hoặc mật khẩu sai !" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -85,7 +85,7 @@ exports.login = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid User or Invalid Password!"
+          message: "Tên đăng nhập hoặc mật khẩu sai"
         });
       }
 
@@ -104,7 +104,7 @@ exports.login = (req, res) => {
         email: user.email,
         roles: authorities,
         success: true,
-        message: "User logged in successfully",
+        message: "Đăng nhập thành công !",
         accessToken: accessToken
       });
       /*

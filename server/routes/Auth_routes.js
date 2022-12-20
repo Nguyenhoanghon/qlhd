@@ -1,6 +1,6 @@
 const { verifySignUp } = require("../middleware");
 const {authJwt} = require("../middleware")
-const controller = require("../controllers/auth.controller");
+const controller = require("../controllers/Auth_controller");
 const db = require("../models");
 const User = db.user;
 

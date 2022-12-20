@@ -1,0 +1,88 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+
+### Get all Contract
+### access public
+###ok
+GET http://localhost:5000/api/contract/getAllContract
+
+
+### Get all Contract tạo bởi user đăng nhập
+### access private
+###ok
+GET http://localhost:5000/api/contract/getContracts
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQ1MjE5MywiZXhwIjoxNjcxNTM4NTkzfQ.G-Vxj5c1EuoFUzQnggRb7BbxyUc1V6eu95PtglyUOz0
+
+### Create Contract
+### access Public
+### Not ok -- Postman ok
+POST http://localhost:5000/api/contract/registerContract
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQ1MjE5MywiZXhwIjoxNjcxNTM4NTkzfQ.G-Vxj5c1EuoFUzQnggRb7BbxyUc1V6eu95PtglyUOz0
+
+{
+"Center": "HSIooooooooo",
+"Deparment": "SSD1",
+"CustomerID": "A",
+"ContractID": "HD01",
+"Date": "2022-12-14T17:00:00.000Z"
+}
+
+
+### Update Contract
+### access Public
+### ok -- Postman ok
+PUT http://localhost:5000/api/Contract/update/639da21349e5ebdcd79e4ff5
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzhmMTgyNTkxNWQzZjQxZTQ1ZDIyOWUiLCJpYXQiOjE2NzAzMjMwMDd9.2LnfC9zLc42tocLoZGxyVrFMW4xGH_mOpRwusDoriq4
+
+{
+  "Center": "HSI update REST",
+  "Deparment": "SSD1",
+  "CustomerID": "A",
+  "ContractID": "HD01",
+  "Date": "2022-12-14T17:00:00.000Z"
+}
+
+### Update Contract
+### access Private
+### ok -- Postman Notok
+PUT http://localhost:5000/api/Contract/update/639da21349e5ebdcd79e4ff5
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "Center": "HSI update REST Private ",
+  "Deparment": "SSD1",
+  "CustomerID": "A",
+  "ContractID": "HD01",
+  "Date": "2022-12-14T17:00:00.000Z"
+}
+
+### Delete Contract
+### access Public
+### ok -- Postman ok
+DELETE http://localhost:5000/api/Contract/Delete/63a00d191fff020f390a4e3e
+
+### Delete Contract
+### access Private
+### ok -- Postman ok
+DELETE http://localhost:5000/api/Contract/Delete/639db4db9e4ad5de8cb47056
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+### Get Find Contract
+### access public
+###ok
+GET http://localhost:5000/api/Contract/find/639ee2f168e7e4fd41a48e2d
+
+
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzhmMTgyNTkxNWQzZjQxZTQ1ZDIyOWUiLCJpYXQiOjE2NzAzMjMwMDd9.2LnfC9zLc42tocLoZGxyVrFMW4xGH_mOpRwusDoriq4
+

@@ -1,0 +1,54 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+### Create MiscExpense
+### access Public
+### Not 
+POST http://localhost:5000/api/miscexpense/insertMiscExpense
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"Content": "Tiếp Khách",
+"Cost": "1000000",
+"Note": "A",
+"ContractID":"HD01"
+}
+
+### Create MiscExpense
+### access Public
+### Not 
+PUT http://localhost:5000/api/miscexpense/updateMiscExpense/639ee51da2b6eefe06607aee
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"Content": "Tiếp Khách update",
+"Cost": "1000000",
+"Note": "A"
+}
+
+### Get all MiscExpense
+### access public
+###ok
+GET http://localhost:5000/api/miscexpense/getAllMiscExpense
+
+
+### Get all Contract tạo bởi user đăng nhập
+### access private
+###ok
+GET http://localhost:5000/api/miscexpense/getAllMiscExpense
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get all Contract tạo bởi user đăng nhập
+### access private
+###ok
+DELETE  http://localhost:5000/api/miscexpense/deleteMiscExpense/63a05c293a224a27306cb053
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
