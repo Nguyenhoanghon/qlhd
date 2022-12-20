@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const { verifySignUp } = require("../middleware");
+const authController = require("../controllers/Auth_controller");
 const userController = require("../controllers/user_controller");
 
 module.exports = function(app) {
@@ -12,10 +13,37 @@ module.exports = function(app) {
   });
 
 //Get all users 
-// access public
+//@access public
   app.get("/api/users/getAllUsers",
   userController.getAllUsers);
 
+// Insert User
+//@access Public
+  app.post("/api/users/insertUser",// [authJwt.verifyToken],
+  [
+    verifySignUp.checkDuplicateUsernameOrEmail,
+    verifySignUp.checkRolesExisted
+  ],
+  userController.insertUser);
+
+  // Insert User
+//@access Public
+app.post("/api/users/adduser",// [authJwt.verifyToken],
+[
+  verifySignUp.checkDuplicateUsernameOrEmail,
+  verifySignUp.checkRolesExisted
+],
+userController.adduser);
+
+//Delete User by id
+app.delete("/api/users/deleteUser/:id", //[authJwt.verifyToken],
+userController.deleteUser);
+
+//Udate User by id
+app.put("/api/users/updateUser/:id", //[authJwt.verifyToken],
+userController.updateUser);
+
+//================= Group Chuc nang mo rong Private ===============//
 //Get all users login
 // access private
 app.get("/api/users/view", [authJwt.verifyToken],
@@ -34,22 +62,6 @@ userController.getUser_ByRole);
 //Get all users
 app.get("/api/users/id", [authJwt.verifyToken], authJwt.isTongGiamDoc,
 userController.getUser_ById );
-
-// Insert User
-  app.post("/api/users/insertUser",// [authJwt.verifyToken],
-  [
-    verifySignUp.checkDuplicateUsernameOrEmail,
-    verifySignUp.checkRolesExisted
-  ],
-  userController.insertUser);
-
-//Delete User by id
-app.delete("/api/users/deleteUser/:id", [authJwt.verifyToken],
-userController.deleteUser);
-
-//Udate User by id
-app.put("/api/users/updateUser/:id", [authJwt.verifyToken],
-userController.updateUser);
 
 
 

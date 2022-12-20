@@ -16,11 +16,12 @@ const AddUserModal = () => {
 	// State
 	const [newUser, setNewUser] = useState({
 		username: '',
+		email: '',
 		password: '',
-		roleId: 0
+		roles: ''
 	})
 
-	const { username, password,roleId } = newUser
+	const { username,email, password,roles } = newUser
 
 	const onChangeNewUserForm = event =>
 		setNewUser({ ...newUser, [event.target.name]: event.target.value })
@@ -37,7 +38,7 @@ const AddUserModal = () => {
 	}
 
 	const resetAddUserData = () => {
-		setNewUser({ username: '', password: '', roleId: 0 })
+		setNewUser({ username: '', email: '',password: '', roles: '' })
 		setShowAddUserModal(false)
 	}
 
@@ -63,6 +64,18 @@ const AddUserModal = () => {
 						/>						
 					</Form.Group>
 					<Form.Group>
+						<Form.Text id='Email-help' muted  as="h6">
+							Email
+						</Form.Text>
+						<Form.Control
+							tpye='text'
+							placeholder=''
+							name='password'
+							value={email} /* tạo ràn buộc số */
+							onChange={onChangeNewUserForm}
+						/>
+					</Form.Group>
+					<Form.Group>
 						<Form.Text id='Password-help' muted  as="h6">
 							Password
 						</Form.Text>
@@ -82,7 +95,7 @@ const AddUserModal = () => {
 							tpye='text'
 							placeholder=''
 							name='roleId'
-							value={roleId} /* tạo ràn buộc số */
+							value={roles} /* tạo ràn buộc số */
 							onChange={onChangeNewUserForm}
 						/>
 					</Form.Group>

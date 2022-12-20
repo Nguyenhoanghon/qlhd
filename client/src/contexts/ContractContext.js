@@ -1,5 +1,5 @@
 import { createContext, useReducer, useState } from 'react'
-import { UserReducer } from '../reducers/UserReducer'//Note
+import { ContractReducer } from '../reducers/ContractReducer'//Note
 import {
 	apiUrl,
 	LOADED_FAIL,
@@ -11,18 +11,18 @@ import {
 } from './constants'//Note
 import axios from 'axios'
 
-export const UserContext = createContext()
+export const ContractContext = createContext()
 
-const UserContextProvider = ({ children }) => {
+const ContractContextProvider = ({ children }) => {
 	// State
-	const [UserState, dispatch] = useReducer(UserReducer, {
-		User: null,
-		Users: [],
-		UsersLoading: true
+	const [ContractState, dispatch] = useReducer(ContractReducer, {
+		Contract: null,
+		Contracts: [],
+		ContractsLoading: true
 	})
 
-	const [showAddUserModal, setShowAddUserModal] = useState(false)
-	const [showUpdateUserModal, setShowUpdateUserModal] = useState(false)
+	const [showAddContractModal, setShowAddContractModal] = useState(false)
+	const [showUpdateContractModal, setShowUpdateContractModal] = useState(false)
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
@@ -30,18 +30,19 @@ const UserContextProvider = ({ children }) => {
 	})
 
 	// Get all Users
-	const getUsers = async () => {
+	const getContracts = async () => {
 		try {
-					const response = await axios.get(`${apiUrl}/api/users/view`)//note
+					const response = await axios.get(`${apiUrl}/api/contract/getAllContract`)//note
 					if (response.data.success) {
-						dispatch({ type: LOADED_SUCCESS, payload: response.data.Users })//note
+						dispatch({ type: LOADED_SUCCESS, payload: response.data.Contracts })//note
 					}
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
+/*
 	// Get all User By Id
-	const getUsers_By_Id = async () => {
+	const getContracts_By_Id = async () => {
 		try {
 					const response = await axios.get(`${apiUrl}/api/users/id`)//note
 					if (response.data.success) {
@@ -84,12 +85,13 @@ const UserContextProvider = ({ children }) => {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
-	// Add User
-	const addUser = async newUser => {
+*/
+	// insert Contract
+	const addContract = async Contract => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/users`, newUser)//note Users
+			const response = await axios.post(`${apiUrl}/api/Contract/insertContract`, Contract)//note Users
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.User }) //note Users
+				dispatch({ type: ADD, payload: response.data.Contract }) //note Users
 				return response.data
 			}
 		} catch (error) {
@@ -99,32 +101,32 @@ const UserContextProvider = ({ children }) => {
 		}
 	}
 
-	// Delete User
-	const deleteUser = async UserId => {
+	// Delete Contract
+	const deleteContract = async ContractId => {
 		try {
-			const response = await axios.delete(`${apiUrl}/api/Users/${UserId}`)//note
+			const response = await axios.delete(`${apiUrl}/api/Contract/Delete/${ContractId}`)//note
 			if (response.data.success)
-				dispatch({ type: DELETE, payload: UserId })
+				dispatch({ type: DELETE, payload: ContractId })
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
-	// Find User when user is updating User
-	const findUser = UserId => {
-		const User = UserState.Users.find(User => User._id === UserId)
-		dispatch({ type: FIND, payload: User })
+	// Find ContractId when ContractId is updating ContractId
+	const findContract = ContractId => {
+		const Contract = ContractState.Contracts.find(Contract => Contract._id === ContractId)
+		dispatch({ type: FIND, payload: Contract })
 	}
 
-	// Update User
-	const updateUser = async updatedUser => {
+	// Update Contract
+	const updateContract = async updateContract => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/Users/${updatedUser._id}`,
-				updatedUser
+				`${apiUrl}/api/Contract/Update/${updateContract._id}`,
+				updateContract
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.User })
+				dispatch({ type: UPDATE, payload: response.data.Contract })
 				return response.data
 			}
 		} catch (error) {
@@ -134,28 +136,29 @@ const UserContextProvider = ({ children }) => {
 		}
 	}
 
-	// User context data
-	const UserContextData = {
-		UserState,
-		getUsers,
-		getUsers_By_Id,
-		showAddUserModal,
-		setShowAddUserModal,
-		showUpdateUserModal,
-		setShowUpdateUserModal,
-		addUser,
+	// Contract context data
+	const ContractContextData = {
+		ContractState,
+		showAddContractModal,
+		setShowAddContractModal,
+		showUpdateContractModal,
+		setShowUpdateContractModal,
 		showToast,
 		setShowToast,
-		deleteUser,
-		findUser,
-		updateUser
+
+		getContracts,
+		addContract,
+		deleteContract,
+		findContract,
+		updateContract,
+
 	}
 
 	return (
-		<UserContext.Provider value={UserContextData}>
+		<ContractContext.Provider value={ContractContextData}>
 			{children}
-		</UserContext.Provider>
+		</ContractContext.Provider>
 	)
 }
 
-export default UserContextProvider
+export default ContractContextProvider

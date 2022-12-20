@@ -37,7 +37,61 @@ exports.getUsers = async (req,res) => {
   }
 }
 
+exports.adduser = (req, res) => {
+  const user = new User({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  });
 
+  user.save((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (req.body.roles) {
+      Role.find(
+        {
+          name: { $in: req.body.roles }
+        },
+        (err, roles) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+
+          user.roles = roles.map(role => role._id);
+          user.save(err => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+
+            res.send({ message: "User was registered successfully!" });
+          });
+        }
+      );
+    } else {
+      Role.findOne({ name: "User" }, (err, role) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        user.roles = [role._id];
+        user.save(err => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+
+          res.send({ message: "User was registered successfully!" });
+        });
+      });
+    }
+  });
+};
 
 //Get user Login
 //@ Access Private
@@ -106,7 +160,7 @@ exports.insertUser = async (req, res) => {
             res.status(500).send({ message: err });
             return;
           }
-
+          
           res.send({ message: "User was registered successfully!" });
         });
       });
@@ -140,7 +194,7 @@ exports.deleteUser = async (req, res) => {
 
 }
 
-// @route Update localhost:5000/api/users/updateUser/:id
+// @route Update  PUT localhost:5000/api/users/updateUser/:id
 // @access private
 exports.updateUser = async (req, res) => {
   console.log("Test route updateUser !");
@@ -151,8 +205,7 @@ exports.updateUser = async (req, res) => {
       let updatedUser = {
         username: req.body.username,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
-        roles: req.body.roles
+        password: bcrypt.hashSync(req.body.password, 8)
       }
       
       const UpdateCondition = { _id: req.params.id}
@@ -198,58 +251,6 @@ exports.getUser_ByRole = async (req,res) => {
       res.status(500).json({ success: false, message: 'Internal server error' })
   }
 }
-
-exports.adduser = async (req, res) => {
-  
-  const { username, password, email, roles} = req.body
-
-  console.log(req.body.username);
-  // Simple validation
-  if (!username || !password)
-      return res
-          .status(400)
-          .json({ success: false, message: 'Missing username and/or password' })
-
-  try {
-      // Check for existing user
-      const user = await User.findOne({ username })
-
-      if (user)
-          return res
-              .status(400)
-              .json({ success: false, message: 'Username already taken' })
-
-      // All good
-      const hashedPassword = await bcrypt.hashSync(req.body.password, 8)
-
-      const datauser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: hashedPassword
-      });
-      console.log(datauser)
-
-      //const newUser = new User({ username, password: hashedPassword, fullname, email, sex, roleId, role, status })
-      await newUser.save()
-
-      // Return token
-      const accessToken = jwt.sign({ userId: newUser._id },
-          process.env.ACCESS_TOKEN_SECRET
-      )
-
-      res.json({
-          success: true,
-          message: 'User created successfully',
-          User: newUser,
-          accessToken
-      })
-  } catch (error) {
-      console.log(error)
-      res.status(500).json({ success: false, message: 'Internal server error' })
-  }
-  
-};
-
 
 
 //Check routes and Roles 

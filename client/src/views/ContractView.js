@@ -1,24 +1,24 @@
-import { UserContext } from '../contexts/UserContext'//Note GET DELETE
+import { ContractContext } from '../contexts/ContractContext'//Note GET DELETE
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
-import { useState } from 'react'
+//import { useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
+//import Row from 'react-bootstrap/Row'
 import Toast from 'react-bootstrap/Toast'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
-import Col from 'react-bootstrap/Col'
+//import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+//import Tooltip from 'react-bootstrap/Tooltip'
+//import Col from 'react-bootstrap/Col'
 
-import ActionButtons_User from '../components/users/ActionButtons_User'
-import AddUserModal from '../components/users/AddUserModal'//Note
-import UpdateUserModal from '../components/users/UpdateUserModal'//Note
+import ActionButtons_Contract from '../components/contract/ActionButtons_Contract'
+import AddContractModal from '../components/contract/AddContractModal'//Note
+import UpdateContractModal from '../components/contract/UpdateContractModal'//Note
 
 import addIcon from '../assets/plus-circle-fill.svg'
 import Table from 'react-bootstrap/Table'
 
-const User = () => {
+const ContractView = () => {
 	// Contexts
 	const {
 		authState: {
@@ -27,12 +27,12 @@ const User = () => {
 	} = useContext(AuthContext)
 
 	const {
-		UserState: { User, Users, UsersLoading },
-		getUsers,
-		setShowAddUserModal,
+		ContractState: { Contract, Contracts, ContractsLoading },
+		getContracts,
+		setShowAddContractModal,
 		showToast: { show, message, type },
 		setShowToast
-	} = useContext(UserContext)
+	} = useContext(ContractContext)
 
 	// hàm tính tổng 
 	function sumArray(mang){
@@ -49,31 +49,31 @@ const User = () => {
  	})
 }
 
-	// Start: Get all Users
-	useEffect(() => getUsers(), [])
+	// Start: Get all Contracts
+	useEffect(() => getContracts(), [])
 
 	let body = null
 	let stt = 1
-	//const tong =  sumArray(Users.map((User) => User.sotien))
-	if (UsersLoading) {
+	//const tong =  sumArray(Contracts.map((Contract) => Contract.sotien))
+	if (ContractsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (Users.length === 0) {
+	} else if (Contracts.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h2'>Thông tin người dùng</Card.Header>
+					<Card.Header as='h2'>Thông tin hợp đôngf</Card.Header>
 					<Card.Body>
-						<Card.Title>CHƯA CÓ USER</Card.Title>
+						<Card.Title>CHƯA CÓ Contract</Card.Title>
 						<Card.Text>
 							Vui lòng bấm thêm! để mới
 						</Card.Text>
 						<Button
 							variant='primary'
-							onClick={setShowAddUserModal.bind(this, true)}
+							onClick={setShowAddContractModal.bind(this, true)}
 						>
 							Thêm!
 						</Button>
@@ -86,26 +86,30 @@ const User = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h2'>Thông tin người dùng </Card.Header>
+					<Card.Header as='h2'>Thông tin Hợp đồng </Card.Header>
 					<Card.Body>
 						<Table  striped bordered hover size="sm">
 							<thead >
 								<tr>
 								<th>STT</th>
-								<th>Tên Tài Khoản</th>
-								<th>Email</th>
-								<th>Vai Trò</th>
+								<th>Center</th>
+								<th>Deparment</th>
+								<th>CustomerID</th>
+								<th>ContractID</th>
+								<th>Date</th>
 								</tr>
 							</thead>
 							<tbody>
-								{Users.map(User => ( 
-									<tr key={User._id} >
+								{Contracts.map(Contract => ( 
+									<tr key={Contract._id} >
 									<td>{stt++}  </td>
-									<td>{User.username}</td>
-									<td>{User.email}</td>
-									<td>{User.roles[0].name}</td>
+									<td>{Contract.Center}</td>
+									<td>{Contract.Deparment}</td>
+									<td>{Contract.CustomerID}</td>
+									<td>{Contract.ContractID}</td>
+									<td>{Contract.Date}</td>
 									<td>
-									<ActionButtons_User _id={User._id} />
+									<ActionButtons_Contract _id={Contract._id} />
 									</td>
 								
 								</tr>
@@ -117,7 +121,7 @@ const User = () => {
     					</Table>
 						<Button
 							variant='primary'
-							onClick={setShowAddUserModal.bind(this, true)}
+							onClick={setShowAddContractModal.bind(this, true)}
 						>
 							Thêm mới
 						</Button>
@@ -130,9 +134,9 @@ const User = () => {
 	return (
 		<>
 			{body}
-			<AddUserModal />
-			{User !== null && <UpdateUserModal />}
-			{/* After User is added, show toast */}
+			<AddContractModal />
+			{Contract !== null && <UpdateContractModal />}
+			{/* After Contract is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
@@ -153,4 +157,4 @@ const User = () => {
 	)
 }
 
-export default 	User
+export default 	ContractView

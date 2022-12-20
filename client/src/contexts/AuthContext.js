@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }) => {
 		}
 
 		try {
-			const response = await axios.get(`${apiUrl}/auth`)
+			const response = await axios.get(`${apiUrl}/api/auth`)
 			if (response.data.success) {
 				dispatch({
 					type: 'SET_AUTH',
@@ -42,7 +42,7 @@ const AuthContextProvider = ({ children }) => {
 	// Login
 	const loginUser = async userForm => {
 		try {
-			const response = await axios.post(`${apiUrl}/auth/login`, userForm)
+			const response = await axios.post(`${apiUrl}/api/auth/login`, userForm)
 			if (response.data.success)
 				localStorage.setItem(
 					LOCAL_STORAGE_TOKEN_NAME,
@@ -61,7 +61,7 @@ const AuthContextProvider = ({ children }) => {
 	// Register
 	const registerUser = async userForm => {
 		try {
-			const response = await axios.post(`${apiUrl}/auth/register`, userForm)
+			const response = await axios.post(`${apiUrl}/api/auth/register`, userForm)
 			if (response.data.success)
 				localStorage.setItem(
 					LOCAL_STORAGE_TOKEN_NAME,

@@ -14,7 +14,7 @@ const MiscExpense = db.MiscExpense;
 exports.getAllMiscExpense = async (req,res) => {
     console.log("getAllMiscExpense is called")
     try {
-      const MiscExpense_data = await MiscExpense.find()//.populate("contract", "-__v")
+      const MiscExpense_data = await MiscExpense.find().populate("contract", "-__v")
       res.json({ success: true, MiscExpense: MiscExpense_data }) 
       console.log(MiscExpense_data)
   
@@ -106,7 +106,8 @@ exports.updateMiscExpense = async (req, res) => {
         else
             res.json({
                 success: true,
-                message: 'Update Contract Successfull !'
+                message: 'Update Contract Successfull !',
+                dataUpdate: updatedMiscExpense
             })
         
     } catch (error) {

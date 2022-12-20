@@ -45,14 +45,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome Server" });
 });
 
-//Controllers
-//const MiscExpenseController = require("./controllers/MiscExpense_Controller");
 
 // routes
 require("./routes/Auth_routes")(app);
 require("./routes/User_routes")(app);
 require("./routes/Contract_routes")(app);
 require("./routes/MiscExpense_routes")(app);
+require("./routes/GuaranteeLetterCost_routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;

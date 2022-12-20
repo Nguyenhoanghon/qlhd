@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Landing from './components/layout/Landing'
 import Auth from './views/Auth'
 import AuthContextProvider from './contexts/AuthContext'
-import Dashboard from './views/Dashboard'
 import ProtectedRoute from './components/routing/ProtectedRoute'
-import PostContextProvider from './contexts/PostContext'
 
 import CPKContextProvider from './contexts/CPKContext'
 import UserContextProvider from './contexts/UserContext'
+import ContractContextProvider from './contexts/ContractContext'
+
 import CPTBLContextProvider from './contexts/CPTBLContext'
 import MDKSContextProvider from './contexts/MDKSContext'
 import CTHHContextProvider from './contexts/CTHHContext'
@@ -17,10 +17,12 @@ import CPVContextProvider from './contexts/CPVContext'
 
 import CPK from './views/CPK'
 import User from './views/User'
+import Contract from './views/ContractView'
+
 import CPTBL from './views/CPTBL'
 import MDKS from './views/MDKS'
-import CTHH from './views/CTHH'
-import PTHD from './views/PTHD'
+//import CTHH from './views/CTHH'
+//import PTHD from './views/PTHD'
 import CPV from './views/CPV'
 import CPTK from './views/CPTK'
 import Phongban from './views/Phongban'
@@ -55,7 +57,11 @@ function App() {
 						<UserContextProvider>
 							<ProtectedRoute exact path='/user' component={User} />
 						</UserContextProvider>
-
+						
+						<ContractContextProvider>
+							<ProtectedRoute exact path='/contract' component={Contract} />
+						</ContractContextProvider>
+						
 						<PhongbanContextProvider>
 							<ProtectedRoute exact path='/phongban' component={Phongban} />
 						</PhongbanContextProvider>

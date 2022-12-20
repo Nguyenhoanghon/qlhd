@@ -19,7 +19,7 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMj
 "username": "Director",
 "email": "Directorn@gmail.com",
 "password": "123",
-"roles[]": "Director"
+"roles[]": "Directorss"
 }
 
 ### Get all users public
@@ -53,18 +53,18 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMj
 ### Not ok -- Postman ok
 POST http://localhost:5000/api/users/insertUser
 Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
 
 {
-"username": "admin821",
-"email": "admin121@gmail.com",
+"username": "admin",
+"email": "admin@gmail.com",
 "password": "123",
-"role[]": "admin"
+"roles[]": "admins"
 }
 
 
 ### Delete User By Id
 ### access private
 ### Not ok -- Postman ok
-DELETE http://localhost:5000/api/users/deleteUser/63a022e4833a1f2249695fbe
+DELETE http://localhost:5000/api/users/deleteUser/63a13f58a7a2e64a0a8bf4f5
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNjE4MywiZXhwIjoxNjcxNTIyNTgzfQ.12vWIr1Yrlr0fmeLwfiajkg0ZrL-ujQBuAGOvbI9QmM
