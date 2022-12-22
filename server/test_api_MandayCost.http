@@ -1,0 +1,56 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+### Create MandayCost
+### access Public
+### Not 
+POST http://localhost:5000/api/MandayCost/insertMandayCost
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"RatioUSD": 24000,
+"Department": "Phòng GP An Toàn TT",
+"Cost": 60,
+"StaffNumber": 1,
+"ImplementationDay": 15,
+"Note": "A",
+"ContractID":"HD01"
+}
+
+
+### update MandayCost
+### access Public
+###  
+PUT http://localhost:5000/api/MandayCost/updateMandayCost/63a2619f6011c873ed8264dc
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"RatioUSD": 24000,
+"Department": "Phòng GP An Toàn TT Update",
+"Cost": 60,
+"StaffNumber": 1,
+"ImplementationDay": 15,
+"Note": "A",
+"ContractID":"HD01"
+}
+
+### Get all Contract tạo bởi user đăng nhập
+### access public
+###ok
+GET http://localhost:5000/api/MandayCost/getAllMandayCost
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get all Contract tạo bởi user đăng nhập
+### access private
+###ok
+DELETE  http://localhost:5000/api/MandayCost/deleteMandayCost/63a2619f6011c873ed8264dc
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
