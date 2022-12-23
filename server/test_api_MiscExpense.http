@@ -11,7 +11,7 @@ Content-Type: application/json
 ### Create MiscExpense
 ### access Public
 ### Not 
-POST http://localhost:5000/api/miscexpense/insertMiscExpense
+POST http://localhost:5000/api/forms/misc-expense/post
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
@@ -25,24 +25,32 @@ Content-Type: application/json
 ### Create MiscExpense
 ### access Public
 ### Not 
-PUT http://localhost:5000/api/miscexpense/updateMiscExpense/63a20c967db9a56967091e6c
+PUT http://localhost:5000/api/forms/misc-expense/put/63a51d89ee0fdc15a66d9829
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
 "Content": "Tiếp Khách update",
-"Cost": "1000000",
+"Cost": "7000000",
 "Note": "A"
 }
 
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/misc-expense/63a4dffe62d2de8060a07f73
+GET http://localhost:5000/api/forms/misc-expense
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+### Get MiscExpense by id
+### access public
+###ok
+GET http://localhost:5000/api/forms/misc-expense/63a5207f6ac60316c8732e78
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
 
 ### Get all Contract tạo bởi user đăng nhập
 ### access private
 ###ok
-DELETE  http://localhost:5000/api/miscexpense/deleteMiscExpense/63a14220a1369d4ab4088e0f
+DELETE  http://localhost:5000/api/forms/misc-expense/delete/63a5207f6ac60316c8732e78
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

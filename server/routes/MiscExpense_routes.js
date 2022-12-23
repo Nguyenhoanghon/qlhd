@@ -24,18 +24,18 @@ MiscExpenseController.getMiscExpense);
 
 // Create MiscExpense 
 // access public
-app.post("/api/miscexpense/insertMiscExpense",
+app.post("/api/forms/misc-expense/post",
 MiscExpenseController.insertMiscExpense);
 
 
 // Update MiscExpense 
 // access public
-app.put("/api/miscexpense/updateMiscExpense/:id",
+app.put("/api/forms/misc-expense/put/:id",
 MiscExpenseController.updateMiscExpense);
 
 // Delete MiscExpense 
 // access public
-app.delete("/api/miscexpense/deleteMiscExpense/:id",
+app.delete("/api/forms/misc-expense/delete/:id",
 MiscExpenseController.deleteMiscExpense);
 
 

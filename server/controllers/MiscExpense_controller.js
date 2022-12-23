@@ -31,7 +31,7 @@ exports.getMiscExpense = async (req,res) => {
     try {
       const MiscExpense_data = await MiscExpense.findById(req.params.id).populate("contract", "-__v")
       console.log(req.params.id);
-      res.json({ success: true, MiscExpense: MiscExpense_data }) 
+      res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
       console.log(MiscExpense_data)
   
     } catch (error) {
@@ -72,7 +72,7 @@ exports.insertMiscExpense = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message: "Contract was registered successfully! ---IF", MiscExpense: newMiscExpense }) 
+                            res.json({ success: true,message: "MiscExpense was registered successfully!", MiscExpense: newMiscExpense }) 
                         });
             });
         }
@@ -117,12 +117,12 @@ exports.updateMiscExpense = async (req, res) => {
         if (!updatedMiscExpense)
             return res.status(401).json({
                 success: false,
-                message: 'Contract not found or user not authorised'
+                message: `MiscExpense not found or user not authorised`
             })
         else
             res.json({
                 success: true,
-                message: 'Update Contract Successfull !',
+                message: 'Update MiscExpense Successfull !',
                 dataUpdate: updatedMiscExpense
             })
         
