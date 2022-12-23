@@ -11,7 +11,7 @@ Content-Type: application/json
 ### Create MandayCost
 ### access Public
 ### Not 
-POST http://localhost:5000/api/MandayCost/insertMandayCost
+POST http://localhost:5000/api/forms/manday-cost/post
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
@@ -26,10 +26,23 @@ Content-Type: application/json
 }
 
 
+### Get all MandayCost
+### access public
+###ok
+GET http://localhost:5000/api/forms/manday-cost
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by id
+### access public
+###ok
+GET http://localhost:5000/api/forms/manday-cost/63a54823564e1d18b4bc1cd5
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
 ### update MandayCost
 ### access Public
 ###  
-PUT http://localhost:5000/api/MandayCost/updateMandayCost/63a2619f6011c873ed8264dc
+PUT http://localhost:5000/api/forms/manday-cost/put/63a54823564e1d18b4bc1cd5
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
@@ -43,14 +56,9 @@ Content-Type: application/json
 "ContractID":"HD01"
 }
 
+
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-GET http://localhost:5000/api/MandayCost/getAllMandayCost
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
-### Get all Contract tạo bởi user đăng nhập
-### access private
-###ok
-DELETE  http://localhost:5000/api/MandayCost/deleteMandayCost/63a2619f6011c873ed8264dc
+DELETE  http://localhost:5000/api/forms/manday-cost/delete/63a54823564e1d18b4bc1cd5
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

@@ -12,25 +12,32 @@ module.exports = function(app) {
 
 //==================== Routes Public Access ====================//
 
+// Create GuaranteeLetterCost 
+//URL access: 
+// access public
+app.post("/api/forms/Guarantee-letter-cost/post",
+GuaranteeLetterCostController.insertGuaranteeLetterCost);
+
+
 // Get all GuaranteeLetterCost 
 // access public
-app.get("/api/GuaranteeLetterCost/getAllGuaranteeLetterCost",
+app.get("/api/forms/Guarantee-letter-cost",
 GuaranteeLetterCostController.getAllGuaranteeLetterCost);
 
-// Create GuaranteeLetterCost 
+// Get GuaranteeLetterCost by id
 // access public
-app.post("/api/GuaranteeLetterCost/insertGuaranteeLetterCost",
-GuaranteeLetterCostController.insertGuaranteeLetterCost);
+app.get("/api/forms/Guarantee-letter-cost/:id",
+GuaranteeLetterCostController.getGuaranteeLetterCost);
 
 
 // Update GuaranteeLetterCost 
 // access public
-app.put("/api/GuaranteeLetterCost/updateGuaranteeLetterCost/:id",
+app.put("/api/forms/Guarantee-letter-cost/put/:id",
 GuaranteeLetterCostController.updateGuaranteeLetterCost);
 
 // Delete GuaranteeLetterCost 
 // access public
-app.delete("/api/GuaranteeLetterCost/deleteGuaranteeLetterCost/:id",
+app.delete("/api/forms/Guarantee-letter-cost/delete/:id",
 GuaranteeLetterCostController.deleteGuaranteeLetterCost);
 
 

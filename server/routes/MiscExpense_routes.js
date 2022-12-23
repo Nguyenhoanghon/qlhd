@@ -12,21 +12,20 @@ module.exports = function(app) {
 
 //==================== Routes Public Access ====================//
 
-// Get all MiscExpense 
-// access public
-app.get("/api/forms/misc-expense",
-MiscExpenseController.getAllMiscExpense);
-
-// Get MiscExpense Byid
-// access public
-app.get("/api/forms/misc-expense/:id",
-MiscExpenseController.getMiscExpense);
-
 // Create MiscExpense 
 // access public
 app.post("/api/forms/misc-expense/post",
 MiscExpenseController.insertMiscExpense);
 
+// Get all MiscExpense 
+// access public
+app.get("/api/forms/misc-expense",
+MiscExpenseController.getAllMiscExpense);
+
+// Get MiscExpense by id
+// access public
+app.get("/api/forms/misc-expense/:id",
+MiscExpenseController.getMiscExpense);
 
 // Update MiscExpense 
 // access public

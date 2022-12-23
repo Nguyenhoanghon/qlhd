@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ### Create MiscExpense
 ### access Public
-### Not 
+### ok 
 POST http://localhost:5000/api/forms/misc-expense/post
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
@@ -22,20 +22,7 @@ Content-Type: application/json
 "ContractID":"HD01"
 }
 
-### Create MiscExpense
-### access Public
-### Not 
-PUT http://localhost:5000/api/forms/misc-expense/put/63a51d89ee0fdc15a66d9829
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
-
-{
-"Content": "Tiếp Khách update",
-"Cost": "7000000",
-"Note": "A"
-}
-
-### Get all Contract tạo bởi user đăng nhập
+### Get all MiscExpense 
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/misc-expense
@@ -45,12 +32,26 @@ GET http://localhost:5000/api/forms/misc-expense
 ### Get MiscExpense by id
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/misc-expense/63a5207f6ac60316c8732e78
+GET http://localhost:5000/api/forms/misc-expense/63a4dffe62d2de8060a07f73
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
-### Get all Contract tạo bởi user đăng nhập
-### access private
+### Update MiscExpense by id
+### access Public
+### Not 
+PUT http://localhost:5000/api/forms/misc-expense/put/63a4dffe62d2de8060a07f73
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"Content": "Tiếp Khách update ",
+"Cost": "8000000",
+"Note": "A"
+}
+
+
+### Delete MiscExpense by id
+### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/misc-expense/delete/63a5207f6ac60316c8732e78
+DELETE  http://localhost:5000/api/forms/misc-expense/delete/63a4dffe62d2de8060a07f73
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

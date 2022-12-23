@@ -8,41 +8,8 @@ const MiscExpense = db.MiscExpense;
 
 //============== Controllers Public Access ==============//
 
-// @route GET localhost:5000/api/miscexpense/getAllMiscExpense
-//Get all MiscExpense
-//@Access Public
-exports.getAllMiscExpense = async (req,res) => {
-    console.log("getAllMiscExpense is called")
-    try {
-      const MiscExpense_data = await MiscExpense.find().populate("contract", "-__v")
-      res.json({ success: true, MiscExpense: MiscExpense_data }) 
-      console.log(MiscExpense_data)
-  
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
-  }
-  // @route GET localhost:5000/api/miscexpense/getAllMiscExpense
-//Get MiscExpense ById
-//@Access Public
-exports.getMiscExpense = async (req,res) => {
-    console.log("getMiscExpense is called")
-    try {
-      const MiscExpense_data = await MiscExpense.findById(req.params.id).populate("contract", "-__v")
-      console.log(req.params.id);
-      res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
-      console.log(MiscExpense_data)
-  
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
-  }
-
-// @route POST localhost:5000/api/miscexpense/insertMiscExpense
+// Create MiscExpense
 // @access Public
-
 exports.insertMiscExpense = async (req, res) => {
     //console.log("Test route ===> addMiscExpense is called !");
     const { 
@@ -87,21 +54,48 @@ exports.insertMiscExpense = async (req, res) => {
 }
 
 
-// @route Put localhost:5000/api/miscexpense/updateMiscExpense/:id
+//Get all MiscExpense
+//@Access Public
+exports.getAllMiscExpense = async (req,res) => {
+    console.log("getAllMiscExpense is called")
+    try {
+      const MiscExpense_data = await MiscExpense.find().populate("contract", "-__v")
+      res.json({ success: true, MiscExpense: MiscExpense_data }) 
+      console.log(MiscExpense_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+
+//Get MiscExpense by id
+//@Access Public
+exports.getMiscExpense = async (req,res) => {
+    console.log("getMiscExpense is called")
+    try {
+      const MiscExpense_data = await MiscExpense.findById(req.params.id).populate("contract", "-__v")
+      console.log(req.params.id);
+      res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
+      console.log(MiscExpense_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+
+
+// Update MiscExpense by id
 // @access Public
 exports.updateMiscExpense = async (req, res) => {
     console.log("Test route updateMiscExpense !");
-    //res.json({ success: true ,message: "Test route updateMiscExpense"}) 
-     //test route Update
-    //res.status(200).send(" Test Routes Update Contract");
+    console.log("Test data recieved ====>>>",req.params.id)
     const { 
         Content,
         Cost,
         Note
     } = req.body
-
-    console.log("Test data recieved ====>>>",req.params.id)
-
     try {
         let updatedMiscExpense = {
             Content,
@@ -132,7 +126,7 @@ exports.updateMiscExpense = async (req, res) => {
     }
 }
 
-// @route Delete localhost:5000/api/miscexpense/deleteMiscExpense/:id
+// Delete MiscExpense
 // @access Public
 exports.deleteMiscExpense = async (req, res) => {
     console.log("Test route deleteMiscExpense !");

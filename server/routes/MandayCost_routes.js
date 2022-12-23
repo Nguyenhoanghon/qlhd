@@ -12,25 +12,35 @@ module.exports = function(app) {
 
 //==================== Routes Public Access ====================//
 
-// Get all MandayCost 
+// Get all MandayCost
+// URL access: GET http://localhost:5000/api/forms/manday-cost
 // access public
-app.get("/api/forms/Manday-Cost",
+app.get("/api/forms/manday-cost",
 MandayCostController.getAllMandayCost);
 
-// Create MandayCost 
+// Get MandayCost By id
+// URL access: GET http://localhost:5000/api/forms/manday-cost/id
 // access public
-app.post("/api/MandayCost/insertMandayCost",
+app.get("/api/forms/manday-cost/:id",
+MandayCostController.getMandayCost);
+
+// Create MandayCost 
+// URL access: POST http://localhost:5000/api/forms/manday-cost/post
+// access public
+app.post("/api/forms/manday-cost/post/",
 MandayCostController.insertMandayCost);
 
 
 // Update MandayCost 
+// URL access: PUT http://localhost:5000/api/forms/manday-cost/put/ID
 // access public
-app.put("/api/MandayCost/updateMandayCost/:id",
+app.put("/api/forms/manday-cost/put/:id",
 MandayCostController.updateMandayCost);
 
 // Delete MandayCost 
+// URL access: POST http://localhost:5000/api/forms/manday-cost/delete/ID
 // access public
-app.delete("/api/MandayCost/deleteMandayCost/:id",
+app.delete("/api/forms/manday-cost/delete/:id",
 MandayCostController.deleteMandayCost);
 
 
@@ -38,4 +48,4 @@ MandayCostController.deleteMandayCost);
 //==================== Routes Private Access ====================//
 
 
-}//end Routes
+} //end Routes

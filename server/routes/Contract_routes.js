@@ -14,37 +14,42 @@ module.exports = function(app) {
 //==================== Routes Public Access ====================//
 
 
-// Get all Contract 
-// access public
-app.get("/api/contract/getAllContract",
-ContractController.getAllContract);
-
 // Create Contract 
 // access public
-app.post("/api/Contract/insertContract",[verifySignUp.checkDuplicateContract],
+app.post("/api/forms/contract/post",[verifySignUp.checkDuplicateContract],
 ContractController.insertContract);
 
-
-// Delete Contract 
+// Get all Contract 
 // access public
-app.delete("/api/Contract/Delete/:id",
-ContractController.deleteContract);
+app.get("/api/forms/contract",
+ContractController.getAllContract);
+
+// Get all Contract 
+// access public
+app.get("/api/forms/contract/:id",
+ContractController.getContract);
+
 
 // Update Contract 
 // access Public
-app.put("/api/Contract/Update/:id",
+app.put("/api/forms/contract/put/:id",
 ContractController.updateContract);
+
+// Delete Contract 
+// access public
+app.delete("/api/forms/contract/delete/:id",
+ContractController.deleteContract);
+
+
+
+
+//==================== Routes Private Access ====================//
 
 // Get all Contract  
 // access public
 app.get("/api/Contract/find/:id",
 ContractController.findContract);
-//==================== Routes Private Access ====================//
 
-// Get all Contract 
-// access private
-app.get("/api/contract/getContracts",[authJwt.verifyToken],
-ContractController.getContracts);
 
 // Create Contract 
 // access private 

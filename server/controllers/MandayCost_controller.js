@@ -22,6 +22,24 @@ exports.getAllMandayCost = async (req,res) => {
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
   }
+// @route GET localhost:5000/api/MandayCost/getAllMandayCost
+//Get MandayCost by Id
+//@Access Public
+exports.getMandayCost = async (req,res) => {
+    console.log("getAllMandayCost is called")
+    try {
+      const MandayCost_data = await MandayCost.findById(req.params.id).populate("contract", "-__v")
+      if (MandayCost_data==null)
+      res.json({ success: true, message: "MandayCost not found !"}) 
+      else 
+      res.json({ success: true, MandayCost: MandayCost_data }) 
+      console.log(MandayCost_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
 
 // @route POST localhost:5000/api/MandayCost/insertMandayCost
 // @access Public
@@ -65,7 +83,7 @@ exports.insertMandayCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message:  'MandayCost was registered successfully! ---IF', MandayCost: newMandayCost }) 
+                            res.json({ success: true,message:  'MandayCost was registered successfully!', MandayCost: newMandayCost }) 
                         });
             });
         }

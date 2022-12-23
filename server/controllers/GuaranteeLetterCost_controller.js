@@ -7,25 +7,9 @@ const GuaranteeLetterCost = db.GuaranteeLetterCost;
 
 //============== Controllers Public Access ==============//
 
-// @route GET localhost:5000/api/GuaranteeLetterCost/getAllGuaranteeLetterCost
-//Get all GuaranteeLetterCost
-//@Access Public
-exports.getAllGuaranteeLetterCost = async (req,res) => {
-    console.log("getAllGuaranteeLetterCost is called")
-    try {
-      const GuaranteeLetterCost_data = await GuaranteeLetterCost.find()//.populate("contract", "-__v")
-      res.json({ success: true, GuaranteeLetterCost: GuaranteeLetterCost_data }) 
-      console.log(GuaranteeLetterCost_data)
-  
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
-  }
 
-// @route POST localhost:5000/api/GuaranteeLetterCost/insertGuaranteeLetterCost
+// Create GuaranteeLetterCost
 // @access Public
-
 exports.insertGuaranteeLetterCost = async (req, res) => {
     //console.log("Test route ===> addGuaranteeLetterCost is called !");
     const { 
@@ -63,12 +47,12 @@ exports.insertGuaranteeLetterCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message: "Contract was registered successfully! ---IF", GuaranteeLetterCost: newGuaranteeLetterCost }) 
+                            res.json({ success: true,message: "GuaranteeLetterCost was registered successfully!", GuaranteeLetterCost: newGuaranteeLetterCost }) 
                         });
             });
         }
         else 
-        res.json({ success: false ,message: "Not found Contract "}) 
+        res.json({ success: false ,message: "Contract not found ! "}) 
         
         });
     } catch (error) {
@@ -78,13 +62,42 @@ exports.insertGuaranteeLetterCost = async (req, res) => {
 }
 
 
-// @route Put localhost:5000/api/GuaranteeLetterCost/updateGuaranteeLetterCost/:id
+//Get all GuaranteeLetterCost
+//@Access Public
+exports.getAllGuaranteeLetterCost = async (req,res) => {
+    console.log("getAllGuaranteeLetterCost is called")
+    try {
+      const GuaranteeLetterCost_data = await GuaranteeLetterCost.find()//.populate("contract", "-__v")
+      res.json({ success: true, GuaranteeLetterCost: GuaranteeLetterCost_data }) 
+      console.log(GuaranteeLetterCost_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+//Get GuaranteeLetterCost by id
+//@Access Public
+exports.getGuaranteeLetterCost = async (req,res) => {
+    console.log("getGuaranteeLetterCost is called")
+    try {
+      const GuaranteeLetterCost_data = await GuaranteeLetterCost.findById({_id: req.params.id})//.populate("contract", "-__v")
+      if (GuaranteeLetterCost_data==null)
+            res.json({ success: true, message: "GuaranteeLetterCost not found !"}) 
+      else 
+      res.json({ success: true, message: "GuaranteeLetterCost ", GuaranteeLetterCost: GuaranteeLetterCost_data })
+
+        console.log(GuaranteeLetterCost_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+// Update GuaranteeLetterCost
 // @access Public
 exports.updateGuaranteeLetterCost = async (req, res) => {
-    console.log("Test route updateGuaranteeLetterCost !");
-    //res.json({ success: true ,message: "Test route updateGuaranteeLetterCost"}) 
-     //test route Update
-    //res.status(200).send(" Test Routes Update updateGuaranteeLetterCost");
+    console.log("Test route update GuaranteeLetterCost !");
     const { 
         Content,//: String,
         Cost,//: Number,
@@ -122,7 +135,7 @@ exports.updateGuaranteeLetterCost = async (req, res) => {
         else
             res.json({
                 success: true,
-                message: 'Update Contract Successfull !',
+                message: 'Update GuaranteeLetterCost Successfull !',
                 dataUpdate: updatedGuaranteeLetterCost
             })
         
@@ -132,13 +145,14 @@ exports.updateGuaranteeLetterCost = async (req, res) => {
     }
 }
 
-// @route Delete localhost:5000/api/GuaranteeLetterCost/deleteGuaranteeLetterCost/:id
+
+// Delete GuaranteeLetterCost by id
 // @access Public
 exports.deleteGuaranteeLetterCost = async (req, res) => {
     console.log("Test route deleteGuaranteeLetterCost !");
     console.log(req.params.id);
     try {
-        const GuaranteeLetterCostDeleteCondition = { _id: req.params.id}//, user: req.userId }
+        const GuaranteeLetterCostDeleteCondition = { _id: req.params.id}
         const deletedGuaranteeLetterCost= await GuaranteeLetterCost.findOneAndDelete(GuaranteeLetterCostDeleteCondition)
 
         // User not authorised or GuaranteeLetterCost not found

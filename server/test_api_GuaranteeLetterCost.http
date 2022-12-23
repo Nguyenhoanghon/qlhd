@@ -11,42 +11,53 @@ Content-Type: application/json
 ### Create GuaranteeLetterCost
 ### access Public
 ### Not 
-POST http://localhost:5000/api/GuaranteeLetterCost/insertGuaranteeLetterCost
+POST http://localhost:5000/api/forms/Guarantee-letter-cost/post
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-"Content": "Tiếp Khách",
-"Cost": "1000000",
+"Content": "BL dự thầu",
+"Cost": "360000000",
 "QuantityMonths": 3,
-"RatioCost": 0.1,
+"RatioCost": 0.2,
 //"IntoMoney": 0, //thanh tien =  Cost*RatioCost
-"Note": "A",
+"Note": "Tính cả phần nhờ hỗ trợ",
 "ContractID":"HD01"
 }
+
+### Get all GuaranteeLetterCost
+### access public
+###ok
+GET http://localhost:5000/api/forms/Guarantee-letter-cost
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get GuaranteeLetterCost by id
+### access public
+###ok
+GET http://localhost:5000/api/forms/Guarantee-letter-cost/63a54f26e68b441c2566bdd7
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
 ### Create GuaranteeLetterCost
 ### access Public
 ### Not 
-PUT http://localhost:5000/api/GuaranteeLetterCost/updateGuaranteeLetterCost/63a20c967db9a56967091e6c
+PUT http://localhost:5000/api/forms/Guarantee-letter-cost/put/63a54f26e68b441c2566bdd7
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-"Content": "Tiếp Khách update",
-"Cost": "1000000",
-"Note": "A"
+"Content": "BL dự thầu Update ",
+"Cost": "370000000",
+"QuantityMonths": 3,
+"RatioCost": 0.2,
+//"IntoMoney": 0, //thanh tien =  Cost * RatioCost
+"Note": "Tính cả phần nhờ hỗ trợ",
+"ContractID":"HD01"
 }
 
-### Get all Contract tạo bởi user đăng nhập
-### access public
-###ok
-GET http://localhost:5000/api/GuaranteeLetterCost/getAllGuaranteeLetterCost
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-### Get all Contract tạo bởi user đăng nhập
-### access private
+### Delete GuaranteeLetterCost
+### access Public
 ###ok
-DELETE  http://localhost:5000/api/GuaranteeLetterCost/deleteGuaranteeLetterCost/63a14220a1369d4ab4088e0f
+DELETE  http://localhost:5000/api/forms/Guarantee-letter-cost/delete/63a54f26e68b441c2566bdd7
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

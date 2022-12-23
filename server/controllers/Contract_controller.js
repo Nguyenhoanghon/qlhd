@@ -10,7 +10,7 @@ const Contract = db.Contract;
 
 //============== Controllers Public Access ==============//
 
-// @route GET localhost:5000/api/Contract
+
 //Get all Contract
 //@Access Public
 exports.getAllContract = async (req,res) => {
@@ -26,6 +26,25 @@ exports.getAllContract = async (req,res) => {
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
   }
+
+
+//Get all Contract
+//@Access Public
+exports.getContract = async (req,res) => {
+    console.log("getContract is called")
+    try {
+      const Contract_data = await Contract.findById({_id: req.params.id}).populate("user", "-__v")
+      if(Contract_data==null)
+            res.json({ success: true, message: "Contract not found !" }) 
+      else
+            res.json({ success: true, Contracts: Contract_data })
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+
 // @route GET localhost:5000/api/contract/getContracts
 //Get all Contract
 //@Access private
@@ -43,11 +62,9 @@ exports.getContracts = async (req,res) => {
     }
   } 
 
-//Note Không insert kèm theo thông tin ngừoi dùng. Này có thể dùng thêm cho User Khách
-// Thêm được từ Postman không cần Token
-// @route POST localhost:5000/api/contract/addContract
-// @access Public
 
+// Create Contract
+// @access Public
 exports.insertContract = async (req, res) => {
     //console.log("Test route ===> addContract is called !");
     const { 
@@ -90,7 +107,7 @@ exports.insertContract = async (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-                    res.json({success: true, message: 'Add Contract Successfull !', Contract: newContract})
+                    res.json({success: true, message: 'Insert Contract Successfull !', Contract: newContract})
                     //res.send({ message: "Contract was registered successfully!" });
                     });
                 }

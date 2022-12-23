@@ -22,3 +22,53 @@ ProductName: String,
 7. Chi phí vật tư phụ - AuxiliaryCost
 8. Chi phí khác - MiscExpense
 9. Form tổng thể - Summary
+
+//test
+// Create Contract
+// @access Public
+exports.postContract = async (req, res) => {
+    //console.log("Test route ===> addContract is called !");
+    const { 
+        Center,
+        Deparment,
+        CustomerID,
+        ContractID,
+        Date,
+        user
+    } = req.body
+
+    const newContract = new Contract({
+        Center,
+        Deparment,
+        CustomerID,
+        ContractID,
+        Date
+    })
+    console.log("test data ====>>>",newContract)
+    try {
+        Users.find({username: req.body.user},(err,user)=>{
+         if(user.length!=0){
+            newContract.save((err, Contract) => {
+                 if (err) {
+                     res.status(500).send({ message: err });
+                     return;
+                 }
+                 newContract.user = Users.map(user => user._id);
+                 newContract.save(err => {
+                             if (err) {
+                                 res.status(500).send({ message: err });
+                                 return;
+                             }
+                             res.json({ success: true,message: "Contract was registered successfully!", MiscExpense: newMiscExpense }) 
+                         });
+             });
+         }
+         else 
+         res.json({ success: false ,message: "Not found User "}) 
+         
+         });
+     } catch (error) {
+         console.log(error)
+         res.status(500).json({ success: false, message: 'Internal server error' })
+     }
+}
