@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 // Get all MandayCost 
 // access public
-app.get("/api/MandayCost/getAllMandayCost",
+app.get("/api/forms/Manday-Cost",
 MandayCostController.getAllMandayCost);
 
 // Create MandayCost 

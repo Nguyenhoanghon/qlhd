@@ -38,7 +38,7 @@ Content-Type: application/json
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-GET http://localhost:5000/api/miscexpense/getAllMiscExpense
+GET http://localhost:5000/api/forms/misc-expense/63a4dffe62d2de8060a07f73
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Get all Contract tạo bởi user đăng nhập

@@ -1,5 +1,9 @@
-ProductCost
-ProductName: String,
+const mongoose = require("mongoose");
+
+const ProductCost = mongoose.model(
+  "ProductCost",
+  new mongoose.Schema({
+    ProductName: String,
     Quantity: Number,
     EX_W: Boolean, // nhap tu nuoc ngoai = true
     FOBCost: Number, //if(EX_W = =true, req.body.FOBCost, 0)
@@ -11,14 +15,13 @@ ProductName: String,
     Insurance: Boolean,
     Incentive: Number,
     Note: String,
-    ContractID
+    contract: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Contract"
+      }
+    ]
+  })
+);
 
-1. Chi phí chi tiết hàng hoá - ProductCost
-2. Chi phí triển khai - ImplementationCost
-3. Chi phí vốn - CapitalExpenditure
-4. Manday kỹ sư - MandayCost
-5. Chi phí làm thư bảo lãnh - GuaranteeLetterCost
-6.  Chi phí phòng ban - DepartmentCost
-7. Chi phí vật tư phụ - AuxiliaryCost
-8. Chi phí khác - MiscExpense
-9. Form tổng thể - Summary
+module.exports = ProductCost;

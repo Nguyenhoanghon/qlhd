@@ -23,6 +23,22 @@ exports.getAllMiscExpense = async (req,res) => {
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
   }
+  // @route GET localhost:5000/api/miscexpense/getAllMiscExpense
+//Get MiscExpense ById
+//@Access Public
+exports.getMiscExpense = async (req,res) => {
+    console.log("getMiscExpense is called")
+    try {
+      const MiscExpense_data = await MiscExpense.findById(req.params.id).populate("contract", "-__v")
+      console.log(req.params.id);
+      res.json({ success: true, MiscExpense: MiscExpense_data }) 
+      console.log(MiscExpense_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
 
 // @route POST localhost:5000/api/miscexpense/insertMiscExpense
 // @access Public

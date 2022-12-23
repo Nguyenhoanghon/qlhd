@@ -20,7 +20,7 @@ Content-Type: application/json
 "Cost": "1000000",
 "QuantityMonths": 3,
 "RatioCost": 0.1,
-"IntoMoney": 0, //thanh tien =  Cost*RatioCost
+//"IntoMoney": 0, //thanh tien =  Cost*RatioCost
 "Note": "A",
 "ContractID":"HD01"
 }

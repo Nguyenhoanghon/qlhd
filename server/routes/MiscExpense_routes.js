@@ -14,8 +14,13 @@ module.exports = function(app) {
 
 // Get all MiscExpense 
 // access public
-app.get("/api/miscexpense/getAllMiscExpense",
+app.get("/api/forms/misc-expense",
 MiscExpenseController.getAllMiscExpense);
+
+// Get MiscExpense Byid
+// access public
+app.get("/api/forms/misc-expense/:id",
+MiscExpenseController.getMiscExpense);
 
 // Create MiscExpense 
 // access public
