@@ -1,0 +1,74 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+### Create MandayCost
+### access Public
+### Not ok
+POST http://localhost:5000/api/forms/product-cost/post
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "ProductName": "Server X60 IBM",
+  "Quantity": 10,
+  "EX_W": true, // nhap tu nuoc ngoai = true
+  "FOBCost": 2500, //if(EX_W = =true, req.body.FOBCost, 0)
+  "RatioUSD": 24000, //if(EX_W = =true, req.body.RatioUSD, 0)
+  "InputPrice": 50000, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
+  "OutputPrice": 100000,
+  "InputIntoMoney": 500000, // Can tinh  = Quantity * InputPrice
+  "OutputIntoMoney": 700000, //Can tinh =  Quantity * OutputPrice
+  "Insurance": true,
+  "Incentive": 100000,
+  "Note": "A",
+  "ContractID": "HD01"
+}
+### Get all MandayCost
+### access public
+###ok
+GET http://localhost:5000/api/forms/product-cost
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by id
+### access public
+###ok
+GET http://localhost:5000/api/forms/product-cost/63a69fc3d96b6250abaa4f7a
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by ContractID
+### access public
+###ok
+GET http://localhost:5000/api/forms/product-cost/contract/63a664db2112764506e7dde1
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+### update MandayCost
+### access Public
+###  
+PUT http://localhost:5000/api/forms/manday-cost/put/63a54823564e1d18b4bc1cd5
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+"RatioUSD": 24000,
+"Department": "Phòng GP An Toàn TT Update",
+"Cost": 60,
+"StaffNumber": 1,
+"ImplementationDay": 15,
+"Note": "A",
+"ContractID":"HD01"
+}
+
+
+### Get all Contract tạo bởi user đăng nhập
+### access public
+###ok
+DELETE  http://localhost:5000/api/forms/manday-cost/delete/63a54823564e1d18b4bc1cd5
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

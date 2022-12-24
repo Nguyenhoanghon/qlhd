@@ -13,7 +13,7 @@ exports.register = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8)
   });
 
-  user.save((err, user) => {
+  user.save((err, userdata) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -30,14 +30,14 @@ exports.register = (req, res) => {
             return;
           }
 
-          user.roles = roles.map(role => role._id);
+          user.roles = roles.map(role => userdata._id);
           user.save(err => {
             if (err) {
               res.status(500).send({ message: err });
               return;
             }
 
-            res.send({ message: "User was registered successfully!" });
+            res.send({ message: "User was registered successfully!", datauser: user});
           });
         }
       );

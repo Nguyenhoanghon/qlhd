@@ -1,0 +1,62 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+### Create MandayCost
+### access Public
+### Not 
+POST http://localhost:5000/api/forms/capital-expenditure-cost/post
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "InventoryDays": 30,
+  "ImplementationDays": 20,
+  "BedtDays": 20,
+  "DebtCollectionDays": 15, 
+  "Note": "A",
+  "ContractID":"HD01"
+}
+
+
+### Get all MandayCost
+### access public
+###ok
+GET http://localhost:5000/api/forms/capital-expenditure-cost
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by id
+### access public
+###ok
+GET http://localhost:5000/api/forms/capital-expenditure-cost/63a67cbc93b9994f37bd393b
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+### update MandayCost
+### access Public
+###  
+PUT http://localhost:5000/api/forms/capital-expenditure-cost/put/63a67cbc93b9994f37bd393b
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "InventoryDays": 60,
+  "ImplementationDays": 20,
+  "BedtDays": 20,
+  "DebtCollectionDays": 15, 
+  "Note": "A",
+  "ContractID":"HD01"
+}
+
+
+### Get all Contract tạo bởi user đăng nhập
+### access public
+###ok
+DELETE  http://localhost:5000/api/forms/capital-expenditure-cost/delete/63a679af1250764e2d878fb1
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

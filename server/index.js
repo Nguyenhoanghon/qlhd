@@ -53,6 +53,10 @@ require("./routes/Contract_routes")(app);
 require("./routes/MiscExpense_routes")(app);
 require("./routes/GuaranteeLetterCost_routes")(app);
 require("./routes/MandayCost_routes")(app);
+require("./routes/ProductCost_routes")(app);
+require("./routes/CapitalExpenditureCost_routes")(app);
+
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;

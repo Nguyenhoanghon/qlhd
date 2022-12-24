@@ -119,7 +119,7 @@ exports.insertUser = async (req, res) => {
   });
   console.log(user)
 
-  user.save((err, user) => {
+  user.save((err, userdata) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -136,7 +136,7 @@ exports.insertUser = async (req, res) => {
             return;
           }
 
-          user.roles = roles.map(role => role._id);
+          user.roles = roles.map(role => userdata._id);
           user.save(err => {
             if (err) {
               res.status(500).send({ message: err });
