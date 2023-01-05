@@ -1,7 +1,7 @@
 import { createContext, useReducer, useState } from 'react'
 import { CPVReducer } from '../reducers/CPVReducer'
-import { CTHHReducer } from '../reducers/CTHHReducer'
-//import { CTHHReducer } from '../reducers/CTHHReducer'//Note
+import { ProductCostReducer } from '../reducers/ProductCostReducer'
+//import { ProductCostReducer } from '../reducers/ProductCostReducer'//Note
 import {
 	apiUrl,
 	LOADED_FAIL,
@@ -22,10 +22,10 @@ const CPVContextProvider = ({ children }) => {
 		CPVs: [],
 		CPVsLoading: true
 	})
-	const [CTHHState, dispatchCTHH] = useReducer(CTHHReducer, {
-		CTHH: null,
-		CTHHs: [],
-		CTHHsLoading: true
+	const [ProductCostState, dispatchProductCost] = useReducer(ProductCostReducer, {
+		ProductCost: null,
+		ProductCosts: [],
+		ProductCostsLoading: true
 	}) 
 
 	const [showAddCPVModal, setShowAddCPVModal] = useState(false)
@@ -40,7 +40,7 @@ const CPVContextProvider = ({ children }) => {
 	const getCPVs = async () => {
 		try {
 			const response = await axios.get(`${apiUrl}/chiphivon/view`)
-			//const response_CTHH = await axios.get(`${apiUrl}/chitiethanghoa`)
+			//const response_ProductCost = await axios.get(`${apiUrl}/chitiethanghoa`)
 			if (response.data.success) {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.ChiPhiVons  })
 				
@@ -50,7 +50,7 @@ const CPVContextProvider = ({ children }) => {
 		}
 
 	}
-	/* const getCTHHs = async () => {
+	/* const getProductCosts = async () => {
 		try {
 			const response = await axios.get(`${apiUrl}/chitiethanghoa`)//note
 			if (response.data.success) {

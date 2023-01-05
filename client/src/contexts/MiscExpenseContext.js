@@ -32,24 +32,28 @@ const CPKContextProvider = ({ children }) => {
 	// Get all CPKs
 	const getCPKs = async () => {
 		try {
-			const response = await axios.get(`${apiUrl}/chiphikhac`)
+			const response = await axios.get(`${apiUrl}/api/forms/misc-expense`)
 			if (response.data.success) {
-				dispatch({ type: LOADED_SUCCESS, payload: response.data.DataChiphikhac })
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.MiscExpense })
 				
 			}
+			console.log(response.data.MiscExpense);
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
-
+	
 	// Add CPK
 	const addCPK = async newCPK => {
 		try {
-			const response = await axios.post(`${apiUrl}/chiphikhac`, newCPK)
+			const response = await axios.post(`${apiUrl}/api/forms/misc-expense/post`, newCPK)
+			
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.chiphikhac })
+				dispatch({ type: ADD, payload: response.data.MiscExpense })
 				return response.data
 			}
+			else
+				return response.data //Hợp đồng không tồn tại
 		} catch (error) {
 			return error.response.data
 				? error.response.data
@@ -61,7 +65,7 @@ const CPKContextProvider = ({ children }) => {
 	
 	const deleteCPK = async CPKId => {
 		try {
-			const response = await axios.delete(`${apiUrl}/chiphikhac/${CPKId}`)
+			const response = await axios.delete(`${apiUrl}/api/forms/misc-expense/delete/${CPKId}`)
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: CPKId })
 		} catch (error) {
@@ -79,11 +83,11 @@ const CPKContextProvider = ({ children }) => {
 	const updateCPK = async updatedCPK => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/chiphikhac/${updatedCPK._id}`,
+				`${apiUrl}/api/forms/misc-expense/put/${updatedCPK._id}`,
 				updatedCPK
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.chiphikhacs })
+				dispatch({ type: UPDATE, payload: response.data.updatedMiscExpense })
 				return response.data
 			}
 		} catch (error) {

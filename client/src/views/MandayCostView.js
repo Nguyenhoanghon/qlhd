@@ -1,4 +1,4 @@
-import { MDKSContext } from '../contexts/MDKSContext'//Note GET DELETE
+import { MandayCostContext } from '../contexts/MandayCostContext'//Note GET DELETE
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 /* import { useState } from 'react' */
@@ -12,14 +12,14 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' */
 import addIcon from '../assets/plus-circle-fill.svg'
 
-import AddMDKSModal from '../components/Mandaykysu/AddMDKSModal'//Note
-import UpdateMDKSModal from '../components/Mandaykysu/UpdateMDKSModal'//Note
-import ActionButtons_MDKS from '../components/Mandaykysu/ActionButtons_MDKS'
+import AddMandayCostModal from '../components/Mandaykysu/AddMandayCostModal'//Note
+import UpdateMandayCostModal from '../components/Mandaykysu/UpdateMandayCostModal'//Note
+import ActionButtons_MandayCost from '../components/Mandaykysu/ActionButtons_MandayCost'
 
 
 import Table from 'react-bootstrap/Table'
 
-const MDKS = () => {
+const MandayCost = () => {
 	// Contexts
 	const {
 		authState: {
@@ -28,12 +28,12 @@ const MDKS = () => {
 	} = useContext(AuthContext)
 
 	const {
-		MDKSState: { MDKS, MDKSs, MDKSsLoading },
-		getMDKSs,
-		setShowAddMDKSModal,
+		MandayCostState: { MandayCost, MandayCosts, MandayCostsLoading },
+		getMandayCosts,
+		setShowAddMandayCostModal,
 		showToast: { show, message, type },
 		setShowToast
-	} = useContext(MDKSContext)
+	} = useContext(MandayCostContext)
 
 	// hàm tính tổng thành tiền
 	function sumArray(mang){
@@ -44,19 +44,19 @@ const MDKS = () => {
     return sum;
 	}
 
-	// Start: Get all MDKSs
-	useEffect(() => getMDKSs(), [])
+	// Start: Get all MandayCosts
+	useEffect(() => getMandayCosts(), [])
 
 	let body = null
 	let stt = 1
-	const tong =  sumArray(MDKSs.map((MDKS) => MDKS.thanhtien))//note
-	if (MDKSsLoading) {
+	const tong =  sumArray(MandayCosts.map((MandayCost) => MandayCost.thanhtien))//note
+	if (MandayCostsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (MDKSs.length === 0) {
+	} else if (MandayCosts.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
@@ -68,7 +68,7 @@ const MDKS = () => {
 						</Card.Text>
 						<Button
 							variant='primary'
-							onClick={setShowAddMDKSModal.bind(this, true)}
+							onClick={setShowAddMandayCostModal.bind(this, true)}
 						>
 							Thêm!
 						</Button>
@@ -92,21 +92,23 @@ const MDKS = () => {
 								<th  width='10%'>Số người tham gia dự án</th>
 								<th width='10%'>Số ngày thực hiện dự án</th>
 								<th>Thành tiền</th>
+								<th width='20%'>ID hợp đồng</th>
 								<th width='20%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{MDKSs.map(MDKS => ( 
-								<tr key={MDKS._id} >
+								{MandayCosts.map(MandayCost => ( 
+								<tr key={MandayCost._id} >
 									<td>{stt++}  </td>
-									<td>{MDKS.phongban}</td>
-									<td>{MDKS.mandaychuan.toLocaleString()}</td>
-									<td>{MDKS.songuoi}</td>
-									<td>{MDKS.songaythuchien}</td>
-									<td>{MDKS.thanhtien.toLocaleString()}</td>
-									<td>{MDKS.ghichu}  </td>
+									<td>{MandayCost.Department}</td>
+									<td>{MandayCost.Cost}</td>
+									<td>{MandayCost.StaffNumber}</td>
+									<td>{MandayCost.ImplementationDay}</td>
+									<td>{MandayCost.IntoMoney.toLocaleString()}</td>
+									<td>{MandayCost.Note}  </td>
+									<td>{MandayCost.contract}  </td>
 									<td>
-									<ActionButtons_MDKS _id={MDKS._id} />
+									<ActionButtons_MandayCost _id={MandayCost._id} />
 									</td>
 								
 								</tr>
@@ -115,7 +117,8 @@ const MDKS = () => {
 								}
 								<tr>
 									<td colSpan={5} >Tổng</td>
-									<td>{tong.toLocaleString()}</td>
+									<td></td>
+									<td></td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -123,7 +126,7 @@ const MDKS = () => {
     					</Table>
 						<Button
 							variant='primary'
-							onClick={setShowAddMDKSModal.bind(this, true)}
+							onClick={setShowAddMandayCostModal.bind(this, true)}
 						>
 							Thêm mới
 						</Button>
@@ -136,9 +139,9 @@ const MDKS = () => {
 	return (
 		<>
 			{body}
-			<AddMDKSModal />
-			{MDKS !== null && <UpdateMDKSModal />}
-			{/* After MDKS is added, show toast */}
+			<AddMandayCostModal />
+			{MandayCost !== null && <UpdateMandayCostModal />}
+			{/* After MandayCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
@@ -159,4 +162,4 @@ const MDKS = () => {
 	)
 }
 
-export default MDKS
+export default MandayCost

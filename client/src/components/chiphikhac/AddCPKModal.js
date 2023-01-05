@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
-import { CPKContext } from '../../contexts/CPKContext'
+import { CPKContext } from '../../contexts/MiscExpenseContext'
 
 const AddCPKModal = () => {
 	// Contexts
@@ -15,12 +15,13 @@ const AddCPKModal = () => {
 
 	// State
 	const [newCPK, setNewCPK] = useState({
-		noidung: '',
-		sotien: '',
-		ghichu: ' '
+		Content: '',
+		Cost: '',
+		Note: '',
+		ContractID:''
 	})
 
-	const { noidung, sotien, ghichu } = newCPK
+	const { Content, Cost, Note, ContractID } = newCPK
 
 	const onChangeNewCPKForm = event =>
 		setNewCPK({ ...newCPK, [event.target.name]: event.target.value })
@@ -31,13 +32,13 @@ const AddCPKModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCPK(newCPK)
+		const { success, message } = await addCPK(newCPK)//newCPK
 		resetAddCPKData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddCPKData = () => {
-		setNewCPK({ noidung: '', sotien: '', ghichu: '' })
+		setNewCPK({ Content: '', Cost: '', Note: '', ContractID: '' })
 		setShowAddCPKModal(false)
 	}
 
@@ -50,15 +51,29 @@ const AddCPKModal = () => {
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
+							Chọn Hợp đồng
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Nhập chuỗi'
+							name='ContractID'
+							required
+							aria-describedby='noidung-help'
+							value={ContractID}
+							onChange={onChangeNewCPKForm}
+						/>						
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung chi phí
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='noidung'
+							name='Content'
 							required
 							aria-describedby='noidung-help'
-							value={noidung}
+							value={Content}
 							onChange={onChangeNewCPKForm}
 						/>						
 					</Form.Group>
@@ -69,8 +84,8 @@ const AddCPKModal = () => {
 						<Form.Control
 							tpye='text'
 							placeholder='Nhập số'
-							name='sotien'
-							value={sotien} /* tạo ràn buộc số */
+							name='Cost'
+							value={Cost} /* tạo ràn buộc số */
 							onChange={onChangeNewCPKForm}
 						/>
 					</Form.Group>
@@ -82,8 +97,8 @@ const AddCPKModal = () => {
 							as='textarea'
 							rows={3}
 							placeholder='Nhập chuỗi'
-							name='ghichu'
-							value={ghichu}
+							name='Note'
+							value={Note}
 							onChange={onChangeNewCPKForm}
 						/>
 					</Form.Group>

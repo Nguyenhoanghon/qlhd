@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button'
 import playIcon from '../../assets/play-btn.svg'
 import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
-import { CPKContext } from '../../contexts/CPKContext'
+import { CPKContext } from '../../contexts/MiscExpenseContext'
 import { useContext } from 'react'
 
 const ActionButtons_CPK = ({ _id }) => {

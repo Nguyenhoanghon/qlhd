@@ -7,7 +7,6 @@ import { ContractContext } from '../../contexts/ContractContext'
 const AddContractModal = () => {
 	// Contexts
 	const {
-		ContractState,
 		showAddContractModal,
 		setShowAddContractModal,
 		addContract,
@@ -59,7 +58,7 @@ const AddContractModal = () => {
 	return (
 		<Modal show={showAddContractModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Bạn muốn thêm Hợp đồng? </Modal.Title>
+				<Modal.Title>Bạn muốn thêm Hợp đồng?</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>

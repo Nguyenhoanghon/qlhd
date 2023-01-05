@@ -6,7 +6,7 @@ import setAuthToken from '../utils/setAuthToken'
 
 export const AuthContext = createContext()
 
-const AuthContextProvider = ({ children }) => {
+function AuthContextProvider({ children }) {
 	const [authState, dispatch] = useReducer(authReducer, {
 		authLoading: true,
 		isAuthenticated: false,
@@ -40,7 +40,7 @@ const AuthContextProvider = ({ children }) => {
 	useEffect(() => loadUser(), [])
 
 	// Login
-	const loginUser = async userForm => {
+	const loginUser = async (userForm) => {
 		try {
 			const response = await axios.post(`${apiUrl}/api/auth/login`, userForm)
 			if (response.data.success)
@@ -53,13 +53,15 @@ const AuthContextProvider = ({ children }) => {
 
 			return response.data
 		} catch (error) {
-			if (error.response.data) return error.response.data
-			else return { success: false, message: error.message }
+			if (error.response.data)
+				return error.response.data
+			else
+				return { success: false, message: error.message }
 		}
 	}
 
 	// Register
-	const registerUser = async userForm => {
+	const registerUser = async (userForm) => {
 		try {
 			const response = await axios.post(`${apiUrl}/api/auth/register`, userForm)
 			if (response.data.success)
@@ -72,8 +74,10 @@ const AuthContextProvider = ({ children }) => {
 
 			return response.data
 		} catch (error) {
-			if (error.response.data) return error.response.data
-			else return { success: false, message: error.message }
+			if (error.response.data)
+				return error.response.data
+			else
+				return { success: false, message: error.message }
 		}
 	}
 

@@ -1,34 +1,41 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Landing from './components/layout/Landing'
-import Auth from './views/Auth'
-import AuthContextProvider from './contexts/AuthContext'
 import ProtectedRoute from './components/routing/ProtectedRoute'
 
-import CPKContextProvider from './contexts/CPKContext'
-import UserContextProvider from './contexts/UserContext'
-import ContractContextProvider from './contexts/ContractContext'
-
-import CPTBLContextProvider from './contexts/CPTBLContext'
-import MDKSContextProvider from './contexts/MDKSContext'
-import CTHHContextProvider from './contexts/CTHHContext'
-import PhongbanContextProvider from './contexts/PhongbanContext'
-import CPVContextProvider from './contexts/CPVContext'
-
-import CPK from './views/CPK'
+//======View
+import Auth from './views/Auth'
 import User from './views/User'
-import Contract from './views/ContractView'
+import { ContractView,Inputforms} from './views/ContractView'
+import MiscExpenseCost from './views/MiscExpenseCost'
+import GuaranteeLetterCost from './views/GuaranteeLetterCostView'
+import MandayCostView from './views/MandayCostView'
+import ProductCostView from './views/ProductCostView'
+import ImplementationView from './views/ImplementationCostView'
 
-import CPTBL from './views/CPTBL'
-import MDKS from './views/MDKS'
-//import CTHH from './views/CTHH'
 //import PTHD from './views/PTHD'
 import CPV from './views/CPV'
 import CPTK from './views/CPTK'
 import Phongban from './views/Phongban'
 
+//=====context
+import AuthContextProvider from './contexts/AuthContext'
+import ContractContextProvider from './contexts/ContractContext'
+import CPKContextProvider from './contexts/MiscExpenseContext'
+import GuaranteeLetterCostContextProvider from './contexts/GuaranteeLetterCostContext'
+import MandayCostContextProvider from './contexts/MandayCostContext'
+import UserContextProvider from './contexts/UserContext'
+import CTHHContextProvider from './contexts/ProductCostContext'
+import ImplementationCostContextProvider from './contexts/ImplementationCostContext'
+
+import PhongbanContextProvider from './contexts/PhongbanContext'
+import CPVContextProvider from './contexts/CPVContext'
+
+
+
 function App() {
 	return (
+		<>
 		<AuthContextProvider>
 				<Router>
 					<Switch>
@@ -44,9 +51,15 @@ function App() {
 							render={props => <Auth {...props} authRoute='register' />}
 						/>
 						<>
-						{/* <CTHHContextProvider>
-							<ProtectedRoute exact path='/chitiethanghoa' component={CTHH} />
-						</CTHHContextProvider> */}
+						
+						<CTHHContextProvider>
+							<ProtectedRoute exact path='/product-cost' component={ProductCostView} />
+						</CTHHContextProvider>
+
+						<ImplementationCostContextProvider>
+							<ProtectedRoute exact path='/implementation-cost' component={ImplementationView} />
+						</ImplementationCostContextProvider>
+						
 
 						
 						{/* {<CTHHContextProvider>
@@ -59,9 +72,13 @@ function App() {
 						</UserContextProvider>
 						
 						<ContractContextProvider>
-							<ProtectedRoute exact path='/contract' component={Contract} />
+							<ProtectedRoute exact path='/contract' component={ContractView} />
 						</ContractContextProvider>
-						
+
+						<ContractContextProvider>
+							<ProtectedRoute exact path='/contract/forms' component={Inputforms} />
+						</ContractContextProvider>
+
 						<PhongbanContextProvider>
 							<ProtectedRoute exact path='/phongban' component={Phongban} />
 						</PhongbanContextProvider>
@@ -77,16 +94,16 @@ function App() {
 						</CTHHContextProvider>
 						
 						<CPKContextProvider>
-							<ProtectedRoute exact path='/chiphikhac' component={CPK} />
+							<ProtectedRoute exact path='/MiscExpenseCost' component={MiscExpenseCost} />
 						</CPKContextProvider>
 
-						<CPTBLContextProvider>
-							<ProtectedRoute exact path='/chiphibaolanh' component={CPTBL} />{/* new */}
-						</CPTBLContextProvider>
+						<GuaranteeLetterCostContextProvider>
+							<ProtectedRoute exact path='/guarantee-letter-cost' component={GuaranteeLetterCost} />{/* new */}
+						</GuaranteeLetterCostContextProvider>
 
-						<MDKSContextProvider>
-							<ProtectedRoute exact path='/mandaykysu' component={MDKS} />
-						</MDKSContextProvider>
+						<MandayCostContextProvider>
+							<ProtectedRoute exact path='/manday-cost' component={MandayCostView} />
+						</MandayCostContextProvider>
 
 
 						
@@ -98,6 +115,7 @@ function App() {
 					</Switch>
 				</Router>
 		</AuthContextProvider>
+		</>
 	)
 }
 export default App

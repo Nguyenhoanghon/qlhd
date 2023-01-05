@@ -32,7 +32,7 @@ const UserContextProvider = ({ children }) => {
 	// Get all Users
 	const getUsers = async () => {
 		try {
-					const response = await axios.get(`${apiUrl}/api/users/view`)//note
+					const response = await axios.get(`${apiUrl}/api/forms/users`)//note
 					if (response.data.success) {
 						dispatch({ type: LOADED_SUCCESS, payload: response.data.Users })//note
 					}

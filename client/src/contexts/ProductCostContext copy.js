@@ -1,5 +1,5 @@
 import { createContext, useReducer, useState } from 'react'
-import { CTHHReducer } from '../reducers/CTHHReducer'//Note
+import { CTHHReducer } from '../reducers/ProductCostReducer'//Note
 import {
 	apiUrl,
 	LOADED_FAIL,
@@ -32,9 +32,9 @@ const CTHHContextProvider = ({ children }) => {
 	// Get all CTHHs
 	const getCTHHs = async () => {
 		try {
-			const response = await axios.get(`${apiUrl}/chitiethanghoa`)//note
+			const response = await axios.get(`${apiUrl}/api/forms/product-Cost`)//note
 			if (response.data.success) {
-				dispatch({ type: LOADED_SUCCESS, payload: response.data.ChiTietHangHoas })//note
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.ProductCost })//note
 				
 			}
 		} catch (error) {
@@ -45,9 +45,9 @@ const CTHHContextProvider = ({ children }) => {
 	// Add CTHH
 	const addCTHH = async newCTHH => {
 		try {
-			const response = await axios.post(`${apiUrl}/chitiethanghoa/insert`, newCTHH)//note mandaykysu
+			const response = await axios.post(`${apiUrl}api/forms/product-Cost/post`, newCTHH)//note mandaykysu
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.ChiTietHangHoa }) //note MandayKysu
+				dispatch({ type: ADD, payload: response.data.ProductCost }) //note MandayKysu
 				return response.data
 			}
 		} catch (error) {
@@ -60,7 +60,7 @@ const CTHHContextProvider = ({ children }) => {
 	// Delete CTHH
 	const deleteCTHH = async CTHHId => {
 		try {
-			const response = await axios.delete(`${apiUrl}/chitiethanghoa/${CTHHId}`)//note
+			const response = await axios.delete(`${apiUrl}api/forms/product-Cost/delete/${CTHHId}`)//note
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: CTHHId })
 		} catch (error) {
@@ -78,7 +78,7 @@ const CTHHContextProvider = ({ children }) => {
 	const updateCTHH = async updatedCTHH => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/chitiethanghoa/${updatedCTHH._id}`, //note xem trong server
+				`${apiUrl}/api/forms/product-Cost/put/${updatedCTHH._id}`, //note xem trong server
 				updatedCTHH
 			)
 			if (response.data.success) {

@@ -2,64 +2,66 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState, useEffect } from 'react'
-import { CPTBLContext } from '../../contexts/CPTBLContext'
+import { GuaranteeLetterCostContext } from '../../contexts/GuaranteeLetterCostContext'
 
-const UpdateCPTBLModal = () => {
+const UpdateGuaranteeLetterCostModal = () => {
 	// Contexts
 	const {
-		CPTBLState: { CPTBL },
-		showUpdateCPTBLModal,
-		setShowUpdateCPTBLModal,
-		updateCPTBL,
+		GuaranteeLetterCostState: { GuaranteeLetterCost },
+		showUpdateGuaranteeLetterCostModal,
+		setShowUpdateGuaranteeLetterCostModal,
+		updateGuaranteeLetterCost,
 		setShowToast
-	} = useContext(CPTBLContext)
+	} = useContext(GuaranteeLetterCostContext)
 
 	// State
-	const [updatedCPTBL, setUpdatedCPTBL] = useState(CPTBL)
+	const [updatedGuaranteeLetterCost, setUpdatedGuaranteeLetterCost] = useState(GuaranteeLetterCost)
 
-	useEffect(() => setUpdatedCPTBL(CPTBL), [CPTBL])
+	useEffect(() => setUpdatedGuaranteeLetterCost(GuaranteeLetterCost), [GuaranteeLetterCost])
 
-	const { noidung, giatrithubaolanh, sothang, tilephi, thanhtien, ghichu } = updatedCPTBL
+	const { 
+		Content,
+		Cost,
+		QuantityMonths,
+		RatioCost,
+		IntoMoney,
+		Note
+	} = updatedGuaranteeLetterCost
 
-	const onChangeUpdatedCPTBLForm = event =>
-		setUpdatedCPTBL({ ...updatedCPTBL, [event.target.name]: event.target.value })
+	const onChangeUpdatedGuaranteeLetterCostForm = event =>
+		setUpdatedGuaranteeLetterCost({ ...updatedGuaranteeLetterCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		setUpdatedCPTBL(CPTBL)
-		setShowUpdateCPTBLModal(false)
+		setUpdatedGuaranteeLetterCost(GuaranteeLetterCost)
+		setShowUpdateGuaranteeLetterCostModal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateCPTBL(updatedCPTBL)
-		setShowUpdateCPTBLModal(false)
+		const { success, message } = await updateGuaranteeLetterCost(updatedGuaranteeLetterCost)
+		setShowUpdateGuaranteeLetterCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddCPTBLData = () => {
-	// 	setNewCPTBL({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddCPTBLModal(false)
-	// }
-
 	return (
-		<Modal show={showUpdateCPTBLModal} onHide={closeDialog}>
+		<Modal show={showUpdateGuaranteeLetterCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Cập nhật chi phí thư bảo lãnh?</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+				<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Nội dung chi phí
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='noidung'
+							name='Content'
 							required
 							aria-describedby='noidung-help'
-							value={noidung}
-							onChange={onChangeUpdatedCPTBLForm}
+							value={Content}
+							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -69,11 +71,11 @@ const UpdateCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='giatrithubaolanh'
+							name='Cost'
 							required
 							aria-describedby='gttbl-help'
-							value={giatrithubaolanh.toLocaleString()}
-							onChange={onChangeUpdatedCPTBLForm}
+							value={Cost}
+							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -83,11 +85,11 @@ const UpdateCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='sothang'
+							name='QuantityMonths'
 							required
 							aria-describedby='sothang-help'
-							value={sothang}
-							onChange={onChangeUpdatedCPTBLForm}
+							value={QuantityMonths}
+							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -97,11 +99,11 @@ const UpdateCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='0.02'
-							name='tilephi'
+							name='RatioCost'
 							required
 							aria-describedby='tilephi-help'
-							value={tilephi}
-							onChange={onChangeUpdatedCPTBLForm}
+							value={RatioCost}
+							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -112,11 +114,11 @@ const UpdateCPTBLModal = () => {
 							as='textarea'
 							rows={3}
 							placeholder='Ghi chú'
-							name='ghichu'
+							name='Note'
 							required
 							aria-describedby='ghichu-help'
-							value={ghichu}
-							onChange={onChangeUpdatedCPTBLForm}
+							value={Note}
+							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 				</Modal.Body>
@@ -133,4 +135,4 @@ const UpdateCPTBLModal = () => {
 	)
 }
 
-export default UpdateCPTBLModal
+export default UpdateGuaranteeLetterCostModal

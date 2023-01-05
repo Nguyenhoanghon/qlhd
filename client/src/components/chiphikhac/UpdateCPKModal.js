@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState, useEffect } from 'react'
-import { CPKContext } from '../../contexts/CPKContext'
+import { CPKContext } from '../../contexts/MiscExpenseContext'
 
 const UpdateCPKModal = () => {
 	// Contexts
@@ -19,7 +19,9 @@ const UpdateCPKModal = () => {
 
 	useEffect(() => setUpdatedCPK(CPK), [CPK])
 
-	const { noidung, sotien, ghichu } = updatedCPK
+	const { 
+		Content, Cost, Note
+	 } = updatedCPK //note
 
 	const onChangeUpdatedCPKForm = event =>
 		setUpdatedCPK({ ...updatedCPK, [event.target.name]: event.target.value })
@@ -44,10 +46,10 @@ const UpdateCPKModal = () => {
 	return (
 		<Modal show={showUpdateCPKModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Cập nhật chi phí ?</Modal.Title>
+				<Modal.Title>Cập nhật Chi phí:  {Content}</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
-				<Modal.Body>
+			<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung chi phí
@@ -55,10 +57,10 @@ const UpdateCPKModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='noidung'
+							name='Content'
 							required
 							aria-describedby='noidung-help'
-							value={noidung}
+							value={Content}
 							onChange={onChangeUpdatedCPKForm}
 						/>						
 					</Form.Group>
@@ -69,8 +71,8 @@ const UpdateCPKModal = () => {
 						<Form.Control
 							tpye='text'
 							placeholder='Nhập số'
-							name='sotien'
-							value={sotien.toLocaleString()} /* tạo ràn buộc số */
+							name='Cost'
+							value={Cost} /* tạo ràn buộc số */
 							onChange={onChangeUpdatedCPKForm}
 						/>
 					</Form.Group>
@@ -82,8 +84,8 @@ const UpdateCPKModal = () => {
 							as='textarea'
 							rows={3}
 							placeholder='Nhập chuỗi'
-							name='ghichu'
-							value={ghichu}
+							name='Note'
+							value={Note}
 							onChange={onChangeUpdatedCPKForm}
 						/>
 					</Form.Group>

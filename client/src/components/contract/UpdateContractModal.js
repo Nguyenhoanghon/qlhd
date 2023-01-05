@@ -45,17 +45,17 @@ const UpdateContractModal = () => {
 	// 	setNewContract({ title: '', description: '', url: '', status: 'TO LEARN' })
 	// 	setShowAddContractModal(false)
 	// }
-
+	const listForms = ['Chi tiết hàng hoá', 'Chi phí vồns']
 	return (
 		<Modal show={showUpdateContractModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Cập nhật Contract ?</Modal.Title>
+				<Modal.Title>Cập nhật Contract ? {Contract.ContractID}</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 			<Modal.Body>
-					<Form.Group>
+						<Form.Group>
 						<Form.Text id='Center-help' muted as="h6">
-						Center
+						 Trung tâm phụ trách hợp đồng
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -69,7 +69,7 @@ const UpdateContractModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Deparment-help' muted  as="h6">
-						Deparment
+						Phòng ban phụ trách hợp đồng 
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -81,7 +81,7 @@ const UpdateContractModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='CustomerID-help' muted  as="h6">
-						CustomerID
+						 Thông tin khách hàng
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -93,7 +93,7 @@ const UpdateContractModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='ContractID-help' muted  as="h6">
-							ContractID
+							Số hợp đồng/PO 
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -105,10 +105,10 @@ const UpdateContractModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Date-help' muted  as="h6">
-							Date
+						Ngày… Tháng… Năm…  của hợp đồng 
 						</Form.Text>
 						<Form.Control
-							type='text'
+							type='date'
 							placeholder=''
 							name='Date'
 							value={Date}

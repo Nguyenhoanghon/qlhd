@@ -1,7 +1,8 @@
-import { CTHHContext } from '../contexts/CTHHContext'//Note GET DELETE
+import { ProductCostContext } from '../contexts/ProductCostContext'//Note GET DELETE
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 /* import { useState } from 'react' */
+import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -12,14 +13,14 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' 
 import addIcon from '../assets/plus-circle-fill.svg'*/
 
-import AddCTHHModal from '../components/chitiethanghoa/AddCTHHModal'//Note
-import UpdateCTHHModal from '../components/chitiethanghoa/UpdateCTHHModal'//Note
-import ActionButtons_CTHH from '../components/chitiethanghoa/ActionButtons_CTHH'
+import AddProductCostModal from '../components/ProductCost/AddProductModal'//Note
+import UpdateProductCostModal from '../components/ProductCost/UpdateProductModal'//Note
+import ActionButtons_ProductCost from '../components/ProductCost/ActionButtons_ProductCost'
 
 
 import Table from 'react-bootstrap/Table'
 
-const CTHH = () => {
+const ProductCost = () => {
 	// Contexts
 	const {
 		authState: {
@@ -28,12 +29,12 @@ const CTHH = () => {
 	} = useContext(AuthContext)
 
 	const {
-		CTHHState: { CTHH, CTHHs, CTHHsLoading },
-		getCTHHs,
-		setShowAddCTHHModal,
+		ProductCostState: { ProductCost, ProductCosts, ProductCostsLoading },
+		getProductCosts,
+		setShowAddProductCostModal,
 		showToast: { show, message, type },
 		setShowToast
-	} = useContext(CTHHContext)
+	} = useContext(ProductCostContext)
 
 	// hàm tính tổng thành tiền
 	function sumArray(mang){
@@ -44,20 +45,20 @@ const CTHH = () => {
     return sum;
 	}
 
-	// Start: Get all CTHHs
-	useEffect(() => getCTHHs(), [])
+	// Start: Get all ProductCosts
+	useEffect(() => getProductCosts(), [])
 
 	let body = null
 	let stt = 1
-	const tongthanhtiengiakho =  sumArray(CTHHs.map((CTHH) => CTHH.thanhtiengiakho))//note
-	const tongthanhtiengiaban =  sumArray(CTHHs.map((CTHH) => CTHH.thanhtiengiaban))//note
-	if (CTHHsLoading) {
+	//const tongthanhtiengiakho =  sumArray(ProductCosts.map((ProductCost) => ProductCost.thanhtiengiakho))//note
+	//const tongthanhtiengiaban =  sumArray(ProductCosts.map((ProductCost) => ProductCost.thanhtiengiaban))//note
+	if (ProductCostsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (CTHHs.length === 0) {
+	} else if (ProductCosts.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
@@ -66,7 +67,7 @@ const CTHH = () => {
 						<Card.Title>Chưa có dữ liệu</Card.Title>
 						<Button
 							variant='primary'
-							onClick={setShowAddCTHHModal.bind(this, true)}
+							onClick={setShowAddProductCostModal.bind(this, true)}
 						>
 							Thêm!
 						</Button>
@@ -89,7 +90,10 @@ const CTHH = () => {
 									<th rowspan="2" width="5%">Số lượng </th>
 									<th colspan="3">Giá vốn hàng bán Giá kho</th>
 									<th colspan="2 ">Doanh số Giá bán</th>
-									<th rowspan="2 " width="15%">Ghi chú </th>
+									<th rowspan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
+									<th rowspan="2">Incentive</th>
+									<th rowspan="2">Tỷ giá USD</th>
+									<th rowspan="2">Ghi chú</th>
 									<th rowspan="2">Thao tác</th>
                    				 </tr>
 								<tr>
@@ -102,19 +106,29 @@ const CTHH = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{CTHHs.map(CTHH => ( 
-								<tr key={CTHH._id} >
+								{ProductCosts.map(ProductCost => ( 
+								<tr key={ProductCost._id} >
 									<td>{stt++}  </td>
-									<td>{CTHH.tenhang}</td>
-									<td>{CTHH.soluong.toLocaleString()}</td>
-									<td>{CTHH.dongiaFOB.toLocaleString()}</td>
-									<td>{CTHH.dongiakho.toLocaleString()}</td>
-									<td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-									<td>{CTHH.dongiaban.toLocaleString()}</td>
-									<td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-									<td>{CTHH.ghichu}  </td>
+									<td>{ProductCost.ProductName}</td>
+									<td>{ProductCost.Quantity.toLocaleString()}</td>
+									<td>{ProductCost.FOBCost.toLocaleString()}</td>
+									<td>{ProductCost.InputPrice.toLocaleString()}</td>
+									<td>{ProductCost.InputIntoMoney.toLocaleString()}</td>
+									<td>{ProductCost.OutputPrice.toLocaleString()}</td>
+									<td>{ProductCost.OutputIntoMoney.toLocaleString()}</td>
+									<td><Form.Check 
+											type={'checkbox'}
+											id={0}
+											value={ProductCost.Insurance.toLocaleString()}
+										/>
+										
+										</td>
+									<td>{ProductCost.Incentive.toLocaleString()} </td>
+									<td>{ProductCost.RatioUSD.toLocaleString()}</td>
+									<td>{ProductCost.Note}  </td>
+									
 									<td>
-									<ActionButtons_CTHH _id={CTHH._id} />
+									<ActionButtons_ProductCost _id={ProductCost._id} />
 									</td>
 								
 								</tr>
@@ -123,9 +137,12 @@ const CTHH = () => {
 								}
 								<tr>
 									<td colSpan={5} >Tổng</td>
-									<td>{tongthanhtiengiakho.toLocaleString()}</td>
 									<td></td>
-									<td>{tongthanhtiengiaban.toLocaleString()}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -133,7 +150,7 @@ const CTHH = () => {
     					</Table>
 						<Button
 							variant='primary'
-							onClick={setShowAddCTHHModal.bind(this, true)}
+							onClick={setShowAddProductCostModal.bind(this, true)}
 						>
 							Thêm mới
 						</Button>
@@ -146,9 +163,9 @@ const CTHH = () => {
 	return (
 		<>
 			{body}
-			<AddCTHHModal />
-			{CTHH !== null && <UpdateCTHHModal />}
-			{/* After CTHH is added, show toast */}
+			<AddProductCostModal />
+			{ProductCost !== null && <UpdateProductCostModal />}
+			{/* After ProductCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
@@ -169,4 +186,4 @@ const CTHH = () => {
 	)
 }
 
-export default CTHH
+export default ProductCost

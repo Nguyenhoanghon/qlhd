@@ -2,55 +2,67 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
-import { CPTBLContext } from '../../contexts/CPTBLContext'
+import { GuaranteeLetterCostContext } from '../../contexts/GuaranteeLetterCostContext'
 
-const AddCPTBLModal = () => {
+const AddGuaranteeLetterCostModal = () => {
 	// Contexts
 	const {
-		showAddCPTBLModal,
-		setShowAddCPTBLModal,
-		addCPTBL,
+		showAddGuaranteeLetterCostModal,
+		setShowAddGuaranteeLetterCostModal,
+		addGuaranteeLetterCost,
 		setShowToast
-	} = useContext(CPTBLContext)
+	} = useContext(GuaranteeLetterCostContext)
 
 	// State
-	const [newCPTBL, setNewCPTBL] = useState({
-		noidung: '',
-		giatrithubaolanh:'',
-		sothang: '',
-		tilephi:'',
-		thanhtien:'',
-		ghichu: ''
+	const [newGuaranteeLetterCost, setNewGuaranteeLetterCost] = useState({
+		Content: '',
+		Cost:'',
+		QuantityMonths: '',
+		RatioCost:'',
+		IntoMoney:'',
+		Note: '',
+		Contract: ''
 	})
 
-	const { noidung, giatrithubaolanh, sothang, tilephi, thanhtien, ghichu } = newCPTBL
+	const { 
+		Content,
+		Cost,
+		QuantityMonths,
+		RatioCost,
+		IntoMoney,
+		Note,
+		ContractID
+	} = newGuaranteeLetterCost
 
-	const onChangeNewCPTBLForm = event =>
-		setNewCPTBL({ ...newCPTBL, [event.target.name]: event.target.value })
+	const onChangeNewGuaranteeLetterCostForm = event =>
+		setNewGuaranteeLetterCost({ ...newGuaranteeLetterCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		resetAddCPTBLData()
+		resetAddGuaranteeLetterCostData()
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCPTBL(newCPTBL)
-		resetAddCPTBLData()
+		const { success, message } = await addGuaranteeLetterCost(newGuaranteeLetterCost)
+		resetAddGuaranteeLetterCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	const resetAddCPTBLData = () => {
-		setNewCPTBL({ noidung: '',
-		giatrithubaolanh:'',
-		sothang: '',
-		tilephi:'',
-		thanhtien:'',
-		ghichu: ' ' })
-		setShowAddCPTBLModal(false)
+	const resetAddGuaranteeLetterCostData = () => {
+		setNewGuaranteeLetterCost({
+			Content: '',
+			Cost:'',
+			QuantityMonths: '',
+			RatioCost:'',
+			IntoMoney:'',
+			Note: '',
+			ContractID: ''
+		 })
+		setShowAddGuaranteeLetterCostModal(false)
 	}
 
 	return (
-		<Modal show={showAddCPTBLModal} onHide={closeDialog}>
+		<Modal show={showAddGuaranteeLetterCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title as='h5'>Bạn muốn thêm chi phí thư bảo lãnh?</Modal.Title>
 			</Modal.Header>
@@ -58,16 +70,30 @@ const AddCPTBLModal = () => {
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
+							Chọn số Hợp đồng.
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Nhập chuỗi'
+							name='ContractID'
+							required
+							aria-describedby='noidung-help'
+							value={ContractID}
+							onChange={onChangeNewGuaranteeLetterCostForm}
+						/>						
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='title-help' muted as='h6'>
 							Nội dung chi phí
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='noidung'
+							name='Content'
 							required
 							aria-describedby='noidung-help'
-							value={noidung}
-							onChange={onChangeNewCPTBLForm}
+							value={Content}
+							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -77,11 +103,11 @@ const AddCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='giatrithubaolanh'
+							name='Cost'
 							required
 							aria-describedby='gttbl-help'
-							value={giatrithubaolanh}
-							onChange={onChangeNewCPTBLForm}
+							value={Cost}
+							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -91,11 +117,11 @@ const AddCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='sothang'
+							name='QuantityMonths'
 							required
 							aria-describedby='sothang-help'
-							value={sothang}
-							onChange={onChangeNewCPTBLForm}
+							value={QuantityMonths}
+							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -105,11 +131,11 @@ const AddCPTBLModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='0.02'
-							name='tilephi'
+							name='RatioCost'
 							required
 							aria-describedby='tilephi-help'
-							value={tilephi}
-							onChange={onChangeNewCPTBLForm}
+							value={RatioCost}
+							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -120,11 +146,11 @@ const AddCPTBLModal = () => {
 							as='textarea'
 							rows={3}
 							placeholder='Ghi chú'
-							name='ghichu'
+							name='Note'
 							required
 							aria-describedby='ghichu-help'
-							value={ghichu}
-							onChange={onChangeNewCPTBLForm}
+							value={Note}
+							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>						
 					</Form.Group>
 				</Modal.Body>
@@ -141,4 +167,4 @@ const AddCPTBLModal = () => {
 	)
 }
 
-export default AddCPTBLModal
+export default AddGuaranteeLetterCostModal

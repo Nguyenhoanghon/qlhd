@@ -1,4 +1,17 @@
-ProductCost
+<ActionButtons_ImplementationCost _id={ImplementationCost._id} />
+
+
+1. Chi phí chi tiết hàng hoá - ProductCost
+2. Chi phí triển khai - ImplementationCost
+3. Chi phí vốn - CapitalExpenditure
+4. Manday kỹ sư - MandayCost
+5. Chi phí làm thư bảo lãnh - GuaranteeLetterCost
+6.  Chi phí phòng ban - DepartmentCost
+7. Chi phí vật tư phụ - AuxiliaryCost
+8. Chi phí khác - MiscExpense
+9. Form tổng thể - Summary
+
+1. ProductCost
 ProductName: String,
     Quantity: Number,
     EX_W: Boolean, // nhap tu nuoc ngoai = true
@@ -12,63 +25,36 @@ ProductName: String,
     Incentive: Number,
     Note: String,
     ContractID
+2. ImplementationCost
+    ImplementationCost
+        GeneralCost: [ContentCost],
+        StagesImplementation: [ContentCost],
+        hopdong: {
+            type: Schema.Types.ObjectId,
+            ref: "hopdong",
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "users",
+        }
 
-1. Chi phí chi tiết hàng hoá - ProductCost
-2. Chi phí triển khai - ImplementationCost
-3. Chi phí vốn - CapitalExpenditure
-4. Manday kỹ sư - MandayCost
-5. Chi phí làm thư bảo lãnh - GuaranteeLetterCost
-6.  Chi phí phòng ban - DepartmentCost
-7. Chi phí vật tư phụ - AuxiliaryCost
-8. Chi phí khác - MiscExpense
-9. Form tổng thể - Summary
+    ContentCost
+        Content: String,
+        Costs: [CostDetails] //các chi phí
 
-//test
-// Create Contract
-// @access Public
-exports.postContract = async (req, res) => {
-    //console.log("Test route ===> addContract is called !");
-    const { 
-        Center,
-        Deparment,
-        CustomerID,
-        ContractID,
-        Date,
-        user
-    } = req.body
+AuxiliaryCost
+    CapitalCost: Number, // Load từ form 1
+    Plan: [Number] , // Lua chon gia tri, M 
+    Content: String, 
+    Cost: Number, // = if(Cost<1; Cost*CapitalCost ; Cost)
+    CPXL: Number,
+    CPgross: Number,
+    Note: String,
+    contract: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Contract"
+      }
+    ]
 
-    const newContract = new Contract({
-        Center,
-        Deparment,
-        CustomerID,
-        ContractID,
-        Date
-    })
-    console.log("test data ====>>>",newContract)
-    try {
-        Users.find({username: req.body.user},(err,user)=>{
-         if(user.length!=0){
-            newContract.save((err, Contract) => {
-                 if (err) {
-                     res.status(500).send({ message: err });
-                     return;
-                 }
-                 newContract.user = Users.map(user => user._id);
-                 newContract.save(err => {
-                             if (err) {
-                                 res.status(500).send({ message: err });
-                                 return;
-                             }
-                             res.json({ success: true,message: "Contract was registered successfully!", MiscExpense: newMiscExpense }) 
-                         });
-             });
-         }
-         else 
-         res.json({ success: false ,message: "Not found User "}) 
-         
-         });
-     } catch (error) {
-         console.log(error)
-         res.status(500).json({ success: false, message: 'Internal server error' })
-     }
-}
+

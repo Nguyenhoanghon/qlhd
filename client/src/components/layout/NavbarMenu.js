@@ -36,7 +36,14 @@ const NavbarMenu = () => {
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/chitiethanghoa'
+							to='/contract/forms'
+							as={Link}
+						>
+							Hợp đồng
+						</Nav.Link>
+						<Nav.Link
+							className='font-weight-bolder text-white'
+							to='/product-cost'
 							as={Link}
 						>
 							CT Hàng hóa
@@ -50,28 +57,28 @@ const NavbarMenu = () => {
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/chiphitrienkhai'
+							to='/implementation-cost'
 							as={Link}
 						>
 							CP Triển khai
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/mandaykysu'
+							to='/manday-cost'
 							as={Link}
 						>
 							Manday Kỹ sư
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/chiphibaolanh'
+							to='/guarantee-letter-cost'
 							as={Link}
 						>
 							CP Thư bảo lãnh
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/chiphikhac'
+							to='/MiscExpenseCost'
 							as={Link}
 						>
 							CP Khác
@@ -84,6 +91,9 @@ const NavbarMenu = () => {
 						<Dropdown.Menu variant="primary">
 							<Dropdown.Item to='/user'as={Link}>
 								Thông tin tài khoản
+							</Dropdown.Item>
+							<Dropdown.Item to='/contract'as={Link}>
+								Thông tin Hợp đồng
 							</Dropdown.Item>
 							<Dropdown.Item href="#/action-2">Đổi mật khẩu</Dropdown.Item>
 							<Dropdown.Divider />

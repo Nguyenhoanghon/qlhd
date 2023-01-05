@@ -13,7 +13,7 @@ import axios from 'axios'
 
 export const ContractContext = createContext()
 
-const ContractContextProvider = ({ children }) => {
+export const ContractContextProvider = ({ children }) => {
 	// State
 	const [ContractState, dispatch] = useReducer(ContractReducer, {
 		Contract: null,
@@ -32,7 +32,7 @@ const ContractContextProvider = ({ children }) => {
 	// Get all Users
 	const getContracts = async () => {
 		try {
-					const response = await axios.get(`${apiUrl}/api/contract/getAllContract`)//note
+					const response = await axios.get(`${apiUrl}/api/forms/contract`)//note
 					if (response.data.success) {
 						dispatch({ type: LOADED_SUCCESS, payload: response.data.Contracts })//note
 					}
@@ -89,11 +89,12 @@ const ContractContextProvider = ({ children }) => {
 	// insert Contract
 	const addContract = async Contract => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/Contract/insertContract`, Contract)//note Users
+			const response = await axios.post(`${apiUrl}/api/forms/contract/post`, Contract)//note Users
 			if (response.data.success) {
 				dispatch({ type: ADD, payload: response.data.Contract }) //note Users
 				return response.data
 			}
+
 		} catch (error) {
 			return error.response.data
 				? error.response.data
@@ -104,9 +105,10 @@ const ContractContextProvider = ({ children }) => {
 	// Delete Contract
 	const deleteContract = async ContractId => {
 		try {
-			const response = await axios.delete(`${apiUrl}/api/Contract/Delete/${ContractId}`)//note
+			const response = await axios.delete(`${apiUrl}/api/forms/contract/delete/${ContractId}`)//note
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: ContractId })
+				console.log(ContractId)
 		} catch (error) {
 			console.log(error)
 		}
@@ -122,11 +124,11 @@ const ContractContextProvider = ({ children }) => {
 	const updateContract = async updateContract => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/Contract/Update/${updateContract._id}`,
+				`${apiUrl}/api/forms/contract/put/${updateContract._id}`,
 				updateContract
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.Contract })
+				dispatch({ type: UPDATE, payload: response.data.updatedContract })
 				return response.data
 			}
 		} catch (error) {
@@ -160,5 +162,6 @@ const ContractContextProvider = ({ children }) => {
 		</ContractContext.Provider>
 	)
 }
+
 
 export default ContractContextProvider

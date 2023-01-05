@@ -3,58 +3,66 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 import { useContext, useState } from 'react'
-import { MDKSContext } from '../../contexts/MDKSContext'
+import { MandayCostContext } from '../../contexts/MandayCostContext'
 
-const AddMDKSModal = () => {
+const AddMandayCostModal = () => {
 	// Contexts
 	const {
-		showAddMDKSModal,
-		setShowAddMDKSModal,
-		addMDKS,
+		showAddMandayCostModal,
+		setShowAddMandayCostModal,
+		addMandayCost,
 		setShowToast
-	} = useContext(MDKSContext)
+	} = useContext(MandayCostContext)
 
 	// State
-	const [newMDKS, setNewMDKS] = useState({
-		TygiaUSD:'',
-		phongban: '',
-		mandaychuan:'',
-		songuoi: '',
-		songaythuchien:'',
-		thanhtien:'',
-		ghichu: ''
+	const [newMandayCost, setNewMandayCost] = useState({
+		RatioUSD:'',
+        Department:'',
+        Cost:'',
+        StaffNumber:'',
+        ImplementationDay:'',
+        Note:'',
+
 	}) //note là các biến trong 
 
-	const { TygiaUSD,phongban, mandaychuan, songuoi, songaythuchien, thanhtien, ghichu } = newMDKS //note
+	const { 
+		RatioUSD,
+        Department,
+        Cost,
+        StaffNumber,
+        ImplementationDay,
+        IntoMoney,
+        Note,
+		ContractID } = newMandayCost //note
 
-	const onChangeNewMDKSForm = event =>
-		setNewMDKS({ ...newMDKS, [event.target.name]: event.target.value })
+	const onChangeNewMandayCostForm = event =>
+		setNewMandayCost({ ...newMandayCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		resetAddMDKSData()
+		resetAddMandayCostData()
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addMDKS(newMDKS)
-		resetAddMDKSData()
+		const { success, message } = await addMandayCost(newMandayCost)
+		resetAddMandayCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	const resetAddMDKSData = () => {
-		setNewMDKS({ 
-		TygiaUSD:'',
-		phongban: '',
-		mandaychuan:'',
-		songuoi: '',
-		songaythuchien:'',
-		thanhtien:'',
-		ghichu: ' ' }) //note cần sửa
-		setShowAddMDKSModal(false)
+	const resetAddMandayCostData = () => {
+		setNewMandayCost({ 
+			RatioUSD:'',
+			Department:'',
+			Cost:'',
+			StaffNumber:'',
+			ImplementationDay:'',
+			IntoMoney:'',
+			Note:'' }) //note cần sửa
+		setShowAddMandayCostModal(false)
 	}
 
 	return (
-		<Modal show={showAddMDKSModal} onHide={closeDialog}>
+		<Modal show={showAddMandayCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title as='h6'>Bạn muốn thêm Mandaykysu?</Modal.Title>
 			</Modal.Header>
@@ -62,16 +70,30 @@ const AddMDKSModal = () => {
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
-							Số này dùng tính thành tiền!
+							Chọn số Hợp đồng.
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Nhập chuỗi'
+							name='ContractID'
+							required
+							aria-describedby='noidung-help'
+							value={ContractID}
+							onChange={onChangeNewMandayCostForm}
+						/>						
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='title-help' muted as='h6'>
+							Tỷ giá USD!
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='22,400'
-							name='TygiaUSD'
+							name='RatioUSD'
 							required
 							aria-describedby='title-help'
-							value={TygiaUSD}
-							onChange={onChangeNewMDKSForm}
+							value={RatioUSD}
+							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
 										
@@ -82,11 +104,11 @@ const AddMDKSModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='phongban'
+							name='Department'
 							required
 							aria-describedby='title-help'
-							value={phongban}
-							onChange={onChangeNewMDKSForm}
+							value={Department}
+							onChange={onChangeNewMandayCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -96,11 +118,11 @@ const AddMDKSModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='mandaychuan'
+							name='Cost'
 							required
-							aria-describedby='mandaychuan-help'
-							value={mandaychuan}
-							onChange={onChangeNewMDKSForm}
+							aria-describedby='Cost-help'
+							value={Cost}
+							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -110,11 +132,11 @@ const AddMDKSModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='songuoi'
+							name='StaffNumber'
 							required
 							aria-describedby='songuoi-help'
-							value={songuoi}
-							onChange={onChangeNewMDKSForm}
+							value={StaffNumber}
+							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -124,11 +146,11 @@ const AddMDKSModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập số'
-							name='songaythuchien'
+							name='ImplementationDay'
 							required
 							aria-describedby='songaythuchien-help'
-							value={songaythuchien}
-							onChange={onChangeNewMDKSForm}
+							value={ImplementationDay}
+							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -139,10 +161,10 @@ const AddMDKSModal = () => {
 							as='textarea'
 							rows={2}
 							placeholder=''
-							name='ghichu'
+							name='Note'
 							aria-describedby='ghichu-help'
-							value={ghichu}
-							onChange={onChangeNewMDKSForm}
+							value={Note}
+							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
 				</Modal.Body>
@@ -159,4 +181,4 @@ const AddMDKSModal = () => {
 	)
 }
 
-export default AddMDKSModal
+export default AddMandayCostModal

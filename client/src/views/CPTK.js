@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { CTHHContext } from "../contexts/CTHHContext"; //Có sử dụng dữ liệu CTHH
+import { ProductCostContext } from "../contexts/ProductCostContext"; //Có sử dụng dữ liệu ProductCost
 
 /* import { useState } from 'react' */
 import Button from "react-bootstrap/Button";
@@ -12,8 +12,8 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' 
 import addIcon from '../assets/plus-circle-fill.svg'*/
 
-import AddCTHHModal from "../components/chitiethanghoa/AddCTHHModal"; //Note
-import UpdateCTHHModal from "../components/chitiethanghoa/UpdateCTHHModal"; //Note
+import AddProductCostModal from "../components/ProductCost/AddProductModal"; //Note
+import UpdateProductCostModal from "../components/ProductCost/UpdateProductModal"; //Note
 
 import Table from "react-bootstrap/Table";
 
@@ -26,12 +26,12 @@ const CPTK = () => {
   } = useContext(AuthContext);
 
   const {
-    CTHHState: { CTHH, CTHHs, CTHHsLoading },
-    getCTHHs,
-    setShowAddCTHHModal,
+    ProductCostState: { ProductCost, ProductCosts, ProductCostsLoading },
+    getProductCosts,
+    setShowAddProductCostModal,
     showToast: { show, message, type },
     setShowToast,
-  } = useContext(CTHHContext);
+  } = useContext(ProductCostContext);
 
   // hàm tính tổng thành tiền
   function sumArray(mang) {
@@ -42,24 +42,24 @@ const CPTK = () => {
     return sum;
   }
 
-  // Start: Get all CTHHs
-  useEffect(() => getCTHHs(), []);
+  // Start: Get all ProductCosts
+  useEffect(() => getProductCosts(), []);
 
   let body = null;
   let stt = 1;
   const tongthanhtiengiakho = sumArray(
-    CTHHs.map((CTHH) => CTHH.thanhtiengiakho)
+    ProductCosts.map((ProductCost) => ProductCost.thanhtiengiakho)
   ); //note
   const tongthanhtiengiaban = sumArray(
-    CTHHs.map((CTHH) => CTHH.thanhtiengiaban)
+    ProductCosts.map((ProductCost) => ProductCost.thanhtiengiaban)
   ); //note
-  if (CTHHsLoading) {
+  if (ProductCostsLoading) {
     body = (
       <div className="spinner-container">
         <Spinner animation="border" variant="info" />
       </div>
     );
-  } else if (CTHHs.length === 0) {
+  } else if (ProductCosts.length === 0) {
     body = (
       <>
         <Card className="text-center mx-5 my-5">
@@ -68,7 +68,7 @@ const CPTK = () => {
             <Card.Title>Chưa có dữ liệu</Card.Title>
             <Button
               variant="primary"
-              onClick={setShowAddCTHHModal.bind(this, true)}
+              onClick={setShowAddProductCostModal.bind(this, true)}
             >
               Thêm!
             </Button>
@@ -127,17 +127,17 @@ const CPTK = () => {
                   Chi phí tiếp khách
                 </th>
               </tr>
-              {/* {CTHHs.map((CTHH) => (
-                <tr key={CTHH._id}>
+              {/* {ProductCosts.map((ProductCost) => (
+                <tr key={ProductCost._id}>
                   <td>{stt++} </td>
-                  <td>{CTHH.tenhang}</td>
-                  <td>{CTHH.soluong.toLocaleString()}</td>
-                  <td>{CTHH.dongiaFOB.toLocaleString()}</td>
-                  <td>{CTHH.dongiakho.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-                  <td>{CTHH.dongiaban.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-                  <td>{CTHH.ghichu} </td>
+                  <td>{ProductCost.tenhang}</td>
+                  <td>{ProductCost.soluong.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaFOB.toLocaleString()}</td>
+                  <td>{ProductCost.dongiakho.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiakho.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaban.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiaban.toLocaleString()}</td>
+                  <td>{ProductCost.ghichu} </td>
                 </tr>
               ))}
               <tr>
@@ -161,17 +161,17 @@ const CPTK = () => {
                   Chi phí hỗ trợ toàn dự án
                 </th>
               </tr>
-              {CTHHs.map((CTHH) => (
-                <tr key={CTHH._id}>
+              {ProductCosts.map((ProductCost) => (
+                <tr key={ProductCost._id}>
                   <td>{stt++} </td>
-                  <td>{CTHH.tenhang}</td>
-                  <td>{CTHH.soluong.toLocaleString()}</td>
-                  <td>{CTHH.dongiaFOB.toLocaleString()}</td>
-                  <td>{CTHH.dongiakho.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-                  <td>{CTHH.dongiaban.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-                  <td>{CTHH.ghichu} </td>
+                  <td>{ProductCost.tenhang}</td>
+                  <td>{ProductCost.soluong.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaFOB.toLocaleString()}</td>
+                  <td>{ProductCost.dongiakho.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiakho.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaban.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiaban.toLocaleString()}</td>
+                  <td>{ProductCost.ghichu} </td>
                 </tr>
               ))}
               <tr>
@@ -206,17 +206,17 @@ const CPTK = () => {
                   Giai đoạn I
                 </th>
               </tr>
-              {CTHHs.map((CTHH) => (
-                <tr key={CTHH._id}>
+              {ProductCosts.map((ProductCost) => (
+                <tr key={ProductCost._id}>
                   <td>{stt++} </td>
-                  <td>{CTHH.tenhang}</td>
-                  <td>{CTHH.soluong.toLocaleString()}</td>
-                  <td>{CTHH.dongiaFOB.toLocaleString()}</td>
-                  <td>{CTHH.dongiakho.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-                  <td>{CTHH.dongiaban.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-                  <td>{CTHH.ghichu} </td>
+                  <td>{ProductCost.tenhang}</td>
+                  <td>{ProductCost.soluong.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaFOB.toLocaleString()}</td>
+                  <td>{ProductCost.dongiakho.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiakho.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaban.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiaban.toLocaleString()}</td>
+                  <td>{ProductCost.ghichu} </td>
                 </tr>
               ))}
               <tr>
@@ -235,17 +235,17 @@ const CPTK = () => {
                   Giai đoạn
                 </th>
               </tr>
-              {CTHHs.map((CTHH) => (
-                <tr key={CTHH._id}>
+              {ProductCosts.map((ProductCost) => (
+                <tr key={ProductCost._id}>
                   <td>{stt++} </td>
-                  <td>{CTHH.tenhang}</td>
-                  <td>{CTHH.soluong.toLocaleString()}</td>
-                  <td>{CTHH.dongiaFOB.toLocaleString()}</td>
-                  <td>{CTHH.dongiakho.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-                  <td>{CTHH.dongiaban.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-                  <td>{CTHH.ghichu} </td>
+                  <td>{ProductCost.tenhang}</td>
+                  <td>{ProductCost.soluong.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaFOB.toLocaleString()}</td>
+                  <td>{ProductCost.dongiakho.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiakho.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaban.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiaban.toLocaleString()}</td>
+                  <td>{ProductCost.ghichu} </td>
                 </tr>
               ))}
               <tr>
@@ -264,17 +264,17 @@ const CPTK = () => {
                   Giai đoạn
                 </th>
               </tr>
-              {CTHHs.map((CTHH) => (
-                <tr key={CTHH._id}>
+              {ProductCosts.map((ProductCost) => (
+                <tr key={ProductCost._id}>
                   <td>{stt++} </td>
-                  <td>{CTHH.tenhang}</td>
-                  <td>{CTHH.soluong.toLocaleString()}</td>
-                  <td>{CTHH.dongiaFOB.toLocaleString()}</td>
-                  <td>{CTHH.dongiakho.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiakho.toLocaleString()}</td>
-                  <td>{CTHH.dongiaban.toLocaleString()}</td>
-                  <td>{CTHH.thanhtiengiaban.toLocaleString()}</td>
-                  <td>{CTHH.ghichu} </td>
+                  <td>{ProductCost.tenhang}</td>
+                  <td>{ProductCost.soluong.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaFOB.toLocaleString()}</td>
+                  <td>{ProductCost.dongiakho.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiakho.toLocaleString()}</td>
+                  <td>{ProductCost.dongiaban.toLocaleString()}</td>
+                  <td>{ProductCost.thanhtiengiaban.toLocaleString()}</td>
+                  <td>{ProductCost.ghichu} </td>
                 </tr>
               ))}
               <tr>
@@ -312,9 +312,9 @@ const CPTK = () => {
   return (
     <>
       {body}
-      <AddCTHHModal />
-      {CTHH !== null && <UpdateCTHHModal />}
-      {/* After CTHH is added, show toast */}
+      <AddProductCostModal />
+      {ProductCost !== null && <UpdateProductCostModal />}
+      {/* After ProductCost is added, show toast */}
       <Toast
         show={show}
         style={{ position: "fixed", top: "20%", right: "10px" }}

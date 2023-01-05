@@ -2,47 +2,47 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState, useEffect } from 'react'
-import { CTHHContext } from '../../contexts/CTHHContext'
+import { ProductCostContext } from '../../contexts/ProductCostContext'
 
-const UpdateCTHHModal = () => {
+const UpdateProductCostModal = () => {
 	// Contexts
 	const {
-		CTHHState: { CTHH },
-		showUpdateCTHHModal,
-		setShowUpdateCTHHModal,
-		updateCTHH,
+		ProductCostState: { ProductCost },
+		showUpdateProductCostModal,
+		setShowUpdateProductCostModal,
+		updateProductCost,
 		setShowToast
-	} = useContext(CTHHContext)
+	} = useContext(ProductCostContext)
 
 	// State
-	const [updatedCTHH, setUpdatedCTHH] = useState(CTHH)
+	const [updatedProductCost, setUpdatedProductCost] = useState(ProductCost)
 
-	useEffect(() => setUpdatedCTHH(CTHH), [CTHH])
+	useEffect(() => setUpdatedProductCost(ProductCost), [ProductCost])
 
-	const {  tenhang, soluong, dongiaFOB, dongiakho, thanhtiengiakho, dongiaban, thanhtiengiaban,  ghichu } = updatedCTHH //note
+	const {  tenhang, soluong, dongiaFOB, dongiakho, thanhtiengiakho, dongiaban, thanhtiengiaban,  ghichu } = updatedProductCost //note
 
-	const onChangeUpdatedCTHHForm = event =>
-		setUpdatedCTHH({ ...updatedCTHH, [event.target.name]: event.target.value })
+	const onChangeUpdatedProductCostForm = event =>
+		setUpdatedProductCost({ ...updatedProductCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		setUpdatedCTHH(CTHH)
-		setShowUpdateCTHHModal(false)
+		setUpdatedProductCost(ProductCost)
+		setShowUpdateProductCostModal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateCTHH(updatedCTHH)
-		setShowUpdateCTHHModal(false)
+		const { success, message } = await updateProductCost(updatedProductCost)
+		setShowUpdateProductCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddCTHHData = () => {
-	// 	setNewCTHH({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddCTHHModal(false)
+	// const resetAddProductCostData = () => {
+	// 	setNewProductCost({ title: '', description: '', url: '', status: 'TO LEARN' })
+	// 	setShowAddProductCostModal(false)
 	// }
 
 	return (
-		<Modal show={showUpdateCTHHModal} onHide={closeDialog}>
+		<Modal show={showUpdateProductCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Cập nhật Hàng Hóa ?</Modal.Title>
 			</Modal.Header>
@@ -59,7 +59,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='tenhang-help'
 							value={tenhang}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -73,7 +73,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='soluong-help'
 							value={soluong}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -87,7 +87,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='dongiaFOB-help'
 							value={dongiaFOB}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>
 						</Form.Group>
 					<Form.Group>
@@ -101,7 +101,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='dongiakho-help'
 							value={dongiakho}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -115,7 +115,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='dongiaban-help'
 							value={dongiaban}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -130,7 +130,7 @@ const UpdateCTHHModal = () => {
 							required
 							aria-describedby='ghichu-help'
 							value={ghichu}
-							onChange={onChangeUpdatedCTHHForm}
+							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
 				</Modal.Body>
@@ -147,4 +147,4 @@ const UpdateCTHHModal = () => {
 	)
 }
 
-export default UpdateCTHHModal
+export default UpdateProductCostModal
