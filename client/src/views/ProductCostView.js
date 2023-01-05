@@ -85,16 +85,16 @@ const ProductCost = () => {
 						<Table responsive="sm" striped bordered hover size="sm" >
 							<thead>
 								 <tr>
-									<th rowspan="2">STT</th>
-									<th rowspan="2" width="15%">Tên hàng</th>
-									<th rowspan="2" width="5%">Số lượng </th>
-									<th colspan="3">Giá vốn hàng bán Giá kho</th>
-									<th colspan="2 ">Doanh số Giá bán</th>
-									<th rowspan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
-									<th rowspan="2">Incentive</th>
-									<th rowspan="2">Tỷ giá USD</th>
-									<th rowspan="2">Ghi chú</th>
-									<th rowspan="2">Thao tác</th>
+									<th rowSpan="2">STT</th>
+									<th rowSpan="2" width="15%">Tên hàng</th>
+									<th rowSpan="2" width="5%">Số lượng </th>
+									<th colSpan="3">Giá vốn hàng bán Giá kho</th>
+									<th colSpan="2 ">Doanh số Giá bán</th>
+									<th rowSpan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
+									<th rowSpan="2">Incentive</th>
+									<th rowSpan="2">Tỷ giá USD</th>
+									<th rowSpan="2">Ghi chú</th>
+									<th rowSpan="2">Thao tác</th>
                    				 </tr>
 								<tr>
 									<th width='8%' as='pre'>Đơn giá FOB <br/>

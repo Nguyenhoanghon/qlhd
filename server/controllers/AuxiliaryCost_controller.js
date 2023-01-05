@@ -13,9 +13,29 @@ const ProductCost = db.ProductCost;
 exports.getAllAuxiliaryCost = async (req,res) => {
     console.log("getAllAuxiliaryCost is called")
     try {
+      let TotalCPXL_Plan1 = 0;
+      let TotalCPgross_Plan1 = 0;
+      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: 1})//.populate("contract", "-__v")
+      for (let i = 0; i < AuxiliaryCost_data1.length; i++){
+        TotalCPXL_Plan1 += AuxiliaryCost_data1[i].CPXL;
+        TotalCPgross_Plan1 += AuxiliaryCost_data1[i].CPgross;
+      }
+
+      let TotalCPXL_Plan2 = 0;
+      let TotalCPgross_Plan2 = 0;
+      const AuxiliaryCost_data2 = await AuxiliaryCost.find({Plan: 2})//.populate("contract", "-__v")
+      for (let i = 0; i < AuxiliaryCost_data2.length; i++){
+        TotalCPXL_Plan2 += AuxiliaryCost_data2[i].CPXL;
+        TotalCPgross_Plan2 += AuxiliaryCost_data2[i].CPgross;
+      }
+      let ListTotal = [];
+      ListTotal.push(TotalCPXL_Plan1, TotalCPgross_Plan1, TotalCPXL_Plan2, TotalCPgross_Plan2)
       const AuxiliaryCost_data = await AuxiliaryCost.find()//.populate("contract", "-__v")
-      res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data }) 
-      console.log(AuxiliaryCost_data)
+     
+      console.log("Test ====> chi tiet CP vat tu phu",AuxiliaryCost_data, "List tong: ", ListTotal)
+
+      res.json({ success: true, AuxiliaryCost: {AuxiliaryCost_data, ListTotal } }) 
+      
   
     } catch (error) {
         console.log(error)
@@ -55,6 +75,8 @@ exports.insertAuxiliaryCost = async (req, res) => {
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        CPXL,
+        CPgross,
         Note,
         contract
     } = req.body
@@ -64,6 +86,8 @@ exports.insertAuxiliaryCost = async (req, res) => {
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        CPXL,
+        CPgross,
         Note
     })
     console.log("Test data recieved ====>>>",newAuxiliaryCost)
@@ -84,6 +108,16 @@ exports.insertAuxiliaryCost = async (req, res) => {
         else
             newAuxiliaryCost.Cost = req.body.Cost;
         
+        if(req.body.Plan == 1){
+            newAuxiliaryCost.CPXL = newAuxiliaryCost.Cost/0.8*0.2;
+            newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
+        }
+        else{
+            newAuxiliaryCost.CPXL = newAuxiliaryCost.Cost/0.75*0.25;
+            newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
+        }
+
+        
         console.log("Data newAuxiliaryCost them >>>>>",newAuxiliaryCost)
         //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
         Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
@@ -99,7 +133,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message:  'AuxiliaryCost was registered successfully!', AuxiliaryCost: newAuxiliaryCost }) 
+                            res.json({ success: true,message:  'AuxiliaryCost đã được thêm thành công!!!', AuxiliaryCost: newAuxiliaryCost }) 
                         });
                 console.log("Sau khi them >>>>>", newAuxiliaryCost)
             });
@@ -128,6 +162,8 @@ exports.updateAuxiliaryCost = async (req, res) => {
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        CPXL,
+        CPgross,
         Note,
         contract
     } = req.body
@@ -137,6 +173,8 @@ exports.updateAuxiliaryCost = async (req, res) => {
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        CPXL,
+        CPgross,
         Note
     }
     console.log("Test data recieved ====>>>",updatedAuxiliaryCost)
@@ -155,9 +193,19 @@ exports.updateAuxiliaryCost = async (req, res) => {
         updatedAuxiliaryCost.Cost = req.body.Cost * updatedAuxiliaryCost.Revenue;
         else
         updatedAuxiliaryCost.Cost = req.body.Cost;
+        // CPXL CPGross
+        if(req.body.Plan == 1){
+            updatedAuxiliaryCost.CPXL = updatedAuxiliaryCost.Cost/0.8*0.2;
+            updatedAuxiliaryCost.CPgross = updatedAuxiliaryCost.Cost + updatedAuxiliaryCost.CPXL;
+        }
+        else{
+            updatedAuxiliaryCost.CPXL = updatedAuxiliaryCost.Cost/0.75*0.25;
+            updatedAuxiliaryCost.CPgross = updatedAuxiliaryCost.Cost + updatedAuxiliaryCost.CPXL;
+        }
 
        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
        const UpdateCondition = { _id: req.params.id}
+
        updatedAuxiliaryCost = await AuxiliaryCost.findOneAndUpdate(
        UpdateCondition,
        updatedAuxiliaryCost, { new: true }

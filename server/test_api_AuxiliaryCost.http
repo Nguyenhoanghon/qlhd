@@ -8,9 +8,9 @@ Content-Type: application/json
   "password": "123"
 }
 
-### Create MandayCost
+### Create auxiliary-cost
 ### access Public
-### Not 
+### Not ok
 POST http://localhost:5000/api/forms/auxiliary-cost/post
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
@@ -19,11 +19,9 @@ Content-Type: application/json
   "CapitalCost": 100, // Load từ form 1
   "Plan": 1, // Lua chon gia tri, M 
   "Content": "Chi phí A",
-  "Cost": 20, // = if(Cost<1; Cost*CapitalCost ; Cost)
-  "CPXL": 30,
-  "CPgross": 40,
+  "Cost": 0.1, // = if(Cost<1; Cost*CapitalCost ; Cost)
   "Note": "A",
-  "ContractID":"HD01"
+  "ContractID": "HD01"
 }
 
 

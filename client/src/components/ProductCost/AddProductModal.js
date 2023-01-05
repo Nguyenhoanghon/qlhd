@@ -211,6 +211,7 @@ const AddProductCostModal = () => {
 							type={'checkbox'}
 							id={0}
 							value={Insurance}
+							checked
 							label = "Có tính chi phí bảo hiểm"
 							name = 'Insurance'
 							inline
