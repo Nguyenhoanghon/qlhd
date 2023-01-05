@@ -15,29 +15,29 @@ module.exports = function(app) {
 // Create GuaranteeLetterCost 
 //URL access: 
 // access public
-app.post("/api/forms/Guarantee-letter-cost/post",
+app.post("/api/forms/Guarantee-letter-cost/post",authJwt.verifyToken,
 GuaranteeLetterCostController.insertGuaranteeLetterCost);
 
 
 // Get all GuaranteeLetterCost 
 // access public
-app.get("/api/forms/Guarantee-letter-cost",
+app.get("/api/forms/Guarantee-letter-cost",authJwt.verifyToken,
 GuaranteeLetterCostController.getAllGuaranteeLetterCost);
 
 // Get GuaranteeLetterCost by id
 // access public
-app.get("/api/forms/Guarantee-letter-cost/:id",
+app.get("/api/forms/Guarantee-letter-cost/:id",authJwt.verifyToken,
 GuaranteeLetterCostController.getGuaranteeLetterCost);
 
 
 // Update GuaranteeLetterCost 
 // access public
-app.put("/api/forms/Guarantee-letter-cost/put/:id",
+app.put("/api/forms/Guarantee-letter-cost/put/:id",authJwt.verifyToken,
 GuaranteeLetterCostController.updateGuaranteeLetterCost);
 
 // Delete GuaranteeLetterCost 
 // access public
-app.delete("/api/forms/Guarantee-letter-cost/delete/:id",
+app.delete("/api/forms/Guarantee-letter-cost/delete/:id",authJwt.verifyToken,
 GuaranteeLetterCostController.deleteGuaranteeLetterCost);
 
 

@@ -12,7 +12,9 @@ db.MiscExpense = require("./MiscExpense_Model");
 db.GuaranteeLetterCost = require("./GuaranteeLetterCost_Model");
 db.MandayCost = require ("./MandayCost_Model");
 db.ProductCost = require("./ProductCost_Model");
-db.CapitalExpenditureCost = require("./CapitalExpenditureCost_Model")
+db.CapitalExpenditureCost = require("./CapitalExpenditureCost_Model");
+db.AuxiliaryCost = require("./AuxiliaryCost_Model");
+db.ImplementationCost = require("./ImplementationCost_Model")
 
 db.ROLES = ["User", "AM", "Manager", "Director", "Admin"];
 

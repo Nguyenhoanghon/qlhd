@@ -11,54 +11,54 @@ Content-Type: application/json
 ### Create MandayCost
 ### access Public
 ### Not 
-POST http://localhost:5000/api/forms/manday-cost/post
+POST http://localhost:5000/api/forms/auxiliary-cost/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjcwMDEyNywiZXhwIjoxNjcyNzA2NTI3fQ.0XLpjB0WhYn_D8qU12tZy3DsUKweDLxd2GYJveCCFJk
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-"RatioUSD": 24000,
-"Department": "Phòng GP An Toàn TT",
-"Cost": 60,
-"StaffNumber": 1,
-"ImplementationDay": 15,
-"Note": "A",
-"ContractID":"HD02"
+  "CapitalCost": 100, // Load từ form 1
+  "Plan": 1, // Lua chon gia tri, M 
+  "Content": "Chi phí A",
+  "Cost": 20, // = if(Cost<1; Cost*CapitalCost ; Cost)
+  "CPXL": 30,
+  "CPgross": 40,
+  "Note": "A",
+  "ContractID":"HD01"
 }
 
 
 ### Get all MandayCost
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/manday-cost
+GET http://localhost:5000/api/forms/auxiliary-cost
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Get MandayCost by id
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/manday-cost/63a54823564e1d18b4bc1cd5
+GET http://localhost:5000/api/forms/auxiliary-cost/63a67cbc93b9994f37bd393b
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
 ### update MandayCost
 ### access Public
 ###  
-PUT http://localhost:5000/api/forms/manday-cost/put/63a54823564e1d18b4bc1cd5
+PUT http://localhost:5000/api/forms/auxiliary-cost/put/63a67cbc93b9994f37bd393b
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-"RatioUSD": 24000,
-"Department": "Phòng GP An Toàn TT Update",
-"Cost": 60,
-"StaffNumber": 1,
-"ImplementationDay": 15,
-"Note": "A",
-"ContractID":"HD01"
+  "InventoryDays": 60,
+  "ImplementationDays": 20,
+  "BedtDays": 20,
+  "DebtCollectionDays": 15, 
+  "Note": "A",
+  "ContractID":"HD01"
 }
 
 
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/manday-cost/delete/63a54823564e1d18b4bc1cd5
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/63a679af1250764e2d878fb1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

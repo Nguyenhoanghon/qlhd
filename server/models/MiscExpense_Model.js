@@ -6,12 +6,11 @@ const MiscExpense = mongoose.model(
     Content: String,
     Cost: Number,
     Note: String,
-    contract: [
+    contract:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Contract"
       }
-    ]
   })
 );
 

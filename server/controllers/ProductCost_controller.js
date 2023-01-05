@@ -12,7 +12,7 @@ const ProductCost = db.ProductCost;
 exports.getAllProductCost = async (req,res) => {
     console.log("getAllProductCost is called")
     try {
-      const ProductCost_data = await ProductCost.find().populate("contract", "-__v")
+      const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
       
       //Tinh tong ProductCost get dc
       let InputIntoMoney = 0;
@@ -50,7 +50,7 @@ exports.getAllProductCost = async (req,res) => {
 // Create ProductCost
 // @access Public
 
-exports.createProductCost = async (req, res) => {
+exports.addProductCost = async (req, res) => {
     //console.log("Test route ===> addProductCost is called !");
     const { 
         ProductName,
@@ -65,7 +65,7 @@ exports.createProductCost = async (req, res) => {
         Insurance,
         Incentive,
         Note,
-        contract
+        ContractID
     } = req.body
 
     const newProductCost = new ProductCost({
@@ -80,13 +80,14 @@ exports.createProductCost = async (req, res) => {
         OutputIntoMoney, //Can tinh =  Quantity * OutputPrice
         Insurance,
         Incentive,
-        Note
+        Note,
+        ContractID
     })
     console.log("Test data recieved ====>>>",newProductCost)
     
     try {
         //Kiem tra hop dong co ton tai?
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{ //sửa lại idcontract
         if(Contract.length!=0){                
             //xu ly logic
             if(req.body.EX_W == 1){ 

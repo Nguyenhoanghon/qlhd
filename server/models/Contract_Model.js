@@ -8,12 +8,11 @@ const Contract = mongoose.model(
     CustomerID: String,
     ContractID: String,
     Date: Date,
-    user: [
+    user:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
       }
-    ]
   })
 );
 

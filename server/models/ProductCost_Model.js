@@ -15,12 +15,11 @@ const ProductCost = mongoose.model(
     Insurance: Boolean,
     Incentive: Number,
     Note: String,
-    contract: [
+    contract:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Contract"
       }
-    ]
   })
 );
 

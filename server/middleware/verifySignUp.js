@@ -66,7 +66,7 @@ checkDuplicateContract = (req, res, next) => {
     }
 
     if (contract) {
-      res.status(400).send({ message: "Failed! Contract is already Exited!" });
+      res.status(400).send({ message: `Lỗi! Hợp đồng ${req.body.ContractID} đã tồn tại!` });
       return;
     }
     else

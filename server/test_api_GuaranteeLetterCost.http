@@ -29,8 +29,7 @@ Content-Type: application/json
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/Guarantee-letter-cost
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjA5NjQ2OSwiZXhwIjoxNjcyMTgyODY5fQ.GevAk4e-IENktSuRMHXDtZa4tfe4WlYvYt2mF48RJZU
 ### Get GuaranteeLetterCost by id
 ### access public
 ###ok

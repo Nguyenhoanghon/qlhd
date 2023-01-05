@@ -9,12 +9,11 @@ const GuaranteeLetterCost = mongoose.model(
     RatioCost: Number,
     IntoMoney: Number,
     Note: String,
-    contract: [
+    contract:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Contract"
       }
-    ]
   })
 );
 

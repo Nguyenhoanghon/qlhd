@@ -83,13 +83,13 @@ exports.insertMandayCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message:  'MandayCost was registered successfully!', MandayCost: newMandayCost }) 
+                            res.json({ success: true,message:  'Thêm MandayCost thành công !!', MandayCost: newMandayCost }) 
                         });
             });
         }
         else 
-        res.json({ success: false ,message: "Not found Contract "}) 
-        
+        res.json({ success: false ,message: "Hợp đồng không tồn tại !!"}) 
+         
         });
     } catch (error) {
         console.log(error)
@@ -141,7 +141,7 @@ exports.updateMandayCost = async (req, res) => {
             res.json({
                 success: true,
                 message: 'Update MaydayCost Successfull !',
-                dataUpdate: updatedMandayCost
+                updatedMandayCost: updatedMandayCost
             })
         
     } catch (error) {

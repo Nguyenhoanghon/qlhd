@@ -47,12 +47,16 @@ exports.insertGuaranteeLetterCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message: "GuaranteeLetterCost was registered successfully!", GuaranteeLetterCost: newGuaranteeLetterCost }) 
+                            console.log(newGuaranteeLetterCost);///test
+                            res.json({ success: true, message: "Thêm thành công thư bảo lãnh !! ", GuaranteeLetterCost: newGuaranteeLetterCost }) 
                         });
             });
         }
-        else 
-        res.json({ success: false ,message: "Contract not found ! "}) 
+        else {
+            console.log("Hop dong kg ton tai") ///test
+            res.json({ success: false, message: "Hợp đồng không tồn tại !!!", GuaranteeLetterCost: newGuaranteeLetterCost })
+        }
+        
         
         });
     } catch (error) {
@@ -135,8 +139,8 @@ exports.updateGuaranteeLetterCost = async (req, res) => {
         else
             res.json({
                 success: true,
-                message: 'Update GuaranteeLetterCost Successfull !',
-                dataUpdate: updatedGuaranteeLetterCost
+                message: `Cập nhật thành công!`,
+                updatedGuaranteeLetterCost: updatedGuaranteeLetterCost
             })
         
     } catch (error) {

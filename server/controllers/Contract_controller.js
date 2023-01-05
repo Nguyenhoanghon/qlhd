@@ -82,7 +82,7 @@ exports.insertContract = async (req, res) => {
         ContractID,
         Date
     })
-    console.log("test data ====>>>",req.userId)
+    console.log("test data ====>>>",req.body.User)
     try {
         newContract.save((err, newContract) => {
             if (err) {
@@ -107,14 +107,14 @@ exports.insertContract = async (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-                    res.json({success: true, message: 'Insert Contract Successfull !', Contract: newContract})
+                    res.json({success: true, message: 'Thêm Hợp đồng thành công!', Contract: newContract})
                     //res.send({ message: "Contract was registered successfully!" });
                     });
                 }
                 );
             } else {
                 try {
-                    Users.findOne({ username: req.body.User }, (err, users) => {//??? (err, users) 
+                    Users.findOne({ username: req.body.User }, (err, users) => {
                         if (err) {
                             res.status(500).send({ message: err });
                             return;
@@ -128,7 +128,8 @@ exports.insertContract = async (req, res) => {
                             return;
                             }
 
-                            res.send({ message: "Contract was registered successfully!" });
+                            //res.send({ message: "Contract was registered successfully!" });
+                            res.json({success: true, message: 'Thêm Hợp đồng thành công!', Contract: newContract})
                         });
                         });
                     } 

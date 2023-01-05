@@ -13,19 +13,19 @@ Content-Type: application/json
 ### Not ok
 POST http://localhost:5000/api/forms/product-cost/post
 Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3Mjc3NDQ5NiwiZXhwIjoxNjcyNzgwODk2fQ.XhJMQp8a348jHV4DmlOVK_5JRXuqkbhc7RR34xP10Uc
 
 {
   "ProductName": "Server X60 IBM",
   "Quantity": 10,
-  "EX_W": true, // nhap tu nuoc ngoai = true
+  "EX_W": 1, // nhap tu nuoc ngoai = true
   "FOBCost": 2500, //if(EX_W = =true, req.body.FOBCost, 0)
   "RatioUSD": 24000, //if(EX_W = =true, req.body.RatioUSD, 0)
   "InputPrice": 50000, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
   "OutputPrice": 100000,
   "InputIntoMoney": 500000, // Can tinh  = Quantity * InputPrice
   "OutputIntoMoney": 700000, //Can tinh =  Quantity * OutputPrice
-  "Insurance": true,
+  "Insurance": 1,
   "Incentive": 100000,
   "Note": "A",
   "ContractID": "HD01"

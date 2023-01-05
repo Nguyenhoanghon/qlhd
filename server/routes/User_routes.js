@@ -14,12 +14,12 @@ module.exports = function(app) {
 
 //Get all users 
 //@access public
-  app.get("/api/users/getAllUsers",
+  app.get("/api/forms/users",
   userController.getAllUsers);
 
 // Insert User
 //@access Public
-  app.post("/api/users/insertUser",// [authJwt.verifyToken],
+  app.post("/api/forms/users/post",// [authJwt.verifyToken],
   [
     verifySignUp.checkDuplicateUsernameOrEmail,
     verifySignUp.checkRolesExisted

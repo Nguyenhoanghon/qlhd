@@ -13,7 +13,7 @@ Content-Type: application/json
 ### ok 
 POST http://localhost:5000/api/forms/misc-expense/post
 Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjY5OTk1MiwiZXhwIjoxNjcyNzA2MzUyfQ.WTZrRuOZcbBJ9aJW3SHP5uYetkTFPwVWvVjVlboylW0
 
 {
 "Content": "Tiếp Khách",
@@ -26,26 +26,25 @@ Content-Type: application/json
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/misc-expense
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
 
 ### Get MiscExpense by id
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/misc-expense/63a4dffe62d2de8060a07f73
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+GET http://localhost:5000/api/forms/misc-expense/63a96085d10d38ba3e243270
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
 
 
 ### Update MiscExpense by id
 ### access Public
 ### Not 
-PUT http://localhost:5000/api/forms/misc-expense/put/63a4dffe62d2de8060a07f73
+PUT http://localhost:5000/api/forms/misc-expense/put/63b23706aae5094cd7f1ee88
 Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
 
 {
-"Content": "Tiếp Khách update ",
-"Cost": "8000000",
+"Content": "Tiếp Khách update",
+"Cost": "1000000",
 "Note": "A"
 }
 
@@ -53,5 +52,5 @@ Content-Type: application/json
 ### Delete MiscExpense by id
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/misc-expense/delete/63a4dffe62d2de8060a07f73
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+DELETE  http://localhost:5000/api/forms/misc-expense/delete/63a918cc919503b1307ba875
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ

@@ -55,6 +55,9 @@ require("./routes/GuaranteeLetterCost_routes")(app);
 require("./routes/MandayCost_routes")(app);
 require("./routes/ProductCost_routes")(app);
 require("./routes/CapitalExpenditureCost_routes")(app);
+require("./routes/AuxiliaryCost_routes")(app);
+
+require("./routes/ImplementationCost_routes")(app);
 
 
 

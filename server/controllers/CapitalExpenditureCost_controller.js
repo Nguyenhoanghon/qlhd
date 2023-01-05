@@ -14,7 +14,7 @@ const ProductCost = db.ProductCost;
 exports.getAllCapitalExpenditureCost = async (req,res) => {
     console.log("getAllCapitalExpenditureCost is called")
     try {
-      const CapitalExpenditureCost_data = await CapitalExpenditureCost.find()//.populate("contract", "-__v")
+      const CapitalExpenditureCost_data = await CapitalExpenditureCost.find().populate("contract", "-__v")
       res.json({ success: true, CapitalExpenditureCost: CapitalExpenditureCost_data }) 
       console.log(CapitalExpenditureCost_data)
   
@@ -151,7 +151,7 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
         contract
     } = req.body
 
-    const updatedCapitalExpenditureCost = new CapitalExpenditureCost({
+    let updatedCapitalExpenditureCost = {
         CapitalCost, 
         Revenue,
         CapitalExpense,
@@ -162,7 +162,7 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
         Deposits,
         DepositsNTP,
         Note
-    })
+    }
     console.log("Test data recieved ====>>>",updatedCapitalExpenditureCost)
     console.log(req.body.ContractID);
 
@@ -187,34 +187,23 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
         updatedCapitalExpenditureCost.CapitalExpense = ((updatedCapitalExpenditureCost.InventoryDays + updatedCapitalExpenditureCost.ImplementationDays - updatedCapitalExpenditureCost.BedtDays) * updatedCapitalExpenditureCost.CapitalCost + updatedCapitalExpenditureCost.DebtCollectionDays * (updatedCapitalExpenditureCost.Revenue - updatedCapitalExpenditureCost.Deposits + updatedCapitalExpenditureCost.DepositsNTP))*0.1/365;
 
        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
-        const UpdateCondition = { _id: req.params.id}
-        // Xac dinh Id Contract
-        const Contract_data = await Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
-            //console.log("Get Contract: >>>>>>",Contract[0]._id);
-            updatedCapitalExpenditureCost.contract = Contract[0]._id; //Contract.map(contract => contract._id);
-        });
-        //console.log("Get Contract_data: >>>>>>",Contract_data[0]._id);
-
-
-        console.log("Tess ID UpdateCondition>>>>>>>>>> ",UpdateCondition, "Data:::",updatedCapitalExpenditureCost);
-        
-
-        updatedCapitalExpenditureCost = await CapitalExpenditureCost.findOneAndUpdate(
-            UpdateCondition,
-            updatedCapitalExpenditureCost, { new: true }
-        )
-        // User not authorised to update CapitalExpenditureCost or CapitalExpenditureCost not found
-        if (!updatedCapitalExpenditureCost)
-            return res.status(401).json({
-                success: false,
-                message: 'CapitalExpenditureCost not found or user not authorised'
-            })
-        else
-            res.json({
-                success: true,
-                message: 'Update CapitalExpenditureCost Successfull !',
-                dataUpdate: updatedCapitalExpenditureCost
-            })
+       const UpdateCondition = { _id: req.params.id}
+       updatedCapitalExpenditureCost = await CapitalExpenditureCost.findOneAndUpdate(
+       UpdateCondition,
+       updatedCapitalExpenditureCost, { new: true }
+       )
+           // User not authorised to update ProductCost or ProductCost not found
+           if (!updatedCapitalExpenditureCost)
+               return res.status(401).json({
+                   success: false,
+                   message: 'CapitalExpenditureCost not found or user not authorised'
+               })
+           else
+               res.json({
+                   success: true,
+                   message: 'updated CapitalExpenditureCost Successfull !',
+                   dataUpdate: updatedCapitalExpenditureCost
+               })
 
 
     } catch (error) {

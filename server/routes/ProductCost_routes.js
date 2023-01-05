@@ -35,7 +35,7 @@ ProductCostController.getProductCost_ContractID);
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
 app.post("/api/forms/product-cost/post",
-ProductCostController.createProductCost);
+ProductCostController.addProductCost);
 
 
 // Update ProductCost 

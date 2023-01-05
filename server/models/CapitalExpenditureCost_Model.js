@@ -13,12 +13,11 @@ const CapitalExpenditureCost = mongoose.model(
     Deposits: Number, // can tinh = Revenue * 20%
     DepositsNTP: Number, //can tinh = CapitalCost * 30%
     Note: String,
-    contract: [
+    contract:
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Contract"
       }
-    ]
   })
 );
 

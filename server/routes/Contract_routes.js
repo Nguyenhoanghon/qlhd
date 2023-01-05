@@ -16,7 +16,7 @@ module.exports = function(app) {
 
 // Create Contract 
 // access public
-app.post("/api/forms/contract/post",[verifySignUp.checkDuplicateContract],
+app.post("/api/forms/contract/post",authJwt.verifyToken,[verifySignUp.checkDuplicateContract],
 ContractController.insertContract);
 
 // Get all Contract 

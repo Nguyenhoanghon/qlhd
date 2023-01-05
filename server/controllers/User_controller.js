@@ -117,14 +117,13 @@ exports.insertUser = async (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   });
-  console.log(user)
 
-  user.save((err, userdata) => {
+  user.save((err, docs) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    //Check Exites???
+
     if (req.body.roles) {
       Role.find(
         {
@@ -136,14 +135,14 @@ exports.insertUser = async (req, res) => {
             return;
           }
 
-          user.roles = roles.map(role => userdata._id);
+          user.roles = roles.map(roles => roles._id);
           user.save(err => {
             if (err) {
               res.status(500).send({ message: err });
               return;
             }
 
-            res.send({ message: "User was registered successfully!" });
+            res.send({ message: "User was registered successfully!", datauser: user});
           });
         }
       );
@@ -160,12 +159,11 @@ exports.insertUser = async (req, res) => {
             res.status(500).send({ message: err });
             return;
           }
-          
+
           res.send({ message: "User was registered successfully!" });
         });
       });
     }
-    
   });
   
 };

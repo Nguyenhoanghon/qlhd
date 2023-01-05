@@ -15,18 +15,22 @@ exports.insertMiscExpense = async (req, res) => {
     const { 
         Content,
         Cost,
-        Note
+        Note,
+        ContractID
     } = req.body
 
     const newMiscExpense = new MiscExpense({
         Content,
         Cost,
-        Note
+        Note, 
+        ContractID
     })
     console.log("Test data recieved ====>>>",req.body.ContractID)
+    console.log("Test data recieved ====>>>",req.body.newMiscExpense)
     
     try {
        Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+        //Console.log("Test Id contract===",Contract._id)
         if(Contract.length!=0){
             newMiscExpense.save((err, MiscExpense) => {
                 if (err) {
@@ -39,12 +43,13 @@ exports.insertMiscExpense = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message: "MiscExpense was registered successfully!", MiscExpense: newMiscExpense }) 
+                            res.json({ success: true , message: "Thêm chi phí khác thành công!", MiscExpense: newMiscExpense }) 
                         });
+                        
             });
         }
         else 
-        res.json({ success: false ,message: "Not found Contract "}) 
+        res.json({ success: false ,message: "Hợp đồng không tồn tại !!!", MiscExpense: newMiscExpense}) 
         
         });
     } catch (error) {
@@ -76,6 +81,23 @@ exports.getMiscExpense = async (req,res) => {
     try {
       const MiscExpense_data = await MiscExpense.findById(req.params.id).populate("contract", "-__v")
       console.log(req.params.id);
+      res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
+      console.log(MiscExpense_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+  //Get MiscExpense by id HD
+//@Access Public
+exports.getMiscExpense_ContractID = async (req,res) => {
+    console.log("getMiscExpense is called")
+    try {
+        //ID_HD
+
+      const MiscExpense_data = await MiscExpense.find({contract: req.params.idHD}).populate("contract", "-__v")
+      console.log(req.params.idHD);
       res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
       console.log(MiscExpense_data)
   
@@ -116,8 +138,8 @@ exports.updateMiscExpense = async (req, res) => {
         else
             res.json({
                 success: true,
-                message: 'Update MiscExpense Successfull !',
-                dataUpdate: updatedMiscExpense
+                message: 'Cập nhật thành công !',
+                updatedMiscExpense: updatedMiscExpense
             })
         
     } catch (error) {
