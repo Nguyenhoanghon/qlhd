@@ -28,7 +28,7 @@ CapitalExpenditureCostController.getCapitalExpenditureCost);
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
 app.post("/api/forms/capital-expenditure-cost/post",
-CapitalExpenditureCostController.insertCapitalExpenditureCost);
+CapitalExpenditureCostController.addCapitalExpenditureCost);
 
 
 // Update CapitalExpenditureCost 

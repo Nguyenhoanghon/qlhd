@@ -14,7 +14,7 @@ import ProductCostView from './views/ProductCostView'
 import ImplementationView from './views/ImplementationCostView'
 
 //import PTHD from './views/PTHD'
-import CPV from './views/CPV'
+import CPV from './views/CapitalExpenditureCostView'
 import CPTK from './views/CPTK'
 import Phongban from './views/Phongban'
 
@@ -29,7 +29,7 @@ import CTHHContextProvider from './contexts/ProductCostContext'
 import ImplementationCostContextProvider from './contexts/ImplementationCostContext'
 
 import PhongbanContextProvider from './contexts/PhongbanContext'
-import CPVContextProvider from './contexts/CPVContext'
+import CPVContextProvider from './contexts/CapitalExpenditureCostContext'
 
 
 

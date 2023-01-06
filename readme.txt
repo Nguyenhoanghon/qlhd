@@ -57,4 +57,9 @@ AuxiliaryCost
       }
     ]
 
-
+CapitalExpenditure
+    "InventoryDays": 30,
+    "ImplementationDays": 20,
+    "BedtDays": 20,
+    "DebtCollectionDays": 15, 
+    "Note": "A",

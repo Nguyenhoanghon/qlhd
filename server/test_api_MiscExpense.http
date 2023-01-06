@@ -13,13 +13,13 @@ Content-Type: application/json
 ### ok 
 POST http://localhost:5000/api/forms/misc-expense/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjY5OTk1MiwiZXhwIjoxNjcyNzA2MzUyfQ.WTZrRuOZcbBJ9aJW3SHP5uYetkTFPwVWvVjVlboylW0
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzAxNjc1MCwiZXhwIjoxNjczMDIzMTUwfQ.SgySyly5OO-mDMoUzZgTJFxfupocADaJfGscW6n8NEI
 
 {
 "Content": "Tiếp Khách",
 "Cost": "1000000",
 "Note": "A",
-"ContractID":"HD01"
+"ContractID":"HD02"
 }
 
 ### Get all MiscExpense 

@@ -92,8 +92,8 @@ const MandayCost = () => {
 								<th  width='10%'>Số người tham gia dự án</th>
 								<th width='10%'>Số ngày thực hiện dự án</th>
 								<th>Thành tiền</th>
-								<th width='20%'>ID hợp đồng</th>
 								<th width='20%'>Ghi chú</th>
+								<th width='20%'>ID hợp đồng</th>
 								</tr>
 							</thead>
 							<tbody>

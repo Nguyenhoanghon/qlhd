@@ -48,7 +48,7 @@ exports.getCapitalExpenditureCost = async (req,res) => {
 //    - Code hien tai Lay het Du lieu Chi tiet hang hoa
 //    - De loc theo hop dong thi code them tra ve _id cua req.body.ContractID
 
-exports.insertCapitalExpenditureCost = async (req, res) => {
+exports.addCapitalExpenditureCost = async (req, res) => {
     console.log("Test route ===> addCapitalExpenditureCost is called !");
     //Load Tong gia von va tong doanh thu tu Form1
     const { 
@@ -202,7 +202,7 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
                res.json({
                    success: true,
                    message: 'updated CapitalExpenditureCost Successfull !',
-                   dataUpdate: updatedCapitalExpenditureCost
+                   updatedCapitalExpenditureCost: updatedCapitalExpenditureCost
                })
 
 
@@ -210,56 +210,6 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
-
-    /*
-    console.log("Test route updateCapitalExpenditureCost !");
-    const { 
-        RatioUSD,
-        Department,
-        Cost,
-        StaffNumber,
-        ImplementationDay,
-        IntoMoney,
-        Note,
-        contract
-    } = req.body
-
-    console.log("Test data recieved ====>>>",req.params.id)
-
-    try {
-        let updatedCapitalExpenditureCost = {
-            RatioUSD,
-            Department,
-            Cost,
-            StaffNumber,
-            ImplementationDay,
-            IntoMoney,
-            Note
-        }
-        updatedCapitalExpenditureCost.IntoMoney = req.body.Cost * req.body.RatioUSD * req.body.StaffNumber * req.body.ImplementationDay;
-        const UpdateCondition = { _id: req.params.id}
-        updatedCapitalExpenditureCost = await CapitalExpenditureCost.findOneAndUpdate(
-            UpdateCondition,
-            updatedCapitalExpenditureCost, { new: true }
-        )
-        // User not authorised to update CapitalExpenditureCost or CapitalExpenditureCost not found
-        if (!updatedCapitalExpenditureCost)
-            return res.status(401).json({
-                success: false,
-                message: 'MaydayCost not found or user not authorised'
-            })
-        else
-            res.json({
-                success: true,
-                message: 'Update MaydayCost Successfull !',
-                dataUpdate: updatedCapitalExpenditureCost
-            })
-        
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({ success: false, message: 'Internal server error' })
-    }
-*/
 }
 
 // delete CapitalExpenditureCost  By id
