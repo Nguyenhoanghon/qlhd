@@ -13,7 +13,7 @@ Content-Type: application/json
 ### Not ok
 POST http://localhost:5000/api/forms/product-cost/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3Mjc3NDQ5NiwiZXhwIjoxNjcyNzgwODk2fQ.XhJMQp8a348jHV4DmlOVK_5JRXuqkbhc7RR34xP10Uc
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
 
 {
   "ProductName": "Server X60 IBM",
@@ -70,5 +70,5 @@ Content-Type: application/json
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/manday-cost/delete/63a54823564e1d18b4bc1cd5
+DELETE  http://localhost:5000/api/forms/manday-cost/delete/63b8dbc3165f143e28359f5b
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

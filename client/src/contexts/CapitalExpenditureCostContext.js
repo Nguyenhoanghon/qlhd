@@ -56,7 +56,7 @@ const CapitalExpenditureCostContextProvider = ({ children }) => {
 			const response = await axios.post(`${apiUrl}/api/forms/capital-expenditure-cost/post`, newCapitalExpenditureCost)
 			if (response.data.success) {
 				dispatch({ type: ADD, payload: response.data.CapitalExpenditureCost })
-				return response.data
+				return response.data 
 			}
 		} catch (error) {
 			return error.response.data

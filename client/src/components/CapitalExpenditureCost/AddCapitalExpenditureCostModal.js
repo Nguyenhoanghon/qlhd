@@ -24,7 +24,8 @@ const AddCapitalExpenditureCostModal = () => {
         DebtCollectionDays: '',
         Deposits: '',
         DepositsNTP: '',
-        Note: ''
+        Note: '',
+		ContractID:''
 	})
 
 	const { 
@@ -37,7 +38,8 @@ const AddCapitalExpenditureCostModal = () => {
         DebtCollectionDays,
         Deposits,
         DepositsNTP,
-        Note
+        Note,
+		ContractID
 	} = newCapitalExpenditureCost
 
 	const onChangeNewCapitalExpenditureCostForm = event =>
@@ -78,38 +80,14 @@ const AddCapitalExpenditureCostModal = () => {
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					<Form.Group>
-						<Form.Text id='CapitalCost' muted as='h6'>
-							Giá vốn
+						<Form.Text id='ContractID' muted as='h6'>
+							Chọn hợp đồng
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='CapitalCost'
-							value={CapitalCost}
-							onChange={onChangeNewCapitalExpenditureCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='giaban' muted as='h6'>
-							Doanh thu
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='load form 1'
-							name='Revenue'
-							value={Revenue.toLocaleString()}
-							onChange={onChangeNewCapitalExpenditureCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='CapitalExpense' muted as='h6'>
-							Chi phí vốn
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='load form 1'
-							name='CapitalExpense'
-							value={CapitalExpense.toLocaleString()}
+							name='ContractID'
+							value={ContractID}
 							onChange={onChangeNewCapitalExpenditureCostForm}
 						/>						
 					</Form.Group>
@@ -158,30 +136,6 @@ const AddCapitalExpenditureCostModal = () => {
 							placeholder='DebtCollectionDays'
 							name='DebtCollectionDays'
 							value={DebtCollectionDays.toLocaleString()}
-							onChange={onChangeNewCapitalExpenditureCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='Deposits' muted as='h6'>
-							Khách hàng trả trước (đặt cọc)
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='Deposits'
-							name='Deposits'
-							value={Deposits.toLocaleString()}
-							onChange={onChangeNewCapitalExpenditureCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='DepositsNTP' muted as='h6'>
-							Đặt cọc cho NTP
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='DepositsNTP'
-							name='DepositsNTP'
-							value={DepositsNTP.toLocaleString()}
 							onChange={onChangeNewCapitalExpenditureCostForm}
 						/>						
 					</Form.Group>

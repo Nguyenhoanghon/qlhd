@@ -78,7 +78,7 @@ exports.addCapitalExpenditureCost = async (req, res) => {
         Note
     })
     console.log("Test data recieved ====>>>",newCapitalExpenditureCost)
-    console.log(req.body.ContractID);
+    console.log("ContractID ",req.body.ContractID);
 
     try {
         // Load data tu Form 1: Lay tong gia von va Doanh thu
@@ -102,6 +102,7 @@ exports.addCapitalExpenditureCost = async (req, res) => {
 
        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
         Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+
         if(Contract.length!=0){
             newCapitalExpenditureCost.save((err, CapitalExpenditureCost) => {
                 if (err) {
@@ -114,15 +115,17 @@ exports.addCapitalExpenditureCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message:  'CapitalExpenditureCost was registered successfully!', CapitalExpenditureCost: newCapitalExpenditureCost }) 
+                            res.json({ success: true, message:  'CapitalExpenditureCost was registered successfully!', CapitalExpenditureCost: newCapitalExpenditureCost }) 
                         });
                 console.log("Sau khi them >>>>>", newCapitalExpenditureCost)
             });
-
-        }
-        else 
-        res.json({ success: false ,message: "Not found Contract "}) 
-        
+            }
+            else 
+            {
+                console.log("Hop dong kg ton tai") ///test
+                res.json({ success: true, message:  'Hợp đồng không tồn tại !!!', CapitalExpenditureCost: newCapitalExpenditureCost }) 
+                //res.json({ success: false, message: "Hợp đồng không tồn tại !!!", CapitalExpenditureCost: newCapitalExpenditureCost }) 
+            }
         });
     } catch (error) {
         console.log(error)

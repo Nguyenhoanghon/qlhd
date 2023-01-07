@@ -94,6 +94,7 @@ const CapitalExpenditureCost = () => {
 								 </tr> */}
                 <tr>
                   <th>STT</th>
+                  <th> Giá vốn </th>
                   <th>Doanh thu</th>
                   <th>Chi phí vốn</th>
                   <th>Số ngày hàng tồn kho</th>
@@ -110,9 +111,9 @@ const CapitalExpenditureCost = () => {
                 {CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
                   <tr key={CapitalExpenditureCost._id}>
                     <td>{stt++} </td>
-                    <td>{CapitalExpenditureCost.Revenue}</td>
                     <td>{CapitalExpenditureCost.CapitalCost.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.CapitalExpense.toLocaleString()}</td>
+                    <td>{CapitalExpenditureCost.Revenue.toLocaleString()}</td>
+                    <td>{CapitalExpenditureCost.CapitalExpense.toLocaleString(2)}</td>
                     <td>{CapitalExpenditureCost.InventoryDays.toLocaleString()}</td>
                     <td>{CapitalExpenditureCost.ImplementationDays.toLocaleString()}</td>
                     <td>{CapitalExpenditureCost.BedtDays}</td>
