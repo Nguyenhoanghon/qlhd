@@ -49,7 +49,7 @@ exports.insertMiscExpense = async (req, res) => {
             });
         }
         else 
-        res.json({ success: false ,message: "Hợp đồng không tồn tại !!!", MiscExpense: newMiscExpense}) 
+        res.json({ success: false ,message: `Hợp đồng ${req.body.ContractID} không tồn tại !!!`, MiscExpense: newMiscExpense}) 
         
         });
     } catch (error) {

@@ -18,11 +18,17 @@ module.exports = function(app) {
 app.get("/api/forms/capital-expenditure-cost",
 CapitalExpenditureCostController.getAllCapitalExpenditureCost);
 
-// Get CapitalExpenditureCost By id
+// Get CapitalExpenditureCost By _idCapitalExpenditureCost
 // URL access: GET http://localhost:5000/api/forms/manday-cost/id
 // access public
 app.get("/api/forms/capital-expenditure-cost/:id",
-CapitalExpenditureCostController.getCapitalExpenditureCost);
+CapitalExpenditureCostController.getCapitalExpenditureCost_byid);
+
+// Get CapitalExpenditureCosts By contract
+// URL access: GET http://localhost:5000/api/forms/manday-cost/id
+// access public
+app.get("/api/forms/capital-expenditure-cost/bycontract/:idcontract",
+CapitalExpenditureCostController.getCapitalExpenditureCost_bycontract);
 
 // Create CapitalExpenditureCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post

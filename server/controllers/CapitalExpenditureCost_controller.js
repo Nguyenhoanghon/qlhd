@@ -14,24 +14,47 @@ const ProductCost = db.ProductCost;
 exports.getAllCapitalExpenditureCost = async (req,res) => {
     console.log("getAllCapitalExpenditureCost is called")
     try {
-      const CapitalExpenditureCost_data = await CapitalExpenditureCost.find().populate("contract", "-__v")
+      const CapitalExpenditureCost_data = await CapitalExpenditureCost.find()//.populate("contract", "-__v")
       res.json({ success: true, CapitalExpenditureCost: CapitalExpenditureCost_data }) 
-      console.log(CapitalExpenditureCost_data)
+      //console.log(CapitalExpenditureCost_data)
   
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
   }
-// @route GET localhost:5000/api/CapitalExpenditureCost/getAllCapitalExpenditureCost
-//Get CapitalExpenditureCost by Id
+
+//Get CapitalExpenditureCost by _id CapitalExpenditureCost
 //@Access Public
-exports.getCapitalExpenditureCost = async (req,res) => {
+// test ok
+exports.getCapitalExpenditureCost_byid = async (req,res) => {
     console.log("getAllCapitalExpenditureCost is called")
     try {
+
+
       const CapitalExpenditureCost_data = await CapitalExpenditureCost.findById({_id: req.params.id}).populate("contract", "-__v")
       if (CapitalExpenditureCost_data==null)
       res.json({ success: true, message: "CapitalExpenditureCost not found !"}) 
+      else 
+      res.json({ success: true, CapitalExpenditureCost: CapitalExpenditureCost_data }) 
+      //console.log(CapitalExpenditureCost_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+//Get CapitalExpenditureCost by contract (idcontract lien ket voi CapitalExpenditureCost)
+//@Access Public
+// test ok
+exports.getCapitalExpenditureCost_bycontract = async (req,res) => {
+    console.log("getAllCapitalExpenditureCost is called")
+    try {
+ 
+
+      const CapitalExpenditureCost_data = await CapitalExpenditureCost.find({contract: req.params.idcontract}).populate("contract", "-__v")
+      if (CapitalExpenditureCost_data==null)
+      res.json({ success: true, message: "idcontract not found !"}) 
       else 
       res.json({ success: true, CapitalExpenditureCost: CapitalExpenditureCost_data }) 
       console.log(CapitalExpenditureCost_data)
@@ -50,7 +73,9 @@ exports.getCapitalExpenditureCost = async (req,res) => {
 
 exports.addCapitalExpenditureCost = async (req, res) => {
     console.log("Test route ===> addCapitalExpenditureCost is called !");
-    //Load Tong gia von va tong doanh thu tu Form1
+
+    //Load Tong gia von va tong doanh thu tu Form1  
+
     const { 
         CapitalCost,
         Revenue,
@@ -77,13 +102,16 @@ exports.addCapitalExpenditureCost = async (req, res) => {
         DepositsNTP,
         Note
     })
-    console.log("Test data recieved ====>>>",newCapitalExpenditureCost)
-    console.log("ContractID ",req.body.ContractID);
+    //console.log("Test data recieved ====>>>",newCapitalExpenditureCost)
+    //console.log("ContractID ",req.body.ContractID);
 
     try {
-        // Load data tu Form 1: Lay tong gia von va Doanh thu
+            // TIM id contract 
+    const id_contract = await Contract.find({ContractID: req.body.ContractID})
+    console.log("Id contract===: ",id_contract.ContractID)
 
-        const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
+        // Load data tu Form 1: Lay tong gia von va Doanh thu
+        const ProductCost_data = await ProductCost.find({contract: id_contract.id})//.populate("contract", "-__v")
         newCapitalExpenditureCost.CapitalCost = 0;
         newCapitalExpenditureCost.Revenue = 0;
         for (let i = 0; i < ProductCost_data.length; i++) {
@@ -92,9 +120,9 @@ exports.addCapitalExpenditureCost = async (req, res) => {
             newCapitalExpenditureCost.Revenue += ProductCost_data[i].OutputIntoMoney;
         }
         console.log("Sau khi load tu Form 1>>>>>>>CapitalCost: ",newCapitalExpenditureCost.CapitalCost,"- Revenue: ",newCapitalExpenditureCost.Revenue);
-        //Dat coc cua khach hang
+        //Tinh Dat coc cua khach hang
         newCapitalExpenditureCost.Deposits = newCapitalExpenditureCost.Revenue * 0.2
-        //Dat coc NTP
+        //Tinh Dat coc NTP
         newCapitalExpenditureCost.DepositsNTP = newCapitalExpenditureCost.CapitalCost * 0.3
         console.log("Sau khi load tu Form 1>>>>>>>Deposits: ",newCapitalExpenditureCost.Deposits,"- DepositsNTP: ",newCapitalExpenditureCost.DepositsNTP);
         //Tinh chi phi von
@@ -102,7 +130,6 @@ exports.addCapitalExpenditureCost = async (req, res) => {
 
        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
         Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
-
         if(Contract.length!=0){
             newCapitalExpenditureCost.save((err, CapitalExpenditureCost) => {
                 if (err) {
@@ -120,12 +147,8 @@ exports.addCapitalExpenditureCost = async (req, res) => {
                 console.log("Sau khi them >>>>>", newCapitalExpenditureCost)
             });
             }
-            else 
-            {
-                console.log("Hop dong kg ton tai") ///test
-                res.json({ success: true, message:  'Hợp đồng không tồn tại !!!', CapitalExpenditureCost: newCapitalExpenditureCost }) 
-                //res.json({ success: false, message: "Hợp đồng không tồn tại !!!", CapitalExpenditureCost: newCapitalExpenditureCost }) 
-            }
+            else
+                res.json({ success: false, message:  `Hợp đồng ${req.body.ContractID} không tồn tại !!!`, CapitalExpenditureCost: newCapitalExpenditureCost })        
         });
     } catch (error) {
         console.log(error)

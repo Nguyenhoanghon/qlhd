@@ -54,7 +54,7 @@ exports.insertGuaranteeLetterCost = async (req, res) => {
         }
         else {
             console.log("Hop dong kg ton tai") ///test
-            res.json({ success: false, message: "Hợp đồng không tồn tại !!!", GuaranteeLetterCost: newGuaranteeLetterCost })
+            res.json({ success: false, message: `Hợp đồng ${req.body.ContractID} không tồn tại !!!`, GuaranteeLetterCost: newGuaranteeLetterCost })
         }
         
         

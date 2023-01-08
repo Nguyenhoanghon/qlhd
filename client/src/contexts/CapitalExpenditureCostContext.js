@@ -58,6 +58,8 @@ const CapitalExpenditureCostContextProvider = ({ children }) => {
 				dispatch({ type: ADD, payload: response.data.CapitalExpenditureCost })
 				return response.data 
 			}
+			else
+				return response.data //Message hop dong kg ton tai
 		} catch (error) {
 			return error.response.data
 				? error.response.data
