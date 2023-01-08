@@ -93,7 +93,6 @@ const GuaranteeLetterCost = () => {
 								<th>Số tháng bảo lãnh</th>
 								<th>Tỉ lệ phí</th>
 								<th>Thành tiền</th>
-								<th width='20%'>Số Hợp đồng </th>
 								<th width='15%'>Ghi chú</th>
 								</tr>
 							</thead>
@@ -106,7 +105,6 @@ const GuaranteeLetterCost = () => {
 									<td>{GuaranteeLetterCost.QuantityMonths}</td>
 									<td>{GuaranteeLetterCost.RatioCost}</td>
 									<td>{GuaranteeLetterCost.IntoMoney.toLocaleString()}</td>
-									<td>{GuaranteeLetterCost.contract}</td>
 									<td>{GuaranteeLetterCost.Note}  </td>
 									<td>
 									<ActionButtons_GuaranteeLetterCost _id={GuaranteeLetterCost._id} />

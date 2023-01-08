@@ -93,7 +93,6 @@ const MandayCost = () => {
 								<th width='10%'>Số ngày thực hiện dự án</th>
 								<th>Thành tiền</th>
 								<th width='20%'>Ghi chú</th>
-								<th width='20%'>ID hợp đồng</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -106,7 +105,6 @@ const MandayCost = () => {
 									<td>{MandayCost.ImplementationDay}</td>
 									<td>{MandayCost.IntoMoney.toLocaleString()}</td>
 									<td>{MandayCost.Note}  </td>
-									<td>{MandayCost.contract}  </td>
 									<td>
 									<ActionButtons_MandayCost _id={MandayCost._id} />
 									</td>

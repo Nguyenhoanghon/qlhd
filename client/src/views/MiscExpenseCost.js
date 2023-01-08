@@ -96,7 +96,6 @@ const CPK = () => {
 								<th>STT</th>
 								<th>Nội dung </th>
 								<th>Số Tiền</th>
-								<th>ID hợp đồng</th>
 								<th width='25%'>Ghi chú</th>
 								</tr>
 							</thead>
@@ -106,7 +105,6 @@ const CPK = () => {
 									<td>{stt++}  </td>
 									<td>{CPK.Content}</td>
 									<td>{CPK.Cost.toLocaleString()}</td>
-									<td>{CPK.contract._id}</td>
 									<td>{CPK.Note}  </td>
 									<td>
 									<ActionButtons_CPK _id={CPK._id} />
