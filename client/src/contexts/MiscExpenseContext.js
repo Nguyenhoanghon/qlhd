@@ -1,5 +1,5 @@
 import { createContext, useReducer, useState } from 'react'
-import { CPKReducer } from '../reducers/CPKReducer'//Note
+import { MiscExpenseCostReducer } from '../reducers/MiscExpenseCostReducer'//Note
 import {
 	apiUrl,
 	LOADED_FAIL,
@@ -11,26 +11,26 @@ import {
 } from './constants'//Note
 import axios from 'axios'
 
-export const CPKContext = createContext()
+export const MiscExpenseCostContext = createContext()
 
-const CPKContextProvider = ({ children }) => {
+const MiscExpenseCostContextProvider = ({ children }) => {
 	// State
-	const [CPKState, dispatch] = useReducer(CPKReducer, {
-		CPK: null,
-		CPKs: [],
-		CPKsLoading: true
+	const [MiscExpenseCostState, dispatch] = useReducer(MiscExpenseCostReducer, {
+		MiscExpenseCost: null,
+		MiscExpenseCosts: [],
+		MiscExpenseCostsLoading: true
 	})
 
-	const [showAddCPKModal, setShowAddCPKModal] = useState(false)
-	const [showUpdateCPKModal, setShowUpdateCPKModal] = useState(false)
+	const [showAddMiscExpenseCostModal, setShowAddMiscExpenseCostModal] = useState(false)
+	const [showUpdateMiscExpenseCostModal, setShowUpdateMiscExpenseCostModal] = useState(false)
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
 		type: null
 	})
 
-	// Get all CPKs
-	const getCPKs = async () => {
+	// Get all MiscExpenseCosts
+	const getMiscExpenseCosts = async () => {
 		try {
 			const response = await axios.get(`${apiUrl}/api/forms/misc-expense`)
 			if (response.data.success) {
@@ -43,10 +43,10 @@ const CPKContextProvider = ({ children }) => {
 		}
 	}
 	
-	// Add CPK
-	const addCPK = async newCPK => {
+	// Add MiscExpenseCost
+	const addMiscExpenseCost = async newMiscExpenseCost => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/misc-expense/post`, newCPK)
+			const response = await axios.post(`${apiUrl}/api/forms/misc-expense/post`, newMiscExpenseCost)
 			
 			if (response.data.success) {
 				dispatch({ type: ADD, payload: response.data.MiscExpense })
@@ -61,30 +61,30 @@ const CPKContextProvider = ({ children }) => {
 		}
 	}
 
-	// Delete CPK
+	// Delete MiscExpenseCost
 	
-	const deleteCPK = async CPKId => {
+	const deleteMiscExpenseCost = async MiscExpenseCostId => {
 		try {
-			const response = await axios.delete(`${apiUrl}/api/forms/misc-expense/delete/${CPKId}`)
+			const response = await axios.delete(`${apiUrl}/api/forms/misc-expense/delete/${MiscExpenseCostId}`)
 			if (response.data.success)
-				dispatch({ type: DELETE, payload: CPKId })
+				dispatch({ type: DELETE, payload: MiscExpenseCostId })
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
-	// Find CPK when user is updating CPK
-	const findCPK = CPKId => {
-		const CPK = CPKState.CPKs.find(CPK => CPK._id === CPKId)
-		dispatch({ type: FIND, payload: CPK })
+	// Find MiscExpenseCost when user is updating MiscExpenseCost
+	const findMiscExpenseCost = MiscExpenseCostId => {
+		const MiscExpenseCost = MiscExpenseCostState.MiscExpenseCosts.find(MiscExpenseCost => MiscExpenseCost._id === MiscExpenseCostId)
+		dispatch({ type: FIND, payload: MiscExpenseCost })
 	}
 
-	// Update CPK
-	const updateCPK = async updatedCPK => {
+	// Update MiscExpenseCost
+	const updateMiscExpenseCost = async updatedMiscExpenseCost => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/forms/misc-expense/put/${updatedCPK._id}`,
-				updatedCPK
+				`${apiUrl}/api/forms/misc-expense/put/${updatedMiscExpenseCost._id}`,
+				updatedMiscExpenseCost
 			)
 			if (response.data.success) {
 				dispatch({ type: UPDATE, payload: response.data.updatedMiscExpense })
@@ -97,27 +97,27 @@ const CPKContextProvider = ({ children }) => {
 		}
 	}
 
-	// CPK context data
-	const CPKContextData = {
-		CPKState,
-		getCPKs,
-		showAddCPKModal,
-		setShowAddCPKModal,
-		showUpdateCPKModal,
-		setShowUpdateCPKModal,
-		addCPK,
+	// MiscExpenseCost context data
+	const MiscExpenseCostContextData = {
+		MiscExpenseCostState,
+		getMiscExpenseCosts,
+		showAddMiscExpenseCostModal,
+		setShowAddMiscExpenseCostModal,
+		showUpdateMiscExpenseCostModal,
+		setShowUpdateMiscExpenseCostModal,
+		addMiscExpenseCost,
 		showToast,
 		setShowToast,
-		deleteCPK,
-		findCPK,
-		updateCPK
+		deleteMiscExpenseCost,
+		findMiscExpenseCost,
+		updateMiscExpenseCost
 	}
 
 	return (
-		<CPKContext.Provider value={CPKContextData}>
+		<MiscExpenseCostContext.Provider value={MiscExpenseCostContextData}>
 			{children}
-		</CPKContext.Provider>
+		</MiscExpenseCostContext.Provider>
 	)
 }
 
-export default CPKContextProvider
+export default MiscExpenseCostContextProvider

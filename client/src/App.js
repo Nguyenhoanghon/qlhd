@@ -7,11 +7,13 @@ import ProtectedRoute from './components/routing/ProtectedRoute'
 import Auth from './views/Auth'
 import User from './views/User'
 import { ContractView,Inputforms} from './views/ContractView'
-import MiscExpenseCost from './views/MiscExpenseCost'
+import MiscExpenseCost from './views/MiscExpenseCostView'
 import GuaranteeLetterCost from './views/GuaranteeLetterCostView'
 import MandayCostView from './views/MandayCostView'
 import ProductCostView from './views/ProductCostView'
 import ImplementationView from './views/ImplementationCostView'
+
+import AuxiliaryCost from './views/AuxiliaryCostView'
 
 //import PTHD from './views/PTHD'
 import CPV from './views/CapitalExpenditureCostView'
@@ -21,12 +23,14 @@ import Phongban from './views/Phongban'
 //=====context
 import AuthContextProvider from './contexts/AuthContext'
 import ContractContextProvider from './contexts/ContractContext'
-import CPKContextProvider from './contexts/MiscExpenseContext'
+import MiscExpenseCostContextProvider from './contexts/MiscExpenseContext'
 import GuaranteeLetterCostContextProvider from './contexts/GuaranteeLetterCostContext'
 import MandayCostContextProvider from './contexts/MandayCostContext'
 import UserContextProvider from './contexts/UserContext'
 import CTHHContextProvider from './contexts/ProductCostContext'
 import ImplementationCostContextProvider from './contexts/ImplementationCostContext'
+
+import AuxiliaryCostContextProvider from './contexts/AuxiliaryCostContext'
 
 import PhongbanContextProvider from './contexts/PhongbanContext'
 import CPVContextProvider from './contexts/CapitalExpenditureCostContext'
@@ -85,7 +89,7 @@ function App() {
 						
 						<CPVContextProvider>
 							<CTHHContextProvider>
-								<ProtectedRoute exact path='/chiphivon' component={CPV} />
+								<ProtectedRoute exact path='/CapitalExpenditureCost' component={CPV} />
 							</CTHHContextProvider>
 						</CPVContextProvider>
 
@@ -93,9 +97,14 @@ function App() {
 							<ProtectedRoute exact path='/chiphitrienkhai' component={CPTK} />
 						</CTHHContextProvider>
 						
-						<CPKContextProvider>
+						<MiscExpenseCostContextProvider>
 							<ProtectedRoute exact path='/MiscExpenseCost' component={MiscExpenseCost} />
-						</CPKContextProvider>
+						</MiscExpenseCostContextProvider>
+
+						<AuxiliaryCostContextProvider>
+							<ProtectedRoute exact path='/AuxiliaryCost' component={AuxiliaryCost} />
+						</AuxiliaryCostContextProvider>
+
 
 						<GuaranteeLetterCostContextProvider>
 							<ProtectedRoute exact path='/guarantee-letter-cost' component={GuaranteeLetterCost} />{/* new */}

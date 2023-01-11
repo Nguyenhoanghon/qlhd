@@ -2,49 +2,49 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState, useEffect } from 'react'
-import { CPKContext } from '../../contexts/MiscExpenseContext'
+import { MiscExpenseCostContext } from '../../contexts/MiscExpenseContext'
 
-const UpdateCPKModal = () => {
+const UpdateMiscExpenseCostModal = () => {
 	// Contexts
 	const {
-		CPKState: { CPK },
-		showUpdateCPKModal,
-		setShowUpdateCPKModal,
-		updateCPK,
+		MiscExpenseCostState: { MiscExpenseCost },
+		showUpdateMiscExpenseCostModal,
+		setShowUpdateMiscExpenseCostModal,
+		updateMiscExpenseCost,
 		setShowToast
-	} = useContext(CPKContext)
+	} = useContext(MiscExpenseCostContext)
 
 	// State
-	const [updatedCPK, setUpdatedCPK] = useState(CPK)
+	const [updatedMiscExpenseCost, setUpdatedMiscExpenseCost] = useState(MiscExpenseCost)
 
-	useEffect(() => setUpdatedCPK(CPK), [CPK])
+	useEffect(() => setUpdatedMiscExpenseCost(MiscExpenseCost), [MiscExpenseCost])
 
 	const { 
 		Content, Cost, Note
-	 } = updatedCPK //note
+	 } = updatedMiscExpenseCost //note
 
-	const onChangeUpdatedCPKForm = event =>
-		setUpdatedCPK({ ...updatedCPK, [event.target.name]: event.target.value })
+	const onChangeUpdatedMiscExpenseCostForm = event =>
+		setUpdatedMiscExpenseCost({ ...updatedMiscExpenseCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		setUpdatedCPK(CPK)
-		setShowUpdateCPKModal(false)
+		setUpdatedMiscExpenseCost(MiscExpenseCost)
+		setShowUpdateMiscExpenseCostModal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateCPK(updatedCPK)
-		setShowUpdateCPKModal(false)
+		const { success, message } = await updateMiscExpenseCost(updatedMiscExpenseCost)
+		setShowUpdateMiscExpenseCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddCPKData = () => {
-	// 	setNewCPK({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddCPKModal(false)
+	// const resetAddMiscExpenseCostData = () => {
+	// 	setNewMiscExpenseCost({ title: '', description: '', url: '', status: 'TO LEARN' })
+	// 	setShowAddMiscExpenseCostModal(false)
 	// }
 
 	return (
-		<Modal show={showUpdateCPKModal} onHide={closeDialog}>
+		<Modal show={showUpdateMiscExpenseCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Cập nhật Chi phí:  {Content}</Modal.Title>
 			</Modal.Header>
@@ -61,7 +61,7 @@ const UpdateCPKModal = () => {
 							required
 							aria-describedby='noidung-help'
 							value={Content}
-							onChange={onChangeUpdatedCPKForm}
+							onChange={onChangeUpdatedMiscExpenseCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -73,7 +73,7 @@ const UpdateCPKModal = () => {
 							placeholder='Nhập số'
 							name='Cost'
 							value={Cost} /* tạo ràn buộc số */
-							onChange={onChangeUpdatedCPKForm}
+							onChange={onChangeUpdatedMiscExpenseCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -86,7 +86,7 @@ const UpdateCPKModal = () => {
 							placeholder='Nhập chuỗi'
 							name='Note'
 							value={Note}
-							onChange={onChangeUpdatedCPKForm}
+							onChange={onChangeUpdatedMiscExpenseCostForm}
 						/>
 					</Form.Group>
 				</Modal.Body>
@@ -103,4 +103,4 @@ const UpdateCPKModal = () => {
 	)
 }
 
-export default UpdateCPKModal
+export default UpdateMiscExpenseCostModal

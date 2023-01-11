@@ -1,4 +1,4 @@
-import { GuaranteeLetterCostContext } from '../contexts/GuaranteeLetterCostContext'//Note GET DELETE
+import { MiscExpenseCostContext } from '../contexts/MiscExpenseContext'//Note GET DELETE
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import { useState } from 'react'
@@ -11,12 +11,14 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col'
 
-import AddGuaranteeLetterCostModal from '../components/GuaranteeLetterCostComponent/AddGuaranteeLetterCostModal'//Note
-import UpdateGuaranteeLetterCostModal from '../components/GuaranteeLetterCostComponent/UpdateGuaranteeLetterCostModal'//Note
+import AddMiscExpenseCostModal from '../components/MiscExpenseCost/AddMiscExpenseCostModal'//Note
+import UpdateMiscExpenseCostModal from '../components/MiscExpenseCost/UpdateMiscExpenseCostModal'//Note
+
 import addIcon from '../assets/plus-circle-fill.svg'
 import Table from 'react-bootstrap/Table'
-import ActionButtons_GuaranteeLetterCost from '../components/GuaranteeLetterCostComponent/ActionButtons_GuaranteeLetterCost'
-const GuaranteeLetterCost = () => {
+//import ActionButtons from '../components/posts/ActionButtons'
+import ActionButtons_MiscExpenseCost from '../components/MiscExpenseCost/ActionButtons_MiscExpenseCost'
+const MiscExpenseCost = () => {
 	// Contexts
 	const {
 		authState: {
@@ -25,14 +27,13 @@ const GuaranteeLetterCost = () => {
 	} = useContext(AuthContext)
 
 	const {
-		GuaranteeLetterCostState: { GuaranteeLetterCost, GuaranteeLetterCosts, GuaranteeLetterCostsLoading },
-		getGuaranteeLetterCosts,
-		setShowAddGuaranteeLetterCostModal,
+		MiscExpenseCostState: { MiscExpenseCost, MiscExpenseCosts, MiscExpenseCostsLoading },
+		getMiscExpenseCosts,
+		setShowAddMiscExpenseCostModal,
 		showToast: { show, message, type },
 		setShowToast
-	} = useContext(GuaranteeLetterCostContext)
+	} = useContext(MiscExpenseCostContext)
 
-	
 	// hàm tính tổng 
 	function sumArray(mang){
     let sum = 0;
@@ -48,28 +49,33 @@ const GuaranteeLetterCost = () => {
  	})
 }
 
-	// Start: Get all GuaranteeLetterCosts
-	useEffect(() => getGuaranteeLetterCosts(), [])
+	// Start: Get all MiscExpenseCosts
+	useEffect(() => getMiscExpenseCosts(), [])
+
+	//console.log(MiscExpenseCosts);
 
 	let body = null
 	let stt = 1
-	const tong =  sumArray(GuaranteeLetterCosts.map((GuaranteeLetterCost) => GuaranteeLetterCost.IntoMoney))//note
-	if (GuaranteeLetterCostsLoading) {
+	const tong =  sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
+	if (MiscExpenseCostsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (GuaranteeLetterCosts.length === 0) {
+	} else if (MiscExpenseCosts.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h5'>Form 5: Chi phí làm thư bảo lãnh</Card.Header>
+					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
-						<Card.Title>Chưa có dữ liệu vui lòng click Thêm!</Card.Title>
+						<Card.Title>CHƯA CÓ DỮ LIỆU CHI PHÍ KHÁC</Card.Title>
+						<Card.Text>
+							Vui lòng bấm thêm! để mới
+						</Card.Text>
 						<Button
 							variant='primary'
-							onClick={setShowAddGuaranteeLetterCostModal.bind(this, true)}
+							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
 						>
 							Thêm!
 						</Button>
@@ -82,32 +88,26 @@ const GuaranteeLetterCost = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h5'>Form 5: Chi phí làm thư bảo lãnh</Card.Header>
+					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
 						<Table  striped bordered hover size="sm">
-							<thead>
+							<thead >
 								<tr>
 								<th>STT</th>
 								<th>Nội dung </th>
-								<th>Giá trị thư bảo lãnh</th>
-								<th>Số tháng bảo lãnh</th>
-								<th>Tỉ lệ phí</th>
-								<th>Thành tiền</th>
-								<th width='15%'>Ghi chú</th>
+								<th>Số Tiền</th>
+								<th width='25%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{GuaranteeLetterCosts.map(GuaranteeLetterCost => ( 
-								<tr key={GuaranteeLetterCost._id} >
+								{MiscExpenseCosts.map(MiscExpenseCost => ( 
+								<tr key={MiscExpenseCost._id} >
 									<td>{stt++}  </td>
-									<td>{GuaranteeLetterCost.Content}</td>
-									<td>{GuaranteeLetterCost.Cost.toLocaleString()}</td>
-									<td>{GuaranteeLetterCost.QuantityMonths}</td>
-									<td>{GuaranteeLetterCost.RatioCost}</td>
-									<td>{GuaranteeLetterCost.IntoMoney.toLocaleString()}</td>
-									<td>{GuaranteeLetterCost.Note}  </td>
+									<td>{MiscExpenseCost.Content}</td>
+									<td>{MiscExpenseCost.Cost.toLocaleString()}</td>
+									<td>{MiscExpenseCost.Note}  </td>
 									<td>
-									<ActionButtons_GuaranteeLetterCost _id={GuaranteeLetterCost._id} />
+									<ActionButtons_MiscExpenseCost _id={MiscExpenseCost._id} />
 									</td>
 								
 								</tr>
@@ -115,16 +115,17 @@ const GuaranteeLetterCost = () => {
 								))
 								}
 								<tr>
-									<td colSpan={5} >Tổng</td>
+									<td colSpan={2} >Tổng</td>
 									<td>{tong.toLocaleString()}</td>
 									<td></td>
 									<td></td>
+									
 								</tr>
 							</tbody>
     					</Table>
 						<Button
 							variant='primary'
-							onClick={setShowAddGuaranteeLetterCostModal.bind(this, true)}
+							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
 						>
 							Thêm mới
 						</Button>
@@ -137,9 +138,9 @@ const GuaranteeLetterCost = () => {
 	return (
 		<>
 			{body}
-			<AddGuaranteeLetterCostModal />
-			{GuaranteeLetterCost !== null && <UpdateGuaranteeLetterCostModal />}
-			{/* After GuaranteeLetterCost is added, show toast */}
+			<AddMiscExpenseCostModal />
+			{MiscExpenseCost !== null && <UpdateMiscExpenseCostModal />}
+			{/* After MiscExpenseCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
@@ -159,5 +160,4 @@ const GuaranteeLetterCost = () => {
 		</>
 	)
 }
-
-export default GuaranteeLetterCost
+export default MiscExpenseCost

@@ -50,7 +50,7 @@ const NavbarMenu = () => {
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/chiphivon'
+							to='/CapitalExpenditureCost'
 							as={Link}
 						>
 							CP Vốn
@@ -83,6 +83,15 @@ const NavbarMenu = () => {
 						>
 							CP Khác
 						</Nav.Link>
+						<Nav.Link
+							className='font-weight-bolder text-white'
+							to='/AuxiliaryCost'
+							as={Link}
+						>
+							CP vật tư phụ
+						</Nav.Link>
+
+						
 					</Nav>
 					<Dropdown>
 						<Dropdown.Toggle id="dropdown-button-dark-example1" variant="info">

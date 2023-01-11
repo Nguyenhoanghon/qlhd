@@ -106,12 +106,10 @@ exports.addCapitalExpenditureCost = async (req, res) => {
     //console.log("ContractID ",req.body.ContractID);
 
     try {
-            // TIM id contract 
-    const id_contract = await Contract.find({ContractID: req.body.ContractID})
-    console.log("Id contract===: ",id_contract.ContractID)
-
+        // TIM id contract 
+        const idcontract = await Contract.find({ContractID: req.body.ContractID})
         // Load data tu Form 1: Lay tong gia von va Doanh thu
-        const ProductCost_data = await ProductCost.find({contract: id_contract.id})//.populate("contract", "-__v")
+        const ProductCost_data = await ProductCost.find({contract: idcontract[0]._id})
         newCapitalExpenditureCost.CapitalCost = 0;
         newCapitalExpenditureCost.Revenue = 0;
         for (let i = 0; i < ProductCost_data.length; i++) {
@@ -194,8 +192,10 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
 
     try {
         // Load data tu Form 1: Lay tong gia von va Doanh thu
-
-        const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
+        const idcontract = await Contract.find({ContractID: req.body.ContractID})
+        // Load data tu Form 1: Lay tong gia von va Doanh thu
+        const ProductCost_data = await ProductCost.find({contract: idcontract[0]._id})
+        //const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
         updatedCapitalExpenditureCost.CapitalCost = 0;
         updatedCapitalExpenditureCost.Revenue = 0;
         for (let i = 0; i < ProductCost_data.length; i++) {

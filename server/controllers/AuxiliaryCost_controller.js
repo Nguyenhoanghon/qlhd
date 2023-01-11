@@ -34,7 +34,7 @@ exports.getAllAuxiliaryCost = async (req,res) => {
      
       console.log("Test ====> chi tiet CP vat tu phu",AuxiliaryCost_data, "List tong: ", ListTotal)
 
-      res.json({ success: true, AuxiliaryCost: {AuxiliaryCost_data, ListTotal } }) 
+      res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data}) 
       
   
     } catch (error) {
@@ -72,7 +72,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
     //Load Tong gia von va tong doanh thu tu Form1
     const { 
         Revenue, // Load từ form 1
-        Plan, // Lua chon gia tri, M 
+        Plan, // Lua chon gia tri
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
         CPXL,
@@ -94,14 +94,16 @@ exports.insertAuxiliaryCost = async (req, res) => {
     console.log(req.body.ContractID);
 
     try {
-        // Load data tu Form 1: Lay Doanh thu
-
-        const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
+        // TIM id contract từ ContractID
+        const idcontract = await Contract.find({ContractID: req.body.ContractID})
+        // Load data tu Form 1: Lay tong gia von va Doanh thu
+        const ProductCost_data = await ProductCost.find({contract: idcontract[0]._id})
         newAuxiliaryCost.Revenue = 0;
         for (let i = 0; i < ProductCost_data.length; i++) {
             newAuxiliaryCost.Revenue += ProductCost_data[i].OutputIntoMoney;
         }
         console.log("Sau khi load tu Form 1>>>>>>>Revenue: ",newAuxiliaryCost.Revenue);
+
         // So tien
         if(req.body.Cost < 1)
             newAuxiliaryCost.Cost = req.body.Cost * newAuxiliaryCost.Revenue;
@@ -133,7 +135,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
                                 res.status(500).send({ message: err });
                                 return;
                             }
-                            res.json({ success: true,message:  'AuxiliaryCost đã được thêm thành công!!!', AuxiliaryCost: newAuxiliaryCost }) 
+                            res.json({ success: true,message:  `${req.body.Content} đã được thêm thành công!!!`, AuxiliaryCost: newAuxiliaryCost }) 
                         });
                 console.log("Sau khi them >>>>>", newAuxiliaryCost)
             });
@@ -141,7 +143,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
 
         }
         else 
-        res.json({ success: false ,message: "Not found Contract "}) 
+        res.json({ success: false ,message: `Hợp đồng ${req.body.ContractID} không tồn tại !!!`}) 
         
         });
     } catch (error) {

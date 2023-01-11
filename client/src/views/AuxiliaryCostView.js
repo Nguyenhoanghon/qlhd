@@ -1,4 +1,4 @@
-import { CPKContext } from '../contexts/MiscExpenseContext'//Note GET DELETE
+import { AuxiliaryCostContext } from '../contexts/AuxiliaryCostContext'//Note GET DELETE
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import { useState } from 'react'
@@ -11,14 +11,14 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col'
 
-import AddCPKModal from '../components/chiphikhac/AddCPKModal'//Note
-import UpdateCPKModal from '../components/chiphikhac/UpdateCPKModal'//Note
+import AddAuxiliaryCostModal from '../components/AuxiliaryCost/AddAuxiliaryCostModal'//Note
+import UpdateAuxiliaryCostModal from '../components/AuxiliaryCost/UpdateAuxiliaryCostModal'//Note
 
 import addIcon from '../assets/plus-circle-fill.svg'
 import Table from 'react-bootstrap/Table'
 //import ActionButtons from '../components/posts/ActionButtons'
-import ActionButtons_CPK from '../components/chiphikhac/ActionButtons_CPK'
-const CPK = () => {
+import ActionButtons_AuxiliaryCost from '../components/AuxiliaryCost/ActionButtons_AuxiliaryCost'
+const AuxiliaryCost = () => {
 	// Contexts
 	const {
 		authState: {
@@ -27,12 +27,12 @@ const CPK = () => {
 	} = useContext(AuthContext)
 
 	const {
-		CPKState: { CPK, CPKs, CPKsLoading },
-		getCPKs,
-		setShowAddCPKModal,
+		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCostsLoading },
+		getAuxiliaryCosts,
+		setShowAddAuxiliaryCostModal,
 		showToast: { show, message, type },
 		setShowToast
-	} = useContext(CPKContext)
+	} = useContext(AuxiliaryCostContext)
 
 	// hàm tính tổng 
 	function sumArray(mang){
@@ -49,33 +49,35 @@ const CPK = () => {
  	})
 }
 
-	// Start: Get all CPKs
-	useEffect(() => getCPKs(), [])
+	// Start: Get all AuxiliaryCosts
+	useEffect(() => getAuxiliaryCosts(), [])
 
-	//console.log(CPKs);
+	//console.log(AuxiliaryCosts);
 
 	let body = null
 	let stt = 1
-	//const tong =  sumArray(CPKs.map((CPK) => CPK.sotien))
-	if (CPKsLoading) {
+	const tong =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
+	const tongCPXL =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
+	const tongCPgross =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	if (AuxiliaryCostsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (CPKs.length === 0) {
+	} else if (AuxiliaryCosts.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
+					<Card.Header as='h2'>Form 7: Chi phí vật tư phụ</Card.Header>
 					<Card.Body>
-						<Card.Title>CHƯA CÓ DỮ LIỆU CHI PHÍ KHÁC</Card.Title>
+						<Card.Title>CHƯA CÓ DỮ LIỆU</Card.Title>
 						<Card.Text>
-							Vui lòng bấm thêm! để mới
+							Vui lòng bấm thêm!
 						</Card.Text>
 						<Button
 							variant='primary'
-							onClick={setShowAddCPKModal.bind(this, true)}
+							onClick={setShowAddAuxiliaryCostModal.bind(this, true)}
 						>
 							Thêm!
 						</Button>
@@ -88,26 +90,32 @@ const CPK = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
+					<Card.Header as='h2'>Form 7: Chi phí Vật tư phụ</Card.Header>
 					<Card.Body>
 						<Table  striped bordered hover size="sm">
 							<thead >
 								<tr>
 								<th>STT</th>
+								<th>Doanh thu </th>
 								<th>Nội dung </th>
 								<th>Số Tiền</th>
 								<th width='25%'>Ghi chú</th>
+								<th width='10%'>Plan</th>
+								<th width='10%'>id_contract</th>
 								</tr>
 							</thead>
 							<tbody>
-								{CPKs.map(CPK => ( 
-								<tr key={CPK._id} >
+								{AuxiliaryCosts.map(AuxiliaryCost => ( 
+								<tr key={AuxiliaryCost._id} >
 									<td>{stt++}  </td>
-									<td>{CPK.Content}</td>
-									<td>{CPK.Cost.toLocaleString()}</td>
-									<td>{CPK.Note}  </td>
+									<td>{AuxiliaryCost.Renevue}</td>
+									<td>{AuxiliaryCost.Content}</td>
+									<td>{AuxiliaryCost.Cost.toLocaleString()}</td>
+									<td>{AuxiliaryCost.Note}  </td>
+									<td>{AuxiliaryCost.Plan}  </td>
+									<td>{AuxiliaryCost.contract}  </td>
 									<td>
-									<ActionButtons_CPK _id={CPK._id} />
+									<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id} />
 									</td>
 								
 								</tr>
@@ -115,22 +123,41 @@ const CPK = () => {
 								))
 								}
 								<tr>
-									<td colSpan={2} >Tổng</td>
-									<td>{}</td>
+									<td colSpan={3} >Tổng</td>
+									<td>{tong.toLocaleString()}</td>
+									<td></td>
+									<td></td>
 									<td></td>
 									<td></td>
 									
+								</tr>
+								<tr>
+									<td colSpan={3} >CPXL</td>
+									<td>{tongCPXL.toLocaleString()}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td colSpan={3} >CPgross</td>
+									<td>{tongCPgross.toLocaleString()}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
 								</tr>
 							</tbody>
     					</Table>
 						<Button
 							variant='primary'
-							onClick={setShowAddCPKModal.bind(this, true)}
+							onClick={setShowAddAuxiliaryCostModal.bind(this, true)}
 						>
 							Thêm mới
 						</Button>
 					</Card.Body>
 				</Card>
+				
 			</>
 		)
 	}
@@ -138,9 +165,9 @@ const CPK = () => {
 	return (
 		<>
 			{body}
-			<AddCPKModal />
-			{CPK !== null && <UpdateCPKModal />}
-			{/* After CPK is added, show toast */}
+			<AddAuxiliaryCostModal />
+			{AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />}
+			{/* After AuxiliaryCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
@@ -160,4 +187,4 @@ const CPK = () => {
 		</>
 	)
 }
-export default CPK
+export default AuxiliaryCost

@@ -50,8 +50,8 @@ const ProductCost = () => {
 
 	let body = null
 	let stt = 1
-	//const tongthanhtiengiakho =  sumArray(ProductCosts.map((ProductCost) => ProductCost.thanhtiengiakho))//note
-	//const tongthanhtiengiaban =  sumArray(ProductCosts.map((ProductCost) => ProductCost.thanhtiengiaban))//note
+	const TotalInputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
+	const TotalOutputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	if (ProductCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -100,9 +100,9 @@ const ProductCost = () => {
 									<th width='8%' as='pre'>Đơn giá FOB <br/>
 									(EX-W)</th>
 									<th>Đơn giá kho</th>
-									<th>Thành tiền</th>
+									<th>Thành tiền giá kho</th>
 									<th>Đơn giá bán</th>
-									<th>Thành tiền</th>
+									<th>Thành tiền giá bán</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -137,9 +137,9 @@ const ProductCost = () => {
 								}
 								<tr>
 									<td colSpan={5} >Tổng</td>
+									<td>{TotalInputIntoMoney.toLocaleString()}</td> 
 									<td></td>
-									<td></td>
-									<td></td>
+									<td>{TotalOutputIntoMoney.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 									<td></td>

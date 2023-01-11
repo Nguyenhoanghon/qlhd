@@ -62,7 +62,7 @@ const ProductCostContextProvider = ({ children }) => {
 	// Delete ProductCost
 	const deleteProductCost = async ProductCostId => {
 		try {
-			const response = await axios.delete(`${apiUrl}api/forms/product-Cost/delete/${ProductCostId}`)//note
+			const response = await axios.delete(`${apiUrl}/api/forms/product-Cost/delete/${ProductCostId}`)//note
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: ProductCostId })
 		} catch (error) {

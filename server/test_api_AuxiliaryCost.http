@@ -20,8 +20,7 @@ Content-Type: application/json
   "Plan": 1, // Lua chon gia tri, M 
   "Content": "Chi phí A",
   "Cost": 0.1, // = if(Cost<1; Cost*CapitalCost ; Cost)
-  "Note": "A",
-  "ContractID": "HD01"
+  "Note": "A"
 }
 
 

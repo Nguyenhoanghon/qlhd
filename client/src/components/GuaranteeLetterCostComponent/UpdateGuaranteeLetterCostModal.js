@@ -115,8 +115,6 @@ const UpdateGuaranteeLetterCostModal = () => {
 							rows={3}
 							placeholder='Ghi chú'
 							name='Note'
-							required
-							aria-describedby='ghichu-help'
 							value={Note}
 							onChange={onChangeUpdatedGuaranteeLetterCostForm}
 						/>						

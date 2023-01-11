@@ -49,7 +49,7 @@ const MandayCost = () => {
 
 	let body = null
 	let stt = 1
-	const tong =  sumArray(MandayCosts.map((MandayCost) => MandayCost.thanhtien))//note
+	const tong =  sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))//note
 	if (MandayCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -60,12 +60,10 @@ const MandayCost = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h1'>Hi {username}</Card.Header>
+					
+					<Card.Header as='h5'>Form 5: Manday kỹ sư</Card.Header>
 					<Card.Body>
-						<Card.Title>Welcome Manday kỹ sư</Card.Title>
-						<Card.Text>
-							Chưa có Dữ liệu
-						</Card.Text>
+						<Card.Title>Chưa có dữ liệu vui lòng click Thêm!</Card.Title>
 						<Button
 							variant='primary'
 							onClick={setShowAddMandayCostModal.bind(this, true)}
@@ -115,7 +113,7 @@ const MandayCost = () => {
 								}
 								<tr>
 									<td colSpan={5} >Tổng</td>
-									<td></td>
+									<td>{tong.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 									<td></td>

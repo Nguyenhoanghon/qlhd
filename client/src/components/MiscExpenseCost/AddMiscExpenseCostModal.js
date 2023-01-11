@@ -2,48 +2,48 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
-import { CPKContext } from '../../contexts/MiscExpenseContext'
+import { MiscExpenseCostContext } from '../../contexts/MiscExpenseContext'
 
-const AddCPKModal = () => {
+const AddMiscExpenseCostModal = () => {
 	// Contexts
 	const {
-		showAddCPKModal,
-		setShowAddCPKModal,
-		addCPK,
+		showAddMiscExpenseCostModal,
+		setShowAddMiscExpenseCostModal,
+		addMiscExpenseCost,
 		setShowToast
-	} = useContext(CPKContext)
+	} = useContext(MiscExpenseCostContext)
 
 	// State
-	const [newCPK, setNewCPK] = useState({
+	const [newMiscExpenseCost, setNewMiscExpenseCost] = useState({
 		Content: '',
 		Cost: '',
 		Note: '',
 		ContractID:''
 	})
 
-	const { Content, Cost, Note, ContractID } = newCPK
+	const { Content, Cost, Note, ContractID } = newMiscExpenseCost
 
-	const onChangeNewCPKForm = event =>
-		setNewCPK({ ...newCPK, [event.target.name]: event.target.value })
+	const onChangeNewMiscExpenseCostForm = event =>
+		setNewMiscExpenseCost({ ...newMiscExpenseCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		resetAddCPKData()
+		resetAddMiscExpenseCostData()
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCPK(newCPK)//newCPK
-		resetAddCPKData()
+		const { success, message } = await addMiscExpenseCost(newMiscExpenseCost)//newMiscExpenseCost
+		resetAddMiscExpenseCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	const resetAddCPKData = () => {
-		setNewCPK({ Content: '', Cost: '', Note: '', ContractID: '' })
-		setShowAddCPKModal(false)
+	const resetAddMiscExpenseCostData = () => {
+		setNewMiscExpenseCost({ Content: '', Cost: '', Note: '', ContractID: '' })
+		setShowAddMiscExpenseCostModal(false)
 	}
 
 	return (
-		<Modal show={showAddCPKModal} onHide={closeDialog}>
+		<Modal show={showAddMiscExpenseCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Bạn muốn thêm chi phí khác?</Modal.Title>
 			</Modal.Header>
@@ -60,7 +60,7 @@ const AddCPKModal = () => {
 							required
 							aria-describedby='noidung-help'
 							value={ContractID}
-							onChange={onChangeNewCPKForm}
+							onChange={onChangeNewMiscExpenseCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -74,7 +74,7 @@ const AddCPKModal = () => {
 							required
 							aria-describedby='noidung-help'
 							value={Content}
-							onChange={onChangeNewCPKForm}
+							onChange={onChangeNewMiscExpenseCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -86,7 +86,7 @@ const AddCPKModal = () => {
 							placeholder='Nhập số'
 							name='Cost'
 							value={Cost} /* tạo ràn buộc số */
-							onChange={onChangeNewCPKForm}
+							onChange={onChangeNewMiscExpenseCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -99,7 +99,7 @@ const AddCPKModal = () => {
 							placeholder='Nhập chuỗi'
 							name='Note'
 							value={Note}
-							onChange={onChangeNewCPKForm}
+							onChange={onChangeNewMiscExpenseCostForm}
 						/>
 					</Form.Group>
 				</Modal.Body>
@@ -116,4 +116,4 @@ const AddCPKModal = () => {
 	)
 }
 
-export default AddCPKModal
+export default AddMiscExpenseCostModal
