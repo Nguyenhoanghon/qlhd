@@ -1,6 +1,6 @@
 export const apiUrl =
 	process.env.NODE_ENV !== 'production'
-		? 'http://localhost:5000'
+		? 'http://103.88.121.45:5000'
 		: 'http://103.88.121.45:5000'
 
 export const LOCAL_STORAGE_TOKEN_NAME = 'qlhd_hnn'
