@@ -24,8 +24,10 @@ const db = require("./models");
 const Role = db.role;
 
 db.mongoose
+    //Connect Mongodb loacal
     //.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    .connect(`mongodb+srv://nhhon:XtojfLH4zntc5dxv@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
+    //Connect Mongodb cloud
+    .connect(`mongodb+srv://nhhon:EhuEbbSBP73Ll31G@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

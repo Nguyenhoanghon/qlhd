@@ -62,7 +62,7 @@ const LoginForm = () => {
 					/>
 				</Form.Group>
 				<Button variant='success' type='submit'>
-					Đăng nhập
+					Login
 				</Button>
 			</Form>
 			<p>

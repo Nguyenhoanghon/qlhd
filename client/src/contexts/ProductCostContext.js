@@ -84,7 +84,7 @@ const ProductCostContextProvider = ({ children }) => {
 				updatedProductCost
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.ChiTietHangHoa }) //note MandayKysu biến trả về từ server
+				dispatch({ type: UPDATE, payload: response.data.updateProductCost }) //note MandayKysu biến trả về từ server
 				return response.data
 			}
 		} catch (error) {

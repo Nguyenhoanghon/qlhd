@@ -25,8 +25,8 @@ exports.getAllProductCost = async (req,res) => {
     
 
       res.json({ success: true, ProductCost: ProductCost_data, CapitalCost: InputIntoMoney, Reneveu: OutputIntoMoney   }) 
-      console.log(ProductCost_data)
-      console.log(">>>>>>>tong",InputIntoMoney,"-",OutputIntoMoney);
+      //console.log(ProductCost_data)
+      //console.log(">>>>>>>tong",InputIntoMoney,"-",OutputIntoMoney);
   
     } catch (error) {
         console.log(error)
@@ -87,11 +87,11 @@ exports.addProductCost = async (req, res) => {
     
     try {
         //Kiem tra hop dong co ton tai?
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{ //sửa lại idcontract
+       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{ //sửa lại tìm theo idcontract
         if(Contract.length!=0){                
             //xu ly logic
-            if(req.body.EX_W == 1){ 
-                console.log("Nhap tu nnuoc ngoai");
+            if(newProductCost.EX_W == 1){ 
+                console.log("Nhap tu nuoc ngoai");
                 newProductCost.InputPrice = req.body.FOBCost * req.body.RatioUSD;
                 newProductCost.InputIntoMoney = newProductCost.InputPrice * newProductCost.Quantity;
                 newProductCost.OutputIntoMoney = req.body.OutputPrice * newProductCost.Quantity;
@@ -205,7 +205,7 @@ exports.updateProductCost = async (req, res) => {
                     res.json({
                         success: true,
                         message: 'Update MaydayCost Successfull !',
-                        dataUpdate: updateProductCost
+                        updateProductCost: updateProductCost
                     })
         
         }
@@ -232,7 +232,7 @@ exports.updateProductCost = async (req, res) => {
                     res.json({
                         success: true,
                         message: 'Update ProductCost Successfull !',
-                        dataUpdate: updateProductCost
+                        updateProductCost: updateProductCost
                     })
 
         }

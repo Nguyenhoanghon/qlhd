@@ -32,7 +32,7 @@ const NavbarMenu = () => {
 							to='/PTHD'
 							as={Link}
 						>
-							PTHĐ
+							Sumary
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'

@@ -1,6 +1,7 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup';
 import { useContext, useState } from 'react'
 import { ProductCostContext } from '../../contexts/ProductCostContext'
 
@@ -82,7 +83,7 @@ const AddProductCostModal = () => {
 	return (
 		<Modal show={showAddProductCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Bạn muốn thêm Hàng Hóa?</Modal.Title>
+				<Modal.Title>Thêm Hàng Hóa</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
@@ -116,25 +117,19 @@ const AddProductCostModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='xuatxu-help' muted as='h6'>
-							Hàng được nhập từ Việt Nam hay nước ngoài?
+							Hàng hoá nhập từ nước ngoài
 						</Form.Text>
-						<Form.Check 
-							type={'radio'}
-							id={0}
+						<Form.Control
+							type='text'
+							placeholder='1 nếu nhập từ nước ngoại, 0 nhập trong nước'
+							name='EX_W'
+							required
+							aria-describedby='tenhang-help'
 							value={EX_W}
-							label = "Trong nước"
-							name = 'EX_W'
-							inline
-						/>
-						<Form.Check 
-							type={'radio'}
-							id={0}
-							value={EX_W}
-							label = "Nước ngoài"
-							name = 'EX_W'
-							inline
+							onChange={onChangeNewProductCostForm}
 						/>
 					</Form.Group>
+					
 					<Form.Group>
 						<Form.Text id='soluong-help' muted as='h6'>
 							Số lượng
@@ -204,17 +199,15 @@ const AddProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='xuatxu-help' muted as='h6'>
+						<Form.Text id='Insurance-help' muted as='h6'>
 							Hàng hoá có tính chi phí bảo hiểm không?
 						</Form.Text>
-						<Form.Check 
-							type={'checkbox'}
-							id={0}
+						<Form.Control
+							type='text'
+							placeholder='Có bảo hiển nhâpj 1'
+							name='Insurance'
 							value={Insurance}
-							checked
-							label = "Có tính chi phí bảo hiểm"
-							name = 'Insurance'
-							inline
+							onChange={onChangeNewProductCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -256,6 +249,7 @@ const AddProductCostModal = () => {
 				</Modal.Footer>
 			</Form>
 		</Modal>
+
 	)
 }
 

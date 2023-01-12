@@ -19,7 +19,21 @@ const UpdateProductCostModal = () => {
 
 	useEffect(() => setUpdatedProductCost(ProductCost), [ProductCost])
 
-	const {  tenhang, soluong, dongiaFOB, dongiakho, thanhtiengiakho, dongiaban, thanhtiengiaban,  ghichu } = updatedProductCost //note
+	const { 
+		ProductName,
+		Quantity,
+		EX_W,
+		FOBCost,
+		RatioUSD,
+		InputPrice,
+		OutputPrice,
+		InputIntoMoney,
+		OutputIntoMoney,
+		Insurance,
+		Incentive,
+		Note,
+		ContractID
+		} = updatedProductCost //note
 
 	const onChangeUpdatedProductCostForm = event =>
 		setUpdatedProductCost({ ...updatedProductCost, [event.target.name]: event.target.value })
@@ -49,19 +63,48 @@ const UpdateProductCostModal = () => {
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					<Form.Group>
-						<Form.Text id='tenhang-help' muted as='h6'>
-							Tên hàng
+						<Form.Text id='contract-help' muted as='h6'>
+							Chọn Hợp đồng
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='tenhang'
-							name='tenhang'
+							placeholder='Contract_id'
+							name='ContractID'
 							required
-							aria-describedby='tenhang-help'
-							value={tenhang}
+							aria-describedby='contract-help'
+							value={ContractID}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
+					<Form.Group>
+						<Form.Text id='tenhang-help' muted as='h6'>
+							Nhập tên hàng
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Tên hàng'
+							name='ProductName'
+							required
+							aria-describedby='tenhang-help'
+							value={ProductName}
+							onChange={onChangeUpdatedProductCostForm}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='xuatxu-help' muted as='h6'>
+							Hàng hoá nhập từ nước ngoài
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='1 nếu nhập từ nước ngoại, 0 nhập trong nước'
+							name='EX_W'
+							required
+							aria-describedby='tenhang-help'
+							value={EX_W}
+							onChange={onChangeUpdatedProductCostForm}
+						/>
+					</Form.Group>
+					
 					<Form.Group>
 						<Form.Text id='soluong-help' muted as='h6'>
 							Số lượng
@@ -69,10 +112,10 @@ const UpdateProductCostModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Số lượng'
-							name='soluong'
+							name='Quantity'
 							required
 							aria-describedby='soluong-help'
-							value={soluong}
+							value={Quantity}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
@@ -83,13 +126,26 @@ const UpdateProductCostModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Đơn giá FOB'
-							name='dongiaFOB'
+							name='FOBCost'
 							required
 							aria-describedby='dongiaFOB-help'
-							value={dongiaFOB}
+							value={FOBCost}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
-						</Form.Group>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='RatioUSD-help' muted as='h6'>
+							Tỷ giá USD
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='22400'
+							name='RatioUSD'
+							required
+							value={RatioUSD}
+							onChange={onChangeUpdatedProductCostForm}
+						/>
+					</Form.Group>
 					<Form.Group>
 						<Form.Text id='dongiakho-help' muted as='h6'>
 							Đơn giá kho
@@ -97,10 +153,9 @@ const UpdateProductCostModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Đơn giá kho'
-							name='dongiakho'
+							name='InputPrice'
 							required
-							aria-describedby='dongiakho-help'
-							value={dongiakho}
+							value={InputPrice}
 							onChange={onChangeUpdatedProductCostForm}
 						/>						
 					</Form.Group>
@@ -111,25 +166,50 @@ const UpdateProductCostModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Đơn giá bán'
-							name='dongiaban'
+							name='OutputPrice'
 							required
 							aria-describedby='dongiaban-help'
-							value={dongiaban}
+							value={OutputPrice}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='Ghichu-help' muted as='h6'>
+						<Form.Text id='Insurance-help' muted as='h6'>
+							Hàng hoá có tính chi phí bảo hiểm không?
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Có bảo hiển nhâpj 1'
+							name='Insurance'
+							value={Insurance}
+							onChange={onChangeUpdatedProductCostForm}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='Incentive-help' muted as='h6'>
+							Tiền thưởng từ đối tác
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='Tiền thưởng từ đối tác'
+							name='Incentive'
+							required
+							aria-describedby='Incentive-help'
+							value={Incentive}
+							onChange={onChangeUpdatedProductCostForm}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='Note-help' muted as='h6'>
 							Ghi chú
 						</Form.Text>
 						<Form.Control
 							as='textarea'
 							rows={3}
 							placeholder='Ghi chú'
-							name='ghichu'
-							required
-							aria-describedby='ghichu-help'
-							value={ghichu}
+							name='Note'
+							aria-describedby='Note-help'
+							value={Note}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
 					</Form.Group>
