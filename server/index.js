@@ -5,6 +5,7 @@ const dbConfig = require("./Config/db.config");
 const app = express();
 
 var corsOptions = {
+  origin: "http://103.88.121.45:3000",
   origin: "http://localhost:3000"
 };
 

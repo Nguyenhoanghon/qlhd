@@ -4,22 +4,12 @@ const authController = require("../controllers/Auth_controller");
 const userController = require("../controllers/User_controller");
 
 module.exports = function(app) {
-  /*
   app.use(function(req, res, next) {
-    
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
     );
-    
     next();
-  });
-  */
-
-  app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
   });
 
 //Get all users 
