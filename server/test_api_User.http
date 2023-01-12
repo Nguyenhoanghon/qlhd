@@ -11,16 +11,21 @@ Content-Type: application/json
 ### Create User
 ### access Public
 ### Not ok -- Postman ok
-POST http://localhost:5000/api/users/insertUser
+POST http://localhost:5000/api/forms/users/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
 
 {
 "username": "Director",
 "email": "Directorn@gmail.com",
 "password": "123",
-"roles[]": "Directorss"
+"roles[]": "Director"
 }
+
+### Get all users public
+### access public
+###ok
+GET http://103.88.121.45:5000
 
 ### Get all users public
 ### access public
