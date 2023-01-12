@@ -11,15 +11,15 @@ Content-Type: application/json
 ### Get all Contract 
 ### access private
 ###ok
-GET http://localhost:5000/api/forms/contract
+GET http://localhost:5000/api/forms/implementation-cost
 
 ###
 // Create ImplementationCost Voi Contract_id truyen vao
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
 // access public
-POST http://localhost:5000/api/forms/implementation-cost/post/63b629ae1878af1864ea8c20
+POST http://localhost:5000/api/forms/implementation-cost/post/63c0049de934d1b019cd029b
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MjkxMjY0MiwiZXhwIjoxNjcyOTE5MDQyfQ.8205MEAI6qbjqR5cMJWCkgTtjcURmXCPugO5JHeOZz4
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
 
 {
   "GeneralExpense": "Chi Phi Chung",
@@ -58,18 +58,18 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
 
 POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MjkxMjY0MiwiZXhwIjoxNjcyOTE5MDQyfQ.8205MEAI6qbjqR5cMJWCkgTtjcURmXCPugO5JHeOZz4
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
 
 {
-  "NameCost": "Chi phí tiep khach 2",
+  "NameCost": "Chi phí 1dsdsd ",
   "Units": "",
   "UnitPrice": 3000000,
   "Quantity_days": 2,
   "Quantity_times": 1,
   "IntoMoney": 0,
   "Note": "Ghi chu",
-  "ImplementationCost_Id": "63b69f41391b9a0052fd7511",
-  "ContentCostId": "63b69f3ffda0ad251c7d1155"
+  "ImplementationCost_Id": "63c0836b30ae9167f8140249",
+  "ContentCostId": "63c0836a498601b90621104d"
 }
 
 ###
@@ -79,7 +79,7 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMT
 
 POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjY5NTExMywiZXhwIjoxNjcyNzAxNTEzfQ.fR7wbUFfT_LlT__Ytg1lVrlSLUrLuAN8t2Tr_itiMpA
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
 
 {
   "NameCost": "Chi phí ve may bay",
@@ -89,8 +89,8 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
   "Quantity_times": 4,
   "IntoMoney": 0,
   "Note": "Ghi chu",
-  "ImplementationCost_Id": "63b35599391b9a0052af623e",
-  "ContentCostId": "63b3579e6d2af85569425c33"
+  "ImplementationCost_Id": "63c0836b30ae9167f8140249",
+  "ContentCostId": "63c0836a498601b90621104d"
 }
 
 

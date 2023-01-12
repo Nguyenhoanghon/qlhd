@@ -29,10 +29,10 @@ const NavbarMenu = () => {
 					<Nav className='mr-auto'>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/PTHD'
+							to='/sumary'
 							as={Link}
 						>
-							Sumary
+							PTHD Tổng thể
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
