@@ -9,8 +9,8 @@ module.exports = function(app) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept",
-      //"Access-Control-Allow-Origin", "*",
-      //"Access-Control-Allow-Headers", "X-Requested-With"
+      "Access-Control-Allow-Origin", "*",
+      "Access-Control-Allow-Headers", "X-Requested-With"
     );
     next();
   });
