@@ -72,9 +72,12 @@ exports.getImplementationCost_IdContract = async (req,res) => {
 // goi ham nay khi trien khai co 1 giai doan
 // @access Public
 
+
 exports.createImplementationCost = async (req, res) => {
     console.log("Test route ===> createImplementationCost is called !");
+    
     try {
+        
         //Kiem tra hop dong co ton tai?
        Contract.find({_id: req.params.idcontract },(err,Contract)=>{
         if(Contract.length!=0)            
@@ -362,97 +365,84 @@ exports.AddCostDetailStage = async (req, res) => {
 
 }
 
-// Update ImplementationCost
+// Update ImplementationCost GeneralExpense
 // @access Public
-exports.updateImplementationCost = async (req, res) => {
+exports.updateImplementationCost_CostGeneralExpense = async (req, res) => {
     console.log("Test route updateImplementationCost !");
 
     const { 
-        ProductName,
-        Quantity,
-        EX_W, // nhap tu nuoc ngoai = true
-        FOBCost, //if(EX_W = =true, req.body.FOBCost, 0)
-        RatioUSD, //if(EX_W = =true, req.body.RatioUSD, 0)
-        InputPrice, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
-        OutputPrice, // Nhap
-        InputIntoMoney, // Can tinh  = Quantity * InputPrice
-        OutputIntoMoney, //Can tinh =  Quantity * OutputPrice
-        Insurance,
-        Incentive,
+        NameCost,
+        Units,
+        UnitPrice,
+        Quantity_days,
+        Quantity_times,
+        IntoMoney,
         Note,
-        contract
+        ImplementationCost_Id,
+        ContentCostId
     } = req.body
 
     console.log("Test data recieved ====>>>",req.params.id)
-
     try {
         let updateImplementationCost = {
-            ProductName,
-            Quantity,
-            EX_W, // nhap tu nuoc ngoai = true
-            FOBCost, //if(EX_W = =true, req.body.FOBCost, 0)
-            RatioUSD, //if(EX_W = =true, req.body.RatioUSD, 0)
-            InputPrice, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
-            OutputPrice, // Nhap
-            InputIntoMoney, // Can tinh  = Quantity * InputPrice
-            OutputIntoMoney, //Can tinh =  Quantity * OutputPrice
-            Insurance,
-            Incentive,
-            Note
+            NameCost,
+            Units,
+            UnitPrice,
+            Quantity_days,
+            Quantity_times,
+            IntoMoney,
+            Note,
+            ImplementationCost_Id,
+            ContentCostId
         }
-        //xu ly logic quy trinh
-        if(req.body.EX_W == 1){ 
-            console.log("Nhap tu nnuoc ngoai");
-            updateImplementationCost.InputPrice = req.body.FOBCost * req.body.RatioUSD;
-            updateImplementationCost.InputIntoMoney = updateImplementationCost.InputPrice * updateImplementationCost.Quantity;
-            updateImplementationCost.OutputIntoMoney = req.body.OutputPrice * updateImplementationCost.Quantity;
-            
-            const UpdateCondition = { _id: req.params.id}
-            updateImplementationCost = await ImplementationCost.findOneAndUpdate(
-            UpdateCondition,
-            updateImplementationCost, { new: true }
-            )
-                // User not authorised to update ImplementationCost or ImplementationCost not found
-                if (!updateImplementationCost)
-                    return res.status(401).json({
-                        success: false,
-                        message: 'ImplementationCost not found or user not authorised'
-                    })
-                else
-                    res.json({
-                        success: true,
-                        message: 'Update MaydayCost Successfull !',
-                        dataUpdate: updateImplementationCost
-                    })
-        
-        }
-        else
-        {
-            console.log("NHap trong nuoc");
-            updateImplementationCost.FOBCost = 0;
-            updateImplementationCost.RatioUSD = 0;
-            updateImplementationCost.InputPrice = req.body.InputPrice
-            updateImplementationCost.InputIntoMoney = updateImplementationCost.InputPrice * updateImplementationCost.Quantity;
-            updateImplementationCost.OutputIntoMoney = req.body.OutputPrice * updateImplementationCost.Quantity;
-            const UpdateCondition = { _id: req.params.id}
-            updateImplementationCost = await ImplementationCost.findOneAndUpdate(
-            UpdateCondition,
-            updateImplementationCost, { new: true }
-            )
-                // User not authorised to update ImplementationCost or ImplementationCost not found
-                if (!updateImplementationCost)
-                    return res.status(401).json({
-                        success: false,
-                        message: 'ImplementationCost not found or user not authorised'
-                    })
-                else
-                    res.json({
-                        success: true,
-                        message: 'Update ImplementationCost Successfull !',
-                        dataUpdate: updateImplementationCost
-                    })
+        console.log("Test data get form =====>>>",updateImplementationCost)
+        //xu ly logic dữ liệu
+        if(req.body.Quantity_times == 0)
+        updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days
+        else if(req.body.Quantity_days == 0)
+        updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_times
+            else
+            updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
+         
+        console.log("Test data sau xu ly logic =====>>>",updateImplementationCost)
 
-        }
+        //const UpdateCondition = { _id: req.params.id}
+        updateImplementationCost = await ImplementationCost.findOneAndUpdate(
+            {
+            _id: ImplementationCost_Id,
+            "GeneralExpense._id": ContentCostId,
+            "GeneralExpense.Costs._id": req.params.id
+          },
+          {
+            $set: {
+              "GeneralExpense.$.Costs": {
+                NameCost,
+                Units,
+                UnitPrice,
+                Quantity_days,
+                Quantity_times,
+                IntoMoney,
+                Note
+              },
+            }
+          },
+          {
+            new: true,
+            upsert: true,
+          }
+        );
+            // User not authorised to update ImplementationCost or ImplementationCost not found
+            if (!updateImplementationCost)
+                return res.status(401).json({
+                    success: false,
+                    message: 'ImplementationCost not found or user not authorised'
+                })
+            else
+                res.json({
+                    success: true,
+                    message: 'Update ImplementationCost Successfull !',
+                    updateImplementationCost: updateImplementationCost
+                })
         
     } catch (error) {
         console.log(error)
@@ -461,6 +451,91 @@ exports.updateImplementationCost = async (req, res) => {
 
 }
 
+// Update ImplementationCost StageImplementation costs
+// @access Public
+exports.updateImplementationCost_CostDetailStage = async (req, res) => {
+    console.log("Test route updateImplementationCost !");
+
+    const { 
+        NameCost,
+        Units,
+        UnitPrice,
+        Quantity_days,
+        Quantity_times,
+        IntoMoney,
+        Note,
+        ImplementationCost_Id,
+        ContentCostId
+    } = req.body
+
+    console.log("Test data recieved ====>>>",req.params.id)
+    try {
+        let updateImplementationCost = {
+            NameCost,
+            Units,
+            UnitPrice,
+            Quantity_days,
+            Quantity_times,
+            IntoMoney,
+            Note,
+            ImplementationCost_Id,
+            ContentCostId
+        }
+        console.log("Test data get form =====>>>",updateImplementationCost)
+        //xu ly logic dữ liệu
+        if(req.body.Quantity_times == 0)
+        updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days
+        else if(req.body.Quantity_days == 0)
+        updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_times
+            else
+            updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
+         
+        console.log("Test data sau xu ly logic =====>>>",updateImplementationCost)
+
+        //const UpdateCondition = { _id: req.params.id}
+        updateImplementationCost = await ImplementationCost.findOneAndUpdate(
+            {
+            _id: ImplementationCost_Id,
+            "StagesImplementation._id": ContentCostId,
+            "StagesImplementation.Costs._id": req.params.id
+          },
+          {
+            $set: {
+              "StagesImplementation.$.Costs": {
+                NameCost,
+                Units,
+                UnitPrice,
+                Quantity_days,
+                Quantity_times,
+                IntoMoney,
+                Note
+              },
+            }
+          },
+          {
+            new: true,
+            upsert: true,
+          }
+        );
+            // User not authorised to update ImplementationCost or ImplementationCost not found
+            if (!updateImplementationCost)
+                return res.status(401).json({
+                    success: false,
+                    message: 'ImplementationCost not found or user not authorised'
+                })
+            else
+                res.json({
+                    success: true,
+                    message: 'Update ImplementationCost Successfull !',
+                    updateImplementationCost: updateImplementationCost
+                })
+        
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ success: false, message: 'Internal server error' })
+    }
+
+}
 // Delete ImplementationCost by id
 // @access Public
 exports.deleteImplementationCost = async (req, res) => {
@@ -468,6 +543,34 @@ exports.deleteImplementationCost = async (req, res) => {
     console.log(req.params.id);
     try {
         const ImplementationCostDeleteCondition = { _id: req.params.id}//, user: req.userId }
+        const deletedImplementationCost= await ImplementationCost.findOneAndDelete(ImplementationCostDeleteCondition)
+
+        // User not authorised or ImplementationCost not found
+        if (!deletedImplementationCost)
+            return res.status(401).json({
+                success: false,
+                message: 'ImplementationCost not found or user not authorised'
+            })
+
+        res.json({ success: true, message: 'Delete ImplementationCost Successfull !'})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+
+}
+
+// Delete ImplementationCost by id Costs General
+// @access Public
+exports.deleteImplementationCost_Stage = async (req, res) => {
+    console.log("Test route deleteImplementationCost !");
+    console.log(req.params.id);
+    try {
+        const ImplementationCostDeleteCondition = {
+            _id: ImplementationCost_Id,
+            "StagesImplementation._id": ContentCostId,
+            "StagesImplementation.Costs._id": req.params.id
+          }//, user: req.userId }
         const deletedImplementationCost= await ImplementationCost.findOneAndDelete(ImplementationCostDeleteCondition)
 
         // User not authorised or ImplementationCost not found

@@ -52,6 +52,7 @@ const ProductCost = () => {
 	let stt = 1
 	const TotalInputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
+	const TotalIncentive =  sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
 	if (ProductCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -116,13 +117,10 @@ const ProductCost = () => {
 									<td>{ProductCost.InputIntoMoney.toLocaleString()}</td>
 									<td>{ProductCost.OutputPrice.toLocaleString()}</td>
 									<td>{ProductCost.OutputIntoMoney.toLocaleString()}</td>
-									<td><Form.Check 
-											type={'checkbox'}
-											id={0}
-											value={ProductCost.Insurance.toLocaleString()}
-										/>
-										
-										</td>
+									<td>  
+											 {ProductCost.Insurance.toLocaleString()
+												}
+									</td>
 									<td>{ProductCost.Incentive.toLocaleString()} </td>
 									<td>{ProductCost.RatioUSD.toLocaleString()}</td>
 									<td>{ProductCost.Note}  </td>
@@ -141,7 +139,7 @@ const ProductCost = () => {
 									<td></td>
 									<td>{TotalOutputIntoMoney.toLocaleString()}</td>
 									<td></td>
-									<td></td>
+									<td>{TotalIncentive.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 									<td></td>

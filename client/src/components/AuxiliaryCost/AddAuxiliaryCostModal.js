@@ -84,18 +84,6 @@ const AddAuxiliaryCostModal = () => {
 						/>						
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='noidung-help' muted as="h6">
-							Chọn Hợp đồng
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='Nhập chuỗi'
-							name='ContractID'
-							value={ContractID}
-							onChange={onChangeNewAuxiliaryCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
 						<Form.Text id='Plan-help' muted as="h6">
 							Chọn phương án
 						</Form.Text>

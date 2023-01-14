@@ -12,13 +12,13 @@ Content-Type: application/json
 ### Not ok -- Postman ok
 POST http://localhost:5000/api/forms/contract/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3Mjg4MjU4OSwiZXhwIjoxNjcyODg4OTg5fQ.IdpFYMVVytSXqGV5CzvTLSlsuGz7H75sYsaeu0_1E-8
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3MzY0ODE0NywiZXhwIjoxNjczNjU0NTQ3fQ.e7bSXaAZGfrqg-k30qYVAYd4efQb43Z9ln8J6S2lFno
 
 {
 "Center": "HCM",
 "Deparment": "SSD",
 "CustomerID": "A",
-"ContractID": "HD01",
+"ContractID": "HD02",
 "Date": "2022-12-14T17:00:00.000Z"
 //"user": "admin"
 }

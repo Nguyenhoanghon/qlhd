@@ -8,29 +8,37 @@ Content-Type: application/json
   "password": "123"
 }
 
+
+
 ### Get all Contract 
 ### access private
 ###ok
+GET http://localhost:5000/api/forms/contract
+
+
+### Get all  ImplementationCost
+### access public
+###ok
 GET http://localhost:5000/api/forms/implementation-cost
 
-###
-// Create ImplementationCost Voi Contract_id truyen vao
+### KHOI TAO 1 CHI TRIEN KHAI
+// Create ImplementationCost Voi _id.contract truyen vao
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
 // access public
-POST http://localhost:5000/api/forms/implementation-cost/post/63c0049de934d1b019cd029b
+POST http://localhost:5000/api/forms/implementation-cost/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3MzY5Njc4NSwiZXhwIjoxNjczNzAzMTg1fQ.uZdHgmoo3cL4dVUnwIW_1qpX_JwIM4WjIyeCfy9r724
 
 {
-  "GeneralExpense": "Chi Phi Chung",
-  "StagesImplementation": "Giai Doan 1"
+  "GeneralExpense": "Chi phí chung",
+  "StagesImplementation": "CHI PHÍ TRIỂN KHAI"
 }
 
-###
+### Add 1 Object (
 // Create ImplementationCost -> GeneralExpense
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
 // access public
-POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/63b352b29fd7cd536585b9e7
+POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjY5NjUzNiwiZXhwIjoxNjcyNzAyOTM2fQ.8KC8VHWvnorrUCsJ7P-lmNpMa53XUIg0Kbh6Dbq8p-4
 
@@ -42,13 +50,13 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
 // Create ImplementationCost -> StagesImplementation
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/
 // access public
-
-POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/63b23706aae5094cd7f1ee88
+// them ?????????????????? giai doạn cho chi phi giai doan
+POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYWFlNTA5NGNkN2YxZWU4MyIsImlhdCI6MTY3MjY5NTExMywiZXhwIjoxNjcyNzAxNTEzfQ.fR7wbUFfT_LlT__Ytg1lVrlSLUrLuAN8t2Tr_itiMpA
 
 {
-  "Content": "Giai Doan 2"
+  "Content": "Giai Doan 1"
 }
 
 ###
@@ -61,15 +69,15 @@ Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
 
 {
-  "NameCost": "Chi phí 1dsdsd ",
-  "Units": "",
-  "UnitPrice": 3000000,
+  "NameCost": "Chi phí tiếp khách",
+  "Units": "Phòng",
+  "UnitPrice": 30000000,
   "Quantity_days": 2,
   "Quantity_times": 1,
   "IntoMoney": 0,
   "Note": "Ghi chu",
-  "ImplementationCost_Id": "63c0836b30ae9167f8140249",
-  "ContentCostId": "63c0836a498601b90621104d"
+  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
+  "ContentCostId": "63c298a97fb4c6dfcaef028b"
 }
 
 ###
@@ -82,23 +90,67 @@ Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
 
 {
-  "NameCost": "Chi phí ve may bay",
+  "NameCost": "Chi phí đi lại",
   "Units": "Phong",
-  "UnitPrice": 4000000,
+  "UnitPrice": 100000,
   "Quantity_days": 1,
   "Quantity_times": 4,
   "IntoMoney": 0,
   "Note": "Ghi chu",
-  "ImplementationCost_Id": "63c0836b30ae9167f8140249",
-  "ContentCostId": "63c0836a498601b90621104d"
+  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
+  "ContentCostId": "63c298a97fb4c6dfcaef028a"
 }
 
 
-### Get all ImplementationCost
-### access public
-###ok
-GET http://localhost:5000/api/forms/implementation-cost
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+###
+// Update stages-implementation Costs cho chi phi giai doan
+// URL access: http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/:idCosts
+//Input Condition : 
+//            _id: ImplementationCost_Id,
+//            "GeneralExpense._id": ContentCostId,
+//            "GeneralExpense.Costs._id": req.params.id
+// access public
+
+PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/63c29a5a7fb4c6dfcaef0298
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
+
+{
+  "NameCost": "Chi phí tiếp khách update",
+  "Units": "Phong",
+  "UnitPrice": 9000000,
+  "Quantity_days": 1,
+  "Quantity_times": 4,
+  "IntoMoney": 0,
+  "Note": "Ghi chu",
+  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
+  "ContentCostId": "63c298a97fb4c6dfcaef028a"
+}
+
+###
+// Update Cost General Expense cho chi phi chung
+// URL access: http://localhost:5000/api/forms/implementation-cost/general-expense/put/:idCosts
+//Input Condition : 
+//            _id: ImplementationCost_Id,
+//            "GeneralExpense._id": ContentCostId,
+//            "GeneralExpense.Costs._id": req.params.id
+// access public
+
+PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/63c29a5a7fb4c6dfcaef0298
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
+
+{
+  "NameCost": "Chi phí tiếp khách update",
+  "Units": "Phong",
+  "UnitPrice": 9000000,
+  "Quantity_days": 1,
+  "Quantity_times": 4,
+  "IntoMoney": 0,
+  "Note": "Ghi chu",
+  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
+  "ContentCostId": "63c298a97fb4c6dfcaef028a"
+}
 
 ### Get ImplementationCost by id Implementation
 ### access public
@@ -113,26 +165,8 @@ GET http://localhost:5000/api/forms/implementation-cost/contract/63b352b29fd7cd5
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
-### update MandayCost
-### access Public
-###  
-PUT http://localhost:5000/api/forms/manday-cost/put/63a54823564e1d18b4bc1cd5
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
-
-{
-"RatioUSD": 24000,
-"Department": "Phòng GP An Toàn TT Update",
-"Cost": 60,
-"StaffNumber": 1,
-"ImplementationDay": 15,
-"Note": "A",
-"ContractID":"HD01"
-}
-
-
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/manday-cost/delete/63a54823564e1d18b4bc1cd5
+DELETE  http://localhost:5000/api/forms/implementation-cost/delete/63c296d730ae9167f8f61b9c
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

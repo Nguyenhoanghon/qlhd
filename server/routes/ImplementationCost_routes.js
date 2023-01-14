@@ -47,37 +47,43 @@ ImplementationCostController.createImplementationCost);
 // Create ImplementationCost -> GeneralExpense
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
 // access public
-app.post("/api/forms/implementation-cost/GeneralExpense/post/:idcontract", authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/GeneralExpense/post/:idcontract",// authJwt.verifyToken,
 ImplementationCostController.createGeneralExpense);
 
 // Create ImplementationCost -> createStagesImplementation
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
 // access public
-app.post("/api/forms/implementation-cost/stages-implementation/post/:idcontract", authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/stages-implementation/post/:idcontract",// authJwt.verifyToken,
 ImplementationCostController.createStagesImplementation);
 
 // Add AddCostDetail vao chi phi Chung 
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
 // access public
-app.post("/api/forms/implementation-cost/GeneralExpense/post/", authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/general-expense/post/", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetail);
 
 // Add AddCostDetail vao chi phi giai doan
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
 // access public
-app.post("/api/forms/implementation-cost/stages-implementation/post/", authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/stages-implementation/post/", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetailStage);
 
-// Update ImplementationCost 
-// URL access: PUT http://localhost:5000/api/forms/manday-cost/put/ID
+// Update ImplementationCost general-expense  Costs_id 
+// URL access: PUT http://localhost:5000/api/forms/implementation-cost/put/:id
 // access public
-app.put("/api/forms/product-cost/put/:id",
-ImplementationCostController.updateImplementationCost);
+app.put("/api/forms/implementation-cost/general-expense/put/:id",
+ImplementationCostController.updateImplementationCost_CostGeneralExpense);
+
+// Update ImplementationCost stages-implementation Costs_id 
+// URL access: PUT http://localhost:5000/api/forms/implementation-cost/put/:id
+// access public
+app.put("/api/forms/implementation-cost/stages-implementation/put/:id",
+ImplementationCostController.updateImplementationCost_CostDetailStage);
 
 // Delete ImplementationCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/delete/ID
 // access public
-app.delete("/api/forms/product-cost/delete/:id",
+app.delete("/api/forms/implementation-cost/delete/:id",
 ImplementationCostController.deleteImplementationCost);
 
 

@@ -18,6 +18,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 	const [ImplementationCostState, dispatch] = useReducer(ImplementationCostReducer, {
 		ImplementationCost: null,
 		ImplementationCosts: [],
+		//TotalGeneralExpense,//note tinh tong
 		ImplementationCostsLoading: true
 	})
 
@@ -37,6 +38,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.ImplementationCost })//note
 				
 			}
+
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
