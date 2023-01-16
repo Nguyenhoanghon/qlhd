@@ -59,7 +59,7 @@ ImplementationCostController.createStagesImplementation);
 // Add AddCostDetail vao chi phi Chung 
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
 // access public
-app.post("/api/forms/implementation-cost/general-expense/post/", //authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/general-expense/post", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetail);
 
 // Add AddCostDetail vao chi phi giai doan

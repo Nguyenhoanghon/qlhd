@@ -27,11 +27,11 @@ GET http://localhost:5000/api/forms/implementation-cost
 // access public
 POST http://localhost:5000/api/forms/implementation-cost/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3MzY5Njc4NSwiZXhwIjoxNjczNzAzMTg1fQ.uZdHgmoo3cL4dVUnwIW_1qpX_JwIM4WjIyeCfy9r724
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3Mzc3NzkyOSwiZXhwIjoxNjczNzg0MzI5fQ.NdN1zeqbi5qHhiDF6zW7v0w-XPjyW-0PHaziB4JUCvQ
 
 {
-  "GeneralExpense": "Chi phí chung",
-  "StagesImplementation": "CHI PHÍ TRIỂN KHAI"
+  "GeneralExpense": "Chi phí chung 2",
+  "StagesImplementation": "Them giai doan"
 }
 
 ### Add 1 Object (
@@ -98,7 +98,7 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1Zj
   "IntoMoney": 0,
   "Note": "Ghi chu",
   "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
-  "ContentCostId": "63c298a97fb4c6dfcaef028a"
+  "ContentCostId": "63c299047fb4c6dfcaef0290"
 }
 
 

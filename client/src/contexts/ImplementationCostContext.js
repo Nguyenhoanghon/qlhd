@@ -21,6 +21,9 @@ const ImplementationCostContextProvider = ({ children }) => {
 		//TotalGeneralExpense,//note tinh tong
 		ImplementationCostsLoading: true
 	})
+	// State dem so doi tuong trong ImplementationCost
+	let [numberObject, setnumberObject] = useState(0)
+	
 
 	const [showAddImplementationCostModal, setShowAddImplementationCostModal] = useState(false)
 	const [showUpdateImplementationCostModal, setShowUpdateImplementationCostModal] = useState(false)
@@ -84,7 +87,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 				updatedImplementationCost
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.ChiTietHangHoa }) //note MandayKysu biến trả về từ server
+				dispatch({ type: UPDATE, payload: response.data.updateImplementationCost }) //note updateImplementationCost biến trả về từ server
 				return response.data
 			}
 		} catch (error) {
@@ -107,7 +110,9 @@ const ImplementationCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteImplementationCost,
 		findImplementationCost,
-		updateImplementationCost
+		updateImplementationCost,
+		numberObject,
+		setnumberObject
 	}
 
 	return (

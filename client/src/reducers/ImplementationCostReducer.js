@@ -1,4 +1,3 @@
-
 import {
 	LOADED_SUCCESS,
 	LOADED_FAIL,
@@ -15,23 +14,20 @@ export const ImplementationCostReducer = (state, action) => {
 			return {
 				...state,
 				ImplementationCosts: payload,
-				ImplementationCostsLoading: false,
-				TotalGeneralExpense: payload
+				ImplementationCostsLoading: false
 			}
 
 		case LOADED_FAIL:
 			return {
 				...state,
 				ImplementationCosts: [],
-				ImplementationCostsLoading: false,
-				TotalGeneralExpense: payload
+				ImplementationCostsLoading: false
 			}
 
 		case ADD:
 			return {
 				...state,
-				ImplementationCosts: [...state.ImplementationCosts, payload],
-				TotalGeneralExpense: [...state.ImplementationCosts, payload]
+				ImplementationCosts: [...state.ImplementationCosts, payload]
 			}
 
 		case DELETE:
@@ -41,7 +37,7 @@ export const ImplementationCostReducer = (state, action) => {
 			}
 
 		case FIND:
-			return { ...state, ImplementationCost: payload, TotalGeneralExpense: payload }
+			return { ...state, ImplementationCost: payload}
 
 		case UPDATE:
 			const newImplementationCosts = state.ImplementationCosts.map(ImplementationCost =>
