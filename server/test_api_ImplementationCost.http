@@ -1,6 +1,6 @@
 ### ok 
 ### LOGIN
-POST http://localhost:5000/api/auth/login
+POST http://103.88.121.45:5000/api/auth/login
 Content-Type: application/json
 
 {
@@ -13,25 +13,25 @@ Content-Type: application/json
 ### Get all Contract 
 ### access private
 ###ok
-GET http://localhost:5000/api/forms/contract
+GET http://103.88.121.45:5000/api/forms/contract
 
 
 ### Get all  ImplementationCost
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/implementation-cost
+GET http://103.88.121.45:5000/api/forms/implementation-cost
 
 ### KHOI TAO 1 CHI TRIEN KHAI
 // Create ImplementationCost Voi _id.contract truyen vao
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
 // access public
-POST http://localhost:5000/api/forms/implementation-cost/post/63c08c08b1a40f0ce190d6e1
+POST http://103.88.121.45:5000/api/forms/implementation-cost/post/63c09408ed60f11521b0087f
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3Mzc3NzkyOSwiZXhwIjoxNjczNzg0MzI5fQ.NdN1zeqbi5qHhiDF6zW7v0w-XPjyW-0PHaziB4JUCvQ
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA5MzhmZWQ2MGYxMTUyMWIwMDg3NSIsImlhdCI6MTY3MzgzMDMwMywiZXhwIjoxNjczODM2NzAzfQ.rCcG8J8svtJelTkt1GOAotImXWm43P7ES4l1OosEElI
 
 {
-  "GeneralExpense": "Chi phí chung 2",
-  "StagesImplementation": "Them giai doan"
+  "GeneralExpense": "Chi phí chung",
+  "StagesImplementation": "Giai đoạn 1"
 }
 
 ### Add 1 Object (
@@ -64,41 +64,41 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post
 // access public
 
-POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post
+POST http://103.88.121.45:5000/api/forms/implementation-cost/general-expense/post/
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA5MzhmZWQ2MGYxMTUyMWIwMDg3NSIsImlhdCI6MTY3MzgzMDMwMywiZXhwIjoxNjczODM2NzAzfQ.rCcG8J8svtJelTkt1GOAotImXWm43P7ES4l1OosEElI
 
 {
-  "NameCost": "Chi phí tiếp khách",
+  "NameCost": "Chi phí vận chuyển",
   "Units": "Phòng",
-  "UnitPrice": 30000000,
-  "Quantity_days": 2,
+  "UnitPrice": 20000000,
+  "Quantity_days": 1,
   "Quantity_times": 1,
   "IntoMoney": 0,
   "Note": "Ghi chu",
-  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
-  "ContentCostId": "63c298a97fb4c6dfcaef028b"
+  "ImplementationCost_Id": "63c4a016eff90d4fe121c465",
+  "ContentCostId": "63c4a016ce506562a374cb0f"
 }
 
 ###
 // AddCostDetailStage cho chi phi giai doan
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post
+// URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post
 // access public
 
-POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post
+POST http://103.88.121.45:5000/api/forms/implementation-cost/stages-implementation/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA5MzhmZWQ2MGYxMTUyMWIwMDg3NSIsImlhdCI6MTY3MzgzMDMwMywiZXhwIjoxNjczODM2NzAzfQ.rCcG8J8svtJelTkt1GOAotImXWm43P7ES4l1OosEElI
 
 {
   "NameCost": "Chi phí đi lại",
-  "Units": "Phong",
+  "Units": "",
   "UnitPrice": 100000,
   "Quantity_days": 1,
   "Quantity_times": 4,
   "IntoMoney": 0,
-  "Note": "Ghi chu",
-  "ImplementationCost_Id": "63c298a930ae9167f8f6e592",
-  "ContentCostId": "63c299047fb4c6dfcaef0290"
+  "Note": "",
+  "ImplementationCost_Id": "63c4a016eff90d4fe121c465",
+  "ContentCostId": "63c4a016ce506562a374cb0e"
 }
 
 
@@ -168,5 +168,5 @@ GET http://localhost:5000/api/forms/implementation-cost/contract/63b352b29fd7cd5
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/delete/63c296d730ae9167f8f61b9c
+DELETE  http://localhost:5000/api/forms/implementation-cost/delete/63c298a930ae9167f8f6e592
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ

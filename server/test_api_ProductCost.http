@@ -16,19 +16,19 @@ Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
 
 {
-  "ProductName": "Server X60 IBM",
+  "ProductName": "Server X60 IBM HD02",
   "Quantity": 10,
-  "EX_W": 1, // nhap tu nuoc ngoai = true
-  "FOBCost": 2500, //if(EX_W = =true, req.body.FOBCost, 0)
-  "RatioUSD": 24000, //if(EX_W = =true, req.body.RatioUSD, 0)
-  "InputPrice": 50000, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
+  "EX_W": 1, 
+  "FOBCost": 2500, 
+  "RatioUSD": 24000,
+  "InputPrice": 50000,
   "OutputPrice": 100000,
-  "InputIntoMoney": 500000, // Can tinh  = Quantity * InputPrice
-  "OutputIntoMoney": 700000, //Can tinh =  Quantity * OutputPrice
+  "InputIntoMoney": 500000,
+  "OutputIntoMoney": 700000,
   "Insurance": 1,
   "Incentive": 100000,
   "Note": "A",
-  "ContractID": "HD01"
+  "ContractID": "HD02"
 }
 ### Get all MandayCost
 ### access public
@@ -45,7 +45,7 @@ GET http://localhost:5000/api/forms/product-cost/63a69fc3d96b6250abaa4f7a
 ### Get MandayCost by ContractID
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/product-cost/contract/63a664db2112764506e7dde1
+GET http://localhost:5000/api/forms/product-cost/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 

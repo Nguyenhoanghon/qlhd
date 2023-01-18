@@ -29,7 +29,7 @@ export const ContractContextProvider = ({ children }) => {
 		type: null
 	})
 
-	// Get all Users
+	// Get all Contracts
 	const getContracts = async () => {
 		try {
 					const response = await axios.get(`${apiUrl}/api/forms/contract`)//note
@@ -40,52 +40,18 @@ export const ContractContextProvider = ({ children }) => {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
-/*
-	// Get all User By Id
-	const getContracts_By_Id = async () => {
+	// Get Contract by id
+	const getContract_byid = async ContractId  => {
 		try {
-					const response = await axios.get(`${apiUrl}/api/users/id`)//note
+					const response = await axios.get(`${apiUrl}/api/forms/contract/${ContractId}`)//note
 					if (response.data.success) {
-						dispatch({ type: LOADED_SUCCESS, payload: response.data.Users })//note
+						dispatch({ type: LOADED_SUCCESS, payload: response.data.Contracts })//note
 					}
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
-
-	const getUsers_By_Router = async () => {
-		try {
-			//// check roles nhận
-			//goi route de lay Role name
-			const UserRole = await axios.get(`${apiUrl}/api/users/role`)//note
-
-			switch(UserRole.data.Users.roles[0].name){
-				case 'TongGiamDoc': 
-				{
-					const response = await axios.get(`${apiUrl}/api/users/4`)//note
-					if (response.data.success) {
-						dispatch({ type: LOADED_SUCCESS, payload: response.data.Users })//note
-					}
-				}
-				break;
-				case 'GiamDoc': 
-				{
-					const response = await axios.get(`${apiUrl}/api/users/3`)//note
-					if (response.data.success) {
-						dispatch({ type: LOADED_SUCCESS, payload: response.data.Users })//note
-					}
-				}
-				break;
-			}
-			
-			
-
-
-		} catch (error) {
-			dispatch({ type: LOADED_FAIL })
-		}
-	}
-*/
+	
 	// insert Contract
 	const addContract = async Contract => {
 		try {
@@ -115,11 +81,27 @@ export const ContractContextProvider = ({ children }) => {
 	}
 
 	// Find ContractId when ContractId is updating ContractId
-	const findContract = ContractId => {
+	const findContract = async ContractId => {
 		const Contract = ContractState.Contracts.find(Contract => Contract._id === ContractId)
 		dispatch({ type: FIND, payload: Contract })
 	}
-
+	//View summary
+	const Find_Contract_id = async id_contract => {
+		try {
+			const response = await axios.get(
+				`${apiUrl}/api/forms/contract/${id_contract._id}`,
+				id_contract
+			)
+			if (response.data.success) {
+				dispatch({ type: FIND, payload: response.data.Contract })
+				return response.data
+			}
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
 	// Update Contract
 	const updateContract = async updateContract => {
 		try {
@@ -153,6 +135,8 @@ export const ContractContextProvider = ({ children }) => {
 		deleteContract,
 		findContract,
 		updateContract,
+		getContract_byid,
+		Find_Contract_id
 
 	}
 

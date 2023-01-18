@@ -28,12 +28,12 @@ exports.getAllContract = async (req,res) => {
   }
 
 
-//Get all Contract
+//Get Contract by id
 //@Access Public
 exports.getContract = async (req,res) => {
     console.log("getContract is called")
     try {
-      const Contract_data = await Contract.findById({_id: req.params.id}).populate("user", "-__v")
+      const Contract_data = await Contract.find({_id: req.params.id}).populate("user", "-__v")
       if(Contract_data==null)
             res.json({ success: true, message: "Contract not found !" }) 
       else

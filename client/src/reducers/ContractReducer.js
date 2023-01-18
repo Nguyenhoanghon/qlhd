@@ -14,6 +14,7 @@ export const ContractReducer = (state, action) => {
 			return {
 				...state,
 				Contracts: payload,
+				Contract: payload,
 				ContractsLoading: false
 			}
 

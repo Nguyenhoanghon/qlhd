@@ -42,6 +42,31 @@ const ProductCostContextProvider = ({ children }) => {
 		}
 	}
 
+		// Get all ProductCosts by id_ProductCosts
+		const getProductCost_byidProductCost = async ContractId => {
+			try {
+				const response = await axios.get(`${apiUrl}/api/forms/product-Cost/${ContractId}`)//note
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS, payload: response.data.ProductCost })//note
+					
+				}
+			} catch (error) {
+				dispatch({ type: LOADED_FAIL })
+			}
+		}
+		// Get all ProductCosts by id_Contract 
+		const getProductCost_byidContract = async ContractId => {
+			try {
+				const response = await axios.get(`${apiUrl}/api/forms/product-cost/contract/${ContractId}`)//note
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS, payload: response.data.ProductCost })//note
+					
+				}
+			} catch (error) {
+				dispatch({ type: LOADED_FAIL })
+			}
+		}
+
 	// Add ProductCost
 	const addProductCost = async newProductCost => {
 		try {
@@ -107,7 +132,10 @@ const ProductCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteProductCost,
 		findProductCost,
-		updateProductCost
+		updateProductCost,
+		getProductCost_byidProductCost,
+		getProductCost_byidContract
+
 	}
 
 	return (

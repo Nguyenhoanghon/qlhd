@@ -29,14 +29,14 @@ const NavbarMenu = () => {
 					<Nav className='mr-auto'>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/sumary'
+							to='/summary'
 							as={Link}
 						>
-							PTHD Tổng thể
+							Dashboard
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'
-							to='/contract/forms'
+							to='/contract'
 							as={Link}
 						>
 							Hợp đồng

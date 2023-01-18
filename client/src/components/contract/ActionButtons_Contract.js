@@ -1,4 +1,7 @@
 
+import * as React from 'react';
+import {BrowserRouter as Routes, Route, useParams} from 'react-router-dom'
+
 import Button from 'react-bootstrap/Button'
 import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
@@ -12,7 +15,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 export const ActionButtons_Contract = ({ _id }) => {
 	const { deleteContract, findContract, setShowUpdateContractModal,setShowAddContractModal } = useContext(
 		ContractContext
-	) //goi ActionButtons cho component khác đc kg ???
+	)
 
 	const chooseContract = ContractId => {
 		findContract(ContractId)
@@ -22,12 +25,14 @@ export const ActionButtons_Contract = ({ _id }) => {
 		findContract(ContractId)
 		setShowAddContractModal(true)
 	}
+
+
 	return (
-		<>
+		<>	
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					Xem tổng thể Hơp đồng 
+					Cập nhật thông tin hơp đồng 
 					</Tooltip>
 				}
 			>
@@ -39,7 +44,7 @@ export const ActionButtons_Contract = ({ _id }) => {
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					 Nhập thông tin hợp đồng
+					 Nhập dữ liệu hợp đồng
 					</Tooltip>
 				}
 			>

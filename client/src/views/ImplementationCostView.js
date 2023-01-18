@@ -76,12 +76,9 @@ const ImplementationCost = () => {
 		return Total;
 	}
 	//Duyet qua so giai doan ====>> chua show duoc
-	const showdata = (mang) =>{
-		for (const i in mang)
-		{
-			data += showStageImplementation(i)
-		}
-		return data
+	let test = [];
+	function showdata() {
+		return 1
 	}
 	
 	//Tieu de Bang chi phi trien khai
@@ -237,15 +234,12 @@ const ImplementationCost = () => {
 					</Card.Body>
 				</Card>
 			</>
-			
-
 		)
 									
 	}
 
 	return (
 		<>
-			
 			{body}
 			{/* After ImplementationCost is added, show toast */}
 			<Toast
@@ -264,6 +258,9 @@ const ImplementationCost = () => {
 					<strong>{message}</strong>
 				</Toast.Body>
 			</Toast>	
+			{showdata()} 
+			{titleTable}
+			
 		</>
 	)
 }

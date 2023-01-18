@@ -282,7 +282,9 @@ exports.getProductCost_ContractID = async (req,res) => {
         InputIntoMoney += ProductCost_data[i].InputIntoMoney;
         OutputIntoMoney += ProductCost_data[i].OutputIntoMoney;
     }
+    console.log("==========",ProductCost_data)
     console.log(">>>>>>>tong",InputIntoMoney,"-",OutputIntoMoney);
+    res.json({ success: true, ProductCost: ProductCost_data }) 
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })

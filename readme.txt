@@ -63,3 +63,25 @@ CapitalExpenditure
     "BedtDays": 20,
     "DebtCollectionDays": 15, 
     "Note": "A",
+
+
+
+<tr> 
+							<td>Trung tâm</td>
+							<td>{Contracts[0].Center}</td>
+							</tr>
+							<tr> 
+							<td>Phòng</td>
+							<td>{Contracts[0].Department}</td>
+							</tr>
+							<tr> 
+							<td>Khách hàng</td>
+							<td>{Contracts[0].CustomerID}</td>
+							</tr>
+							<tr> 
+							<td>Số hợp đồng/PO</td>
+							<td>{Contracts[0].ContractID}</td>
+							</tr>
+							<tr> 
+							<td>Ngày</td>
+							<td>{Contracts[0].Date}</td>
