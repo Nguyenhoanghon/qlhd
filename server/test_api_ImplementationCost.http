@@ -13,13 +13,14 @@ Content-Type: application/json
 ### Get all Contract 
 ### access private
 ###ok
-GET http://103.88.121.45:5000/api/forms/contract
-
+//GET http://103.88.121.45:5000/api/forms/contract
+GET http://localhost:5000/api/forms/contract
 
 ### Get all  ImplementationCost
 ### access public
 ###ok
-GET http://103.88.121.45:5000/api/forms/implementation-cost
+//GET http://103.88.121.45:5000/api/forms/implementation-cost
+GET http://localhost:5000/api/forms/implementation-cost
 
 ### KHOI TAO 1 CHI TRIEN KHAI
 // Create ImplementationCost Voi _id.contract truyen vao
@@ -155,13 +156,13 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1Zj
 ### Get ImplementationCost by id Implementation
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/implementation-cost/63b3570f391b9a0052aff0ce
+GET http://localhost:5000/api/forms/implementation-cost/63c484e430ae9167f8c739c6
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Get ImplementationCost by IdContract
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/implementation-cost/contract/63b352b29fd7cd536585b9e7
+GET http://localhost:5000/api/forms/implementation-cost/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 

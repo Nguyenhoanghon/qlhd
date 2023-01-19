@@ -49,6 +49,21 @@ const CapitalExpenditureCostContextProvider = ({ children }) => {
 		}
 
 	}
+
+	// Get CapitalExpenditureCosts by idContract
+	const getCapitalExpenditureCosts_byidContract = async (idContract) => {
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/capital-expenditure-cost/contract/${idContract}`)
+			console.log("test",response)
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.CapitalExpenditureCost  })
+				
+			}
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+
+	}
 	
 	// Add CapitalExpenditureCost
 	const addCapitalExpenditureCost = async newCapitalExpenditureCost => {
@@ -116,6 +131,7 @@ const CapitalExpenditureCostContextProvider = ({ children }) => {
 		deleteCapitalExpenditureCost,
 		findCapitalExpenditureCost,
 		updateCapitalExpenditureCost,
+		getCapitalExpenditureCosts_byidContract
 	}
 
 	return (

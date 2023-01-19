@@ -42,6 +42,20 @@ const MiscExpenseCostContextProvider = ({ children }) => {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
+
+	// Get MiscExpenseCosts by idContract
+	const getMiscExpenseCost_byidContract = async (ContractId) => {
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/misc-expense/contract/${ContractId}`)
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.MiscExpense })
+				
+			}
+			console.log(response.data.MiscExpense);
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
 	
 	// Add MiscExpenseCost
 	const addMiscExpenseCost = async newMiscExpenseCost => {
@@ -110,7 +124,9 @@ const MiscExpenseCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteMiscExpenseCost,
 		findMiscExpenseCost,
-		updateMiscExpenseCost
+		updateMiscExpenseCost,
+		getMiscExpenseCost_byidContract
+
 	}
 
 	return (

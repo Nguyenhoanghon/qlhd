@@ -46,6 +46,19 @@ const ImplementationCostContextProvider = ({ children }) => {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
+	// Get ImplementationCosts by idContract
+	const getImplementationCosts_byidContract = async (idContract) => {
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/implementation-cost/contract/${idContract}`)//note
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.ImplementationCost })//note
+				
+			}
+
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
 
 	// Add ImplementationCost
 	const addImplementationCost = async newImplementationCost => {
@@ -112,7 +125,8 @@ const ImplementationCostContextProvider = ({ children }) => {
 		findImplementationCost,
 		updateImplementationCost,
 		numberObject,
-		setnumberObject
+		setnumberObject,
+		getImplementationCosts_byidContract
 	}
 
 	return (

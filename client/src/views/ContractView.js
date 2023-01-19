@@ -85,6 +85,7 @@ export const ContractView = () => {
 								<th>Phòng</th>
 								<th>Khách Hàng</th>
 								<th>Ngày</th>
+								<th>Tỷ giá USD</th>
 								<th>ID</th>
 								</tr>
 							</thead>
@@ -97,6 +98,7 @@ export const ContractView = () => {
 									<td>{Contract.Deparment}</td>
 									<td>{Contract.CustomerID}</td>
 									<td>{Contract.Date}</td>
+									<td>{Contract.RatioUSD}</td>
 									<td>{Contract._id}</td>
 									<td>
 									<ActionButtons_Update_Delete _id={Contract._id} />
@@ -341,6 +343,7 @@ export const Contract_id = () => {
 								<th>Phòng</th>
 								<th>Khách Hàng</th>
 								<th>Ngày</th>
+								<th>Tỷ giá USD</th>
 								<th>ID</th>
 								</tr>
 							</thead>
@@ -353,11 +356,11 @@ export const Contract_id = () => {
 									<td>{Contract.Deparment}</td>
 									<td>{Contract.CustomerID}</td>
 									<td>{Contract.Date}</td>
+									<td>{Contract.RatioUSD}</td>
 									<td>{Contract._id}</td>
 									<td>
 									
 									</td>
-								
 								</tr>
 								
 								))

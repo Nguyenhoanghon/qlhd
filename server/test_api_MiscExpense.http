@@ -18,8 +18,8 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMT
 {
 "Content": "Tiếp Khách",
 "Cost": "1000000",
-"Note": "A",
-"ContractID":"HD02"
+"Note": "HD01",
+"ContractID":"HD01"
 }
 
 ### Get all MiscExpense 
@@ -32,6 +32,12 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mz
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/misc-expense/63a96085d10d38ba3e243270
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
+
+### Get MiscExpense by idContract
+### access public
+###ok
+GET http://localhost:5000/api/forms/misc-expense/contract/63c08c08b1a40f0ce190d6e1
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
 
 

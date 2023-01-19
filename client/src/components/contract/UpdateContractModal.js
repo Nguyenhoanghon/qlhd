@@ -19,10 +19,12 @@ const UpdateContractModal = () => {
 
 	useEffect(() => setUpdatedContract(Contract), [Contract])
 
-	const { Center,
+	const {
+		Center,
         Deparment,
         CustomerID,
         ContractID,
+		RatioUSD,
         Date
 	 } = updatedContract //note
 
@@ -41,11 +43,6 @@ const UpdateContractModal = () => {
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddContractData = () => {
-	// 	setNewContract({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddContractModal(false)
-	// }
-	const listForms = ['Chi tiết hàng hoá', 'Chi phí vồns']
 	return (
 		<Modal show={showUpdateContractModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
@@ -100,6 +97,18 @@ const UpdateContractModal = () => {
 							placeholder=''
 							name='ContractID'
 							value={ContractID}
+							onChange={onChangeUpdatedContractForm}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='RatioUSD-help' muted  as="h6">
+							Tỷ giá USD
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='24000'
+							name='RatioUSD'
+							value={RatioUSD}
 							onChange={onChangeUpdatedContractForm}
 						/>
 					</Form.Group>

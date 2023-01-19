@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 // Create MiscExpense 
 // access public
-app.post("/api/forms/misc-expense/post",authJwt.verifyToken,
+app.post("/api/forms/misc-expense/post",//authJwt.verifyToken,
 MiscExpenseController.insertMiscExpense);
 
 // Get all MiscExpense 
@@ -24,12 +24,12 @@ MiscExpenseController.getAllMiscExpense);
 
 // Get MiscExpense by id
 // access public
-app.get("/api/forms/misc-expense/:id", authJwt.verifyToken,
+app.get("/api/forms/misc-expense/:id", //authJwt.verifyToken,
 MiscExpenseController.getMiscExpense);
 
 // Get MiscExpense by id HD
 // access public
-app.get("/api/forms/misc-expense/filter/:idHD", //authJwt.verifyToken,
+app.get("/api/forms/misc-expense/contract/:id", //authJwt.verifyToken,
 MiscExpenseController.getMiscExpense_ContractID);
 
 // Update MiscExpense 

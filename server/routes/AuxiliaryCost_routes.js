@@ -24,6 +24,18 @@ AuxiliaryCostController.getAllAuxiliaryCost);
 app.get("/api/forms/auxiliary-cost/:id",
 AuxiliaryCostController.getAuxiliaryCost);
 
+// Get AuxiliaryCost By idContract
+// URL access: GET http://localhost:5000/api/forms/auxiliary-cost/contract/id
+// access public
+app.get("/api/forms/auxiliary-cost/contract/:id",
+AuxiliaryCostController.getAuxiliaryCost_byidContract);
+
+// Get AuxiliaryCost By idContract and plan
+// URL access: GET http://localhost:5000/api/forms/auxiliary-cost/contract/:id/:plan
+// access public
+app.get("/api/forms/auxiliary-cost/contract/:id/:plan",
+AuxiliaryCostController.getAuxiliaryCost_byidContract_plan);
+
 // Create AuxiliaryCost 
 // URL access: POST http://localhost:5000/api/forms/auxiliary-cost/post
 // access public

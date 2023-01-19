@@ -3,23 +3,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Landing from './components/layout/Landing'
 import ProtectedRoute from './components/routing/ProtectedRoute'
 //====== Components
+
 import Auth from './views/Auth'
 import User from './views/User'
+import {Summary,Summary_id} from './views/SummaryView'
+import {InputForm} from './views/InputForm'
 import { ContractView,Inputforms,Contract_id} from './views/ContractView'
 
-import MiscExpenseCost from './views/MiscExpenseCostView'
-import GuaranteeLetterCost from './views/GuaranteeLetterCostView'
-import MandayCostView from './views/MandayCostView'
 
-import ImplementationView from './views/ImplementationCostView'
-import AuxiliaryCost from './views/AuxiliaryCostView'
-import CapitalExpenditure from './views/CapitalExpenditureCostView'
-
-import {Summary,Summary_id} from './views/SummaryView'
 import {ProductCost_all,ProductCost_idContract} from './views/ProductCostView'
-
-
-
+import {MandayCost_all,MandayCost_idContract} from './views/MandayCostView'
+import {GuaranteeLetterCost_all, GuaranteeLetterCost_idContract} from './views/GuaranteeLetterCostView'
+import {MiscExpenseCost_all,MiscExpenseCost_byidContract} from './views/MiscExpenseCostView'
+import {CapitalExpenditureCost_all,CapitalExpenditureCost_byidContract} from './views/CapitalExpenditureCostView'
+import {AuxiliaryCost_all,AuxiliaryCost_byidContract} from './views/AuxiliaryCostView'
+import {ImplementationCost,ImplementationCost_byidContract} from './views/ImplementationCostView'
 
 //=====contexts
 import AuthContextProvider from './contexts/AuthContext'
@@ -36,6 +34,7 @@ import CapitalExpenditureContextProvider from './contexts/CapitalExpenditureCost
 function App() {
 	return (
 		<>
+		
 		<AuthContextProvider>
 				<Router>
 					<Switch>
@@ -58,7 +57,8 @@ function App() {
 						</ProductCostContextProvider>
 
 						<ImplementationCostContextProvider>
-							<ProtectedRoute exact path='/implementation-cost' component={ImplementationView} />
+							<ProtectedRoute exact path='/implementation-cost' component={ImplementationCost} />
+							<ProtectedRoute exact path='/implementation-cost/contract/:id' component={ImplementationCost_byidContract} />
 						</ImplementationCostContextProvider>
 
 						<UserContextProvider>
@@ -73,32 +73,53 @@ function App() {
 
 						<CapitalExpenditureContextProvider>
 							<ProductCostContextProvider>
-								<ProtectedRoute exact path='/CapitalExpenditureCost' component={CapitalExpenditure} />
+								<ProtectedRoute exact path='/CapitalExpenditureCost' component={CapitalExpenditureCost_all} />
+								<ProtectedRoute exact path='/CapitalExpenditureCost/contract/:id' component={CapitalExpenditureCost_byidContract} />
 							</ProductCostContextProvider>
 						</CapitalExpenditureContextProvider>
 						
 						<MiscExpenseCostContextProvider>
-							<ProtectedRoute exact path='/MiscExpenseCost' component={MiscExpenseCost} />
+							<ProtectedRoute exact path='/MiscExpenseCost' component={MiscExpenseCost_all} /> 
+							<ProtectedRoute exact path='/MiscExpenseCost/contract/:id' component={MiscExpenseCost_byidContract} />
 						</MiscExpenseCostContextProvider>
 
+						<ProductCostContextProvider>
 						<AuxiliaryCostContextProvider>
-							<ProtectedRoute exact path='/AuxiliaryCost' component={AuxiliaryCost} />
+							<ProtectedRoute exact path='/AuxiliaryCost' component={AuxiliaryCost_all} />
+							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id' component={AuxiliaryCost_byidContract} />
 						</AuxiliaryCostContextProvider>
+						</ProductCostContextProvider>
 
 						<GuaranteeLetterCostContextProvider>
-							<ProtectedRoute exact path='/guarantee-letter-cost' component={GuaranteeLetterCost} />{/* new */}
+							<ProtectedRoute exact path='/guarantee-letter-cost' component={GuaranteeLetterCost_all} />
+							<ProtectedRoute exact path='/guarantee-letter-cost/contract/:id' component={GuaranteeLetterCost_idContract} />
 						</GuaranteeLetterCostContextProvider>
 
 						<MandayCostContextProvider>
-							<ProtectedRoute exact path='/manday-cost' component={MandayCostView} />
+							<ProtectedRoute exact path='/manday-cost' component={MandayCost_all} />
+							<ProtectedRoute exact path='/manday-cost/contract/:id' component={MandayCost_idContract}/>
 						</MandayCostContextProvider>
 
+						<ImplementationCostContextProvider>
+						<AuxiliaryCostContextProvider>
+						<CapitalExpenditureContextProvider>
+						<MiscExpenseCostContextProvider>
+						<GuaranteeLetterCostContextProvider>
+						<MandayCostContextProvider>
 						<ContractContextProvider>
 						<ProductCostContextProvider>
 							<ProtectedRoute exact path='/summary' component={Summary}/>
 							<ProtectedRoute exact path='/summary/:id' component={Summary_id}/>
+							<ProtectedRoute exact path='/inputform/:id' component={InputForm}/>
 						</ProductCostContextProvider>
 						</ContractContextProvider>
+						</MandayCostContextProvider>
+						</GuaranteeLetterCostContextProvider>
+						</MiscExpenseCostContextProvider>
+						</CapitalExpenditureContextProvider>
+						</AuxiliaryCostContextProvider>
+						</ImplementationCostContextProvider>
+
 						</>
 
 						

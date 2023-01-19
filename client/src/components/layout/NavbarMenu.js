@@ -32,14 +32,7 @@ const NavbarMenu = () => {
 							to='/summary'
 							as={Link}
 						>
-							Dashboard
-						</Nav.Link>
-						<Nav.Link
-							className='font-weight-bolder text-white'
-							to='/contract'
-							as={Link}
-						>
-							Hợp đồng
+							Summary
 						</Nav.Link>
 						<Nav.Link
 							className='font-weight-bolder text-white'

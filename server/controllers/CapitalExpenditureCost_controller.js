@@ -47,7 +47,7 @@ exports.getCapitalExpenditureCost_byid = async (req,res) => {
 //Get CapitalExpenditureCost by contract (idcontract lien ket voi CapitalExpenditureCost)
 //@Access Public
 // test ok
-exports.getCapitalExpenditureCost_bycontract = async (req,res) => {
+exports.getCapitalExpenditureCost_byidContract = async (req,res) => {
     console.log("getAllCapitalExpenditureCost is called")
     try {
  

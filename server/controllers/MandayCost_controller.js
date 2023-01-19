@@ -174,3 +174,18 @@ exports.deleteMandayCost = async (req, res) => {
 
 }
 
+//================== cac ham chuc nang ================================//
+//Get  MandayCost by idContract
+//@Access Public
+exports.getMandayCost_ContractID = async (req,res) => {
+    console.log("getMandayCost_Contract is called >>>>", req.params.idContract)
+    try {
+      const MandayCost_data = await MandayCost.find({contract: req.params.idContract},)//.populate("contract", "-__v")
+    console.log("==========",MandayCost_data)
+    res.json({ success: true, MandayCost: MandayCost_data }) 
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+    
+  }

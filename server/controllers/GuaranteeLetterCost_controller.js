@@ -174,19 +174,18 @@ exports.deleteGuaranteeLetterCost = async (req, res) => {
 
 }
 
-// @route Get localhost:5000/api/GuaranteeLetterCost/check
-// @access Public
-exports.check = async (req, res) => {
-    console.log("Test route !");
-    res.json({ success: true ,message: "Test route"}) 
-
-    GuaranteeLetterCost.find({_id: req.params.id },(err,GuaranteeLetterCost)=>{
-        if(!GuaranteeLetterCost){
-            console.log("Thoa điêuf kiện",GuaranteeLetterCost)
-        }
-        else{
-            console.log("Id Chi phí not found")
-        }
-    });
-
-}
+//================== cac ham chuc nang ================================//
+//Get  GuaranteeLetterCost by idContract
+//@Access Public
+exports.getGuaranteeLetterCost_ContractID = async (req,res) => {
+    console.log("geGuaranteeLetterCost_Contract is called >>>>", req.params.idContract)
+    try {
+      const GuaranteeLetterCost_data = await GuaranteeLetterCost.find({contract: req.params.idContract},).populate("contract", "-__v")
+    console.log("==========",GuaranteeLetterCost_data)
+    res.json({ success: true, GuaranteeLetterCost: GuaranteeLetterCost_data }) 
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+    
+  }

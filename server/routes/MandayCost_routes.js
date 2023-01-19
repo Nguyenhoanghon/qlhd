@@ -15,7 +15,7 @@ module.exports = function(app) {
 // Get all MandayCost
 // URL access: GET http://localhost:5000/api/forms/manday-cost
 // access public
-app.get("/api/forms/manday-cost",authJwt.verifyToken,
+app.get("/api/forms/manday-cost",//authJwt.verifyToken,
 MandayCostController.getAllMandayCost);
 
 // Get MandayCost By id
@@ -23,6 +23,12 @@ MandayCostController.getAllMandayCost);
 // access public
 app.get("/api/forms/manday-cost/:id",
 MandayCostController.getMandayCost);
+
+// Get MandayCost By idContract
+// URL access: GET http://localhost:5000/api/forms/manday-cost/contract/id
+// access public
+app.get("/api/forms/manday-cost/contract/:idContract",
+MandayCostController.getMandayCost_ContractID);
 
 // Create MandayCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post

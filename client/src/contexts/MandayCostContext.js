@@ -42,6 +42,19 @@ const MandayCostContextProvider = ({ children }) => {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
+		// Get  MandayCost by idcontract
+		const getMandayCost_byidContract = async (ContractId) => {
+			try {
+				const response = await axios.get(`${apiUrl}/api/forms/manday-cost/contract/${ContractId}`)
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS, payload: response.data.MandayCost })
+					
+				}
+				console.log(response.data.MandayCost);
+			} catch (error) {
+				dispatch({ type: LOADED_FAIL })
+			}
+		}
 
 	// Add MandayCost
 	const addMandayCost = async newMandayCost => {
@@ -110,7 +123,8 @@ const MandayCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteMandayCost,
 		findMandayCost,
-		updateMandayCost
+		updateMandayCost,
+		getMandayCost_byidContract
 	}
 
 	return (

@@ -72,6 +72,7 @@ exports.insertContract = async (req, res) => {
         Deparment,
         CustomerID,
         ContractID,
+        RatioUSD,
         Date
     } = req.body
 
@@ -80,6 +81,7 @@ exports.insertContract = async (req, res) => {
         Deparment,
         CustomerID,
         ContractID,
+        RatioUSD,
         Date
     })
     console.log("test data ====>>>",req.body.User)
@@ -157,7 +159,8 @@ exports.updateContract = async (req,res) => {
         Deparment,
         CustomerID,
         ContractID,
-        Date 
+		RatioUSD,
+        Date
     } = req.body
     // Simple validation
     if (!ContractID)
@@ -172,6 +175,7 @@ exports.updateContract = async (req,res) => {
             Deparment: req.body.Deparment,
             CustomerID: req.body.CustomerID,
             ContractID: req.body.ContractID,
+            RatioUSD: req.body.RatioUSD,
             Date: req.body.Date,
         }
 

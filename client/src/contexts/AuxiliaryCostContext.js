@@ -16,7 +16,7 @@ export const AuxiliaryCostContext = createContext()
 const AuxiliaryCostContextProvider = ({ children }) => {
 	// State
 	const [AuxiliaryCostState, dispatch] = useReducer(AuxiliaryCostReducer, {
-		AuxiliaryCost: null,
+		AuxiliaryCost: [],
 		AuxiliaryCosts: [],
 		AuxiliaryCostsLoading: true
 	})
@@ -38,6 +38,43 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 				
 			}
 			console.log(response.data.AuxiliaryCost);
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+
+	// Get AuxiliaryCosts by idContract
+	const getAuxiliaryCosts_byidContract = async (idcontract) => {
+		console.log("trong getAuxiliaryCosts_byidContract",idcontract)
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idcontract}`)
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost })
+				
+			}
+			console.log(response.data.AuxiliaryCost);
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+	// Get AuxiliaryCosts by idContract and Plan
+	const getAuxiliaryCosts_byidContract_Plan1 = async (idContract,Plan) => {
+		try {
+				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost_data })
+				}
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+	// Get AuxiliaryCosts by idContract and Plan
+	const getAuxiliaryCosts_byidContract_Plan2 = async (idContract,Plan) => {
+		try {
+				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
+				if (response.data.success) {
+					dispatch({ type: FIND, payload: response.data.AuxiliaryCost_data })
+				}
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
@@ -110,7 +147,10 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteAuxiliaryCost,
 		findAuxiliaryCost,
-		updateAuxiliaryCost
+		updateAuxiliaryCost,
+		getAuxiliaryCosts_byidContract,
+		getAuxiliaryCosts_byidContract_Plan1,
+		getAuxiliaryCosts_byidContract_Plan2
 	}
 
 	return (

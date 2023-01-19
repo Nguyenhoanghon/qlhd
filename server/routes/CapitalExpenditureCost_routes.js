@@ -27,8 +27,8 @@ CapitalExpenditureCostController.getCapitalExpenditureCost_byid);
 // Get CapitalExpenditureCosts By contract
 // URL access: GET http://localhost:5000/api/forms/manday-cost/id
 // access public
-app.get("/api/forms/capital-expenditure-cost/bycontract/:idcontract",
-CapitalExpenditureCostController.getCapitalExpenditureCost_bycontract);
+app.get("/api/forms/capital-expenditure-cost/contract/:idcontract",
+CapitalExpenditureCostController.getCapitalExpenditureCost_byidContract);
 
 // Create CapitalExpenditureCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post

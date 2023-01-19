@@ -94,9 +94,7 @@ exports.getMiscExpense = async (req,res) => {
 exports.getMiscExpense_ContractID = async (req,res) => {
     console.log("getMiscExpense is called")
     try {
-        //ID_HD
-
-      const MiscExpense_data = await MiscExpense.find({contract: req.params.idHD}).populate("contract", "-__v")
+      const MiscExpense_data = await MiscExpense.find({contract: req.params.id}).populate("contract", "-__v")
       console.log(req.params.idHD);
       res.json({ success: true,message: 'MiscExpense not Found', MiscExpense: MiscExpense_data }) 
       console.log(MiscExpense_data)

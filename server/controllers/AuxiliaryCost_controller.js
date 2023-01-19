@@ -15,7 +15,7 @@ exports.getAllAuxiliaryCost = async (req,res) => {
     try {
       let TotalCPXL_Plan1 = 0;
       let TotalCPgross_Plan1 = 0;
-      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: 1})//.populate("contract", "-__v")
+      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: 1}).populate("contract", "-__v")
       for (let i = 0; i < AuxiliaryCost_data1.length; i++){
         TotalCPXL_Plan1 += AuxiliaryCost_data1[i].CPXL;
         TotalCPgross_Plan1 += AuxiliaryCost_data1[i].CPgross;
@@ -48,7 +48,7 @@ exports.getAllAuxiliaryCost = async (req,res) => {
 exports.getAuxiliaryCost = async (req,res) => {
     console.log("getAllAuxiliaryCost is called")
     try {
-      const AuxiliaryCost_data = await AuxiliaryCost.findById({_id: req.params.id}).populate("contract", "-__v")
+      const AuxiliaryCost_data = await AuxiliaryCost.findById({_id: req.params.id})//.populate("contract", "-__v")
       if (AuxiliaryCost_data==null)
       res.json({ success: true, message: "AuxiliaryCost not found !"}) 
       else 
@@ -61,6 +61,48 @@ exports.getAuxiliaryCost = async (req,res) => {
     }
   }
 
+// @route GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c1d855ce5c8ecc6ce46069
+//Get AuxiliaryCost by idContract
+//@Access Public
+exports.getAuxiliaryCost_byidContract = async (req,res) => {
+    console.log("getAllAuxiliaryCost is called")
+    try {
+      const AuxiliaryCost_data = await AuxiliaryCost.find({contract: req.params.id})
+      if (AuxiliaryCost_data==null)
+      res.json({ success: true, message: "AuxiliaryCost not found !"}) 
+      else 
+      res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data }) 
+      console.log(AuxiliaryCost_data)
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+  }
+
+// @route GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c1d855ce5c8ecc6ce46069/1
+//Get AuxiliaryCost by idContract and plan
+//@Access Public
+exports.getAuxiliaryCost_byidContract_plan = async (req,res) => {
+    console.log("getAllAuxiliaryCost is called","idContract" ,req.params.id, "Plan", req.params.plan)
+
+    try {
+      const AuxiliaryCost_data = await AuxiliaryCost.find({contract: req.params.id, Plan: req.params.plan})
+      if (AuxiliaryCost_data==null)
+      res.json({ success: true, message: "AuxiliaryCost not found !"}) 
+      else 
+      res.json({ success: true, AuxiliaryCost_data: AuxiliaryCost_data })
+    
+  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+    
+  }
+
+
+
 // Insert AuxiliaryCost
 // @access Public
 // Note: Load Form 1 co loc theo Hop Dong Khong???
@@ -70,43 +112,43 @@ exports.getAuxiliaryCost = async (req,res) => {
 exports.insertAuxiliaryCost = async (req, res) => {
     console.log("Test route ===> addAuxiliaryCost is called !");
     //Load Tong gia von va tong doanh thu tu Form1
-    const { 
-        Revenue, // Load từ form 1
-        Plan, // Lua chon gia tri
+    const {
+        Renevue,
+        Plan,
         Content,
-        Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        Cost,
         CPXL,
         CPgross,
-        Note,
-        contract
+        Note
     } = req.body
 
     const newAuxiliaryCost = new AuxiliaryCost({
-        Revenue, // Load từ form 1
-        Plan, // Lua chon gia tri, M 
+        Renevue,
+        Plan,
         Content,
-        Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+        Cost,
         CPXL,
         CPgross,
         Note
     })
-    console.log("Test data recieved ====>>>",newAuxiliaryCost)
+    console.log("Test data recieved ====>>>",newAuxiliaryCost.Renevue)
     console.log(req.body.ContractID);
-
+    newAuxiliaryCost.Renevue = 0;
     try {
         // TIM id contract từ ContractID
         const idcontract = await Contract.find({ContractID: req.body.ContractID})
         // Load data tu Form 1: Lay tong gia von va Doanh thu
+        console.log("test ket quả idCOntract", idcontract)
         const ProductCost_data = await ProductCost.find({contract: idcontract[0]._id})
-        newAuxiliaryCost.Revenue = 0;
+        
         for (let i = 0; i < ProductCost_data.length; i++) {
-            newAuxiliaryCost.Revenue += ProductCost_data[i].OutputIntoMoney;
+            newAuxiliaryCost.Renevue += ProductCost_data[i].OutputIntoMoney;
         }
-        console.log("Sau khi load tu Form 1>>>>>>>Revenue: ",newAuxiliaryCost.Revenue);
+        console.log("Data newAuxiliaryCost sẽ được thêm >>>>>",newAuxiliaryCost)
 
-        // So tien
+        // Xử lý logic chi phí (So tien)
         if(req.body.Cost < 1)
-            newAuxiliaryCost.Cost = req.body.Cost * newAuxiliaryCost.Revenue;
+            newAuxiliaryCost.Cost = req.body.Cost * newAuxiliaryCost.Renevue ;
         else
             newAuxiliaryCost.Cost = req.body.Cost;
         
@@ -119,9 +161,10 @@ exports.insertAuxiliaryCost = async (req, res) => {
             newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
         }
 
-        
-        console.log("Data newAuxiliaryCost them >>>>>",newAuxiliaryCost)
-        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
+        console.log("Sau khi load tu Form 1>>>>>>>Revenue: ",newAuxiliaryCost.Renevue);
+       
+        //Thuc hien luu vao DB voi idContract
+
         Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
         if(Contract.length!=0){
             newAuxiliaryCost.save((err, AuxiliaryCost) => {
@@ -137,7 +180,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
                             }
                             res.json({ success: true,message:  `${req.body.Content} đã được thêm thành công!!!`, AuxiliaryCost: newAuxiliaryCost }) 
                         });
-                console.log("Sau khi them >>>>>", newAuxiliaryCost)
+                console.log("Sau khi them >>>>>", AuxiliaryCost)
             });
             
 

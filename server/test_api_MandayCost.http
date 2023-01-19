@@ -21,8 +21,8 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
 "Cost": 60,
 "StaffNumber": 1,
 "ImplementationDay": 15,
-"Note": "A",
-"ContractID":"HD02"
+"Note": "HD03",
+"ContractID":"HD03"
 }
 
 
@@ -32,10 +32,16 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjIzNmVkYW
 GET http://localhost:5000/api/forms/manday-cost
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-### Get MandayCost by id
+### Get MandayCost by idMandaycost
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/manday-cost/63a54823564e1d18b4bc1cd5
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by idcontract
+### access public
+###ok
+GET http://localhost:5000/api/forms/manday-cost/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 

@@ -20,6 +20,7 @@ const AddContractModal = () => {
 		Deparment: '',
 		CustomerID: '',
 		ContractID: '',
+		RatioUSD: 24000,
 		Date: ''
 	})
 
@@ -28,6 +29,7 @@ const AddContractModal = () => {
         Deparment,
         CustomerID,
         ContractID,
+		RatioUSD,
         Date
 	} = newContract
 
@@ -51,6 +53,7 @@ const AddContractModal = () => {
 			Deparment: '',
 			CustomerID: '',
 			ContractID: '',
+			RatioUSD: 0,
 			Date: ''
 	 	})
 		setShowAddContractModal(false)
@@ -110,6 +113,18 @@ const AddContractModal = () => {
 							placeholder=''
 							name='ContractID'
 							value={ContractID}
+							onChange={onChangeNewContractForm}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='RatioUSD-help' muted  as="h6">
+							Tỷ giá USD
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder='24000'
+							name='RatioUSD'
+							value={RatioUSD}
 							onChange={onChangeNewContractForm}
 						/>
 					</Form.Group>

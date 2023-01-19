@@ -20,7 +20,7 @@ Content-Type: application/json
   "ImplementationDays": 20,
   "BedtDays": 20,
   "DebtCollectionDays": 15, 
-  "Note": "A",
+  "Note": "HD02",
   "ContractID":"HD02"
 }
 
@@ -36,6 +36,15 @@ GET http://localhost:5000/api/forms/capital-expenditure-cost
 ###ok
 GET http://localhost:5000/api/forms/capital-expenditure-cost/63b895ad315c46311dd16704
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get MandayCost by idContract
+### access public
+###ok
+GET http://localhost:5000/api/forms/capital-expenditure-cost/contract/63c08c08b1a40f0ce190d6e1
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+
 
 
 ### update MandayCost

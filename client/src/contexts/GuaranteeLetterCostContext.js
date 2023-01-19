@@ -43,6 +43,20 @@ const GuaranteeLetterCostContextProvider = ({ children }) => {
 		}
 	}
 
+	// Get  GuaranteeLetterCost by idcontract
+	const getGuaranteeLetterCost_byidContract = async (ContractId) => {
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/Guarantee-letter-cost/contract/${ContractId}`)
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.GuaranteeLetterCost })
+				
+			}
+			console.log(response.data.GuaranteeLetterCost);
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+
 	// Add GuaranteeLetterCost
 	const addGuaranteeLetterCost = async newGuaranteeLetterCost => {
 		try {
@@ -112,7 +126,8 @@ const GuaranteeLetterCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteGuaranteeLetterCost,
 		findGuaranteeLetterCost,
-		updateGuaranteeLetterCost
+		updateGuaranteeLetterCost,
+		getGuaranteeLetterCost_byidContract
 	}
 
 	return (

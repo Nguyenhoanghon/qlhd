@@ -13,7 +13,7 @@ Content-Type: application/json
 ### Not 
 POST http://localhost:5000/api/forms/Guarantee-letter-cost/post
 Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NDAzMDY1MywiZXhwIjoxNjc0MDM3MDUzfQ.SMSKBjbkv5Bn0hrI_rk68tFTExWev9couRnM_LuSLoY
 
 {
 "Content": "BL dự thầu",
@@ -21,8 +21,8 @@ Content-Type: application/json
 "QuantityMonths": 3,
 "RatioCost": 0.2,
 //"IntoMoney": 0, //thanh tien =  Cost*RatioCost
-"Note": "Tính cả phần nhờ hỗ trợ",
-"ContractID":"HD01"
+"Note": "03",
+"ContractID":"HD03"
 }
 
 ### Get all GuaranteeLetterCost
@@ -30,10 +30,18 @@ Content-Type: application/json
 ###ok
 GET http://localhost:5000/api/forms/Guarantee-letter-cost
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjA5NjQ2OSwiZXhwIjoxNjcyMTgyODY5fQ.GevAk4e-IENktSuRMHXDtZa4tfe4WlYvYt2mF48RJZU
+
+
 ### Get GuaranteeLetterCost by id
 ### access public
 ###ok
 GET http://localhost:5000/api/forms/Guarantee-letter-cost/63a54f26e68b441c2566bdd7
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get GuaranteeLetterCost by idContract
+### access public
+###ok
+GET http://localhost:5000/api/forms/Guarantee-letter-cost/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 

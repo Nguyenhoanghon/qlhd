@@ -1,4 +1,4 @@
-import { ProductCostContext } from '../contexts/ProductCostContext'//Note GET DELETE
+import { ProductCostContext } from '../contexts/ProductCostContext'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
@@ -223,6 +223,7 @@ export const ProductCost_idContract = () => {
 	const TotalInputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney =  sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	const TotalIncentive =  sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
+	
 	if (ProductCostsLoading) {
 		body = (
 			<div className='spinner-container'>

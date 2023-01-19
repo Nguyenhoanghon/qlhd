@@ -21,13 +21,18 @@ GuaranteeLetterCostController.insertGuaranteeLetterCost);
 
 // Get all GuaranteeLetterCost 
 // access public
-app.get("/api/forms/Guarantee-letter-cost",authJwt.verifyToken,
+app.get("/api/forms/Guarantee-letter-cost",//authJwt.verifyToken,
 GuaranteeLetterCostController.getAllGuaranteeLetterCost);
 
 // Get GuaranteeLetterCost by id
 // access public
-app.get("/api/forms/Guarantee-letter-cost/:id",authJwt.verifyToken,
+app.get("/api/forms/Guarantee-letter-cost/:id",//authJwt.verifyToken,
 GuaranteeLetterCostController.getGuaranteeLetterCost);
+
+// Get GuaranteeLetterCost by idContract
+// access public
+app.get("/api/forms/Guarantee-letter-cost/contract/:idContract",//authJwt.verifyToken,
+GuaranteeLetterCostController.getGuaranteeLetterCost_ContractID);
 
 
 // Update GuaranteeLetterCost 
@@ -40,12 +45,6 @@ GuaranteeLetterCostController.updateGuaranteeLetterCost);
 app.delete("/api/forms/Guarantee-letter-cost/delete/:id",authJwt.verifyToken,
 GuaranteeLetterCostController.deleteGuaranteeLetterCost);
 
-
-
-// Create GuaranteeLetterCost 
-// access public
-app.get("/api/GuaranteeLetterCost/check",
-GuaranteeLetterCostController.check);
 
 //==================== Routes Private Access ====================//
 

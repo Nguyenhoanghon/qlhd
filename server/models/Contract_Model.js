@@ -7,6 +7,7 @@ const Contract = mongoose.model(
     Deparment: String,
     CustomerID: String,
     ContractID: String,
+    RatioUSD: Number,
     Date: Date,
     user:
       {
