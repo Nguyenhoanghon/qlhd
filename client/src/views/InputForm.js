@@ -51,7 +51,7 @@ export const InputForm = () => {
 							<td> Chi tiết hàng hoá</td>
 							<td>{params.id}</td>
 							<td>
-							<a href={`/product-cost/contract/${params.id}`}> Click nhập</a>
+							<a /* href={`/product-cost/contract/${params.id}`} */> Click nhập</a>
 							</td>
 						</tr>
 						<tr>
@@ -59,7 +59,7 @@ export const InputForm = () => {
 							<td> Chi tiết triển khai</td>
 							<td>{params.id}</td>
 							<td>
-							<a href={`/implementation-cost/contract/${params.id}`}> Click nhập</a>
+							<a /* href={`/implementation-cost/contract/${params.id}`} */> Click nhập</a>
 							</td>
 						</tr>
 						<tr>
@@ -99,7 +99,7 @@ export const InputForm = () => {
 							<td> Chi phí vật tư phụ</td>
 							<td>{params.id}</td>
 							<td>
-							<a href={`/AuxiliaryCost/contract/${params.id}`}> Click nhập</a>
+							<a /* href={`/AuxiliaryCost/contract/${params.id}`} */> Click nhập</a>
 							</td>
 						</tr>
 					</tbody>

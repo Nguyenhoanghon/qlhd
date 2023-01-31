@@ -5,8 +5,8 @@ const dbConfig = require("./Config/db.config");
 const app = express();
 
 var corsOptions = {
-  //origin: "http://103.88.121.45:3000",
-  origin: "http://localhost:3000"
+  origin: "http://103.88.121.45:3000",
+  //origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -25,10 +25,10 @@ const db = require("./models");
 const Role = db.role;
 
 db.mongoose
-    //Connect Mongodb loacal
-    //.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    //Connect Mongodb cloud
-    .connect(`mongodb+srv://nhhon:h3MBHqeL2o2n4VUZ@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
+    //Connect Mongodb local - Run VPS
+    .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    //Connect Mongodb cloud - Run Local dev
+    //.connect(`mongodb+srv://nhhon:h3MBHqeL2o2n4VUZ@cluster0.wuapvu5.mongodb.net/?retryWrites=true&w=majority`, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
