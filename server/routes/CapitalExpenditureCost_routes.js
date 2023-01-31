@@ -1,4 +1,5 @@
 const { authJwt } = require("../middleware");
+const { verifySignUp } = require("../middleware");
 const CapitalExpenditureCostController = require("../controllers/CapitalExpenditureCost_controller");
 
 module.exports = function(app) {
@@ -33,7 +34,7 @@ CapitalExpenditureCostController.getCapitalExpenditureCost_byidContract);
 // Create CapitalExpenditureCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
-app.post("/api/forms/capital-expenditure-cost/post",
+app.post("/api/forms/capital-expenditure-cost/post",[verifySignUp.checkDuplicateContract_id],
 CapitalExpenditureCostController.addCapitalExpenditureCost);
 
 

@@ -1,6 +1,7 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import { useParams } from 'react-router-dom'
 import { useContext, useState, useEffect } from 'react'
 import { ProductCostContext } from '../../contexts/ProductCostContext'
 
@@ -35,6 +36,20 @@ const UpdateProductCostModal = () => {
 		ContractID
 		} = updatedProductCost //note
 
+	const params = useParams();
+	//Ham checkbox value
+	updatedProductCost.ContractID = params.id
+	
+	const toggleEX_W = (value) => {
+		setUpdatedProductCost({EX_W: value});
+	};
+	
+	const toggleInsurance = (value) => {
+		setUpdatedProductCost({Insurance: value});
+	};
+
+	setUpdatedProductCost.ContractID = params.id;
+
 	const onChangeUpdatedProductCostForm = event =>
 		setUpdatedProductCost({ ...updatedProductCost, [event.target.name]: event.target.value })
 
@@ -49,11 +64,6 @@ const UpdateProductCostModal = () => {
 		setShowUpdateProductCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
-
-	// const resetAddProductCostData = () => {
-	// 	setNewProductCost({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddProductCostModal(false)
-	// }
 
 	return (
 		<Modal show={showUpdateProductCostModal} onHide={closeDialog}>
@@ -92,17 +102,16 @@ const UpdateProductCostModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='xuatxu-help' muted as='h6'>
-							Hàng hoá nhập từ nước ngoài
+							Nguồn nhập hàng
 						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='1 nếu nhập từ nước ngoại, 0 nhập trong nước'
-							name='EX_W'
-							required
-							aria-describedby='tenhang-help'
-							value={EX_W}
-							onChange={onChangeUpdatedProductCostForm}
+						<label className='switch'>
+						<input
+							type='checkbox'
+							checked={EX_W}
+							onChange={(e) => toggleEX_W(e.target.checked)}
 						/>
+						<span>Nhập từ nước ngoài</span>
+						</label>
 					</Form.Group>
 					
 					<Form.Group>
@@ -177,13 +186,13 @@ const UpdateProductCostModal = () => {
 						<Form.Text id='Insurance-help' muted as='h6'>
 							Hàng hoá có tính chi phí bảo hiểm không?
 						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='Có bảo hiển nhâpj 1'
-							name='Insurance'
-							value={Insurance}
-							onChange={onChangeUpdatedProductCostForm}
+						<label className='switch'>
+						<input
+							type='checkbox'
+							checked={Insurance}
+							onChange={(e) => toggleInsurance(e.target.checked)}
 						/>
+						</label>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Incentive-help' muted as='h6'>

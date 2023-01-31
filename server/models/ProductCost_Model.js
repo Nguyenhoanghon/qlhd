@@ -13,7 +13,7 @@ const ProductCost = mongoose.model(
     OutputPrice: Number, // Nhap
     InputIntoMoney: Number, // Can tinh  = Quantity * InputPrice
     OutputIntoMoney: Number, //Can tinh =  Quantity * OutputPrice
-    Insurance: Boolean,
+    Insurance: Number,
     Incentive: Number,
     Note: String,
     contract:

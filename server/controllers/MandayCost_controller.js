@@ -69,7 +69,7 @@ exports.insertMandayCost = async (req, res) => {
     console.log("Test data recieved ====>>>",req.body.ContractID)
     
     try {
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+       Contract.find({_id: req.body.ContractID },(err,Contract)=>{
         if(Contract.length!=0){
             newMandayCost.IntoMoney = req.body.Cost * req.body.RatioUSD * req.body.StaffNumber * req.body.ImplementationDay;
             newMandayCost.save((err, MandayCost) => {
@@ -140,7 +140,7 @@ exports.updateMandayCost = async (req, res) => {
         else
             res.json({
                 success: true,
-                message: 'Update MaydayCost Successfull !',
+                message: 'Cập nhật thành công !',
                 updatedMandayCost: updatedMandayCost
             })
         

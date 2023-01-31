@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { CapitalExpenditureCostContext } from '../../contexts/CapitalExpenditureCostContext'
 
 const UpdateCapitalExpenditureCostModal = () => {
@@ -19,19 +20,23 @@ const UpdateCapitalExpenditureCostModal = () => {
 
 	useEffect(() => setUpdatedCapitalExpenditureCost(CapitalExpenditureCost), [CapitalExpenditureCost])
 
-	const { 
-		CapitalCost, 
-        Revenue,
-        CapitalExpense,
-        InventoryDays,
-        ImplementationDays,
-        BedtDays,
-        DebtCollectionDays,
-        Deposits,
-        DepositsNTP,
-        Note,
+	const {
+		CapitalCost,
+		Revenue,
+		CapitalExpense,
+		InventoryDays,
+		ImplementationDays,
+		BedtDays,
+		DebtCollectionDays,
+		Deposits,
+		DepositsNTP,
+		Note,
 		ContractID
 	} = updatedCapitalExpenditureCost
+
+	//load idcontract
+	const params = useParams();
+	updatedCapitalExpenditureCost.ContractID = params.id;
 
 	const onChangeUpdatedCapitalExpenditureCostForm = event =>
 		setUpdatedCapitalExpenditureCost({ ...updatedCapitalExpenditureCost, [event.target.name]: event.target.value })
@@ -48,11 +53,6 @@ const UpdateCapitalExpenditureCostModal = () => {
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddCapitalExpenditureCostData = () => {
-	// 	setNewCapitalExpenditureCost({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddCapitalExpenditureCostModal(false)
-	// }
-
 	return (
 		<Modal show={showUpdateCapitalExpenditureCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
@@ -60,6 +60,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
+					
 					<Form.Group>
 						<Form.Text id='ContractID' muted as='h6'>
 							Chọn hợp đồng
@@ -72,6 +73,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
 						/>						
 					</Form.Group>
+					
 					<Form.Group>
 						<Form.Text id='InventoryDays' muted as='h6'>
 							Số ngày hàng tồn kho
@@ -82,11 +84,11 @@ const UpdateCapitalExpenditureCostModal = () => {
 							name='InventoryDays'
 							value={InventoryDays.toLocaleString()}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='ImplementationDays' muted as='h6'>
-						Số ngày triển khai
+							Số ngày triển khai
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -94,11 +96,11 @@ const UpdateCapitalExpenditureCostModal = () => {
 							name='ImplementationDays'
 							value={ImplementationDays.toLocaleString()}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='BedtDays' muted as='h6'>
-						Số ngày công nợ nhà cung cấp
+							Số ngày công nợ nhà cung cấp
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -106,7 +108,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 							name='BedtDays'
 							value={BedtDays.toLocaleString()}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='DebtCollectionDays' muted as='h6'>
@@ -118,7 +120,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 							name='DebtCollectionDays'
 							value={DebtCollectionDays.toLocaleString()}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Note' muted as='h6'>
@@ -130,7 +132,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 							name='Note'
 							value={Note}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
-						/>						
+						/>
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>

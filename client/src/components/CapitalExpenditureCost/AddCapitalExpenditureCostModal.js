@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { CapitalExpenditureCostContext } from '../../contexts/CapitalExpenditureCostContext'
 
 const AddCapitalExpenditureCostModal = () => {
@@ -41,6 +42,9 @@ const AddCapitalExpenditureCostModal = () => {
         Note,
 		ContractID
 	} = newCapitalExpenditureCost
+	//load idcontract
+	const params = useParams();
+	newCapitalExpenditureCost.ContractID = params.id;
 
 	const onChangeNewCapitalExpenditureCostForm = event =>
 		setNewCapitalExpenditureCost({ ...newCapitalExpenditureCost, [event.target.name]: event.target.value })

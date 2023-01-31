@@ -1,5 +1,7 @@
 import {
 	LOADED_SUCCESS,
+	LOADED_SUCCESS_PLAN1,
+	LOADED_SUCCESS_PLAN2,
 	LOADED_FAIL,
 	ADD,
 	DELETE,
@@ -16,7 +18,18 @@ export const AuxiliaryCostReducer = (state, action) => {
 				AuxiliaryCosts: payload,
 				AuxiliaryCostsLoading: false
 			}
-
+		case LOADED_SUCCESS_PLAN1:
+			return {
+				...state,
+				AuxiliaryCostsPlan1: payload,
+				AuxiliaryCostsLoading: false
+			}
+		case LOADED_SUCCESS_PLAN2:
+			return {
+				...state,
+				AuxiliaryCostsPlan2: payload,
+				AuxiliaryCostsLoading: false
+			}
 		case LOADED_FAIL:
 			return {
 				...state,

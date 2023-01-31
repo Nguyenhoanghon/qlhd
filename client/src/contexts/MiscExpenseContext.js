@@ -57,7 +57,7 @@ const MiscExpenseCostContextProvider = ({ children }) => {
 		}
 	}
 	
-	// Add MiscExpenseCost
+	// Add MiscExpenseCost by id contract
 	const addMiscExpenseCost = async newMiscExpenseCost => {
 		try {
 			const response = await axios.post(`${apiUrl}/api/forms/misc-expense/post`, newMiscExpenseCost)

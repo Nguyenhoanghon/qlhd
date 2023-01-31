@@ -12,10 +12,11 @@ module.exports = function(app) {
 
 //==================== Routes Public Access ====================//
 
-// Create MiscExpense 
+// Create MiscExpense By id contract
 // access public
 app.post("/api/forms/misc-expense/post",//authJwt.verifyToken,
-MiscExpenseController.insertMiscExpense);
+MiscExpenseController.addMiscExpenseCost);
+
 
 // Get all MiscExpense 
 // access public
@@ -42,12 +43,6 @@ MiscExpenseController.updateMiscExpense);
 app.delete("/api/forms/misc-expense/delete/:id", authJwt.verifyToken,
 MiscExpenseController.deleteMiscExpense);
 
-
-
-// Create MiscExpense 
-// access public
-app.get("/api/miscexpense/check",
-MiscExpenseController.check);
 
 //==================== Routes Private Access ====================//
 

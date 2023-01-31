@@ -7,6 +7,8 @@ export const apiUrl =
 export const LOCAL_STORAGE_TOKEN_NAME = 'qlhd_hnn'
 
 export const LOADED_SUCCESS = 'LOADED_SUCCESS'
+export const LOADED_SUCCESS_PLAN1 = 'LOADED_SUCCESS_PLAN1'
+export const LOADED_SUCCESS_PLAN2 = 'LOADED_SUCCESS_PLAN2'
 export const LOADED_FAIL = 'LOADED_FAIL'
 export const ADD = 'ADD'
 export const DELETE = 'DELETE'

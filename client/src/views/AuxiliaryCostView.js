@@ -177,7 +177,7 @@ export const AuxiliaryCost_byidContract = () => {
 	} = useContext(AuthContext)
 
 	const {
-		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCosts_plan1, AuxiliaryCosts_plan2, AuxiliaryCostsLoading },
+		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCostsPlan1, AuxiliaryCostsPlan2, AuxiliaryCostsLoading },
 		getAuxiliaryCosts_byidContract,
 		getAuxiliaryCosts_byidContract_Plan1,
 		getAuxiliaryCosts_byidContract_Plan2,
@@ -226,26 +226,28 @@ export const AuxiliaryCost_byidContract = () => {
 
 	console.log("params.id",params.id)
 
-	//get dat AuxiliaryCosts with idContract and Plan 1
+	//get data AuxiliaryCostsPlan1 with idContract and Plan 1
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id,1), [])
-	const TotalPlan1 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan1 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan1 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
-	//get dat AuxiliaryCosts with idContract and Plan 2
+	const TotalPlan1 =  sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost))
+	const TotalCPXLPlan1 =  sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
+	const TotalCPgrossPlan1 =  sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	
+	//get data AuxiliaryCosts with idContract and Plan 2
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id,2), [])
-	const TotalPlan2 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan2 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan2 =  sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	const TotalPlan2 =  sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost))
+	const TotalCPXLPlan2 =  sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
+	const TotalCPgrossPlan2 =  sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
 	let body = null
 	let stt = 1
 	let TT =1
+	console.log("Plan 1",AuxiliaryCosts)
 	if (AuxiliaryCostsLoading) {
 		body = (
 			<div className='spinner-container'>
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (AuxiliaryCosts.length === 0) {
+	} else if (AuxiliaryCosts.length === 0 && AuxiliaryCost.length === 0) {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
@@ -301,7 +303,7 @@ export const AuxiliaryCost_byidContract = () => {
 									<td>{AuxiliaryCost.Cost.toLocaleString()}</td>
 									<td>{AuxiliaryCost.Note}  </td>
 									<td>
-									<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id} />
+									<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id}/>
 									</td>
 								
 								</tr>
@@ -325,7 +327,7 @@ export const AuxiliaryCost_byidContract = () => {
 								</tr>
 								<tr>
 									<td colSpan={2} >CPgross</td>
-									<td>{TotalCPXLPlan1.toLocaleString()}</td>
+									<td>{TotalCPgrossPlan1.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -351,7 +353,8 @@ export const AuxiliaryCost_byidContract = () => {
 									<td>{AuxiliaryCost.Cost.toLocaleString()}</td>
 									<td>{AuxiliaryCost.Note}  </td>
 									<td>
-									<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id} />
+									<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id}/>
+									
 									</td>
 								
 								</tr>

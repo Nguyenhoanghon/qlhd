@@ -1,12 +1,13 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-
-import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useContext, useState, useEffect } from 'react'
 import { MandayCostContext } from '../../contexts/MandayCostContext'
+import { ContractContext } from '../../contexts/ContractContext'
 
 const AddMandayCostModal = () => {
-	// Contexts
+	// Contexts MandayCostContext
 	const {
 		showAddMandayCostModal,
 		setShowAddMandayCostModal,
@@ -16,24 +17,40 @@ const AddMandayCostModal = () => {
 
 	// State
 	const [newMandayCost, setNewMandayCost] = useState({
-		RatioUSD:'',
-        Department:'',
-        Cost:'',
-        StaffNumber:'',
-        ImplementationDay:'',
-        Note:'',
+		RatioUSD: '',
+		Department: '',
+		Cost: '',
+		StaffNumber: '',
+		ImplementationDay: '',
+		Note: '',
 
 	}) //note là các biến trong 
 
-	const { 
+	const {
 		RatioUSD,
-        Department,
-        Cost,
-        StaffNumber,
-        ImplementationDay,
-        IntoMoney,
-        Note,
-		ContractID } = newMandayCost //note
+		Department,
+		Cost,
+		StaffNumber,
+		ImplementationDay,
+		IntoMoney,
+		Note,
+		ContractID
+	} = newMandayCost //note
+	//load idcontract
+	const params = useParams();
+	newMandayCost.ContractID = params.id;
+	//===== Get RaitoUSD ====
+	// Contexts
+	/* const {
+		ContractState: { Contracts },
+		getContract_byid
+	} = useContext(ContractContext)
+	
+	// Start: Get all Contracts by id contract
+	useEffect(() => getContract_byid(params.id), [])
+	console.log("Contract===",Contracts)
+	newMandayCost.RatioUSD = Contracts[0].RatioUSD */
+	//===== Get RaitoUSD ====
 
 	const onChangeNewMandayCostForm = event =>
 		setNewMandayCost({ ...newMandayCost, [event.target.name]: event.target.value })
@@ -50,14 +67,15 @@ const AddMandayCostModal = () => {
 	}
 
 	const resetAddMandayCostData = () => {
-		setNewMandayCost({ 
-			RatioUSD:'',
-			Department:'',
-			Cost:'',
-			StaffNumber:'',
-			ImplementationDay:'',
-			IntoMoney:'',
-			Note:'' }) //note cần sửa
+		setNewMandayCost({
+			RatioUSD: '',
+			Department: '',
+			Cost: '',
+			StaffNumber: '',
+			ImplementationDay: '',
+			IntoMoney: '',
+			Note: ''
+		}) //note cần sửa
 		setShowAddMandayCostModal(false)
 	}
 
@@ -80,7 +98,7 @@ const AddMandayCostModal = () => {
 							aria-describedby='noidung-help'
 							value={ContractID}
 							onChange={onChangeNewMandayCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
@@ -88,7 +106,7 @@ const AddMandayCostModal = () => {
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='22,400'
+							placeholder=''
 							name='RatioUSD'
 							required
 							aria-describedby='title-help'
@@ -96,7 +114,7 @@ const AddMandayCostModal = () => {
 							onChange={onChangeNewMandayCostForm}
 						/>
 					</Form.Group>
-										
+
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Phòng ban
@@ -109,7 +127,7 @@ const AddMandayCostModal = () => {
 							aria-describedby='title-help'
 							value={Department}
 							onChange={onChangeNewMandayCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>

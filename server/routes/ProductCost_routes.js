@@ -37,11 +37,16 @@ ProductCostController.getProductCost_ContractID);
 app.post("/api/forms/product-cost/post",
 ProductCostController.addProductCost);
 
+// Create ProductCost by id contract
+// URL access: POST http://localhost:5000/api/forms/manday-cost/post
+// access public
+app.post("/api/forms/product-cost/post/contract/:idcontract",
+ProductCostController.addProductCost);
 
 // Update ProductCost 
 // URL access: PUT http://localhost:5000/api/forms/manday-cost/put/ID
 // access public
-app.put("/api/forms/product-cost/put/:id",
+app.put("/api/forms/product-cost/contract/put/:id",
 ProductCostController.updateProductCost);
 
 // Delete ProductCost 

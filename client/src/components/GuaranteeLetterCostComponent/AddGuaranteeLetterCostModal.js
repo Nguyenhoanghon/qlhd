@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { GuaranteeLetterCostContext } from '../../contexts/GuaranteeLetterCostContext'
 
 const AddGuaranteeLetterCostModal = () => {
@@ -33,6 +34,10 @@ const AddGuaranteeLetterCostModal = () => {
 		Note,
 		ContractID
 	} = newGuaranteeLetterCost
+
+	//load idcontract
+	const params = useParams();
+	newGuaranteeLetterCost.ContractID = params.id;
 
 	const onChangeNewGuaranteeLetterCostForm = event =>
 		setNewGuaranteeLetterCost({ ...newGuaranteeLetterCost, [event.target.name]: event.target.value })

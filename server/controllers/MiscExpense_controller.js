@@ -8,9 +8,9 @@ const MiscExpense = db.MiscExpense;
 
 //============== Controllers Public Access ==============//
 
-// Create MiscExpense
+// Create MiscExpense By Number Contract
 // @access Public
-exports.insertMiscExpense = async (req, res) => {
+exports.addMiscExpenseCost = async (req, res) => {
     //console.log("Test route ===> addMiscExpense is called !");
     const { 
         Content,
@@ -29,7 +29,7 @@ exports.insertMiscExpense = async (req, res) => {
     console.log("Test data recieved ====>>>",req.body.newMiscExpense)
     
     try {
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+       Contract.find({_id: req.body.ContractID },(err,Contract)=>{
         //Console.log("Test Id contract===",Contract._id)
         if(Contract.length!=0){
             newMiscExpense.save((err, MiscExpense) => {
@@ -170,19 +170,4 @@ exports.deleteMiscExpense = async (req, res) => {
 
 }
 
-// @route Get localhost:5000/api/miscexpense/check
-// @access Public
-exports.check = async (req, res) => {
-    console.log("Test route !");
-    res.json({ success: true ,message: "Test route"}) 
 
-    MiscExpense.find({_id: req.params.id },(err,MiscExpense)=>{
-        if(!MiscExpense){
-            console.log("Thoa điêuf kiện",MiscExpense)
-        }
-        else{
-            console.log("Id Chi phí not found")
-        }
-    });
-
-}

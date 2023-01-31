@@ -1,11 +1,12 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup';
 import { useContext, useState } from 'react'
 import { ProductCostContext } from '../../contexts/ProductCostContext'
+import { useParams } from 'react-router-dom'
 
 const AddProductCostModal = () => {
+
 	// Contexts
 	const {
 		showAddProductCostModal,
@@ -17,20 +18,20 @@ const AddProductCostModal = () => {
 	// State
 	const [newProductCost, setNewProductCost] = useState({
 		ProductName: '',
-        Quantity: '',
-        EX_W: '', // nhap tu nuoc ngoai = true
-        FOBCost: '', //if(EX_W = =true, req.body.FOBCost, 0)
-        RatioUSD: '', //if(EX_W = =true, req.body.RatioUSD, 0)
-        InputPrice: '', // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
-        OutputPrice: '', // Nhap
-        InputIntoMoney: '', // Can tinh  = Quantity * InputPrice
-        OutputIntoMoney: '', //Can tinh =  Quantity * OutputPrice
-        Insurance: '',
-        Incentive: '',
-        Note: '',
-        ContractID:''
+		Quantity: '',
+		EX_W: '', // nhap tu nuoc ngoai = true
+		FOBCost: '', //if(EX_W = =true, req.body.FOBCost, 0)
+		RatioUSD: '', //if(EX_W = =true, req.body.RatioUSD, 0)
+		InputPrice: '', // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
+		OutputPrice: '', // Nhap
+		InputIntoMoney: '', // Can tinh  = Quantity * InputPrice
+		OutputIntoMoney: '', //Can tinh =  Quantity * OutputPrice
+		Insurance: '',
+		Incentive: '',
+		Note: '',
+		ContractID:''
 	}) //note là các biến trong 
-	
+
 	const { 
 		ProductName,
 		Quantity,
@@ -45,7 +46,25 @@ const AddProductCostModal = () => {
 		Incentive,
 		Note,
 		ContractID
-	} = newProductCost //note
+		} = newProductCost //note
+
+
+	const params = useParams();
+	newProductCost.ContractID = params.id;
+	console.log("AddProductModel  params.id : ",params.id)
+	//Ham checkbox value
+
+	const toggleEX_W = (value) => {
+		setNewProductCost({ EX_W: value });
+	};
+
+	//Ham checkbox Insurance
+
+	const toggleInsurance = (value) => {
+		setNewProductCost({ Insurance: value });
+	};
+
+
 
 	const onChangeNewProductCostForm = event =>
 		setNewProductCost({ ...newProductCost, [event.target.name]: event.target.value })
@@ -56,13 +75,13 @@ const AddProductCostModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addProductCost(newProductCost)
+		const { success, message } = await addProductCost(params.id,newProductCost)
 		resetAddProductCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddProductCostData = () => {
-		setNewProductCost({ 
+		setNewProductCost({
 			ProductName: '',
 			Quantity: '',
 			EX_W: '', // nhap tu nuoc ngoai = true
@@ -75,7 +94,7 @@ const AddProductCostModal = () => {
 			Insurance: '',
 			Incentive: '',
 			Note: '',
-			ContractID
+			ContractID: ''
 		}) //note cần sửa
 		setShowAddProductCostModal(false)
 	}
@@ -117,23 +136,22 @@ const AddProductCostModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='xuatxu-help' muted as='h6'>
-							Hàng hoá nhập từ nước ngoài
+							Nguồn nhập hàng
 						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='1 nếu nhập từ nước ngoại, 0 nhập trong nước'
-							name='EX_W'
-							required
-							aria-describedby='tenhang-help'
-							value={EX_W}
-							onChange={onChangeNewProductCostForm}
-						/>
+						<label className='switch'>
+							<input
+								type='checkbox'
+								checked={EX_W}
+								onChange={(e) => toggleEX_W(e.target.checked)}
+							/>
+							<span>Nhập từ nước ngoài</span>
+						</label>
 					</Form.Group>
-					
+
 					<Form.Group>
 						<Form.Text id='soluong-help' muted as='h6'>
 							Số lượng
-						</Form.Text>						
+						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Số lượng'
@@ -182,7 +200,7 @@ const AddProductCostModal = () => {
 							required
 							value={InputPrice}
 							onChange={onChangeNewProductCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='dongiaban-help' muted as='h6'>
@@ -202,13 +220,13 @@ const AddProductCostModal = () => {
 						<Form.Text id='Insurance-help' muted as='h6'>
 							Hàng hoá có tính chi phí bảo hiểm không?
 						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder='Có bảo hiển nhâpj 1'
-							name='Insurance'
-							value={Insurance}
-							onChange={onChangeNewProductCostForm}
-						/>
+						<label className='switch'>
+							<input
+								type='checkbox'
+								checked={Insurance}
+								onChange={(e) => toggleInsurance(e.target.checked)}
+							/>
+						</label>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Incentive-help' muted as='h6'>
@@ -223,6 +241,7 @@ const AddProductCostModal = () => {
 							value={Incentive}
 							onChange={onChangeNewProductCostForm}
 						/>
+
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Note-help' muted as='h6'>

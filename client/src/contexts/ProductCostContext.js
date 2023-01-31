@@ -56,7 +56,9 @@ const ProductCostContextProvider = ({ children }) => {
 		}
 		// Get all ProductCosts by id_Contract 
 		const getProductCost_byidContract = async ContractId => {
+			console.log("test====> Get all ProductCosts by id_Contract : ",ContractId)
 			try {
+
 				const response = await axios.get(`${apiUrl}/api/forms/product-cost/contract/${ContractId}`)//note
 				if (response.data.success) {
 					dispatch({ type: LOADED_SUCCESS, payload: response.data.ProductCost })//note
@@ -68,9 +70,9 @@ const ProductCostContextProvider = ({ children }) => {
 		}
 
 	// Add ProductCost
-	const addProductCost = async newProductCost => {
+	const addProductCost = async (id,newProductCost) => { 
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/product-cost/post`, newProductCost)//note mandaykysu
+			const response = await axios.post(`${apiUrl}/api/forms/product-cost/post/contract/${id}`, newProductCost)//note mandaykysu
 			if (response.data.success) {
 				dispatch({ type: ADD, payload: response.data.ProductCost }) //note MandayKysu
 				return response.data
@@ -105,7 +107,7 @@ const ProductCostContextProvider = ({ children }) => {
 	const updateProductCost = async updatedProductCost => {
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/forms/product-Cost/put/${updatedProductCost._id}`, //note xem trong server
+				`${apiUrl}/api/forms/product-Cost/contract/put/${updatedProductCost._id}`, //note xem trong server
 				updatedProductCost
 			)
 			if (response.data.success) {

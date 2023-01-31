@@ -38,42 +38,42 @@ export const ImplementationCost = () => {
 	} = useContext(ImplementationCostContext)
 
 	//test su dung numberObject
-	const{
+	const {
 		numberObject,
 		setnumberObject,
 	} = useContext(ImplementationCostContext)
 	// hàm tính tổng thành tiền
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
-	
+
 	// Start: Get all ImplementationCosts
 	useEffect(() => getImplementationCosts(), [])
 
-	console.log("ImplementationCosts===>>>",ImplementationCosts);
+	console.log("ImplementationCosts===>>>", ImplementationCosts);
 	let body = null
 	let data = []
 	let stt = 1
 	//Function TotalGeneralExpense
 	function TotalStageImplementation(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	//Function TotalGeneralExpense
 	function TotalGeneralExpense(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	//Duyet qua so giai doan ====>> chua show duoc
@@ -81,7 +81,7 @@ export const ImplementationCost = () => {
 	function showdata() {
 		return 1
 	}
-	
+
 	//Tieu de Bang chi phi trien khai
 	let titleTable = (
 		<thead>
@@ -104,13 +104,13 @@ export const ImplementationCost = () => {
 	//Tieu de chi phi chung
 	let titleGeneralExpense = (
 		<tr>
-		<td colSpan={9} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
+			<td colSpan={9} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
 		</tr>
 	)
 	//Tieu de chi phi chung
 	let titleImplementationCost = (
 		<tr>
-		<td colSpan={9} align={'left'} bgcolor={'black'}>B. CHI PHÍ TRIỂN KHAI: </td>
+			<td colSpan={9} align={'left'} bgcolor={'black'}>B. CHI PHÍ TRIỂN KHAI: </td>
 		</tr>
 	)
 	//In chi phi giai doan tuong ung voi tham so stage 
@@ -184,7 +184,7 @@ export const ImplementationCost = () => {
 		)
 	} else if (ImplementationCosts.length === 0) {
 		body = (
-			<> 
+			<>
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
 					<Card.Body>
@@ -199,9 +199,9 @@ export const ImplementationCost = () => {
 				</Card>
 			</>
 		)
-	} else { 
+	} else {
 		body = (
-			<>  
+			<>
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
 					<Card.Body>
@@ -211,7 +211,7 @@ export const ImplementationCost = () => {
 							{showGeneralExpense(0)}
 							{titleImplementationCost}
 							{showStageImplementation(0)}
-							
+
 							<tr>
 								<td colSpan={6} align={'left'}>CỘNG B: </td>
 								<td></td>
@@ -220,12 +220,12 @@ export const ImplementationCost = () => {
 							</tr>
 							<tr>
 								<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
-								<td>{(TotalGeneralExpense(0)+ TotalStageImplementation(0)).toLocaleString()}</td>
+								<td>{(TotalGeneralExpense(0) + TotalStageImplementation(0)).toLocaleString()}</td>
 								<td></td>
 								<td></td>
 							</tr>
 
-    					</Table>
+						</Table>
 						<Button
 							variant='primary'
 							onClick={setShowAddImplementationCostModal.bind(this, true)}
@@ -236,7 +236,7 @@ export const ImplementationCost = () => {
 				</Card>
 			</>
 		)
-									
+
 	}
 
 	return (
@@ -258,9 +258,9 @@ export const ImplementationCost = () => {
 				<Toast.Body>
 					<strong>{message}</strong>
 				</Toast.Body>
-			</Toast>	
-			
-			
+			</Toast>
+
+
 		</>
 	)
 }
@@ -283,42 +283,42 @@ export const ImplementationCost_byidContract = () => {
 	} = useContext(ImplementationCostContext)
 
 	//test su dung numberObject
-	const{
+	const {
 		numberObject,
 		setnumberObject,
 	} = useContext(ImplementationCostContext)
 	// hàm tính tổng thành tiền
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
-	
+
 	// Start: Get all ImplementationCosts
 	useEffect(() => getImplementationCosts_byidContract(params.id), [])
 
-	console.log("ImplementationCosts===>>>",ImplementationCosts);
+	console.log("ImplementationCosts===>>>", ImplementationCosts);
 	let body = null
 	let data = []
 	let stt = 1
 	//Function TotalGeneralExpense
 	function TotalStageImplementation(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	//Function TotalGeneralExpense
 	function TotalGeneralExpense(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	//Duyet qua so giai doan ====>> chua show duoc
@@ -326,7 +326,7 @@ export const ImplementationCost_byidContract = () => {
 	function showdata() {
 		return 1
 	}
-	
+
 	//Tieu de Bang chi phi trien khai
 	let titleTable = (
 		<thead>
@@ -349,13 +349,14 @@ export const ImplementationCost_byidContract = () => {
 	//Tieu de chi phi chung
 	let titleGeneralExpense = (
 		<tr>
-		<td colSpan={9} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
+			<td colSpan={9} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
 		</tr>
 	)
 	//Tieu de chi phi chung
 	let titleImplementationCost = (
 		<tr>
-		<td colSpan={9} align={'left'} bgcolor={'black'}>B. CHI PHÍ TRIỂN KHAI: </td>
+			<td colSpan={8} align={'left'} bgcolor={'black'}>B. CHI PHÍ TRIỂN KHAI: </td>
+			<td><a href={`/MiscExpenseCost/contract/${params.id}`}> Thêm giai đoạn</a></td>
 		</tr>
 	)
 	//In chi phi giai doan tuong ung voi tham so stage 
@@ -365,7 +366,7 @@ export const ImplementationCost_byidContract = () => {
 			ImplementationCosts.map(ImplementationCost => (
 				<>
 					<tr>
-						<td colSpan={9} align={'left'}>{ImplementationCost.StagesImplementation[stage].Content}</td>
+						<td colSpan={9} align={'left'}>{ImplementationCost.StagesImplementation[stage].Content} {':'} {ImplementationCost._id}</td>
 					</tr>
 					{ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
 						<tr>
@@ -382,7 +383,15 @@ export const ImplementationCost_byidContract = () => {
 					))}
 					<td colSpan={6} align={'left'}>CỘNG: </td>
 					<td>{TotalStageImplementation(stage).toLocaleString()}</td>
-					<td></td>
+					<td>{ImplementationCost.StagesImplementation[stage]._id}</td>
+					<td>
+						<Button
+							variant='primary'
+							onClick={setShowAddImplementationCostModal.bind(this, true)}
+						>
+							Thêm chi phí
+						</Button>
+					</td>
 				</>
 
 			))
@@ -410,9 +419,17 @@ export const ImplementationCost_byidContract = () => {
 
 							</tr>
 						))}
-						<td colSpan={6} align={'left'}>CỘNG A: </td>
+						<td colSpan={6} align={'left'}>CỘNG A: {ImplementationCost._id} </td>
 						<td>{TotalGeneralExpense(stage).toLocaleString()}</td>
-						<td></td>
+						<td>{ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td>
+							<Button
+								variant='primary'
+								onClick={setShowAddImplementationCostModal.bind(this, true)}
+							>
+								Thêm chi phí
+							</Button>
+						</td>
 					</tbody>
 				</>
 
@@ -429,24 +446,7 @@ export const ImplementationCost_byidContract = () => {
 		)
 	} else if (ImplementationCosts.length === 0) {
 		body = (
-			<> 
-				<Card className='text-center mx-5 my-5'>
-					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
-					<Card.Body>
-						<Card.Title>Chưa có dữ liệu</Card.Title>
-						<Button
-							variant='primary'
-							onClick={setShowAddImplementationCostModal.bind(this, true)}
-						>
-							Thêm!
-						</Button>
-					</Card.Body>
-				</Card>
-			</>
-		)
-	} else { 
-		body = (
-			<>  
+			<>
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
 					<Card.Body>
@@ -454,9 +454,12 @@ export const ImplementationCost_byidContract = () => {
 							{titleTable}
 							{titleGeneralExpense}
 							{showGeneralExpense(0)}
+						</Table>
+						<Table responsive="sm" striped bordered hover size="sm" >
+							{titleTable}
 							{titleImplementationCost}
 							{showStageImplementation(0)}
-							
+
 							<tr>
 								<td colSpan={6} align={'left'}>CỘNG B: </td>
 								<td></td>
@@ -465,23 +468,51 @@ export const ImplementationCost_byidContract = () => {
 							</tr>
 							<tr>
 								<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
-								<td>{(TotalGeneralExpense(0)+ TotalStageImplementation(0)).toLocaleString()}</td>
+								<td>{(TotalGeneralExpense(0) + TotalStageImplementation(0)).toLocaleString()}</td>
 								<td></td>
 								<td></td>
 							</tr>
 
-    					</Table>
-						<Button
-							variant='primary'
-							onClick={setShowAddImplementationCostModal.bind(this, true)}
-						>
-							Thêm mới
-						</Button>
+						</Table>
 					</Card.Body>
 				</Card>
 			</>
 		)
-									
+	} else {
+		body = (
+			<>
+				<Card className='text-center mx-5 my-5'>
+					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
+					<Card.Body>
+						<Table responsive="sm" striped bordered hover size="sm" >
+							{titleTable}
+							{titleGeneralExpense}
+							{showGeneralExpense(0)}
+						</Table>
+						<Table responsive="sm" striped bordered hover size="sm" >
+							{titleTable}
+							{titleImplementationCost}
+							{showStageImplementation(0)}
+
+							<tr>
+								<td colSpan={6} align={'left'}>CỘNG B: </td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
+								<td>{(TotalGeneralExpense(0) + TotalStageImplementation(0)).toLocaleString()}</td>
+								<td></td>
+								<td></td>
+							</tr>
+
+						</Table>
+					</Card.Body>
+				</Card>
+			</>
+		)
+
 	}
 
 	return (
@@ -503,9 +534,9 @@ export const ImplementationCost_byidContract = () => {
 				<Toast.Body>
 					<strong>{message}</strong>
 				</Toast.Body>
-			</Toast>	
-			
-			
+			</Toast>
+
+
 		</>
 	)
 }

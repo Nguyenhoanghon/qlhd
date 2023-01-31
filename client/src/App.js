@@ -51,10 +51,12 @@ function App() {
 						/>
 						<>
 						
+						
 						<ProductCostContextProvider>
 							<ProtectedRoute exact path='/product-cost' component={ProductCost_all} />
 							<ProtectedRoute exact path='/product-cost/contract/:id' component={ProductCost_idContract} />
 						</ProductCostContextProvider>
+						
 
 						<ImplementationCostContextProvider>
 							<ProtectedRoute exact path='/implementation-cost' component={ImplementationCost} />
@@ -71,13 +73,13 @@ function App() {
 							<ProtectedRoute exact path='/contract/forms/:id' component={Contract_id}/>
 						</ContractContextProvider>
 
+						<ProductCostContextProvider>
 						<CapitalExpenditureContextProvider>
-							<ProductCostContextProvider>
 								<ProtectedRoute exact path='/CapitalExpenditureCost' component={CapitalExpenditureCost_all} />
 								<ProtectedRoute exact path='/CapitalExpenditureCost/contract/:id' component={CapitalExpenditureCost_byidContract} />
-							</ProductCostContextProvider>
 						</CapitalExpenditureContextProvider>
-						
+						</ProductCostContextProvider>
+
 						<MiscExpenseCostContextProvider>
 							<ProtectedRoute exact path='/MiscExpenseCost' component={MiscExpenseCost_all} /> 
 							<ProtectedRoute exact path='/MiscExpenseCost/contract/:id' component={MiscExpenseCost_byidContract} />
@@ -95,10 +97,12 @@ function App() {
 							<ProtectedRoute exact path='/guarantee-letter-cost/contract/:id' component={GuaranteeLetterCost_idContract} />
 						</GuaranteeLetterCostContextProvider>
 
+						<ContractContextProvider>
 						<MandayCostContextProvider>
 							<ProtectedRoute exact path='/manday-cost' component={MandayCost_all} />
 							<ProtectedRoute exact path='/manday-cost/contract/:id' component={MandayCost_idContract}/>
 						</MandayCostContextProvider>
+						</ContractContextProvider>
 
 						<ImplementationCostContextProvider>
 						<AuxiliaryCostContextProvider>

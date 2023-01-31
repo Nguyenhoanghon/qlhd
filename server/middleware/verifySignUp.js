@@ -2,6 +2,7 @@ const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
 const Contract = db.Contract;
+const CapitalExpenditureCost = db.CapitalExpenditureCost;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Username
@@ -75,11 +76,31 @@ checkDuplicateContract = (req, res, next) => {
   });
 };
 
+checkDuplicateContract_id = (req, res, next) => {
+  CapitalExpenditureCost.findOne({
+    contract: req.body.ContractID
+  }).exec((err, CapitalExpenditureCost) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (CapitalExpenditureCost) {
+      res.status(400).send({ message: `Lỗi! Hợp đồng ${req.body.ContractID} đã tồn tại!` });
+      return;
+    }
+    else
+    next();
+
+  });
+};
+
 
 const verifySignUp = {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
-  checkDuplicateContract
+  checkDuplicateContract,
+  checkDuplicateContract_id
 };
 
 module.exports = verifySignUp;

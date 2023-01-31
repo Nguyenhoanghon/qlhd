@@ -1,23 +1,30 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { AuxiliaryCostContext } from '../../contexts/AuxiliaryCostContext'
 
-const UpdateAuxiliaryCostModal = () => {
+const AddAuxiliaryCostModal = () => {
 	// Contexts
 	const {
-		AuxiliaryCostState: { AuxiliaryCost },
-		showUpdateAuxiliaryCostModal,
-		setShowUpdateAuxiliaryCostModal,
-		updateAuxiliaryCost,
+		showAddAuxiliaryCostModal,
+		setShowAddAuxiliaryCostModal,
+		addAuxiliaryCost,
 		setShowToast
 	} = useContext(AuxiliaryCostContext)
 
 	// State
-	const [updatedAuxiliaryCost, setUpdatedAuxiliaryCost] = useState(AuxiliaryCost)
-
-	useEffect(() => setUpdatedAuxiliaryCost(AuxiliaryCost), [AuxiliaryCost])
+	const [updatedAuxiliaryCost, setupdatedAuxiliaryCost] = useState({
+		Revenue: '', // Load form 1
+        Plan:'', // Lua chon gia tri
+        Content:'',
+        Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
+        CPXL:'',
+        CPgross:'',
+        Note:'',
+        ContractID:''
+	})
 
 	const { 
 		Revenue, // Load từ form 1
@@ -28,35 +35,46 @@ const UpdateAuxiliaryCostModal = () => {
         CPgross,
         Note,
         ContractID
-	 } = updatedAuxiliaryCost //note
+	 } = updatedAuxiliaryCost
+	 //load idcontract
+	const params = useParams();
+	updatedAuxiliaryCost.ContractID = params.id;
 
-	const onChangeUpdatedAuxiliaryCostForm = event =>
-		setUpdatedAuxiliaryCost({ ...updatedAuxiliaryCost, [event.target.name]: event.target.value })
+	const onChangeupdatedAuxiliaryCostForm = event =>
+		setupdatedAuxiliaryCost({ ...updatedAuxiliaryCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		setUpdatedAuxiliaryCost(AuxiliaryCost)
-		setShowUpdateAuxiliaryCostModal(false)
+		resetAddAuxiliaryCostData()
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateAuxiliaryCost(updatedAuxiliaryCost)
-		setShowUpdateAuxiliaryCostModal(false)
+		const { success, message } = await addAuxiliaryCost(updatedAuxiliaryCost)//updatedAuxiliaryCost
+		resetAddAuxiliaryCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	// const resetAddAuxiliaryCostData = () => {
-	// 	setNewAuxiliaryCost({ title: '', description: '', url: '', status: 'TO LEARN' })
-	// 	setShowAddAuxiliaryCostModal(false)
-	// }
+	const resetAddAuxiliaryCostData = () => {
+		setupdatedAuxiliaryCost({
+			Revenue: '', // Load form 1
+			Plan:'', // Lua chon gia tri
+			Content:'',
+			Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
+			CPXL:'',
+			CPgross:'',
+			Note:'',
+			ContractID:''
+		})
+		setShowAddAuxiliaryCostModal(false)
+	}
 
 	return (
-		<Modal show={showUpdateAuxiliaryCostModal} onHide={closeDialog}>
+		<Modal show={showAddAuxiliaryCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Cập nhật: {ContractID}</Modal.Title>
+				<Modal.Title>Thêm Chi phí vật tư phụ</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
-			<Modal.Body>
+				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Chọn Hợp đồng
@@ -66,7 +84,7 @@ const UpdateAuxiliaryCostModal = () => {
 							placeholder='Nhập chuỗi'
 							name='ContractID'
 							value={ContractID}
-							onChange={onChangeUpdatedAuxiliaryCostForm}
+							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -80,7 +98,7 @@ const UpdateAuxiliaryCostModal = () => {
 							required
 							aria-describedby='Plan-help'
 							value={Plan}
-							onChange={onChangeUpdatedAuxiliaryCostForm}
+							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -94,7 +112,7 @@ const UpdateAuxiliaryCostModal = () => {
 							required
 							aria-describedby='noidung-help'
 							value={Content}
-							onChange={onChangeUpdatedAuxiliaryCostForm}
+							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
@@ -103,10 +121,10 @@ const UpdateAuxiliaryCostModal = () => {
 						</Form.Text>
 						<Form.Control
 							tpye='text'
-							placeholder='Nhập số'
+							placeholder='Nhập tỉ lệ % hoặc số tiền tuyệt đối'
 							name='Cost'
 							value={Cost} /* tạo ràn buộc số */
-							onChange={onChangeUpdatedAuxiliaryCostForm}
+							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -119,7 +137,7 @@ const UpdateAuxiliaryCostModal = () => {
 							placeholder='Nhập chuỗi'
 							name='Note'
 							value={Note}
-							onChange={onChangeUpdatedAuxiliaryCostForm}
+							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>
 					</Form.Group>
 				</Modal.Body>
@@ -127,8 +145,8 @@ const UpdateAuxiliaryCostModal = () => {
 					<Button variant='secondary' onClick={closeDialog}>
 						Hủy
 					</Button>
-					<Button variant='primary' type='submit'>
-						Cập nhật
+					<Button variant='info' type='submit'>
+						Thêm!
 					</Button>
 				</Modal.Footer>
 			</Form>
@@ -136,4 +154,4 @@ const UpdateAuxiliaryCostModal = () => {
 	)
 }
 
-export default UpdateAuxiliaryCostModal
+export default AddAuxiliaryCostModal

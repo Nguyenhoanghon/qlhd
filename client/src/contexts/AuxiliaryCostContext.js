@@ -4,6 +4,8 @@ import {
 	apiUrl,
 	LOADED_FAIL,
 	LOADED_SUCCESS,
+	LOADED_SUCCESS_PLAN1,
+	LOADED_SUCCESS_PLAN2,
 	ADD,
 	DELETE,
 	UPDATE,
@@ -16,6 +18,8 @@ export const AuxiliaryCostContext = createContext()
 const AuxiliaryCostContextProvider = ({ children }) => {
 	// State
 	const [AuxiliaryCostState, dispatch] = useReducer(AuxiliaryCostReducer, {
+		AuxiliaryCostsPlan1: [],
+		AuxiliaryCostsPlan2: [],
 		AuxiliaryCost: [],
 		AuxiliaryCosts: [],
 		AuxiliaryCostsLoading: true

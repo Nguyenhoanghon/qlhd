@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { MiscExpenseCostContext } from '../../contexts/MiscExpenseContext'
 
 const AddMiscExpenseCostModal = () => {
@@ -22,6 +23,9 @@ const AddMiscExpenseCostModal = () => {
 	})
 
 	const { Content, Cost, Note, ContractID } = newMiscExpenseCost
+	//load idcontract
+	const params = useParams();
+	newMiscExpenseCost.ContractID = params.id;
 
 	const onChangeNewMiscExpenseCostForm = event =>
 		setNewMiscExpenseCost({ ...newMiscExpenseCost, [event.target.name]: event.target.value })

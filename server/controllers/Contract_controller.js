@@ -14,12 +14,12 @@ const Contract = db.Contract;
 //Get all Contract
 //@Access Public
 exports.getAllContract = async (req,res) => {
-    console.log("getAllContract is called")
+    console.log("getAllContract is called sfsdfsdfsfs")
     try {
       const Contract_data = await Contract.find().populate("user", "-__v")
       res.json({ success: true, Contracts: Contract_data }) 
       //console.log(Contract_data)
-      console.log(req.userId)
+      //console.log(req.userId)
   
     } catch (error) {
         console.log(error)
@@ -33,7 +33,7 @@ exports.getAllContract = async (req,res) => {
 exports.getContract = async (req,res) => {
     console.log("getContract is called")
     try {
-      const Contract_data = await Contract.find({_id: req.params.id}).populate("user", "-__v")
+      const Contract_data = await Contract.find({_id: req.params.id})//.populate("user", "-__v")
       if(Contract_data==null)
             res.json({ success: true, message: "Contract not found !" }) 
       else

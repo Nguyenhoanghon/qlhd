@@ -53,22 +53,39 @@ exports.getAllProductCost = async (req,res) => {
 exports.addProductCost = async (req, res) => {
     //console.log("Test route ===> addProductCost is called !");
     const { 
-        ProductName,
-        Quantity,
-        EX_W, // nhap tu nuoc ngoai = true
-        FOBCost, //if(EX_W = =true, req.body.FOBCost, 0)
-        RatioUSD, //if(EX_W = =true, req.body.RatioUSD, 0)
-        InputPrice, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
-        OutputPrice, // Nhap
-        InputIntoMoney, // Can tinh  = Quantity * InputPrice
-        OutputIntoMoney, //Can tinh =  Quantity * OutputPrice
-        Insurance,
-        Incentive,
-        Note,
-        ContractID
-    } = req.body
+		ProductName,
+		Quantity,
+		EX_W,
+		FOBCost,
+		RatioUSD,
+		InputPrice,
+		OutputPrice,
+		InputIntoMoney,
+		OutputIntoMoney,
+		Insurance,
+		Incentive,
+		Note,
+		ContractID
+		} = req.body
 
-    const newProductCost = new ProductCost({
+    const newProductCost = new ProductCost(
+        { 
+            ProductName,
+            Quantity,
+            EX_W,
+            FOBCost,
+            RatioUSD,
+            InputPrice,
+            OutputPrice,
+            InputIntoMoney,
+            OutputIntoMoney,
+            Insurance,
+            Incentive,
+            Note,
+            ContractID
+        })
+            /*
+        {
         ProductName,
         Quantity,
         EX_W, // nhap tu nuoc ngoai = true
@@ -82,14 +99,15 @@ exports.addProductCost = async (req, res) => {
         Incentive,
         Note,
         ContractID
-    })
+    })*/
     console.log("Test data recieved ====>>>",newProductCost)
-    
+    console.log("TContractID ====>>>",req.body.ContractID)
     try {
         //Kiem tra hop dong co ton tai?
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{ //sửa lại tìm theo idcontract
+       Contract.find({_id: req.body.ContractID},(err,Contract)=>{ //sửa lại tìm theo idcontract
         if(Contract.length!=0){                
             //xu ly logic
+            console.log("id contract ========",Contract._id)
             if(newProductCost.EX_W == 1){ 
                 console.log("Nhap tu nuoc ngoai");
                 newProductCost.InputPrice = req.body.FOBCost * req.body.RatioUSD;
@@ -113,12 +131,13 @@ exports.addProductCost = async (req, res) => {
             }
             else 
             {
-                console.log("NHap trong nuoc");
+                console.log("NHap trong nuoc", req.body.ContractID);
                 newProductCost.FOBCost = 0;
                 newProductCost.RatioUSD =0;
                 newProductCost.InputPrice = req.body.InputPrice
                 newProductCost.InputIntoMoney = newProductCost.InputPrice * newProductCost.Quantity;
                 newProductCost.OutputIntoMoney = req.body.OutputPrice * newProductCost.Quantity;
+                console.log("Check newProductCost Them ".newProductCost)
                 newProductCost.save((err, ProductCost) => {
                     if (err) {
                         res.status(500).send({ message: err });
@@ -204,7 +223,7 @@ exports.updateProductCost = async (req, res) => {
                 else
                     res.json({
                         success: true,
-                        message: 'Update MaydayCost Successfull !',
+                        message: 'Update Successfull !',
                         updateProductCost: updateProductCost
                     })
         

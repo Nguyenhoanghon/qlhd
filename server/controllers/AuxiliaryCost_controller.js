@@ -135,12 +135,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
     console.log(req.body.ContractID);
     newAuxiliaryCost.Renevue = 0;
     try {
-        // TIM id contract từ ContractID
-        const idcontract = await Contract.find({ContractID: req.body.ContractID})
-        // Load data tu Form 1: Lay tong gia von va Doanh thu
-        console.log("test ket quả idCOntract", idcontract)
-        const ProductCost_data = await ProductCost.find({contract: idcontract[0]._id})
-        
+        const ProductCost_data = await ProductCost.find({ contract: req.body.ContractID })
         for (let i = 0; i < ProductCost_data.length; i++) {
             newAuxiliaryCost.Renevue += ProductCost_data[i].OutputIntoMoney;
         }
@@ -165,7 +160,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
        
         //Thuc hien luu vao DB voi idContract
 
-        Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+        Contract.find({_id: req.body.ContractID },(err,Contract)=>{
         if(Contract.length!=0){
             newAuxiliaryCost.save((err, AuxiliaryCost) => {
                 if (err) {

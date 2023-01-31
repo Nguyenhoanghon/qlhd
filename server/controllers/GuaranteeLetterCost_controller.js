@@ -33,7 +33,7 @@ exports.insertGuaranteeLetterCost = async (req, res) => {
     console.log("Test data recieved ====>>>",req.body.ContractID)
     
     try {
-       Contract.find({ContractID: req.body.ContractID },(err,Contract)=>{
+       Contract.find({_id: req.body.ContractID },(err,Contract)=>{
         if(Contract.length!=0){
             newGuaranteeLetterCost.IntoMoney = (req.body.Cost * req.body.RatioCost * req.body.QuantityMonths)/12;
             newGuaranteeLetterCost.save((err, GuaranteeLetterCost) => {

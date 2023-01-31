@@ -18,7 +18,6 @@ const ImplementationCostContextProvider = ({ children }) => {
 	const [ImplementationCostState, dispatch] = useReducer(ImplementationCostReducer, {
 		ImplementationCost: null,
 		ImplementationCosts: [],
-		//TotalGeneralExpense,//note tinh tong
 		ImplementationCostsLoading: true
 	})
 	// State dem so doi tuong trong ImplementationCost
@@ -63,9 +62,9 @@ const ImplementationCostContextProvider = ({ children }) => {
 	// Add ImplementationCost
 	const addImplementationCost = async newImplementationCost => {
 		try {
-			const response = await axios.post(`${apiUrl}api/forms/product-Cost/post`, newImplementationCost)//note mandaykysu
+			const response = await axios.post(`${apiUrl}api/forms/product-Cost/post`, newImplementationCost)
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.ChiTietHangHoa }) //note MandayKysu
+				dispatch({ type: ADD, payload: response.data.ChiTietHangHoa }) 
 				return response.data
 			}
 		} catch (error) {
