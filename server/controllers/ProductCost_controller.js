@@ -84,31 +84,17 @@ exports.addProductCost = async (req, res) => {
             Note,
             ContractID
         })
-            /*
-        {
-        ProductName,
-        Quantity,
-        EX_W, // nhap tu nuoc ngoai = true
-        FOBCost, //if(EX_W = =true, req.body.FOBCost, 0)
-        RatioUSD, //if(EX_W = =true, req.body.RatioUSD, 0)
-        InputPrice, // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
-        OutputPrice, // Nhap
-        InputIntoMoney, // Can tinh  = Quantity * InputPrice
-        OutputIntoMoney, //Can tinh =  Quantity * OutputPrice
-        Insurance,
-        Incentive,
-        Note,
-        ContractID
-    })*/
+            
     console.log("Test data recieved ====>>>",newProductCost)
     console.log("TContractID ====>>>",req.body.ContractID)
-    try {
+    
+     try {
         //Kiem tra hop dong co ton tai?
        Contract.find({_id: req.body.ContractID},(err,Contract)=>{ //sửa lại tìm theo idcontract
         if(Contract.length!=0){                
             //xu ly logic
             console.log("id contract ========",Contract._id)
-            if(newProductCost.EX_W == 1){ 
+            if(newProductCost.EX_W === true){ 
                 console.log("Nhap tu nuoc ngoai");
                 newProductCost.InputPrice = req.body.FOBCost * req.body.RatioUSD;
                 newProductCost.InputIntoMoney = newProductCost.InputPrice * newProductCost.Quantity;
@@ -161,7 +147,8 @@ exports.addProductCost = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
-    }
+    } 
+    
 }
 
 // Update ProductCost
@@ -203,7 +190,7 @@ exports.updateProductCost = async (req, res) => {
             Note
         }
         //xu ly logic quy trinh
-        if(req.body.EX_W == 1){ 
+        if(req.body.EX_W == true){ 
             console.log("Nhap tu nnuoc ngoai");
             updateProductCost.InputPrice = req.body.FOBCost * req.body.RatioUSD;
             updateProductCost.InputIntoMoney = updateProductCost.InputPrice * updateProductCost.Quantity;

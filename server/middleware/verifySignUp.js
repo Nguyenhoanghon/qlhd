@@ -67,7 +67,7 @@ checkDuplicateContract = (req, res, next) => {
     }
 
     if (contract) {
-      res.status(400).send({ message: `Lỗi! Hợp đồng ${req.body.ContractID} đã tồn tại!` });
+      res.status(400).send({ message: `Hợp đồng ${req.body.ContractID} đã tồn tại!` });
       return;
     }
     else
@@ -76,7 +76,7 @@ checkDuplicateContract = (req, res, next) => {
   });
 };
 
-checkDuplicateContract_id = (req, res, next) => {
+checkDuplicateCapitalExpenditureCost = (req, res, next) => {
   CapitalExpenditureCost.findOne({
     contract: req.body.ContractID
   }).exec((err, CapitalExpenditureCost) => {
@@ -86,7 +86,7 @@ checkDuplicateContract_id = (req, res, next) => {
     }
 
     if (CapitalExpenditureCost) {
-      res.status(400).send({ message: `Lỗi! Hợp đồng ${req.body.ContractID} đã tồn tại!` });
+      res.status(400).send({ message: `Chi phí vốn đã tồn tại!` });
       return;
     }
     else
@@ -100,7 +100,7 @@ const verifySignUp = {
   checkDuplicateUsernameOrEmail,
   checkRolesExisted,
   checkDuplicateContract,
-  checkDuplicateContract_id
+  checkDuplicateCapitalExpenditureCost
 };
 
 module.exports = verifySignUp;

@@ -8,7 +8,7 @@ import { useContext } from 'react'
 const ActionButtons_AuxiliaryCost = ({ _id }) => {
 	const { deleteAuxiliaryCost, findAuxiliaryCost, setShowUpdateAuxiliaryCostModal } = useContext(
 		AuxiliaryCostContext
-	) //goi ActionButtons cho component khác đc kg ???
+	) 
 
 	const chooseAuxiliaryCost = AuxiliaryCostId => {
 		findAuxiliaryCost(AuxiliaryCostId)

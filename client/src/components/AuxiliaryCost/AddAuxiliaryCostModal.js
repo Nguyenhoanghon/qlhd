@@ -1,6 +1,7 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import '../App.css'
 import { useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AuxiliaryCostContext } from '../../contexts/AuxiliaryCostContext'
@@ -40,6 +41,12 @@ const AddAuxiliaryCostModal = () => {
 	const params = useParams();
 	newAuxiliaryCost.ContractID = params.id;
 
+	//Checkbox Phuong an
+	const togglePlan = event => {
+		newAuxiliaryCost({ ...newAuxiliaryCost, Plan: event })
+		
+	};
+
 	const onChangeNewAuxiliaryCostForm = event =>
 		setNewAuxiliaryCost({ ...newAuxiliaryCost, [event.target.name]: event.target.value })
 
@@ -57,7 +64,7 @@ const AddAuxiliaryCostModal = () => {
 	const resetAddAuxiliaryCostData = () => {
 		setNewAuxiliaryCost({
 			Revenue: '', // Load form 1
-			Plan:'', // Lua chon gia tri
+			Plan: 1, // Lua chon gia tri
 			Content:'',
 			Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
 			CPXL:'',
@@ -71,13 +78,13 @@ const AddAuxiliaryCostModal = () => {
 	return (
 		<Modal show={showAddAuxiliaryCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm Chi phí vật tư phụ</Modal.Title>
+				<Modal.Title>Thêm Chi phí vật tư phụ mmm</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							Chọn Hợp đồng
+							Chọn Hợp đồng wddd
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -91,7 +98,14 @@ const AddAuxiliaryCostModal = () => {
 						<Form.Text id='Plan-help' muted as="h6">
 							Chọn phương án
 						</Form.Text>
-						<Form.Control
+						<Form.Control className='switch'
+								type='checkbox'
+								checked={Plan}
+								value={Plan}
+								onChange={(e) => togglePlan(e.target.checked)}
+							/>
+							<span>Phuong an 2</span>
+						{/* <Form.Control
 							type='text'
 							placeholder='Nhập 1 Hoặc 2'
 							name='Plan'
@@ -99,7 +113,7 @@ const AddAuxiliaryCostModal = () => {
 							aria-describedby='Plan-help'
 							value={Plan}
 							onChange={onChangeNewAuxiliaryCostForm}
-						/>						
+						/>		 */}				
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">

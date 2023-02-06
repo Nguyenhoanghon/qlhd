@@ -37,15 +37,18 @@ const UpdateProductCostModal = () => {
 		} = updatedProductCost //note
 
 	const params = useParams();
-	//Ham checkbox value
+	//Ham Load id contract
 	updatedProductCost.ContractID = params.id
 	
-	const toggleEX_W = (value) => {
-		setUpdatedProductCost({EX_W: value});
+	//Checkbox nguon nhap
+	const toggleEX_W = event => {
+		setUpdatedProductCost({ ...updatedProductCost, EX_W: event })
+		
 	};
-	
-	const toggleInsurance = (value) => {
-		setUpdatedProductCost({Insurance: value});
+
+	//Ham checkbox Insurance
+	const toggleInsurance = event => {
+		setUpdatedProductCost({ ...updatedProductCost, Insurance: event })
 	};
 
 	setUpdatedProductCost.ContractID = params.id;
@@ -71,8 +74,8 @@ const UpdateProductCostModal = () => {
 				<Modal.Title>Cập nhật Hàng Hóa ?</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
-				<Modal.Body>
-					<Form.Group>
+			<Modal.Body>
+					{/* <Form.Group>
 						<Form.Text id='contract-help' muted as='h6'>
 							Chọn Hợp đồng
 						</Form.Text>
@@ -85,7 +88,7 @@ const UpdateProductCostModal = () => {
 							value={ContractID}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='tenhang-help' muted as='h6'>
 							Nhập tên hàng
@@ -101,23 +104,9 @@ const UpdateProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='xuatxu-help' muted as='h6'>
-							Nguồn nhập hàng
-						</Form.Text>
-						<label className='switch'>
-						<input
-							type='checkbox'
-							checked={EX_W}
-							onChange={(e) => toggleEX_W(e.target.checked)}
-						/>
-						<span>Nhập từ nước ngoài</span>
-						</label>
-					</Form.Group>
-					
-					<Form.Group>
 						<Form.Text id='soluong-help' muted as='h6'>
 							Số lượng
-						</Form.Text>						
+						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Số lượng'
@@ -129,14 +118,27 @@ const UpdateProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
+						<Form.Text id='xuatxu-help' muted as='h6'>
+							Nguồn nhập hàng
+						</Form.Text>
+						<Form.Control className='switch'
+								type='checkbox'
+								checked={EX_W}
+								value={EX_W}
+								onChange={(e) => toggleEX_W(e.target.checked)}
+							/>
+							<span>Nhập từ nước ngoài</span>
+					</Form.Group>
+					
+					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Đơn giá FOB
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='Đơn giá FOB'
+							placeholder=''
 							name='FOBCost'
-							required
+							readOnly={!EX_W}
 							aria-describedby='dongiaFOB-help'
 							value={FOBCost}
 							onChange={onChangeUpdatedProductCostForm}
@@ -148,9 +150,9 @@ const UpdateProductCostModal = () => {
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='22400'
+							placeholder=''
 							name='RatioUSD'
-							required
+							readOnly={!EX_W}
 							value={RatioUSD}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
@@ -163,10 +165,10 @@ const UpdateProductCostModal = () => {
 							type='text'
 							placeholder='Đơn giá kho'
 							name='InputPrice'
-							required
+							readOnly={EX_W}
 							value={InputPrice}
 							onChange={onChangeUpdatedProductCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='dongiaban-help' muted as='h6'>
@@ -183,16 +185,13 @@ const UpdateProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='Insurance-help' muted as='h6'>
-							Hàng hoá có tính chi phí bảo hiểm không?
-						</Form.Text>
-						<label className='switch'>
-						<input
+						<Form.Control className='switch'
 							type='checkbox'
 							checked={Insurance}
+							value={Insurance}
 							onChange={(e) => toggleInsurance(e.target.checked)}
 						/>
-						</label>
+						<span>Hàng hoá có tính chi phí bảo hiểm</span>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Incentive-help' muted as='h6'>
@@ -200,13 +199,14 @@ const UpdateProductCostModal = () => {
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='Tiền thưởng từ đối tác'
+							placeholder=''
 							name='Incentive'
 							required
 							aria-describedby='Incentive-help'
 							value={Incentive}
 							onChange={onChangeUpdatedProductCostForm}
 						/>
+
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Note-help' muted as='h6'>

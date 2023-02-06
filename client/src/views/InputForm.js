@@ -30,7 +30,7 @@ import UpdateContractModal from '../components/contract/UpdateContractModal'
 export const InputForm = () => {
 	// Contexts
 	const params = useParams()
-	console.log("Id hop dong dc click")
+	console.log("Id hop dong dc click",params)
 	return (
 		<>
 		<Card className='text-center mx-5 my-5'>
@@ -99,7 +99,7 @@ export const InputForm = () => {
 							<td> Chi phí vật tư phụ</td>
 							<td>{params.id}</td>
 							<td>
-							<a /* href={`/AuxiliaryCost/contract/${params.id}`} */> Click nhập</a>
+							<a href={`/AuxiliaryCost/contract/${params.id}`}> Click nhập</a>
 							</td>
 						</tr>
 					</tbody>

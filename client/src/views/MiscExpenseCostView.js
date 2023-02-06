@@ -235,7 +235,7 @@ export const MiscExpenseCost_byidContract = () => {
 		
 		body = (
 			<>
-				<Card className='text-center mx-5 my-5'>
+				<Card className='text-center mx-5 my-5' animation={false}>
 					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
 						<Table  striped bordered hover size="sm">

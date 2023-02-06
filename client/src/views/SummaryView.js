@@ -79,7 +79,7 @@ export const Summary = () => {
 
 		body = (
 			<>
-				<Card className='text-center mx-5 my-5'>
+				<Card className='text-center mx-5 my-5' aninmation={false.toLocaleString()}>
 					<Card.Header as='h2'> QUẢN LÝ HỢP ĐỒNG</Card.Header>
 					<Card.Body>
 						<Table striped bordered hover size="sm">
@@ -254,17 +254,16 @@ export const Summary_id = () => {
 
 	//=== Get data AuxiliaryCost
 	const {
-		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCosts_plan1, AuxiliaryCosts_plan2, AuxiliaryCostsLoading },
-		getAuxiliaryCosts_byidContract,
+		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCostsPlan1, AuxiliaryCostsPlan2, AuxiliaryCostsLoading },
 		getAuxiliaryCosts_byidContract_Plan1,
-		getAuxiliaryCosts_byidContract_Plan2,
-		setShowAddAuxiliaryCostModal
+		getAuxiliaryCosts_byidContract_Plan2
 	} = useContext(AuxiliaryCostContext)
+
 	//get dat AuxiliaryCosts with idContract and Plan 1
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, 1), [])
 	const TotalPlan1 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
 	const TotalCPXLPlan1 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan1 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	const TotalCPgrossPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
 	//get dat AuxiliaryCosts with idContract and Plan 2
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, 2), [])
 	const TotalPlan2 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
@@ -320,7 +319,7 @@ export const Summary_id = () => {
 
 	return (
 		<>
-			<Card className='text-center mx-5 my-5'>
+			<Card className='text-center mx-5 my-5' aninmation={false}>
 				<Card.Header as='h2'>BẢNG PHÂN TÍCH HIỆU QUẢ HỢP ĐỒNG - DỰ ÁN </Card.Header>
 				<Card.Body>
 					<Table striped bordered hover size="sm">
@@ -522,7 +521,7 @@ export const Summary_id = () => {
 						<tr>
 							<td>2</td>
 							<td colSpan={6} >Chi phí mua vật tư phụ (dự kiến) </td>
-							<td>{/* {(TotalCPgrossPlan1 / 10).toLocaleString()} */ } Đang xử lý...</td>
+							<td>{(TotalCPgrossPlan1 / 10).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>

@@ -88,7 +88,7 @@ export const ProductCost_all = () => {
 
 		body = (
 			<>
-				<Card className='text-center mx-5 my-5'>
+				<Card className='text-center mx-5 my-5' animation={false}>
 					<Card.Header as='h1'>CHI TIẾT HÀNG HÓA</Card.Header>
 					<Card.Body>
 						<Table responsive="sm" striped bordered hover size="sm" >

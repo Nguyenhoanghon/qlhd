@@ -66,7 +66,7 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		try {
 				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
 				if (response.data.success) {
-					dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost_data })
+					dispatch({ type: LOADED_SUCCESS_PLAN1, payload: response.data.AuxiliaryCost_data })
 				}
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
@@ -77,7 +77,7 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		try {
 				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
 				if (response.data.success) {
-					dispatch({ type: FIND, payload: response.data.AuxiliaryCost_data })
+					dispatch({ type: LOADED_SUCCESS_PLAN2, payload: response.data.AuxiliaryCost_data })
 				}
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })

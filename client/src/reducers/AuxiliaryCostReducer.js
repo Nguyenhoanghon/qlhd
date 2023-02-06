@@ -10,7 +10,7 @@ import {
 } from '../contexts/constants'
 
 export const AuxiliaryCostReducer = (state, action) => {
-	const { type, payload, } = action
+	const { type, payload } = action
 	switch (type) {
 		case LOADED_SUCCESS:
 			return {

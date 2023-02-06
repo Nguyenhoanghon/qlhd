@@ -85,6 +85,22 @@ const ProductCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
+	// Add ProductCost idcontract
+	const addProductCostIdcontract = async (newProductCost) => { 
+		try {
+			const response = await axios.post(`${apiUrl}/api/forms/product-cost/post/contract/`, newProductCost)//note mandaykysu
+			if (response.data.success) {
+				dispatch({ type: ADD, payload: response.data.ProductCost }) //note MandayKysu
+				return response.data
+			}
+			else
+				return response.data
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
 
 	// Delete ProductCost
 	const deleteProductCost = async ProductCostId => {
@@ -136,7 +152,8 @@ const ProductCostContextProvider = ({ children }) => {
 		findProductCost,
 		updateProductCost,
 		getProductCost_byidProductCost,
-		getProductCost_byidContract
+		getProductCost_byidContract,
+		addProductCostIdcontract
 
 	}
 
