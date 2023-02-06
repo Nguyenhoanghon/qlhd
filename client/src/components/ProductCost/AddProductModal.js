@@ -19,15 +19,15 @@ const AddProductCostModal = () => {
 	const [newProductCost, setNewProductCost] = useState({
 		ProductName: '',
 		Quantity: '',
-		EX_W: '', // nhap tu nuoc ngoai = true
+		EX_W: false, // nhap tu nuoc ngoai = true
 		FOBCost: '', //if(EX_W = =true, req.body.FOBCost, 0)
 		RatioUSD: '', //if(EX_W = =true, req.body.RatioUSD, 0)
 		InputPrice: '', // = if(EX_W == true, FOBCost * RatioUSD , req.body.InputPrice)
 		OutputPrice: '', // Nhap
 		InputIntoMoney: '', // Can tinh  = Quantity * InputPrice
 		OutputIntoMoney: '', //Can tinh =  Quantity * OutputPrice
-		Insurance: '',
-		Incentive: '',
+		Insurance: false,
+		Incentive: 0,
 		Note: '',
 		ContractID: ''
 	}) //note là các biến trong 
@@ -104,7 +104,7 @@ const AddProductCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					{/* <Form.Group>
+					<Form.Group>
 						<Form.Text id='contract-help' muted as='h6'>
 							Chọn Hợp đồng
 						</Form.Text>
@@ -117,7 +117,7 @@ const AddProductCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewProductCostForm}
 						/>
-					</Form.Group> */}
+					</Form.Group>
 					<Form.Group>
 						<Form.Text id='tenhang-help' muted as='h6'>
 							Nhập tên hàng
@@ -150,7 +150,7 @@ const AddProductCostModal = () => {
 						<Form.Text id='xuatxu-help' muted as='h6'>
 							Nguồn nhập hàng
 						</Form.Text>
-						<Form.Control className='switch'
+						<Form.Control className = 'switch'
 								type='checkbox'
 								checked={EX_W}
 								value={EX_W}
@@ -214,7 +214,7 @@ const AddProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Control className='switch'
+						<Form.Control className = 'switch'
 							type='checkbox'
 							checked={Insurance}
 							value={Insurance}
