@@ -44,9 +44,9 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mz
 ### Update MiscExpense by id
 ### access Public
 ### Not 
-PUT http://localhost:5000/api/forms/misc-expense/put/63b23706aae5094cd7f1ee88
+PUT http://localhost:5000/api/forms/misc-expense/put/63c142835873e8c743b2ee01
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTgxNTE2Mzk0ZTAyODg4YjQ1NTBiMCIsImlhdCI6MTY3MjAwOTkxMiwiZXhwIjoxNjcyMDk2MzEyfQ.-1wfSKYAt3_a2g8uxSr9EpSvUlhp6Hi-PwF6GMSWXCQ
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTkyODc1MSwiZXhwIjoxNjc1OTM1MTUxfQ.uix91LLTxQPLw2Cov55Hc_RCJSWdvI9b5PxgFTRkdqU
 
 {
 "Content": "Tiếp Khách update",

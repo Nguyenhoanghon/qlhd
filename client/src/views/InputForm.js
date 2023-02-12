@@ -59,7 +59,7 @@ export const InputForm = () => {
 							<td> Chi tiết triển khai</td>
 							<td>{params.id}</td>
 							<td>
-							<a /* href={`/implementation-cost/contract/${params.id}`} */> Click nhập</a>
+							<a href={`/implementation-cost/contract/${params.id}`}> Click nhập</a>
 							</td>
 						</tr>
 						<tr>

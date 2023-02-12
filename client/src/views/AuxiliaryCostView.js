@@ -1,13 +1,10 @@
 import { AuxiliaryCostContext } from '../contexts/AuxiliaryCostContext';
-import { ProductCostContext } from '../contexts/ProductCostContext'
-import { AuthContext } from '../contexts/AuthContext'
-import { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { ProductCostContext } from '../contexts/ProductCostContext';
+import { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
 
-
-import { useState } from 'react'
-import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 
 import Toast from 'react-bootstrap/Toast'

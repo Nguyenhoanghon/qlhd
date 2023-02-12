@@ -2,8 +2,20 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
-import { ImplementationCostContext } from '../../contexts/MiscExpenseContext'
+import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
+//Ham them giai doan
+const AddStage = () =>{
+	//Contexts
+	const{
+		showAddStage,
+		setshowAddStage,
+		showUpdateStage,
+		setshowUpdateStage,
 
+	} = useContext(ImplementationCostContext)
+	//State chua thong tin Stage
+
+}
 const AddImplementationCostModal = () => {
 	// Contexts
 	const {

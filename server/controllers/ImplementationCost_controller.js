@@ -38,7 +38,7 @@ exports.getAllImplementationCost = async (req,res) => {
 
 //Get ImplementationCost By ID ImplementationCost
 //@Access Public
-// Chua test
+// Test: chua
   exports.getImplementationCost = async (req,res) => {
       console.log("getAllImplementationCost is called")
       try {
@@ -54,14 +54,12 @@ exports.getAllImplementationCost = async (req,res) => {
 
 //Get ImplementationCost By ID HopDong
 //@Access Public
-// Chua test
+// test: ok
 exports.getImplementationCost_IdContract = async (req,res) => {
     console.log("getAllImplementationCost is called")
     try {
       const ImplementationCost_data = await ImplementationCost.find({contract: req.params.id}).populate("contract", "-__v")
-      res.json({ success: true, ImplementationCost: ImplementationCost_data }) 
-      console.log(ImplementationCost_data)
-  
+      res.json({ success: true, ImplementationCost: ImplementationCost_data })
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
@@ -368,7 +366,7 @@ exports.AddCostDetailStage = async (req, res) => {
 // Update ImplementationCost GeneralExpense
 // @access Public
 exports.updateImplementationCost_CostGeneralExpense = async (req, res) => {
-    console.log("Test route updateImplementationCost !");
+    console.log("Test route updateImplementationCost_CostGeneralExpense !");
 
     const { 
         NameCost,
@@ -405,32 +403,50 @@ exports.updateImplementationCost_CostGeneralExpense = async (req, res) => {
             updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
          
         console.log("Test data sau xu ly logic =====>>>",updateImplementationCost)
-
+        console.log("Test ID1 =====>>>",ImplementationCost_Id)
+        console.log("Test ID2 =====>>>",ContentCostId)
+        console.log("Test ID3 =====>>>",req.params.id)
         //const UpdateCondition = { _id: req.params.id}
-        updateImplementationCost = await ImplementationCost.findOneAndUpdate(
-            {
-            _id: ImplementationCost_Id,
+        const generalcost = await ImplementationCost.find(
+          {
+          _id: ImplementationCost_Id,
             "GeneralExpense._id": ContentCostId,
             "GeneralExpense.Costs._id": req.params.id
+          })
+
+        console.log("Get data =====",generalcost);
+
+        updateImplementationCost = await ImplementationCost.updateOne(//findOneAndUpdate(
+          {
+            
+            //GeneralExpense: {$elemMatch:
+            //{_id: ImplementationCost_Id,
+            //  "GeneralExpense._id": ContentCostId,
+            //  "GeneralExpense.Costs._id": req.params.id
+            //}}
+            //_id: {$elemMatch: {_id: ImplementationCost_Id}},
+            "GeneralExpense._id": ContentCostId,
+            "GeneralExpense.Costs._id": req.params.id
+
           },
           {
             $set: {
-              "GeneralExpense.$.Costs": {
-                NameCost,
-                Units,
-                UnitPrice,
-                Quantity_days,
-                Quantity_times,
-                IntoMoney,
-                Note
-              },
-            }
-          },
+              //"GeneralExpense.$.Costs.$.NameCost": 'Update 63e4bab5709f670de5b98a4a'
+              "GeneralExpense.$[].Costs": {
+                NameCost,//: req.body.NameCost,
+                Units,//: req.body.Units,
+                UnitPrice,//: req.body.UnitPrice,
+                Quantity_days,//: req.body.Quantity_days,
+                Quantity_times,//: req.body.Quantity_times,
+                IntoMoney,//: req.body.IntoMoney,
+                Note,//: req.body.Note
+              }
+            }},
           {
-            new: true,
-            upsert: true,
-          }
+            //arrayFilters: [{"el._id": req.params.id}]
+          } 
         );
+        console.log('sau cap nhat',updateImplementationCost)
             // User not authorised to update ImplementationCost or ImplementationCost not found
             if (!updateImplementationCost)
                 return res.status(401).json({
@@ -534,10 +550,11 @@ exports.updateImplementationCost_CostDetailStage = async (req, res) => {
         console.log(error)
         res.status(400).json({ success: false, message: 'Internal server error' })
     }
-
 }
-// Delete ImplementationCost by id
+
+// Xoa  ImplementationCost by id
 // @access Public
+//ok
 exports.deleteImplementationCost = async (req, res) => {
     console.log("Test route deleteImplementationCost !");
     console.log(req.params.id);
@@ -560,31 +577,123 @@ exports.deleteImplementationCost = async (req, res) => {
 
 }
 
-// Delete ImplementationCost by id Costs General
+// Xoa 1 giai doan voi id giaidoan
 // @access Public
-exports.deleteImplementationCost_Stage = async (req, res) => {
-    console.log("Test route deleteImplementationCost !");
-    console.log(req.params.id);
-    try {
-        const ImplementationCostDeleteCondition = {
-            _id: ImplementationCost_Id,
-            "StagesImplementation._id": ContentCostId,
-            "StagesImplementation.Costs._id": req.params.id
-          }//, user: req.userId }
-        const deletedImplementationCost= await ImplementationCost.findOneAndDelete(ImplementationCostDeleteCondition)
+//ok
+exports.deleteImplementationCost_ContentCost = async (req, res) => {
+  console.log("Test route deleteImplementationCost_ContentCost !");
+  console.log("ID Giai doan",req.params.idContentCost);
+  try {
+      
+        const deletedImplementationCost = await ImplementationCost.updateOne(
+          {
+            _id: req.params.idImplementationCost
+          },
+          {
+            $pull:
+            {
+              "GeneralExpense": {
+                _id: req.params.idContentCost
+              },
+              "StagesImplementation": {
+                _id: req.params.idContentCost
+              }
+            }
+          }
+        );
+      
+        // User not authorised or ImplementationCost not found
+      if (!deletedImplementationCost)
+          return res.status(401).json({
+              success: false,
+              message: 'ImplementationCost GeneralExpense not found or user not authorised'
+          })
+
+      res.json({ success: true, message: 'Delete GeneralExpense Successfull !'})
+  } catch (error) {
+      console.log(error)
+      res.status(500).json({ success: false, message: 'Internal server error' })
+  }
+
+}
+// Xoa 1 chi phi trong 1 giai doan chi phi chung 
+// @access Public
+//ok
+exports.deleteImplementationCost_GeneralCostDetail = async (req, res) => {
+  console.log("Test route deleteImplementationCost_GeneralCostDetail !");
+  console.log("ID Chi phi",req.params.idImplementationCost);
+  console.log("ID Giai doan",req.params.idContentCost);
+  console.log("ID Cost",req.params.id);
+  try {
+      
+        const deletedImplementationCost = await ImplementationCost.updateOne(
+          {
+            _id: req.params.idImplementationCost,
+            "GeneralExpense._id": req.params.idContentCost
+          },
+          {
+            $pull:
+            {
+              "GeneralExpense.$.Costs": {
+                    _id: req.params.id
+                  }
+            }
+          }
+        );
 
         // User not authorised or ImplementationCost not found
-        if (!deletedImplementationCost)
-            return res.status(401).json({
-                success: false,
-                message: 'ImplementationCost not found or user not authorised'
-            })
+      if (!deletedImplementationCost)
+          return res.status(401).json({
+              success: false,
+              message: 'Not found or user not authorised'
+          })
 
-        res.json({ success: true, message: 'Delete ImplementationCost Successfull !'})
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
+      res.json({ success: true, message: 'Delete Successfull !'})
+  } catch (error) {
+      console.log(error)
+      res.status(500).json({ success: false, message: 'Internal server error' })
+  }
+
+}
+
+// Xoa 1 chi phi trong 1 giai doan chi phi trien khai
+// @access Public
+//ok
+exports.deleteImplementationCost_StageCostDetail = async (req, res) => {
+  console.log("Test route deleteImplementationCost_StageCostDetail !");
+  console.log("ID Chi phi",req.params.idImplementationCost);
+  console.log("ID Giai doan",req.params.idContentCost);
+  console.log("ID Cost",req.params.id);
+  try {
+      
+        const deletedImplementationCost = await ImplementationCost.updateOne(
+          {
+            _id: req.params.idImplementationCost,
+            "StagesImplementation._id": req.params.idContentCost
+          },
+          {
+            $pull:
+            {
+              "StagesImplementation.$.Costs": {
+                _id: req.params.id
+              }
+              
+            }
+          }
+        );
+
+        // User not authorised or ImplementationCost not found
+      if (!deletedImplementationCost)
+          return res.status(401).json({
+              success: false,
+              message: 'Not found or user not authorised'
+          })
+
+      res.json({ success: true, message: 'Delete Successfull !'})
+  } catch (error) {
+      console.log(error)
+      res.status(500).json({ success: false, message: 'Internal server error' })
+  }
 
 }
 
