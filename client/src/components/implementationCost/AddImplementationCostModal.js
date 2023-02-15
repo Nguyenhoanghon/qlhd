@@ -2,20 +2,10 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
-//Ham them giai doan
-const AddStage = () =>{
-	//Contexts
-	const{
-		showAddStage,
-		setshowAddStage,
-		showUpdateStage,
-		setshowUpdateStage,
 
-	} = useContext(ImplementationCostContext)
-	//State chua thong tin Stage
 
-}
 const AddImplementationCostModal = () => {
 	// Contexts
 	const {
@@ -27,13 +17,16 @@ const AddImplementationCostModal = () => {
 
 	// State
 	const [newImplementationCost, setNewImplementationCost] = useState({
-		Content: '',
-		Cost: '',
-		Note: '',
-		ContractID:''
+		GeneralExpense: '',
+		StagesImplementation: '',
+		idcontract:''
 	})
 
-	const { Content, Cost, Note, ContractID } = newImplementationCost
+	const { GeneralExpense, StagesImplementation, idcontract } = newImplementationCost
+
+	//Load id Implementation
+	const params = useParams();
+	newImplementationCost.idcontract = params.id;
 
 	const onChangeNewImplementationCostForm = event =>
 		setNewImplementationCost({ ...newImplementationCost, [event.target.name]: event.target.value })
@@ -44,20 +37,20 @@ const AddImplementationCostModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addImplementationCost(newImplementationCost)//newImplementationCost
+		const { success, message } = await addImplementationCost(newImplementationCost,idcontract)//newImplementationCost
 		resetAddImplementationCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddImplementationCostData = () => {
-		setNewImplementationCost({ Content: '', Cost: '', Note: '', ContractID: '' })
+		setNewImplementationCost({ GeneralExpense: '', StagesImplementation: '', idcontract:'' })
 		setShowAddImplementationCostModal(false)
 	}
 
 	return (
 		<Modal show={showAddImplementationCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Bạn muốn thêm chi phí khác?</Modal.Title>
+				<Modal.Title>Nhập nội dung giai đoạn</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
@@ -68,51 +61,40 @@ const AddImplementationCostModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='ContractID'
+							name='idcontract'
 							required
 							aria-describedby='noidung-help'
-							value={ContractID}
+							value={idcontract}
 							onChange={onChangeNewImplementationCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							Nội dung chi phí
+							Nội dung chi phí chung
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='Nhập chuỗi'
-							name='Content'
+							placeholder=''
+							name='GeneralExpense'
 							required
 							aria-describedby='noidung-help'
-							value={Content}
+							value={GeneralExpense}
 							onChange={onChangeNewImplementationCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='sotien-help' muted  as="h6">
-							Số tiền
+						<Form.Text id='noidung-help' muted as="h6">
+							Nội dung giai đoạn chi phí triển khai
 						</Form.Text>
 						<Form.Control
-							tpye='text'
-							placeholder='Nhập số'
-							name='Cost'
-							value={Cost} /* tạo ràn buộc số */
+							type='text'
+							placeholder=''
+							name='StagesImplementation'
+							required
+							aria-describedby='noidung-help'
+							value={StagesImplementation}
 							onChange={onChangeNewImplementationCostForm}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='ghichu-help' muted as="h6">
-							Ghi chú
-						</Form.Text>
-						<Form.Control
-							as='textarea'
-							rows={3}
-							placeholder='Nhập chuỗi'
-							name='Note'
-							value={Note}
-							onChange={onChangeNewImplementationCostForm}
-						/>
+						/>						
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>
@@ -129,3 +111,4 @@ const AddImplementationCostModal = () => {
 }
 
 export default AddImplementationCostModal
+	

@@ -42,7 +42,7 @@ export const InputForm = () => {
 						<th>STT</th>
 						<th>Tên Form </th>
 						<th>ID Hợp đồng</th>
-						<th> Thao tác</th>
+						<th>Thao tác</th>
 						</tr>
 					</thead>
 					<tbody>

@@ -60,7 +60,7 @@ function App() {
 						<ImplementationCostContextProvider>
 							<ProtectedRoute exact path='/implementation-cost' component={ImplementationCost} />
 							<ProtectedRoute exact path='/implementation-cost/contract/:id' component={ImplementationCost_byidContract} />
-							<ProtectedRoute exact path='/implementation-cost/general-cost/:id' component={Input_GeneralCost} />
+							<ProtectedRoute exact path='/implementation-cost/general-cost/:id/:id' component={Input_GeneralCost} />
 							<ProtectedRoute exact path='/implementation-cost/stage-implement/:id' component={Input_StageImplement} />
 						</ImplementationCostContextProvider>
 						</ContractContextProvider>

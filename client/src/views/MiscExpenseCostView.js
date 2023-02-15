@@ -16,7 +16,7 @@ import Col from 'react-bootstrap/Col'
 import AddMiscExpenseCostModal from '../components/MiscExpenseCost/AddMiscExpenseCostModal'//Note
 import UpdateMiscExpenseCostModal from '../components/MiscExpenseCost/UpdateMiscExpenseCostModal'//Note
 
-import addIcon from '../assets/plus-circle-fill.svg'
+import addIcon from '../assets/plus_circle_fill.svg'
 import Table from 'react-bootstrap/Table'
 //import ActionButtons from '../components/posts/ActionButtons'
 import ActionButtons_MiscExpenseCost from '../components/MiscExpenseCost/ActionButtons_MiscExpenseCost'

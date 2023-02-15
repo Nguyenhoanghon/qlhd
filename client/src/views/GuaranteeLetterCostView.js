@@ -15,7 +15,7 @@ import Col from 'react-bootstrap/Col'
 
 import AddGuaranteeLetterCostModal from '../components/GuaranteeLetterCostComponent/AddGuaranteeLetterCostModal'//Note
 import UpdateGuaranteeLetterCostModal from '../components/GuaranteeLetterCostComponent/UpdateGuaranteeLetterCostModal'//Note
-import addIcon from '../assets/plus-circle-fill.svg'
+import addIcon from '../assets/plus_circle_fill.svg'
 import Table from 'react-bootstrap/Table'
 import ActionButtons_GuaranteeLetterCost from '../components/GuaranteeLetterCostComponent/ActionButtons_GuaranteeLetterCost'
 

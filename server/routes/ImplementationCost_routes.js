@@ -12,63 +12,54 @@ module.exports = function(app) {
 
 //==================== Routes Public Access ====================//
 
-// Get all ImplementationCost 
-// URL access: GET http://localhost:5000/api/forms/manday-cost
-// access public
-//test: ok
+//### Get all  ImplementationCost
+//### API access: /api/forms/implementation-cost
+//### Test: ok
 app.get("/api/forms/implementation-cost",
 ImplementationCostController.getAllImplementationCost);
 
-// Get ImplementationCost By id ImplemetationCosts
-// URL access: GET http://localhost:5000/api/forms/product-cost/id
-// access public
-app.get("/api/forms/implementation-cost/:id",
-ImplementationCostController.getImplementationCost);
-
-// Get ImplementationCost By id ImplemetationCosts
-// URL access: GET http://localhost:5000/api/forms/implementation-cost/contract/:id
-// access public
-//Test: ok
-app.get("/api/forms/implementation-cost/contract/:id",
-ImplementationCostController.getImplementationCost_IdContract);
-
-// Get ImplementationCost By ContractID
-// URL access: GET http://localhost:5000/api/forms/product-cost/id
-// access public
-app.get("/api/forms/implementation-cost/contract/:contractName",
-ImplementationCostController.getImplementationCost_ContractID);
+//### Get ImplementationCost by idcontract
+//### API access: /api/forms/implementation-cost/:idcontract
+//### Test: ok
+app.get("/api/forms/implementation-cost/:idcontract",
+ImplementationCostController.getImplementationCost_idcontract);
 
 
+//Get  tstca chi phi trong 1 giai doan với params_idImplementation  và params id_Stage
+//@Access Public
+// test: chưa
+//app.get("/api/forms/implementation-cost/contract/:id/:ContentCostId",
+//ImplementationCostController.getImplementationCost_ContentCostId);
 
-// Create ImplementationCost Khoi tao giai doan
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/post/:idcontract
-// access public
-//test: ok
+
+//### KHOI TAO 1 CHI TRIEN KHAI
+// API access: /api/forms/implementation-cost/post:idcontract
+// Test: ok
 app.post("/api/forms/implementation-cost/post/:idcontract",// authJwt.verifyToken,
 ImplementationCostController.createImplementationCost);
 
-// Create ImplementationCost -> GeneralExpense
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/GeneralExpense/post/:idcontract
-// access public
-app.post("/api/forms/implementation-cost/GeneralExpense/post/:idcontract",// authJwt.verifyToken,
+//### Them 1 giai doan chi phi chung
+// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
+// Test: ok
+app.post("/api/forms/implementation-cost/general-expense/post/:idcontract",// authJwt.verifyToken,
 ImplementationCostController.createGeneralExpense);
 
-// Create ImplementationCost -> createStagesImplementation
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
-// access public
+//### Them 1 giai doan chi phi chung
+// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
+// Test: ok
 app.post("/api/forms/implementation-cost/stages-implementation/post/:idcontract",// authJwt.verifyToken,
 ImplementationCostController.createStagesImplementation);
 
-// Add AddCostDetail vao chi phi Chung 
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
-// access public
-app.post("/api/forms/implementation-cost/general-expense/post", //authJwt.verifyToken,
+//###Them 1 chi phi vao giai doan chi phi chung
+// API access: /api/forms/implementation-cost/general-expense/post/:idImplementationCost/:idContentCost
+// Test: ok
+app.post("/api/forms/implementation-cost/general-expense/post",///:idImplementationCost/:idContentCost", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetail);
 
 // Add AddCostDetail vao chi phi giai doan
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idcontract
-// access public
-app.post("/api/forms/implementation-cost/stages-implementation/post/", //authJwt.verifyToken,
+// URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost
+// Test: ok
+app.post("/api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetailStage);
 
 // Update ImplementationCost general-expense  Costs_id 
@@ -83,20 +74,24 @@ ImplementationCostController.updateImplementationCost_CostGeneralExpense);
 app.put("/api/forms/implementation-cost/stages-implementation/put/:id",
 ImplementationCostController.updateImplementationCost_CostDetailStage);
 
-// Delete ImplementationCost 
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/delete/:id
-// access public
+
+
+
+
+// Delete ImplementationCost by idcontract
+// API access: /api/forms/implementation-cost/delete/:id
+// Test: ok
 app.delete("/api/forms/implementation-cost/delete/:id",
 ImplementationCostController.deleteImplementationCost);
 
 // Xoa 1 giai doan voi id giaidoan
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/delete/:id
+// API access: /api/forms/implementation-cost/content-cost/delete/:idImplementationCost/:idContentCost
 // access public
 app.delete("/api/forms/implementation-cost/content-cost/delete/:idImplementationCost/:idContentCost", 
 ImplementationCostController.deleteImplementationCost_ContentCost);
 
 // Xoa 1 chi phi trong 1 giai doan voi id chi phi CostDetail_id
-// URL access: POST http://localhost:5000/api/forms/implementation-cost/delete/:id
+// API access: /api/forms/implementation-cost/general-cost-detail/delete/:idImplementationCost/:idContentCost/:id
 // access public 
 app.delete("/api/forms/implementation-cost/general-cost-detail/delete/:idImplementationCost/:idContentCost/:id", 
 ImplementationCostController.deleteImplementationCost_GeneralCostDetail);
@@ -112,8 +107,8 @@ ImplementationCostController.deleteImplementationCost_StageCostDetail);
 // Get all ImplementationCost
 // URL access: GET http://localhost:5000/api/forms/manday-cost
 // access public
-app.get("/api/forms/product-cost/:ContractID",
-ImplementationCostController.getImplementationCost_ContractID);
+//app.get("/api/forms/product-cost/:ContractID",
+//ImplementationCostController.getImplementationCost_ContractID);
 
 
 } //end Routes

@@ -15,7 +15,7 @@ import ActionButtons_User from '../components/users/ActionButtons_User'
 import AddUserModal from '../components/users/AddUserModal'//Note
 import UpdateUserModal from '../components/users/UpdateUserModal'//Note
 
-import addIcon from '../assets/plus-circle-fill.svg'
+import addIcon from '../assets/plus_circle_fill.svg'
 import Table from 'react-bootstrap/Table'
 
 const User = () => {

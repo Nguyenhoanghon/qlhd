@@ -11,7 +11,7 @@ import Toast from 'react-bootstrap/Toast'
 /* import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' */
-import addIcon from '../assets/plus-circle-fill.svg'
+import addIcon from '../assets/plus_circle_fill.svg'
 
 import AddMandayCostModal from '../components/Mandaykysu/AddMandayCostModal'//Note
 import UpdateMandayCostModal from '../components/Mandaykysu/UpdateMandayCostModal'//Note

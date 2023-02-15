@@ -9,16 +9,23 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Toast from 'react-bootstrap/Toast'
+
 /* import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' 
 import addIcon from '../assets/plus-circle-fill.svg'*/
 
-//import AddImplementationCostModal from '../components/chitiethanghoa/AddImplementationCostModal'//Note
-//import UpdateImplementationCostModal from '../components/chitiethanghoa/UpdateImplementationCostModal'//Note
-import { ActionButtons_ImplementationCost, ActionButtons_GeneralCostDetail, ActionButtons_StageCostDetail } from '../components/ImplementationCost/ActionButtons_ImplementationCost'
-import {showAddStage, showUpdateStage} from '../components/ImplementationCost/AddImplementationCostModal'
+import {
+	ActionButtons_ImplementationCost,
+	ActionButtons_Update_Delete_GeneralCostDetail,
+	ActionButtons_Add_GeneralCostDetail,
+	ActionButtons_StageCostDetail
+} from '../components/ImplementationCost/ActionButtons_ImplementationCost';
 
+import AddImplementationCostModal from '../components/ImplementationCost/AddImplementationCostModal'
+import AddStageImplementationModal from '../components/ImplementationCost/AddStageImplementationModal'
+import AddStageGeneralModal from '../components/ImplementationCost/AddStageGeneralModal'
+import AddCostDetailGeneral from '../components/ImplementationCost/AddCostDetailGeneral'
 import Table from 'react-bootstrap/Table'
 //View all
 export const ImplementationCost = () => {
@@ -31,28 +38,15 @@ export const ImplementationCost = () => {
 
 	const {
 		ImplementationCostState: { ImplementationCost, ImplementationCosts, ImplementationCostsLoading },
-		getImplementationCosts,
+		find_ImplementationCosts,
 		setShowAddImplementationCostModal,
 		showToast: { show, message, type },
 		setShowToast
 	} = useContext(ImplementationCostContext)
 
-	//test su dung numberObject
-	const {
-		numberObject,
-		setnumberObject,
-	} = useContext(ImplementationCostContext)
-	// hàm tính tổng thành tiền
-	function sumArray(mang) {
-		let sum = 0;
-		mang.map(function (value) {
-			sum += value;
-		});
-		return sum;
-	}
 
 	// Start: Get all ImplementationCosts
-	useEffect(() => getImplementationCosts(), [])
+	useEffect(() => find_ImplementationCosts(), [])
 
 	console.log("ImplementationCosts===>>>", ImplementationCosts);
 	let body = null
@@ -275,37 +269,30 @@ export const ImplementationCost_byidContract = () => {
 		} = useContext(AuthContext) */
 
 	const {
-		ImplementationCostState: { ImplementationCosts },
+		ImplementationCostState: { ImplementationCosts,
+			StageImplementation,
+			ImplementationCostsLoading },
 		getImplementationCosts_byidContract,
-		showAddStage,
-		setshowAddStage,
-		showUpdateStage,
-		setshowUpdateStage,
+		showAddImplementationCostModal,
 		setShowAddImplementationCostModal,
+
+		showAddStageImplementationModal,
+		setshowAddStageImplementationModal,
+
+		showAddStageGeneralModal,
+		setshowAddStageGeneralModal,
+
+		addCostDetailGeneral,
+		showAddCostDetailGeneralModal,
+		setshowAddCostDetailGeneralModal,
+
 		showToast: { show, message, type },
 		setShowToast
 	} = useContext(ImplementationCostContext)
 
 	// Start: Get ImplementationCosts by idcontract
 	useEffect(() => getImplementationCosts_byidContract(params.id), [])
-
 	console.log("ImplementationCosts===>>>", ImplementationCosts);
-	//console.log("Số phần tử General",ImplementationCosts.GeneralExpense.length)
-	//test su dung numberObject  !!!
-	const {
-		numberObject,
-		setnumberObject,
-	} = useContext(ImplementationCostContext)
-	// hàm tính tổng thành tiền !!!
-	function sumArray(mang) {
-		let sum = 0;
-		mang.map(function (value) {
-			sum += value;
-		});
-		return sum;
-	}
-
-
 	//Ham tinh tong chi phi 1 giai doan trien khai
 	function TotalStageImplementation(stage) {
 		let Total = 0;
@@ -315,7 +302,6 @@ export const ImplementationCost_byidContract = () => {
 
 		return Total;
 	}
-
 	// Ham tinh tong tat ca giai doan trien khai
 	function All_TotalStageImplementation(ImplementationCosts) {
 		let All_Total = 0;
@@ -325,7 +311,6 @@ export const ImplementationCost_byidContract = () => {
 			})))
 		return All_Total;
 	}
-
 	////Ham tinh tong chi phi 1 giai doan chi phi chung
 	function TotalGeneralExpense(stage) {
 		let Total = 0;
@@ -375,13 +360,21 @@ export const ImplementationCost_byidContract = () => {
 		return (
 			<thead>
 				<tr>
-					<td colSpan={8} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
+					<td colSpan={6} align={'left'} bgcolor={'black'}>A. CHI PHÍ CHUNG</td>
 					<td>
-						<a href={`/MiscExpenseCost/contract/${params.id}`}>
-							<Button variant='primary'>
-								Thêm giai đoạn
-							</Button>
-						</a>
+						<Button variant='primary' onClick={setshowAddStageGeneralModal.bind(this, true)}>
+							Sửa
+						</Button>
+					</td>
+					<td>
+						<Button variant='primary' onClick={setshowAddStageGeneralModal.bind(this, true)}>
+							Thêm giai đoạn
+						</Button>
+					</td>
+					<td>
+						<Button variant='primary' onClick={setshowAddStageGeneralModal.bind(this, true)}>
+							Xoá
+						</Button>
 					</td>
 				</tr>
 			</thead>
@@ -393,14 +386,15 @@ export const ImplementationCost_byidContract = () => {
 			<thead>
 				<tr>
 					<td colSpan={8} align={'left'} bgcolor={'black'}>B. CHI PHÍ TRIỂN KHAI: </td>
-					<td>
-						<a href={`/MiscExpenseCost/contract/${params.id}`}>
-							<Button variant='primary'>
-								Thêm giai đoạn
-							</Button>
-						</a></td>
+					<td><Button
+						variant='primary'
+						onClick={setshowAddStageImplementationModal.bind(this, true)}
+					>
+						Thêm giai đoạn
+					</Button>
+					</td>
 				</tr>
-			</thead>
+			</thead >
 		)
 	}
 
@@ -411,7 +405,14 @@ export const ImplementationCost_byidContract = () => {
 			ImplementationCosts.map(ImplementationCost => (
 				<>
 					<tr>
-						<td colSpan={9} align={'left'}>{ImplementationCost.GeneralExpense[stage].Content} {':'} {ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td colSpan={8} align={'left'}>{ImplementationCost.GeneralExpense[stage].Content} {':'} {ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td>
+							{/* <Button variant='primary' onClick={setshowAddCostDetailGeneralModal.bind(this, true)}>
+								Thêm chi phí
+							</Button> */}
+
+							<ActionButtons_Add_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} />
+						</td>
 					</tr>
 					{titleTable()}
 					<tbody>
@@ -426,25 +427,27 @@ export const ImplementationCost_byidContract = () => {
 								<td>{Costs.Quantity_times}</td>
 								<td>{Costs.IntoMoney.toLocaleString()}</td>
 								<td>{Costs.Note}  </td>
-								<td><ActionButtons_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Costs_id={Costs._id} />  </td>
+								<td><ActionButtons_Update_Delete_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Costs_id={Costs._id} />  </td>
 
 							</tr>
 						))}
-						<td colSpan={6} align={'left'}>TỔNG: {ImplementationCost.GeneralExpense.Content} </td>
+						<td colSpan={6} align={'left'}>Tổng {ImplementationCost.GeneralExpense.Content}{':'} </td>
 						<td>{TotalGeneralExpense(stage).toLocaleString()}</td>
 						<td>{ImplementationCost.GeneralExpense[stage]._id}</td>
 						<td>
-							<a href={`/implementation-cost/general-cost/${params.id}`}>
+							<a href={`/implementation-cost/general-cost/${ImplementationCost._id}/${ImplementationCost.GeneralExpense[stage]._id}`}>
 								<Button variant='primary'>
-									Nhập chi phí chung
+									Nhập Link
 								</Button>
 							</a>
 							{/* <Button
-							variant='primary'
-							onClick={setShowAddImplementationCostModal.bind(this, true)}
-						>
-							Thêm chi phí
-						</Button> */}
+								variant='primary'
+								onClick={setshowAddCostDetailGeneralModal.bind(this, true)}
+							>
+								Thêm chi phí
+							</Button> */}
+							{/* <ActionButtons_Add_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} /> */}
+
 						</td>
 					</tbody>
 				</>
@@ -480,12 +483,12 @@ export const ImplementationCost_byidContract = () => {
 							<td>{Costs.Quantity_times}</td>
 							<td>{Costs.IntoMoney.toLocaleString()}</td>
 							<td>{Costs.Note}  </td>
-							<td><ActionButtons_StageCostDetail _id={ImplementationCost._id} StagesImplementation_id={ImplementationCost.StagesImplementation[stage]._id} Costs_id={Costs._id} />
+							<td><ActionButtons_Update_Delete_GeneralCostDetail _id={ImplementationCost._id} StagesImplementation_id={ImplementationCost.StagesImplementation[stage]._id} Costs_id={Costs._id} />
 								{/* Nut sua xoa 1 chi phi */}
 							</td>
 						</tr>
 					))}
-					<td colSpan={6} align={'left'}>CỘNG: </td>
+					<td colSpan={6} align={'left'}>Tổng {ImplementationCost.StagesImplementation[stage].Content} {':'} </td>
 					<td>{TotalStageImplementation(stage).toLocaleString()}</td>
 					<td>{ImplementationCost.StagesImplementation[stage]._id}</td>
 					<td>
@@ -512,6 +515,25 @@ export const ImplementationCost_byidContract = () => {
 		return data
 	}
 
+	function showAll_Total(ImplementationCosts) {
+		if (ImplementationCosts.length != 0)
+			return (
+				<>
+					<tr>
+						<td colSpan={6} align={'left'}>CỘNG B: </td>
+						<td>{All_TotalStageImplementation(ImplementationCosts).toLocaleString()}</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
+						<td>{(All_TotalGeneralExpense(ImplementationCosts) + All_TotalStageImplementation(ImplementationCosts)).toLocaleString()}</td>
+						<td></td>
+						<td></td>
+					</tr>
+				</>
+			)
+	}
 
 	//Xu ly bang du lieu
 	let body = null
@@ -521,31 +543,12 @@ export const ImplementationCost_byidContract = () => {
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h1'>CHI TIẾT TRIỂN KHAI</Card.Header>
 					<Card.Body>
-						<Table responsive="sm" striped bordered hover size="sm" >
-							{titleTable}
-							{titleGeneralExpense}
-							{showGeneralExpense(0)}
-
-						</Table>
-						<Table responsive="sm" striped bordered hover size="sm" >
-							{titleTable}
-							{titleImplementationCost}
-							{showStageImplementation(0)}
-
-							<tr>
-								<td colSpan={6} align={'left'}>CỘNG B: </td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
-								<td>{(TotalGeneralExpense(0) + TotalStageImplementation(0)).toLocaleString()}</td>
-								<td></td>
-								<td></td>
-							</tr>
-
-						</Table>
+						<Button
+							variant='primary'
+							onClick={setShowAddImplementationCostModal.bind(this, true)}
+						>
+							Khởi tạo chi phí triển khai
+						</Button>
 					</Card.Body>
 				</Card>
 			</>
@@ -570,19 +573,7 @@ export const ImplementationCost_byidContract = () => {
 						<Table responsive="sm" striped bordered hover size="sm" >
 							{titleImplementationCost()}
 							{showdata_All_StageImplementation(ImplementationCosts)}
-							<tr>
-								<td colSpan={6} align={'left'}>CỘNG B: </td>
-								<td>{All_TotalStageImplementation(ImplementationCosts).toLocaleString()}</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td colSpan={6} align={'left'}>TỔNG CHI PHÍ TOÀN DỰ ÁN (A+B) </td>
-								<td>{(All_TotalGeneralExpense(ImplementationCosts) + All_TotalStageImplementation(ImplementationCosts)).toLocaleString()}</td>
-								<td></td>
-								<td></td>
-							</tr>
-
+							{showAll_Total(ImplementationCosts)}
 						</Table>
 					</Card.Body>
 				</Card>
@@ -594,6 +585,10 @@ export const ImplementationCost_byidContract = () => {
 	return (
 		<>
 			{body}
+			<AddStageImplementationModal />
+			<AddStageGeneralModal />
+			<AddImplementationCostModal />
+			<AddCostDetailGeneral />
 			{/* After ImplementationCost is added, show toast */}
 			<Toast
 				show={show}
@@ -680,13 +675,25 @@ export const Input_GeneralCost = () => {
 			</Button>
 		</tr>
 	)
-	//In chi phi chung tuong ung voi tham so stage 
+	//In mot giai doan trong chi phi chung
 	function showGeneralExpense(stage) {
 		let stt = 1;
-		let StageGeneralExpense = (
+		return (
 			ImplementationCosts.map(ImplementationCost => (
 				<>
+					<tr>
+						<td colSpan={8} align={'left'}>{ImplementationCost.GeneralExpense[stage].Content} {':'} {ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td>
+							{/* <Button variant='primary' onClick={setshowAddCostDetailGeneralModal.bind(this, true)}>
+								Thêm chi phí
+							</Button> */}
+
+							<ActionButtons_Add_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} />
+						</td>
+					</tr>
+					{titleTable()}
 					<tbody>
+
 						{ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
 							<tr key={ImplementationCost.GeneralExpense[stage].Costs._id}>
 								<td>{stt++}  </td>
@@ -697,30 +704,32 @@ export const Input_GeneralCost = () => {
 								<td>{Costs.Quantity_times}</td>
 								<td>{Costs.IntoMoney.toLocaleString()}</td>
 								<td>{Costs.Note}  </td>
-								<td><ActionButtons_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Costs_id={Costs._id} />  </td>
+								<td><ActionButtons_Update_Delete_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Costs_id={Costs._id} />  </td>
 
 							</tr>
 						))}
-						<td colSpan={6} align={'left'}>CỘNG A: {ImplementationCost._id} </td>
+						<td colSpan={6} align={'left'}>Tổng {ImplementationCost.GeneralExpense.Content}{':'} </td>
 						<td>{TotalGeneralExpense(stage).toLocaleString()}</td>
+						<td>{ImplementationCost.GeneralExpense[stage]._id}</td>
 						<td>
-
-						</td>
-						<td>
-							<a href={`/implementation-cost/contract/${params.id}`}>
-								<Button
-									variant='primary'
-								>
-									Kết thúc
+							<a href={`/implementation-cost/general-cost/${ImplementationCost._id}/${ImplementationCost.GeneralExpense[stage]._id}`}>
+								<Button variant='primary'>
+									Nhập Link
 								</Button>
 							</a>
+							{/* <Button
+								variant='primary'
+								onClick={setshowAddCostDetailGeneralModal.bind(this, true)}
+							>
+								Thêm chi phí
+							</Button> */}
+							{/* <ActionButtons_Add_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} /> */}
+
 						</td>
 					</tbody>
 				</>
-
 			))
-		);
-		return StageGeneralExpense;
+		)
 	}
 
 	if (ImplementationCostsLoading) {
@@ -739,6 +748,7 @@ export const Input_GeneralCost = () => {
 							{titleTable}
 							{titleGeneralExpense}
 							{showGeneralExpense(0)}
+							<><div>Not data</div></>
 						</Table>
 					</Card.Body>
 				</Card>

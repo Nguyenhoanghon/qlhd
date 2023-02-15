@@ -4,12 +4,18 @@ import {
 	ADD,
 	DELETE,
 	UPDATE,
-	FIND
+	FIND,
+	ADDSTAGE,
 } from '../contexts/constants'
 
 export const ImplementationCostReducer = (state, action) => {
 	const { type, payload } = action
 	switch (type) {
+		case ADDSTAGE:
+			return {
+				...state,
+				ImplementationCosts: [...state.StageImplementation, payload]
+			}
 		case LOADED_SUCCESS:
 			return {
 				...state,
