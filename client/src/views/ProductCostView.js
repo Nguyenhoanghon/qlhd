@@ -221,8 +221,8 @@ export const ProductCost_idContract = () => {
 	// Start: Get ProductCosts by id Contract
 
 	useEffect(() => getProductCost_byidContract(params.id), [])
-	console.log("Test===>ProductCostView review useEffect: ",ProductCosts )
-	console.log("Test===>ProductCostView review useEffect: ",params.id)
+	console.log("Test===>ProductCostView review useEffect: ", ProductCosts)
+	console.log("Test===>ProductCostView review useEffect: ", params.id)
 
 	//Ham checkbox Insurance
 	const [stateInsurance, setStateInsurance] = useState(false)
@@ -300,14 +300,14 @@ export const ProductCost_idContract = () => {
 										<td>{ProductCost.OutputPrice.toLocaleString()}</td>
 										<td>{ProductCost.OutputIntoMoney.toLocaleString()}</td>
 										<td> {ProductCost.Insurance}
-											
+
 											<input
 												type='checkbox'
 												checked={ProductCost.Insurance}
 												onChange={(e) => toggleInsurance((e).target.checked)}
 											/>
-											 
-											
+
+
 										</td>
 										<td>{ProductCost.Incentive.toLocaleString()} </td>
 										<td>{ProductCost.RatioUSD.toLocaleString()}</td>
@@ -338,14 +338,33 @@ export const ProductCost_idContract = () => {
 									<td></td>
 									<td></td>
 								</tr>
+								<tr>
+									<td colSpan={13}>
+										<Button
+											variant='primary'
+											onClick={setShowAddProductCostModal.bind(this, true)}
+										>
+											Thêm mới
+										</Button>
+									</td>
+								</tr>
 							</tbody>
 						</Table>
-						<Button
-							variant='primary'
-							onClick={setShowAddProductCostModal.bind(this, true)}
-						>
-							Thêm mới
-						</Button>
+						<a href={`/summary/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Xem PTHD
+							</Button>
+						</a>
+						<span> </span>
+						<a href={`/inputform/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
 					</Card.Body>
 				</Card>
 			</>

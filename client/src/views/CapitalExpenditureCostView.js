@@ -129,8 +129,8 @@ export const CapitalExpenditureCost_all = () => {
                 ))}
                 <tr>
                   <td colSpan={3}>Tổng</td>
-                  <td>{}</td>
-                  <td>{}</td>
+                  <td>{ }</td>
+                  <td>{ }</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -290,25 +290,34 @@ export const CapitalExpenditureCost_byidContract = () => {
                     </td>
                   </tr>
                 ))}
+                
                 <tr>
-                  <td colSpan={3}>Tổng</td>
-                  <td>{}</td>
-                  <td>{}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td colSpan={12}><
+                    Button
+                    variant="primary"
+                    onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
+                  >
+                    Thêm mới
+                  </Button></td>
                 </tr>
               </tbody>
             </Table>
-            <Button
-              variant="primary"
-              onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
-            >
-              Thêm mới
-            </Button>
+
+            <a href={`/summary/${params.id}`}>
+              <Button
+                variant='primary'
+              >
+                Xem PTHD
+              </Button>
+            </a>
+            <span> </span>
+            <a href={`/inputform/${params.id}`}>
+              <Button
+                variant='primary'
+              >
+                Kết thúc
+              </Button>
+            </a>
           </Card.Body>
         </Card>
       </>

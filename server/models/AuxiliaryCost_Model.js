@@ -4,7 +4,7 @@ const AuxiliaryCost = mongoose.model(
   "AuxiliaryCost",
   new mongoose.Schema({
     Renevue: Number,
-    Plan: Number, // Lua chon gia tri, M 
+    Plan: Boolean, // Lua chon gia tri, M 
     Content: String, 
     Cost: Number, // = if(Cost<1; Cost*CapitalCost ; Cost)
     CPXL: Number,

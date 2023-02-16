@@ -37,12 +37,12 @@ export const MandayCost_all = () => {
 	} = useContext(MandayCostContext)
 
 	// hàm tính tổng thành tiền
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
 
 	// Start: Get all MandayCosts
@@ -50,7 +50,7 @@ export const MandayCost_all = () => {
 
 	let body = null
 	let stt = 1
-	const tong =  sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))//note
+	const tong = sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))//note
 	if (MandayCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -61,7 +61,7 @@ export const MandayCost_all = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					
+
 					<Card.Header as='h5'>Form 5: Manday kỹ sư</Card.Header>
 					<Card.Body>
 						<Card.Title>Chưa có dữ liệu vui lòng click Thêm!</Card.Title>
@@ -76,7 +76,7 @@ export const MandayCost_all = () => {
 			</>
 		)
 	} else {
-		
+
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
@@ -85,31 +85,31 @@ export const MandayCost_all = () => {
 						<Table responsive="lg" striped bordered hover size="lg" variant="" >
 							<thead>
 								<tr>
-								<th>STT</th>
-								<th>Phòng ban </th>
-								<th>Manday chuẩn</th>
-								<th  width='10%'>Số người tham gia dự án</th>
-								<th width='10%'>Số ngày thực hiện dự án</th>
-								<th>Thành tiền</th>
-								<th width='20%'>Ghi chú</th>
+									<th>STT</th>
+									<th>Phòng ban </th>
+									<th>Manday chuẩn</th>
+									<th width='10%'>Số người tham gia dự án</th>
+									<th width='10%'>Số ngày thực hiện dự án</th>
+									<th>Thành tiền</th>
+									<th width='20%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{MandayCosts.map(MandayCost => ( 
-								<tr key={MandayCost._id} >
-									<td>{stt++}  </td>
-									<td>{MandayCost.Department}</td>
-									<td>{MandayCost.Cost}</td>
-									<td>{MandayCost.StaffNumber}</td>
-									<td>{MandayCost.ImplementationDay}</td>
-									<td>{MandayCost.IntoMoney.toLocaleString()}</td>
-									<td>{MandayCost.Note}  </td>
-									<td>
-									<ActionButtons_MandayCost _id={MandayCost._id} />
-									</td>
-								
-								</tr>
-								
+								{MandayCosts.map(MandayCost => (
+									<tr key={MandayCost._id} >
+										<td>{stt++}  </td>
+										<td>{MandayCost.Department}</td>
+										<td>{MandayCost.Cost}</td>
+										<td>{MandayCost.StaffNumber}</td>
+										<td>{MandayCost.ImplementationDay}</td>
+										<td>{MandayCost.IntoMoney.toLocaleString()}</td>
+										<td>{MandayCost.Note}  </td>
+										<td>
+											<ActionButtons_MandayCost _id={MandayCost._id} />
+										</td>
+
+									</tr>
+
 								))
 								}
 								<tr>
@@ -120,7 +120,7 @@ export const MandayCost_all = () => {
 									<td></td>
 								</tr>
 							</tbody>
-    					</Table>
+						</Table>
 						<Button
 							variant='primary'
 							onClick={setShowAddMandayCostModal.bind(this, true)}
@@ -178,12 +178,12 @@ export const MandayCost_idContract = () => {
 	} = useContext(MandayCostContext)
 
 	// hàm tính tổng thành tiền
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
 
 	// Start: Get all MandayCost by idContract
@@ -191,7 +191,7 @@ export const MandayCost_idContract = () => {
 
 	let body = null
 	let stt = 1
-	const tong =  sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))//note
+	const tong = sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))//note
 	if (MandayCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -202,7 +202,7 @@ export const MandayCost_idContract = () => {
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
-					
+
 					<Card.Header as='h5'>Form 5: Manday kỹ sư</Card.Header>
 					<Card.Body>
 						<Card.Title>Chưa có dữ liệu vui lòng click Thêm!</Card.Title>
@@ -217,7 +217,7 @@ export const MandayCost_idContract = () => {
 			</>
 		)
 	} else {
-		
+
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
@@ -226,31 +226,31 @@ export const MandayCost_idContract = () => {
 						<Table responsive="lg" striped bordered hover size="lg" variant="" >
 							<thead>
 								<tr>
-								<th>STT</th>
-								<th>Phòng ban </th>
-								<th>Manday chuẩn</th>
-								<th  width='10%'>Số người tham gia dự án</th>
-								<th width='10%'>Số ngày thực hiện dự án</th>
-								<th>Thành tiền</th>
-								<th width='20%'>Ghi chú</th>
+									<th>STT</th>
+									<th>Phòng ban </th>
+									<th>Manday chuẩn</th>
+									<th width='10%'>Số người tham gia dự án</th>
+									<th width='10%'>Số ngày thực hiện dự án</th>
+									<th>Thành tiền</th>
+									<th width='20%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{MandayCosts.map(MandayCost => ( 
-								<tr key={MandayCost._id} >
-									<td>{stt++}  </td>
-									<td>{MandayCost.Department}</td>
-									<td>{MandayCost.Cost}</td>
-									<td>{MandayCost.StaffNumber}</td>
-									<td>{MandayCost.ImplementationDay}</td>
-									<td>{MandayCost.IntoMoney.toLocaleString()}</td>
-									<td>{MandayCost.Note}  </td>
-									<td>
-									<ActionButtons_MandayCost _id={MandayCost._id} />
-									</td>
-								
-								</tr>
-								
+								{MandayCosts.map(MandayCost => (
+									<tr key={MandayCost._id} >
+										<td>{stt++}  </td>
+										<td>{MandayCost.Department}</td>
+										<td>{MandayCost.Cost}</td>
+										<td>{MandayCost.StaffNumber}</td>
+										<td>{MandayCost.ImplementationDay}</td>
+										<td>{MandayCost.IntoMoney.toLocaleString()}</td>
+										<td>{MandayCost.Note}  </td>
+										<td>
+											<ActionButtons_MandayCost _id={MandayCost._id} />
+										</td>
+
+									</tr>
+
 								))
 								}
 								<tr>
@@ -258,16 +258,35 @@ export const MandayCost_idContract = () => {
 									<td>{tong.toLocaleString()}</td>
 									<td></td>
 									<td></td>
-									<td></td>
+								</tr>
+								<tr>
+									<td colSpan={8} >
+										<Button
+											variant='primary'
+											onClick={setShowAddMandayCostModal.bind(this, true)}
+										>
+											Thêm mới
+										</Button>
+									</td>
+
 								</tr>
 							</tbody>
-    					</Table>
-						<Button
-							variant='primary'
-							onClick={setShowAddMandayCostModal.bind(this, true)}
-						>
-							Thêm mới
-						</Button>
+						</Table>
+						<a href={`/summary/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Xem PTHD
+							</Button>
+						</a>
+						<span> </span>
+						<a href={`/inputform/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
 					</Card.Body>
 				</Card>
 			</>

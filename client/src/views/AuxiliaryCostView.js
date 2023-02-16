@@ -187,12 +187,7 @@ export const AuxiliaryCost_byidContract = () => {
 		});
 		return sum;
 	}
-	//Định dạng hiển thị số
-	function formatCash(str) {
-		return str.split('').reverse().reduce((prev, next, index) => {
-			return ((index % 3) ? next : (next + ',')) + prev
-		})
-	}
+	
 	//=== Get productcosts with idcontract
 	const {
 		ProductCostState: { ProductCosts },
@@ -298,7 +293,7 @@ export const AuxiliaryCost_byidContract = () => {
 		<>
 			{body}
 			<AddAuxiliaryCostModal />
-			{AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />}
+			{/* {AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />} */}
 			{/* After AuxiliaryCost is added, show toast */}
 			<Toast
 				show={show}
@@ -346,12 +341,7 @@ export const AuxiliaryCost_Plan = () => {
 		});
 		return sum;
 	}
-	//Định dạng hiển thị số
-	function formatCash(str) {
-		return str.split('').reverse().reduce((prev, next, index) => {
-			return ((index % 3) ? next : (next + ',')) + prev
-		})
-	}
+	
 	//=== Get productcosts with idcontract
 	const {
 		ProductCostState: { ProductCost, ProductCosts },
@@ -370,13 +360,13 @@ export const AuxiliaryCost_Plan = () => {
 	console.log("params.id", params.id)
 
 	//get data AuxiliaryCostsPlan1 with idContract and Plan 1
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, 1), [])
+	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, false), [])
 	const TotalPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost))
 	const TotalCPXLPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
 	const TotalCPgrossPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
 
 	//get data AuxiliaryCosts with idContract and Plan 2
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, 2), [])
+	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, true), [])
 	const TotalPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost))
 	const TotalCPXLPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
 	const TotalCPgrossPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
@@ -384,6 +374,7 @@ export const AuxiliaryCost_Plan = () => {
 	let stt = 1
 	let TT = 1
 	console.log("Plan 1", AuxiliaryCosts)
+
 	if (AuxiliaryCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -517,6 +508,14 @@ export const AuxiliaryCost_Plan = () => {
 								Thêm
 							</Button>
 						</a>
+						<span>  </span>
+						<a href={`/inputform/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
 					</Card.Body>
 				</Card>
 
@@ -528,7 +527,7 @@ export const AuxiliaryCost_Plan = () => {
 		<>
 			{body}
 			<AddAuxiliaryCostModal />
-			{AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />}
+			{/* {AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />} */}
 			{/* After AuxiliaryCost is added, show toast */}
 			<Toast
 				show={show}

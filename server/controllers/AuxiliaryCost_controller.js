@@ -15,7 +15,7 @@ exports.getAllAuxiliaryCost = async (req,res) => {
     try {
       let TotalCPXL_Plan1 = 0;
       let TotalCPgross_Plan1 = 0;
-      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: 1}).populate("contract", "-__v")
+      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: false}).populate("contract", "-__v")
       for (let i = 0; i < AuxiliaryCost_data1.length; i++){
         TotalCPXL_Plan1 += AuxiliaryCost_data1[i].CPXL;
         TotalCPgross_Plan1 += AuxiliaryCost_data1[i].CPgross;
@@ -23,7 +23,7 @@ exports.getAllAuxiliaryCost = async (req,res) => {
 
       let TotalCPXL_Plan2 = 0;
       let TotalCPgross_Plan2 = 0;
-      const AuxiliaryCost_data2 = await AuxiliaryCost.find({Plan: 2})//.populate("contract", "-__v")
+      const AuxiliaryCost_data2 = await AuxiliaryCost.find({Plan: true})//.populate("contract", "-__v")
       for (let i = 0; i < AuxiliaryCost_data2.length; i++){
         TotalCPXL_Plan2 += AuxiliaryCost_data2[i].CPXL;
         TotalCPgross_Plan2 += AuxiliaryCost_data2[i].CPgross;
@@ -147,7 +147,7 @@ exports.insertAuxiliaryCost = async (req, res) => {
         else
             newAuxiliaryCost.Cost = req.body.Cost;
         
-        if(req.body.Plan == 1){
+        if(req.body.Plan === false){
             newAuxiliaryCost.CPXL = newAuxiliaryCost.Cost/0.8*0.2;
             newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
         }
@@ -234,7 +234,7 @@ exports.updateAuxiliaryCost = async (req, res) => {
         else
         updatedAuxiliaryCost.Cost = req.body.Cost;
         // CPXL CPGross
-        if(req.body.Plan == 1){
+        if(req.body.Plan == false){
             updatedAuxiliaryCost.CPXL = updatedAuxiliaryCost.Cost/0.8*0.2;
             updatedAuxiliaryCost.CPgross = updatedAuxiliaryCost.Cost + updatedAuxiliaryCost.CPXL;
         }

@@ -568,6 +568,21 @@ export const ImplementationCost_byidContract = () => {
 							{showdata_All_StageImplementation(ImplementationCosts)}
 							{showAll_Total(ImplementationCosts)}
 						</Table>
+						<a href={`/summary/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Xem PTHD
+							</Button>
+						</a>
+						<span> </span>
+						<a href={`/inputform/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
 					</Card.Body>
 				</Card>
 			</>

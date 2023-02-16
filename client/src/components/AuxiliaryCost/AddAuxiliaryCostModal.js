@@ -18,7 +18,7 @@ const AddAuxiliaryCostModal = () => {
 	// State
 	const [newAuxiliaryCost, setNewAuxiliaryCost] = useState({
 		Revenue: '', // Load form 1
-        Plan:'', // Lua chon gia tri
+        Plan: false, // Lua chon gia tri
         Content:'',
         Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
         CPXL:'',
@@ -30,6 +30,7 @@ const AddAuxiliaryCostModal = () => {
 	const { 
 		Revenue, // Load từ form 1
         Plan, // Lua chon gia tri
+		Plan1,
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
         CPXL,
@@ -43,10 +44,14 @@ const AddAuxiliaryCostModal = () => {
 
 	//Checkbox Phuong an
 	const togglePlan = event => {
-		newAuxiliaryCost({ ...newAuxiliaryCost, Plan: event })
+		setNewAuxiliaryCost({ ...newAuxiliaryCost, Plan: event })
 		
 	};
-
+//Checkbox nguon nhap
+/* const toggleEX_W = event => {
+	setNewProductCost({ ...newProductCost, EX_W: event })
+	
+}; */
 	const onChangeNewAuxiliaryCostForm = event =>
 		setNewAuxiliaryCost({ ...newAuxiliaryCost, [event.target.name]: event.target.value })
 
@@ -64,7 +69,7 @@ const AddAuxiliaryCostModal = () => {
 	const resetAddAuxiliaryCostData = () => {
 		setNewAuxiliaryCost({
 			Revenue: '', // Load form 1
-			Plan: 1, // Lua chon gia tri
+			Plan: false, // Lua chon gia tri
 			Content:'',
 			Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
 			CPXL:'',
@@ -78,13 +83,13 @@ const AddAuxiliaryCostModal = () => {
 	return (
 		<Modal show={showAddAuxiliaryCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm Chi phí vật tư phụ mmm</Modal.Title>
+				<Modal.Title>Thêm Chi phí vật tư phụ</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							Chọn Hợp đồng wddd
+							Chọn Hợp đồng
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -93,15 +98,24 @@ const AddAuxiliaryCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewAuxiliaryCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='Plan-help' muted as="h6">
-							Chọn phương án
+							Chọn phương án chi
 						</Form.Text>
 						<Form.Control className='switch'
-								type='checkbox'
+								type='radio'//checkbox
+								checked={true}
+								value={Plan1}
+								name='Plan'
+								onChange={(e) => togglePlan(e.target.checked)}
+							/>
+							<span>Phuong an 1</span>
+						<Form.Control className='switch'
+								type='radio'//checkbox
 								checked={Plan}
 								value={Plan}
+								name = 'Plan'
 								onChange={(e) => togglePlan(e.target.checked)}
 							/>
 							<span>Phuong an 2</span>

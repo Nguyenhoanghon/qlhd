@@ -38,19 +38,19 @@ export const MiscExpenseCost_all = () => {
 	} = useContext(MiscExpenseCostContext)
 
 	// hàm tính tổng 
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
 	//Định dạng hiển thị số
 	function formatCash(str) {
- 	return str.split('').reverse().reduce((prev, next, index) => {
- 		return ((index % 3) ? next : (next + ',')) + prev
- 	})
-}
+		return str.split('').reverse().reduce((prev, next, index) => {
+			return ((index % 3) ? next : (next + ',')) + prev
+		})
+	}
 
 	// Start: Get all MiscExpenseCosts
 	useEffect(() => getMiscExpenseCosts(), [])
@@ -59,7 +59,7 @@ export const MiscExpenseCost_all = () => {
 
 	let body = null
 	let stt = 1
-	const TotalMiscExpenseCost =  sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
+	const TotalMiscExpenseCost = sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
 	if (MiscExpenseCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -87,34 +87,34 @@ export const MiscExpenseCost_all = () => {
 			</>
 		)
 	} else {
-		
+
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
-						<Table  striped bordered hover size="sm">
+						<Table striped bordered hover size="sm">
 							<thead >
 								<tr>
-								<th>STT</th>
-								<th>Nội dung </th>
-								<th>Số Tiền</th>
-								<th width='25%'>Ghi chú</th>
+									<th>STT</th>
+									<th>Nội dung </th>
+									<th>Số Tiền</th>
+									<th width='25%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{MiscExpenseCosts.map(MiscExpenseCost => ( 
-								<tr key={MiscExpenseCost._id} >
-									<td>{stt++}  </td>
-									<td>{MiscExpenseCost.Content}</td>
-									<td>{MiscExpenseCost.Cost.toLocaleString()}</td>
-									<td>{MiscExpenseCost.Note}  </td>
-									<td>
-									<ActionButtons_MiscExpenseCost _id={MiscExpenseCost._id} />
-									</td>
-								
-								</tr>
-								
+								{MiscExpenseCosts.map(MiscExpenseCost => (
+									<tr key={MiscExpenseCost._id} >
+										<td>{stt++}  </td>
+										<td>{MiscExpenseCost.Content}</td>
+										<td>{MiscExpenseCost.Cost.toLocaleString()}</td>
+										<td>{MiscExpenseCost.Note}  </td>
+										<td>
+											<ActionButtons_MiscExpenseCost _id={MiscExpenseCost._id} />
+										</td>
+
+									</tr>
+
 								))
 								}
 								<tr>
@@ -122,10 +122,10 @@ export const MiscExpenseCost_all = () => {
 									<td>{TotalMiscExpenseCost.toLocaleString()}</td>
 									<td></td>
 									<td></td>
-									
+
 								</tr>
 							</tbody>
-    					</Table>
+						</Table>
 						<Button
 							variant='primary'
 							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
@@ -183,19 +183,19 @@ export const MiscExpenseCost_byidContract = () => {
 	} = useContext(MiscExpenseCostContext)
 
 	// hàm tính tổng 
-	function sumArray(mang){
-    let sum = 0;
-    mang.map(function(value){
-        sum += value;
-    });
-    return sum;
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
 	}
 	//Định dạng hiển thị số
 	function formatCash(str) {
- 	return str.split('').reverse().reduce((prev, next, index) => {
- 		return ((index % 3) ? next : (next + ',')) + prev
- 	})
-}
+		return str.split('').reverse().reduce((prev, next, index) => {
+			return ((index % 3) ? next : (next + ',')) + prev
+		})
+	}
 
 	// Start: Get all MiscExpenseCosts
 	useEffect(() => getMiscExpenseCost_byidContract(params.id), [])
@@ -204,7 +204,7 @@ export const MiscExpenseCost_byidContract = () => {
 
 	let body = null
 	let stt = 1
-	const TotalMiscExpenseCost =  sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
+	const TotalMiscExpenseCost = sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
 	if (MiscExpenseCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -232,34 +232,34 @@ export const MiscExpenseCost_byidContract = () => {
 			</>
 		)
 	} else {
-		
+
 		body = (
 			<>
 				<Card className='text-center mx-5 my-5' animation={false}>
 					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
-						<Table  striped bordered hover size="sm">
+						<Table striped bordered hover size="sm">
 							<thead >
 								<tr>
-								<th>STT</th>
-								<th>Nội dung </th>
-								<th>Số Tiền</th>
-								<th width='25%'>Ghi chú</th>
+									<th>STT</th>
+									<th>Nội dung </th>
+									<th>Số Tiền</th>
+									<th width='25%'>Ghi chú</th>
 								</tr>
 							</thead>
 							<tbody>
-								{MiscExpenseCosts.map(MiscExpenseCost => ( 
-								<tr key={MiscExpenseCost._id} >
-									<td>{stt++}  </td>
-									<td>{MiscExpenseCost.Content}</td>
-									<td>{MiscExpenseCost.Cost.toLocaleString()}</td>
-									<td>{MiscExpenseCost.Note}  </td>
-									<td>
-									<ActionButtons_MiscExpenseCost _id={MiscExpenseCost._id} />
-									</td>
-								
-								</tr>
-								
+								{MiscExpenseCosts.map(MiscExpenseCost => (
+									<tr key={MiscExpenseCost._id} >
+										<td>{stt++}  </td>
+										<td>{MiscExpenseCost.Content}</td>
+										<td>{MiscExpenseCost.Cost.toLocaleString()}</td>
+										<td>{MiscExpenseCost.Note}  </td>
+										<td>
+											<ActionButtons_MiscExpenseCost _id={MiscExpenseCost._id} />
+										</td>
+
+									</tr>
+
 								))
 								}
 								<tr>
@@ -267,16 +267,35 @@ export const MiscExpenseCost_byidContract = () => {
 									<td>{TotalMiscExpenseCost.toLocaleString()}</td>
 									<td></td>
 									<td></td>
-									
+
+								</tr>
+								<tr>
+									<td colSpan={5} >
+										<Button
+											variant='primary'
+											onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
+										>
+											Thêm mới
+										</Button>
+									</td>
 								</tr>
 							</tbody>
-    					</Table>
-						<Button
-							variant='primary'
-							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
-						>
-							Thêm mới
-						</Button>
+						</Table>
+						<a href={`/summary/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Xem PTHD
+							</Button>
+						</a>
+						<span> </span>
+						<a href={`/inputform/${params.id}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
 					</Card.Body>
 				</Card>
 			</>
