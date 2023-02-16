@@ -59,7 +59,7 @@ ImplementationCostController.AddCostDetail);
 // Add AddCostDetail vao chi phi giai doan
 // URL access: POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost
 // Test: ok
-app.post("/api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost", //authJwt.verifyToken,
+app.post("/api/forms/implementation-cost/stages-implementation/post",///:idImplementationCost/:idContentCost", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetailStage);
 
 // Update ImplementationCost general-expense  Costs_id 

@@ -1,22 +1,21 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
-import { useParams } from 'react-router-dom'
+
 
 //Ham them giai doan chi phi vao chi phi chung
-const AddCostDetailGeneral = (_id) => {
+const AddCostDetailStageImplementModal = (_id) => {
 	//Contexts
 	
 	const {
 		ImplementationCostState: { ImplementationCosts },
-		showAddCostDetailGeneralModal,
-		setshowAddCostDetailGeneralModal,
+		showAddCostDetailStageImplementModal,
+		setshowAddCostDetailStageImplementModal,
 		dataOn_Click,
 		setdataOn_Click,
-		addCostDetailGeneral,
-		getImplementationCosts_byidContract,
+		addCostDetailStageImplement,
 		setShowToast
 
 	} = useContext(ImplementationCostContext)
@@ -46,14 +45,9 @@ const AddCostDetailGeneral = (_id) => {
 		ContentCost
 	} = newStageImplementation
 	//Load id Implementation
-	//const params = useParams();
 	
-	//useEffect(() => getImplementationCosts_byidContract(params.id,[]))
-
-	//console.log("URL showAddCostDetailGeneralModal", showAddCostDetailGeneralModal)
-	//console.log("ID click", dataOn_Click)
 	newStageImplementation.ImplementationCost_Id = dataOn_Click._id //params.id;
-	newStageImplementation.ContentCostId = dataOn_Click.GeneralExpense_id//params.id;
+	newStageImplementation.ContentCostId = dataOn_Click.StagesImplementation_id//params.id;
 	newStageImplementation.ContentCost = dataOn_Click.Content_name
 
 	const onChangeNewImplementationCostForm = event =>
@@ -72,12 +66,12 @@ const AddCostDetailGeneral = (_id) => {
 			ContentCostId: '',
 			ContentCost:''
 		})
-		setshowAddCostDetailGeneralModal(false)
+		setshowAddCostDetailStageImplementModal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCostDetailGeneral(newStageImplementation)//newImplementationCost
+		const { success, message } = await addCostDetailStageImplement(newStageImplementation)//note
 		resetAddStageImplementationData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
@@ -86,7 +80,7 @@ const AddCostDetailGeneral = (_id) => {
 		resetAddStageImplementationData()
 	}
 	return (
-		<Modal show={showAddCostDetailGeneralModal} onHide={closeDialog}>
+		<Modal show={showAddCostDetailStageImplementModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Thêm chi phí vào {ContentCost}</Modal.Title>
 			</Modal.Header>
@@ -216,4 +210,4 @@ const AddCostDetailGeneral = (_id) => {
 		</Modal>
 	)
 }
-export default AddCostDetailGeneral
+export default AddCostDetailStageImplementModal

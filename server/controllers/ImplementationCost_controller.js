@@ -297,10 +297,10 @@ exports.AddCostDetailStage = async (req, res) => {
     Quantity_times,
     IntoMoney,
     Note,
-    /* ImplementationCost_Id,
-    ContentCostId */
+    ImplementationCost_Id,
+    ContentCostId
   } = req.body;
-  //console.log(chiphi);
+  
   try {
     if (req.body.Quantity_times == 0)
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days
@@ -311,8 +311,8 @@ exports.AddCostDetailStage = async (req, res) => {
 
     const newImplementationCost = await ImplementationCost.findOneAndUpdate(
       {
-        _id: req.params.idImplementationCost,
-        "StagesImplementation._id": req.params.idContentCost, //nhan tu tham so
+        _id: req.body.ImplementationCost_Id,//req.params.idImplementationCost,
+        "StagesImplementation._id": req.body.ContentCostId//req.params.idContentCost, //nhan tu tham so
       },
       {
         $push: {
