@@ -155,6 +155,30 @@ const ImplementationCostContextProvider = ({ children }) => {
 			console.log(error)
 		}
 	}
+	// Delete 1 Giai doan chi phi chung voi idImplementationCost / idContentCost
+	const delete_StageGeneral_Expense = async (ImplementationCost) => {
+		try {
+			console.log("ID idImplementationCost", ImplementationCost)
+			console.log((`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost.idImplementationCost}/${ImplementationCost.GeneralExpense_id}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost.idImplementationCost}/${ImplementationCost.GeneralExpense_id}`)//note
+			if (response.data.success)
+				dispatch({ type: DELETE, payload: ImplementationCost })
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	// Delete 1 Giai doan chi phi Trien khai voi idImplementationCost / idContentCost
+	const delete_StageImplementation = async (ImplementationCost) => {
+		try {
+			console.log("ID idImplementationCost", ImplementationCost)
+			console.log((`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost.idImplementationCost}/${ImplementationCost.StagesImplementation_id}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost.idImplementationCost}/${ImplementationCost.StagesImplementation_id}`)//note
+			if (response.data.success)
+				dispatch({ type: DELETE, payload: ImplementationCost })
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	// Delete 1chi phi trong chi phi Chung  Test: ok
 	const delete_GeneralCostDetail = async (ImplementationCost) => {
@@ -235,7 +259,11 @@ const ImplementationCostContextProvider = ({ children }) => {
 		findImplementationCost,
 		updateImplementationCost,
 		getImplementationCosts_byidContract,
-		delete_GeneralCostDetail,
+
+		delete_StageGeneral_Expense, //xoa 1 giai doan chung
+		delete_StageImplementation, //xoa 1 giai doan chi phi trien khai
+
+		delete_GeneralCostDetail, 
 		delete_StageCostDetail,
 		dataOn_Click, setdataOn_Click,
 

@@ -27,6 +27,51 @@ export const ActionButtons_ImplementationCost = ( _id ) => {
 		</>
 	)
 }
+//Nut cap nhat - xoá 1 giai doan chi phi chung
+export const ActionButtons_Update_Delete_StageGeneral_Expense = ( _id ) => {
+	const { delete_StageGeneral_Expense,
+		findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
+		ImplementationCostContext
+	)
+
+	const chooseImplementationCost = ImplementationCostId => {
+		findImplementationCost(ImplementationCostId)
+		setShowUpdateImplementationCostModal(true)
+	}
+	return (
+		<>
+			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+				<img src={editIcon} alt='edit' width='24' height='24' />
+			</Button>
+			<Button className='post-button' onClick={delete_StageGeneral_Expense.bind(this, _id)}>
+				<img src={deleteIcon} alt='delete' width='24' height='24' />
+			</Button>
+		</>
+	)
+}
+//Nut cap nhat - xoá 1 giai doan chi phi Trien khai
+export const ActionButtons_Update_Delete_StageImplementation = ( _id ) => {
+	const { delete_StageImplementation,
+		findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
+		ImplementationCostContext
+	)
+
+	const chooseImplementationCost = ImplementationCostId => {
+		findImplementationCost(ImplementationCostId)
+		setShowUpdateImplementationCostModal(true)
+	}
+	return (
+		<>
+			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+				<img src={editIcon} alt='edit' width='24' height='24' />
+			</Button>
+			<Button className='post-button' onClick={delete_StageImplementation.bind(this, _id)}>
+				<img src={deleteIcon} alt='delete' width='24' height='24' />
+			</Button>
+		</>
+	)
+}
+
 //Nut cap nhat - xoá 1 chi phi trong chi phi chung
 export const ActionButtons_Update_Delete_GeneralCostDetail = ( _id ) => {
 	const { deleteImplementationCost,

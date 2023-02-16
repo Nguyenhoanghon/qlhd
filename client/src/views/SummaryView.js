@@ -181,10 +181,12 @@ export const Summary_id = () => {
 	function sumArray(mang) {
 		let sum = 0;
 		mang.map(function (value) {
+			
 			sum += value;
 		});
 		return sum;
 	}
+	
 	//Ham checkbox Insurance
 	const [stateInsurance, setStateInsurance] = useState(false)
     const toggleTheme = (value) => {
@@ -195,7 +197,21 @@ export const Summary_id = () => {
 	useEffect(() => getProductCost_byidContract(params.id), [])
 	//tính tổng tiền bảo hiểm
 	
+	function SumInsurance(mang1,mang2) {
+		let sum = 0;
+		//console.log("Array Insurace =========",mang1)
+		//console.log("Array Insurace =========",mang2)
+		mang1.forEach((element, index) =>  {
+			if(mang1[index]){
+				sum += mang2[index];
+			}
 
+			
+		});
+
+		return sum;
+	}
+	const TotalInsurance = 0.0065*SumInsurance(ProductCosts.map((ProductCost) => ProductCost.Insurance),ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))
 	const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
@@ -290,6 +306,15 @@ export const Summary_id = () => {
 							
 		return Total;
 	}
+	// Ham tinh tong tat ca giai doan trien khai
+	function All_TotalStageImplementation(ImplementationCosts) {
+		let All_Total = 0;
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.StagesImplementation.forEach((element, index) => {
+				All_Total += TotalStageImplementation(index)
+			})))
+		return All_Total;
+	}
 	//Function TotalGeneralExpense
 	function TotalGeneralExpense(stage) {
 		let Total = 0;
@@ -299,18 +324,29 @@ export const Summary_id = () => {
 							
 		return Total;
 	}
-	const GeneralExpense = TotalGeneralExpense(0);
-	const StageImplementation = TotalStageImplementation(0);
+	// Ham tinh tong tat ca giai doan trien khai
+	function All_TotalGeneralExpense(ImplementationCosts) {
+		let All_Total = 0;
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.GeneralExpense.forEach((element, index) => {
+				All_Total += TotalGeneralExpense(index)
+				//console.log("Tong chi chi phi chung;", All_Total);
+			})))
+
+		return All_Total;
+	}
+	const GeneralExpense = All_TotalGeneralExpense(ImplementationCosts);
+	const StageImplementation = All_TotalStageImplementation(ImplementationCosts);
 	const TotalImplementationCost = GeneralExpense + StageImplementation;
 	//=== End Get data ImplementationCost
 
 
 	//=== Data process
 	// 1. chi phi phat sinh khi thuc hien du an
-	// thieu gia trij TotalInsurance
-	const ExtraCost = (TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost )
+	const ExtraCost = (TotalInsurance + TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost )
+
 	// 3.
-	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney) // - 1 - 2*10
+	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - TotalCPgrossPlan1)
 
 	//===
 	let body = null
@@ -408,7 +444,7 @@ export const Summary_id = () => {
 						<tr>
 							<td>1</td>
 							<td colSpan={6} >Chi phí phát sinh khi thực hiện Dự Án </td>
-							<td>{/* {ExtraCost.toLocaleString()} */} Đang xử lý...</td>
+							<td>{ExtraCost.toLocaleString()}</td>
 							<td></td>
 							<td></td>
 							
@@ -416,7 +452,7 @@ export const Summary_id = () => {
 						<tr >
 							<td>1.1</td>
 							<td colSpan={6} >Chi phí triển khai hợp đồng </td>
-							<td>{/* {TotalImplementationCost.toLocaleString()} */} Đang xử lý...</td>
+							<td>{TotalImplementationCost.toLocaleString()}</td>
 							<td></td>
 							<td></td>
 							
@@ -424,7 +460,7 @@ export const Summary_id = () => {
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí bảo hành phần cứng trích cho TT HSC 0.65%</td>
-							<td>Đang xử lý...</td>
+							<td>{TotalInsurance.toLocaleString()}</td>
 							<td></td>
 							<td></td>
 							
@@ -432,7 +468,7 @@ export const Summary_id = () => {
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí chung</td>
-							<td>{/* {GeneralExpense.toLocaleString()} */} Đang xử lý...</td>
+							<td>{GeneralExpense.toLocaleString()}</td>
 							<td></td>
 							<td></td>
 							
@@ -440,7 +476,7 @@ export const Summary_id = () => {
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí triển khai</td>
-							<td>{/* {StageImplementation.toLocaleString()} */} Đang xử lý...</td>
+							<td>{StageImplementation.toLocaleString()}</td>
 							<td>{}</td>
 							<td></td>
 						</tr>
@@ -528,14 +564,14 @@ export const Summary_id = () => {
 						<tr>
 							<td>3</td>
 							<td colSpan={6} >Hiệu quả dự án (giá trị tuyệt đối)</td>
-							<td>{hieuquaduan.toLocaleString()}</td>
+							<td>{hieuquaduan.toLocaleString()}</td> !!!
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>4</td>
 							<td colSpan={6} >Hiệu quả dự án (tỉ lệ trên doanh thu)</td>
-							<td>{((hieuquaduan / TotalInputIntoMoney) * 100).toFixed(2) + "%"}</td>
+							<td>{((hieuquaduan / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
 							<td></td>
 							<td></td>
 						</tr>

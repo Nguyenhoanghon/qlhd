@@ -168,7 +168,7 @@ DELETE  http://localhost:5000/api/forms/implementation-cost/delete/63c08c08b1a40
 ### Xoa Giai doan voi id ImplementationCost / id giaidoan
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/content-cost/delete/63ec468eada883181bd30f23/63ec468e5fd6ef5134f3f251
+DELETE  http://localhost:5000/api/forms/implementation-cost/content-cost/delete/63ed675dada883181b6cd07e/63ed8a01e8a6f66fa2bd0904
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Xoa 1 chi phi trong giai doan chi phi  chung
