@@ -28,7 +28,7 @@ import {
 import AddImplementationCostModal from '../components/ImplementationCost/AddImplementationCostModal'
 import AddStageImplementationModal from '../components/ImplementationCost/AddStageImplementationModal'
 import AddStageGeneralModal from '../components/ImplementationCost/AddStageGeneralModal'
-import AddCostDetailGeneral from '../components/ImplementationCost/AddCostDetailGeneral'
+import AddCostDetailGeneralModal from '../components/ImplementationCost/AddCostDetailGeneralModal'
 import AddCostDetailStageImplementModal from '../components/ImplementationCost/AddCostDetailStageImplementModal'
 import Table from 'react-bootstrap/Table'
 //View all
@@ -596,7 +596,7 @@ export const ImplementationCost_byidContract = () => {
 			<AddStageImplementationModal />
 			<AddStageGeneralModal />
 			<AddImplementationCostModal />
-			<AddCostDetailGeneral />
+			<AddCostDetailGeneralModal />
 			<AddCostDetailStageImplementModal />
 			{/* After ImplementationCost is added, show toast */}
 			<Toast

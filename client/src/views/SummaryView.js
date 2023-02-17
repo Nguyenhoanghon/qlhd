@@ -23,6 +23,7 @@ import { ImplementationCostContext } from '../contexts/ImplementationCostContext
 import { ActionButtons_Update_Delete } from '../components/contract/ActionButtons_Contract'
 import AddContractModal from '../components/contract/AddContractModal'
 import UpdateContractModal from '../components/contract/UpdateContractModal'
+import { ActionButtons_Add_StageCostDetail } from '../components/ImplementationCost/ActionButtons_ImplementationCost'
 
 
 
@@ -91,7 +92,7 @@ export const Summary = () => {
 									<th>Phòng</th>
 									<th>Khách Hàng</th>
 									<th>Ngày</th>
-									<th>ID</th>
+									<th>Thao tác</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -103,11 +104,19 @@ export const Summary = () => {
 										<td>{Contract.Deparment}</td>
 										<td>{Contract.CustomerID}</td>
 										<td>{Contract.Date}</td>
-										<td>{Contract._id}</td>
+										{/* <td>{Contract._id}</td> */}
 										<td>
-											<a href={`/summary/${Contract._id}`}>Xem PTHD</a>
+											<a href={`/summary/${Contract._id}`}>
+												<Button >
+													Xem PTHD
+												</Button>
+											</a>
 											<ActionButtons_Update_Delete _id={Contract._id} />
-											<a href={`/inputform/${Contract._id}`}>Nhập liệu</a>
+											<a href={`/inputform/${Contract._id}`}>
+												<Button>
+													Nhập liệu
+												</Button>
+											</a>
 										</td>
 
 									</tr>
@@ -159,7 +168,7 @@ export const Summary = () => {
 //View Contract_id Phân tích hợp đồng tổng thể
 export const Summary_id = () => {
 	const params = useParams();
-	
+
 	//===Get data Contract with idContract
 	const {
 		ContractState: { Contracts },
@@ -181,37 +190,37 @@ export const Summary_id = () => {
 	function sumArray(mang) {
 		let sum = 0;
 		mang.map(function (value) {
-			
+
 			sum += value;
 		});
 		return sum;
 	}
-	
+
 	//Ham checkbox Insurance
 	const [stateInsurance, setStateInsurance] = useState(false)
-    const toggleTheme = (value) => {
+	const toggleTheme = (value) => {
 		setStateInsurance(value);
-	  };
-	
+	};
+
 	// Start: Get ProductCosts by id Contract
 	useEffect(() => getProductCost_byidContract(params.id), [])
 	//tính tổng tiền bảo hiểm
-	
-	function SumInsurance(mang1,mang2) {
+
+	function SumInsurance(mang1, mang2) {
 		let sum = 0;
 		//console.log("Array Insurace =========",mang1)
 		//console.log("Array Insurace =========",mang2)
-		mang1.forEach((element, index) =>  {
-			if(mang1[index]){
+		mang1.forEach((element, index) => {
+			if (mang1[index]) {
 				sum += mang2[index];
 			}
 
-			
+
 		});
 
 		return sum;
 	}
-	const TotalInsurance = 0.0065*SumInsurance(ProductCosts.map((ProductCost) => ProductCost.Insurance),ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))
+	const TotalInsurance = 0.0065 * SumInsurance(ProductCosts.map((ProductCost) => ProductCost.Insurance), ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))
 	const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
@@ -288,7 +297,7 @@ export const Summary_id = () => {
 	//=== End Get data AuxiliaryCost
 
 	//=== Get data ImplementationCost
-	
+
 	const {
 		ImplementationCostState: { ImplementationCost, ImplementationCosts, ImplementationCostsLoading },
 		getImplementationCosts_byidContract,
@@ -300,10 +309,10 @@ export const Summary_id = () => {
 	//Function TotalGeneralExpense
 	function TotalStageImplementation(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	// Ham tinh tong tat ca giai doan trien khai
@@ -318,10 +327,10 @@ export const Summary_id = () => {
 	//Function TotalGeneralExpense
 	function TotalGeneralExpense(stage) {
 		let Total = 0;
-			ImplementationCosts.map(ImplementationCost => (
-				ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
-					Total += Costs.IntoMoney))))
-							
+		ImplementationCosts.map(ImplementationCost => (
+			ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
+				Total += Costs.IntoMoney))))
+
 		return Total;
 	}
 	// Ham tinh tong tat ca giai doan trien khai
@@ -343,7 +352,7 @@ export const Summary_id = () => {
 
 	//=== Data process
 	// 1. chi phi phat sinh khi thuc hien du an
-	const ExtraCost = (TotalInsurance + TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost )
+	const ExtraCost = (TotalInsurance + TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost)
 
 	// 3.
 	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - TotalCPgrossPlan1)
@@ -420,9 +429,9 @@ export const Summary_id = () => {
 									<td>
 										{/* {ProductCost.Insurance} Check data*/}
 										<input
-										type='checkbox'
-										checked={ProductCost.Insurance}
-										onChange={(e) => toggleTheme(e.target.checked)}
+											type='checkbox'
+											checked={ProductCost.Insurance}
+											onChange={(e) => toggleTheme(e.target.checked)}
 										/>
 									</td>
 									{/* Checkbox */}
@@ -438,7 +447,7 @@ export const Summary_id = () => {
 								<td>{TotalOutputIntoMoney.toLocaleString()}</td>
 								<td></td>
 								<td></td>
-								
+
 							</tr>
 						</tbody>
 						<tr>
@@ -447,7 +456,7 @@ export const Summary_id = () => {
 							<td>{ExtraCost.toLocaleString()}</td>
 							<td></td>
 							<td></td>
-							
+
 						</tr>
 						<tr >
 							<td>1.1</td>
@@ -455,7 +464,7 @@ export const Summary_id = () => {
 							<td>{TotalImplementationCost.toLocaleString()}</td>
 							<td></td>
 							<td></td>
-							
+
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
@@ -463,7 +472,7 @@ export const Summary_id = () => {
 							<td>{TotalInsurance.toLocaleString()}</td>
 							<td></td>
 							<td></td>
-							
+
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
@@ -471,13 +480,13 @@ export const Summary_id = () => {
 							<td>{GeneralExpense.toLocaleString()}</td>
 							<td></td>
 							<td></td>
-							
+
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí triển khai</td>
 							<td>{StageImplementation.toLocaleString()}</td>
-							<td>{}</td>
+							<td>{ }</td>
 							<td></td>
 						</tr>
 						{CapitalExpenditureCosts.map((CapitalExpenditureCost) => (

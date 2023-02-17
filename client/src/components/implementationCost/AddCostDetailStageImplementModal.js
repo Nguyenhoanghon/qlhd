@@ -86,7 +86,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							ImplementationCost_Id
 						</Form.Text>
@@ -113,7 +113,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							value={ContentCostId}
 							onChange={onChangeNewImplementationCostForm}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='NameCost-help' muted as="h6">
 							Nội dung dự trù

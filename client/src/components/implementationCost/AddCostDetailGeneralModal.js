@@ -6,7 +6,7 @@ import { ImplementationCostContext } from '../../contexts/ImplementationCostCont
 import { useParams } from 'react-router-dom'
 
 //Ham them giai doan chi phi vao chi phi chung
-const AddCostDetailGeneral = (_id) => {
+const AddCostDetailGeneralModal = (_id) => {
 	//Contexts
 	
 	const {
@@ -92,7 +92,7 @@ const AddCostDetailGeneral = (_id) => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							ImplementationCost_Id
 						</Form.Text>
@@ -119,7 +119,7 @@ const AddCostDetailGeneral = (_id) => {
 							value={ContentCostId}
 							onChange={onChangeNewImplementationCostForm}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='NameCost-help' muted as="h6">
 							Nội dung dự trù
@@ -216,4 +216,4 @@ const AddCostDetailGeneral = (_id) => {
 		</Modal>
 	)
 }
-export default AddCostDetailGeneral
+export default AddCostDetailGeneralModal
