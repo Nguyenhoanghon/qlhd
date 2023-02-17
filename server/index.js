@@ -3,27 +3,19 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./Config/db.config");
 const app = express();
-
 var corsOptions = {
-  origin: "http://103.88.121.45:3000", //run host
+  origin: "http://103.88.121.45:3000", //run VPS
   //origin: "http://localhost:3000" // run localhost
 };
-
 app.use(cors(corsOptions));
-
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
 ///
 app.use(express.json());
-
 const db = require("./models");
 const Role = db.role;
-
 db.mongoose
     //Connect Mongodb local - Run VPS
     .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
