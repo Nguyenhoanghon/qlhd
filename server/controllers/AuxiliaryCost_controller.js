@@ -2,6 +2,8 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 var bcrypt = require("bcryptjs");
 const db = require("../models");
+const { update } = require('../models/User_Model');
+const { response } = require('express');
 const Contract = db.Contract;
 const AuxiliaryCost = db.AuxiliaryCost;
 const ProductCost = db.ProductCost;
@@ -13,26 +15,8 @@ const ProductCost = db.ProductCost;
 exports.getAllAuxiliaryCost = async (req,res) => {
     console.log("getAllAuxiliaryCost is called")
     try {
-      let TotalCPXL_Plan1 = 0;
-      let TotalCPgross_Plan1 = 0;
-      const AuxiliaryCost_data1 = await AuxiliaryCost.find({Plan: false}).populate("contract", "-__v")
-      for (let i = 0; i < AuxiliaryCost_data1.length; i++){
-        TotalCPXL_Plan1 += AuxiliaryCost_data1[i].CPXL;
-        TotalCPgross_Plan1 += AuxiliaryCost_data1[i].CPgross;
-      }
-
-      let TotalCPXL_Plan2 = 0;
-      let TotalCPgross_Plan2 = 0;
-      const AuxiliaryCost_data2 = await AuxiliaryCost.find({Plan: true})//.populate("contract", "-__v")
-      for (let i = 0; i < AuxiliaryCost_data2.length; i++){
-        TotalCPXL_Plan2 += AuxiliaryCost_data2[i].CPXL;
-        TotalCPgross_Plan2 += AuxiliaryCost_data2[i].CPgross;
-      }
-      let ListTotal = [];
-      ListTotal.push(TotalCPXL_Plan1, TotalCPgross_Plan1, TotalCPXL_Plan2, TotalCPgross_Plan2)
-      const AuxiliaryCost_data = await AuxiliaryCost.find()//.populate("contract", "-__v")
-     
-      console.log("Test ====> chi tiet CP vat tu phu",AuxiliaryCost_data, "List tong: ", ListTotal)
+      const AuxiliaryCost_data = await AuxiliaryCost.find()//.populate("contract", "-__v")    
+      console.log("Test ====> chi tiet CP vat tu phu",AuxiliaryCost_data)
 
       res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data}) 
       
@@ -109,7 +93,7 @@ exports.getAuxiliaryCost_byidContract_plan = async (req,res) => {
 //    - Code hien tai Lay het Du lieu Chi tiet hang hoa
 //    - De loc theo hop dong thi code them tra ve _id cua req.body.ContractID
 
-exports.insertAuxiliaryCost = async (req, res) => {
+exports.addAuxiliaryCost = async (req, res) => {
     console.log("Test route ===> addAuxiliaryCost is called !");
     //Load Tong gia von va tong doanh thu tu Form1
     const {
@@ -117,8 +101,6 @@ exports.insertAuxiliaryCost = async (req, res) => {
         Plan,
         Content,
         Cost,
-        CPXL,
-        CPgross,
         Note
     } = req.body
 
@@ -127,8 +109,6 @@ exports.insertAuxiliaryCost = async (req, res) => {
         Plan,
         Content,
         Cost,
-        CPXL,
-        CPgross,
         Note
     })
     console.log("Test data recieved ====>>>",newAuxiliaryCost.Renevue)
@@ -139,25 +119,6 @@ exports.insertAuxiliaryCost = async (req, res) => {
         for (let i = 0; i < ProductCost_data.length; i++) {
             newAuxiliaryCost.Renevue += ProductCost_data[i].OutputIntoMoney;
         }
-        console.log("Data newAuxiliaryCost sẽ được thêm >>>>>",newAuxiliaryCost)
-
-        // Xử lý logic chi phí (So tien)
-        if(req.body.Cost < 1)
-            newAuxiliaryCost.Cost = req.body.Cost * newAuxiliaryCost.Renevue ;
-        else
-            newAuxiliaryCost.Cost = req.body.Cost;
-        
-        if(req.body.Plan === false){
-            newAuxiliaryCost.CPXL = newAuxiliaryCost.Cost/0.8*0.2;
-            newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
-        }
-        else{
-            newAuxiliaryCost.CPXL = newAuxiliaryCost.Cost/0.75*0.25;
-            newAuxiliaryCost.CPgross = newAuxiliaryCost.Cost + newAuxiliaryCost.CPXL;
-        }
-
-        console.log("Sau khi load tu Form 1>>>>>>>Revenue: ",newAuxiliaryCost.Renevue);
-       
         //Thuc hien luu vao DB voi idContract
 
         Contract.find({_id: req.body.ContractID },(err,Contract)=>{
@@ -192,18 +153,60 @@ exports.insertAuxiliaryCost = async (req, res) => {
 }
 
 
-// update AuxiliaryCost By id
+// update All AuxiliaryCost By id_contract
 // @access Public
+exports.update_AuxiliaryCost_Revenue = async (req, res) => {
+    console.log("===> update_All_AuxiliaryCost is called !");
+    //Load Tong gia von va tong doanh thu tu Form1
+    const { 
+        Revenue, // Load từ form 1
+    } = req.body
+
+    let updatedAuxiliaryCost ={
+        Revenue, // Load từ form 1
+    }
+    console.log("Test data recieved ====>>>",updatedAuxiliaryCost)
+
+    try {
+        // Load data tu Form 1: Lay tong gia von va Doanh thu
+        console.log("Sau khi load tu Form 1>>>>>>> - Revenue: ",updatedAuxiliaryCost.Revenue);
+       
+       const UpdateCondition = { contract: req.params.id}
+       const UpdateData = { Revenue: updatedAuxiliaryCost.Revenue}
+       const response = await AuxiliaryCost.updateMany(
+       UpdateCondition,
+       UpdateData, { new: true }
+       )
+           // User not authorised to update ProductCost or ProductCost not found
+           if (!response)
+               return res.status(401).json({
+                   success: false,
+                   message: 'AuxiliaryCost not found or user not authorised'
+               })
+           else
+               res.json({
+                   success: true,
+                   message: 'updated AuxiliaryCost Successfull !',
+                   dataUpdate: response
+               })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+
+}
+
+// update AuxiliaryCost By id_AuxiliaryCost
+// @access Public
+// Test: ok
 exports.updateAuxiliaryCost = async (req, res) => {
-    console.log("Test route ===> addAuxiliaryCost is called !");
+    console.log("===> updateAuxiliaryCost is called !");
     //Load Tong gia von va tong doanh thu tu Form1
     const { 
         Revenue, // Load từ form 1
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
-        CPXL,
-        CPgross,
         Note,
         contract
     } = req.body
@@ -213,8 +216,6 @@ exports.updateAuxiliaryCost = async (req, res) => {
         Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
-        CPXL,
-        CPgross,
         Note
     }
     console.log("Test data recieved ====>>>",updatedAuxiliaryCost)
@@ -222,27 +223,8 @@ exports.updateAuxiliaryCost = async (req, res) => {
 
     try {
         // Load data tu Form 1: Lay tong gia von va Doanh thu
-        const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
-        updatedAuxiliaryCost.Revenue = 0;
-        for (let i = 0; i < ProductCost_data.length; i++) {
-            updatedAuxiliaryCost.Revenue += ProductCost_data[i].OutputIntoMoney;
-        }
         console.log("Sau khi load tu Form 1>>>>>>> - Revenue: ",updatedAuxiliaryCost.Revenue);
-        // So tien
-        if(req.body.Cost < 1)
-        updatedAuxiliaryCost.Cost = req.body.Cost * updatedAuxiliaryCost.Revenue;
-        else
-        updatedAuxiliaryCost.Cost = req.body.Cost;
-        // CPXL CPGross
-        if(req.body.Plan == false){
-            updatedAuxiliaryCost.CPXL = updatedAuxiliaryCost.Cost/0.8*0.2;
-            updatedAuxiliaryCost.CPgross = updatedAuxiliaryCost.Cost + updatedAuxiliaryCost.CPXL;
-        }
-        else{
-            updatedAuxiliaryCost.CPXL = updatedAuxiliaryCost.Cost/0.75*0.25;
-            updatedAuxiliaryCost.CPgross = updatedAuxiliaryCost.Cost + updatedAuxiliaryCost.CPXL;
-        }
-
+        
        //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
        const UpdateCondition = { _id: req.params.id}
 
@@ -269,15 +251,15 @@ exports.updateAuxiliaryCost = async (req, res) => {
 
 }
 
-// delete AuxiliaryCost  By id
+// delete AuxiliaryCost  By id_Contract
 // @access Public
 exports.deleteAuxiliaryCost = async (req, res) => {
     console.log("Test route deleteAuxiliaryCost !");
     console.log(req.params.id);
     try {
         const AuxiliaryCostDeleteCondition = { _id: req.params.id}//, user: req.userId }
-        const deletedAuxiliaryCost= await AuxiliaryCost.findOneAndDelete(AuxiliaryCostDeleteCondition)
 
+        const deletedAuxiliaryCost= await AuxiliaryCost.findOneAndDelete(AuxiliaryCostDeleteCondition)
         // User not authorised or AuxiliaryCost not found
         if (!deletedAuxiliaryCost)
             return res.status(401).json({

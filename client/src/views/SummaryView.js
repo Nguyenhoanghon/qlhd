@@ -273,7 +273,6 @@ export const Summary_id = () => {
 	useEffect(() => getCapitalExpenditureCosts_byidContract(params.id), []);
 	const TotalCapitalExpense = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.CapitalExpense))//ch
 
-	console.log("Chi phis von =============".CapitalExpenditureCosts)
 
 	//=== End Get data CapitalExpenditureCost
 
@@ -283,17 +282,35 @@ export const Summary_id = () => {
 		getAuxiliaryCosts_byidContract_Plan1,
 		getAuxiliaryCosts_byidContract_Plan2
 	} = useContext(AuxiliaryCostContext)
+	//if Cost < 1 = Cost* tong doanh thu
+	function changeCost(value, heso) {
+		let kq = value;
+		if (value < 1)
+			kq = value * heso;
+		return kq
+	}
+	//Ham tinh tong phuong an
+	function sumTotal(mang, heso) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += changeCost(value, heso);
+		});
+		return sum;
+	}
+	//get data AuxiliaryCostsPlan1 with idContract and Plan 1
+	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, false), [])
+	// Total Plan1
+	const TotalPlan1 = sumTotal(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
+	const TotalCPXLPlan1 = TotalPlan1 / 0.8 * 0.2
+	const TotalCPgrossPlan1 = TotalPlan1 + TotalCPXLPlan1
 
-	//get dat AuxiliaryCosts with idContract and Plan 1
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, 1), [])
-	const TotalPlan1 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan1 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
-	//get dat AuxiliaryCosts with idContract and Plan 2
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, 2), [])
-	const TotalPlan2 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan2 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan2 = sumArray(AuxiliaryCosts.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	//get data AuxiliaryCosts with idContract and Plan 2
+	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, true), [])
+	// Total Plan2
+	const TotalPlan2 = sumTotal(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
+	const TotalCPXLPlan2 = TotalPlan1 / 0.75 * 0.25
+	const TotalCPgrossPlan2 = TotalPlan2 + TotalCPXLPlan2
+
 	//=== End Get data AuxiliaryCost
 
 	//=== Get data ImplementationCost
@@ -573,7 +590,7 @@ export const Summary_id = () => {
 						<tr>
 							<td>3</td>
 							<td colSpan={6} >Hiệu quả dự án (giá trị tuyệt đối)</td>
-							<td>{hieuquaduan.toLocaleString()}</td> !!!
+							<td>{hieuquaduan.toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
@@ -605,10 +622,21 @@ export const Summary_id = () => {
 							<td></td>
 							<td></td>
 						</tr>
+						<tr>
 
-					</Table>
-				</Card.Body>
-			</Card>
+							<td colSpan={10}>
+							<a href={`/inputform/${params.id}`}>
+								<Button>
+									Nhập liệu
+								</Button>
+							</a>
+						</td>
+
+					</tr>
+				</Table>
+
+			</Card.Body>
+		</Card>
 		</>
 
 	)

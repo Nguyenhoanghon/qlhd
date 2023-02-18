@@ -278,18 +278,18 @@ exports.deleteProductCost = async (req, res) => {
 //Get all ProductCost by Contract
 //@Access Public
 exports.getProductCost_ContractID = async (req,res) => {
-    console.log("getProductCost_Contract is called >>>>", req.params.contractName)
+    //console.log("getProductCost_Contract is called >>>>", req.params.contractName)
     try {
       const ProductCost_data = await ProductCost.find({contract: req.params.contractName},)//.populate("contract", "-__v")
       let InputIntoMoney = 0;
       let OutputIntoMoney = 0;
         for (let i = 0; i < ProductCost_data.length; i++) {
-        console.log(ProductCost_data[i].InputIntoMoney)
+        //console.log(ProductCost_data[i].InputIntoMoney)
         InputIntoMoney += ProductCost_data[i].InputIntoMoney;
         OutputIntoMoney += ProductCost_data[i].OutputIntoMoney;
     }
-    console.log("==========",ProductCost_data)
-    console.log(">>>>>>>tong",InputIntoMoney,"-",OutputIntoMoney);
+    //console.log("==========",ProductCost_data)
+    //console.log(">>>>>>>tong",InputIntoMoney,"-",OutputIntoMoney);
     res.json({ success: true, ProductCost: ProductCost_data }) 
     } catch (error) {
         console.log(error)

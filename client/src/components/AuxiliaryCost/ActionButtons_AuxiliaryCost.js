@@ -4,12 +4,14 @@ import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
 import { AuxiliaryCostContext } from '../../contexts/AuxiliaryCostContext'
 import { useContext } from 'react'
+import { View, StyleSheet, Alert } from "react-native";
+
 
 const ActionButtons_AuxiliaryCost = ({ _id }) => {
 	const { deleteAuxiliaryCost, findAuxiliaryCost, setShowUpdateAuxiliaryCostModal } = useContext(
 		AuxiliaryCostContext
 	) 
-
+	
 	const chooseAuxiliaryCost = AuxiliaryCostId => {
 		findAuxiliaryCost(AuxiliaryCostId)
 		setShowUpdateAuxiliaryCostModal(true)

@@ -7,8 +7,6 @@ const AuxiliaryCost = mongoose.model(
     Plan: Boolean, // Lua chon gia tri, M 
     Content: String, 
     Cost: Number, // = if(Cost<1; Cost*CapitalCost ; Cost)
-    CPXL: Number,
-    CPgross: Number,
     Note: String,
     contract:
       {

@@ -47,11 +47,7 @@ const AddAuxiliaryCostModal = () => {
 		setNewAuxiliaryCost({ ...newAuxiliaryCost, Plan: event })
 		
 	};
-//Checkbox nguon nhap
-/* const toggleEX_W = event => {
-	setNewProductCost({ ...newProductCost, EX_W: event })
-	
-}; */
+
 	const onChangeNewAuxiliaryCostForm = event =>
 		setNewAuxiliaryCost({ ...newAuxiliaryCost, [event.target.name]: event.target.value })
 

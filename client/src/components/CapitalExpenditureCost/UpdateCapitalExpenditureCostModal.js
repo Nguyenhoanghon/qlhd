@@ -52,7 +52,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 		setShowUpdateCapitalExpenditureCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
-
+	
 	return (
 		<Modal show={showUpdateCapitalExpenditureCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>

@@ -187,7 +187,6 @@ export const AuxiliaryCost_byidContract = () => {
 		});
 		return sum;
 	}
-	
 	//=== Get productcosts with idcontract
 	const {
 		ProductCostState: { ProductCosts },
@@ -196,7 +195,6 @@ export const AuxiliaryCost_byidContract = () => {
 
 	// Start: Get ProductCosts by id Contract
 	useEffect(() => getProductCost_byidContract(params.id), [])
-
 	const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
@@ -205,6 +203,7 @@ export const AuxiliaryCost_byidContract = () => {
 	let body = null
 	let stt = 1
 	console.log("Plan 1", AuxiliaryCosts)
+
 	if (AuxiliaryCostsLoading) {
 		body = (
 			<div className='spinner-container'>
@@ -267,6 +266,7 @@ export const AuxiliaryCost_byidContract = () => {
 										<td>{AuxiliaryCost.Plan}  </td>
 										<td>
 											<ActionButtons_AuxiliaryCost _id={AuxiliaryCost._id} />
+
 										</td>
 
 									</tr>
@@ -293,6 +293,7 @@ export const AuxiliaryCost_byidContract = () => {
 		<>
 			{body}
 			<AddAuxiliaryCostModal />
+			<UpdateAuxiliaryCostModal />
 			{/* {AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />} */}
 			{/* After AuxiliaryCost is added, show toast */}
 			<Toast
@@ -333,7 +334,14 @@ export const AuxiliaryCost_Plan = () => {
 		setShowToast
 	} = useContext(AuxiliaryCostContext)
 
-	// hàm tính tổng 
+	//if Cost < 1 = Cost* tong doanh thu
+	function changeCost(value, heso) {
+		let kq = value;
+		if (value < 1)
+			kq = value * heso;
+		return kq
+	}
+	// hàm tính tổng mang
 	function sumArray(mang) {
 		let sum = 0;
 		mang.map(function (value) {
@@ -341,7 +349,15 @@ export const AuxiliaryCost_Plan = () => {
 		});
 		return sum;
 	}
-	
+	//Ham tinh tong phuong an
+	function sumTotal(mang, heso) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += changeCost(value, heso);
+		});
+		return sum;
+	}
+
 	//=== Get productcosts with idcontract
 	const {
 		ProductCostState: { ProductCost, ProductCosts },
@@ -350,7 +366,6 @@ export const AuxiliaryCost_Plan = () => {
 
 	// Start: Get ProductCosts by id Contract
 	useEffect(() => getProductCost_byidContract(params.id), [])
-
 	//const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	//const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
@@ -361,15 +376,18 @@ export const AuxiliaryCost_Plan = () => {
 
 	//get data AuxiliaryCostsPlan1 with idContract and Plan 1
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, false), [])
-	const TotalPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan1 = sumArray(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	// Total Plan1
+	const TotalPlan1 = sumTotal(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
+	const TotalCPXLPlan1 = TotalPlan1 / 0.8 * 0.2
+	const TotalCPgrossPlan1 = TotalPlan1 + TotalCPXLPlan1
 
 	//get data AuxiliaryCosts with idContract and Plan 2
 	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, true), [])
-	const TotalPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost))
-	const TotalCPXLPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPXL))
-	const TotalCPgrossPlan2 = sumArray(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.CPgross))
+	// Total Plan2
+	const TotalPlan2 = sumTotal(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
+	const TotalCPXLPlan2 = TotalPlan1 / 0.75 * 0.25
+	const TotalCPgrossPlan2 = TotalPlan2 + TotalCPXLPlan2
+
 	let body = null
 	let stt = 1
 	let TT = 1
@@ -427,15 +445,19 @@ export const AuxiliaryCost_Plan = () => {
 									<th>Nội dung </th>
 									<th>Số Tiền</th>
 									<th width='25%'>Ghi chú</th>
+
 								</tr>
 							</thead>
 							{AuxiliaryCostsPlan1.map(AuxiliaryCosts => (
 								<tr key={AuxiliaryCosts._id} >
 									<td>{stt++}  </td>
 									<td>{AuxiliaryCosts.Content}</td>
-									<td>{AuxiliaryCosts.Cost.toLocaleString()}</td>
+									<td>{changeCost(AuxiliaryCosts.Cost, TotalOutputIntoMoney).toLocaleString()}</td>
 									<td>{AuxiliaryCosts.Note}  </td>
+									{/* <td>
+										<ActionButtons_AuxiliaryCost _id={AuxiliaryCosts._id} />
 
+									</td> */}
 								</tr>
 
 							))
@@ -444,8 +466,6 @@ export const AuxiliaryCost_Plan = () => {
 								<td colSpan={2} >Tổng</td>
 								<td>{TotalPlan1.toLocaleString()}</td>
 								<td></td>
-
-
 							</tr>
 							<tr>
 								<td colSpan={2} >CPXL</td>
@@ -472,12 +492,17 @@ export const AuxiliaryCost_Plan = () => {
 									<th width='25%'>Ghi chú</th>
 								</tr>
 							</thead>
-							{AuxiliaryCostsPlan2.map(AuxiliaryCost => (
-								<tr key={AuxiliaryCost._id} >
+							{AuxiliaryCostsPlan2.map(AuxiliaryCosts => (
+								<tr key={AuxiliaryCosts._id} >
 									<td>{TT++}  </td>
-									<td>{AuxiliaryCost.Content}</td>
-									<td>{AuxiliaryCost.Cost.toLocaleString()}</td>
-									<td>{AuxiliaryCost.Note}  </td>
+									<td>{AuxiliaryCosts.Content}</td>
+									<td>{changeCost(AuxiliaryCosts.Cost, TotalOutputIntoMoney).toLocaleString()}
+									</td>
+									<td>{AuxiliaryCosts.Note}  </td>
+									{/* <td>
+										<ActionButtons_AuxiliaryCost _id={AuxiliaryCosts._id} />
+
+									</td> */}
 								</tr>
 
 							))
@@ -527,6 +552,7 @@ export const AuxiliaryCost_Plan = () => {
 		<>
 			{body}
 			<AddAuxiliaryCostModal />
+			<UpdateAuxiliaryCostModal />
 			{/* {AuxiliaryCost !== null && <UpdateAuxiliaryCostModal />} */}
 			{/* After AuxiliaryCost is added, show toast */}
 			<Toast

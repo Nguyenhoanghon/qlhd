@@ -1,75 +1,81 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { AuxiliaryCostContext } from '../../contexts/AuxiliaryCostContext'
+import { ProductCostContext } from '../../contexts/ProductCostContext'
 
-const AddAuxiliaryCostModal = () => {
+
+const UpdateAuxiliaryCostModal = () => {
+	// hàm tính tổng 
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
+	}
 	// Contexts
 	const {
-		showAddAuxiliaryCostModal,
-		setShowAddAuxiliaryCostModal,
-		addAuxiliaryCost,
+		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCostsLoading },
+		showUpdateAuxiliaryCostModal,
+		setShowUpdateAuxiliaryCostModal,
+		updateAuxiliaryCost,
+		getAuxiliaryCosts_byidContract,
 		setShowToast
 	} = useContext(AuxiliaryCostContext)
-
-	// State
-	const [updatedAuxiliaryCost, setupdatedAuxiliaryCost] = useState({
-		Revenue: '', // Load form 1
-        Plan:'', // Lua chon gia tri
-        Content:'',
-        Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
-        CPXL:'',
-        CPgross:'',
-        Note:'',
-        ContractID:''
-	})
-
-	const { 
-		Revenue, // Load từ form 1
-        Plan, // Lua chon gia tri
-        Content,
-        Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
-        CPXL,
-        CPgross,
-        Note,
-        ContractID
-	 } = updatedAuxiliaryCost
-	 //load idcontract
+	const {
+		ProductCostState: { ProductCosts },
+		getProductCost_byidContract
+	} = useContext(ProductCostContext)
 	const params = useParams();
+	// State get data AuxiliaryCost
+	const [updatedAuxiliaryCost, setupdatedAuxiliaryCost] = useState(AuxiliaryCost)
+	useEffect(() => setupdatedAuxiliaryCost(AuxiliaryCost), [AuxiliaryCost])
+	//State get data Tong Doanh thu
+	console.log("=====> id",params.id)
+	useEffect(() => getProductCost_byidContract(params.id), [])
+	console.log("=====> ProductCosts",ProductCosts)
+	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney));//note
+	
+	const {
+		Revenue, // Load từ form 1
+		Plan, // Lua chon gia tri
+		Plan1,
+		Content,
+		Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
+		Note,
+		ContractID
+	} = updatedAuxiliaryCost
+	//load idcontract
+	
 	updatedAuxiliaryCost.ContractID = params.id;
+	updatedAuxiliaryCost.Revenue = TotalOutputIntoMoney;
+	//Checkbox Phuong an
+	const togglePlan = event => {
+		setupdatedAuxiliaryCost({ ...updatedAuxiliaryCost, Plan: event })
+
+	};
 
 	const onChangeupdatedAuxiliaryCostForm = event =>
 		setupdatedAuxiliaryCost({ ...updatedAuxiliaryCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		resetAddAuxiliaryCostData()
+		setupdatedAuxiliaryCost(AuxiliaryCost)
+		setShowUpdateAuxiliaryCostModal(false)
+
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addAuxiliaryCost(updatedAuxiliaryCost)//updatedAuxiliaryCost
-		resetAddAuxiliaryCostData()
+		const { success, message } = await updateAuxiliaryCost(updatedAuxiliaryCost)//updatedAuxiliaryCost
+		setShowUpdateAuxiliaryCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	const resetAddAuxiliaryCostData = () => {
-		setupdatedAuxiliaryCost({
-			Revenue: '', // Load form 1
-			Plan:'', // Lua chon gia tri
-			Content:'',
-			Cost:'', // = if(Cost<1; Cost*CapitalCost ; Cost)
-			CPXL:'',
-			CPgross:'',
-			Note:'',
-			ContractID:''
-		})
-		setShowAddAuxiliaryCostModal(false)
-	}
-
 	return (
-		<Modal show={showAddAuxiliaryCostModal} onHide={closeDialog}>
+		<Modal show={showUpdateAuxiliaryCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Thêm Chi phí vật tư phụ</Modal.Title>
 			</Modal.Header>
@@ -77,29 +83,45 @@ const AddAuxiliaryCostModal = () => {
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							Chọn Hợp đồng
+							Tong doanh thu
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
 							name='ContractID'
-							value={ContractID}
+							value={Revenue}
 							onChange={onChangeupdatedAuxiliaryCostForm}
 						/>						
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Plan-help' muted as="h6">
-							Chọn phương án
+							Chọn phương án chi
 						</Form.Text>
-						<Form.Control
+						<Form.Control className='switch'
+							type='radio'//checkbox
+							checked={true}
+							value={Plan1}
+							name='Plan'
+							onChange={(e) => togglePlan(e.target.checked)}
+						/>
+						<span>Phuong an 1</span>
+						<Form.Control className='switch'
+							type='radio'//checkbox
+							checked={Plan}
+							value={Plan}
+							name='Plan'
+							onChange={(e) => togglePlan(e.target.checked)}
+						/>
+						<span>Phuong an 2</span>
+						{/* <Form.Control
 							type='text'
 							placeholder='Nhập 1 Hoặc 2'
 							name='Plan'
 							required
 							aria-describedby='Plan-help'
 							value={Plan}
-							onChange={onChangeupdatedAuxiliaryCostForm}
-						/>						
+							onChange={onChangeNewAuxiliaryCostForm}
+						/>		 */}
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
@@ -113,10 +135,10 @@ const AddAuxiliaryCostModal = () => {
 							aria-describedby='noidung-help'
 							value={Content}
 							onChange={onChangeupdatedAuxiliaryCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='sotien-help' muted  as="h6">
+						<Form.Text id='sotien-help' muted as="h6">
 							Số tiền
 						</Form.Text>
 						<Form.Control
@@ -154,4 +176,4 @@ const AddAuxiliaryCostModal = () => {
 	)
 }
 
-export default AddAuxiliaryCostModal
+export default UpdateAuxiliaryCostModal

@@ -40,14 +40,20 @@ AuxiliaryCostController.getAuxiliaryCost_byidContract_plan);
 // URL access: POST http://localhost:5000/api/forms/auxiliary-cost/post
 // access public
 app.post("/api/forms/auxiliary-cost/post",
-AuxiliaryCostController.insertAuxiliaryCost);
+AuxiliaryCostController.addAuxiliaryCost);
 
 
-// Update AuxiliaryCost 
+// Update AuxiliaryCost by id_AuxiliaryCost
 // URL access: PUT http://localhost:5000/api/forms/manday-cost/put/ID
 // access public
 app.put("/api/forms/auxiliary-cost/put/:id",
 AuxiliaryCostController.updateAuxiliaryCost);
+
+// Update  update_AuxiliaryCost_Revenue by id_Contract
+// URL access: PUT http://localhost:5000/api/forms/manday-cost/put/ID
+// access public
+app.put("/api/forms/auxiliary-cost/put/revenue/:idcontract",
+AuxiliaryCostController.update_AuxiliaryCost_Revenue);
 
 // Delete AuxiliaryCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/delete/ID

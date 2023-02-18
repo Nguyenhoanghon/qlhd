@@ -122,13 +122,14 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 
 	// Update AuxiliaryCost
 	const updateAuxiliaryCost = async updatedAuxiliaryCost => {
+		console.log("===>", updatedAuxiliaryCost._id)
 		try {
 			const response = await axios.put(
 				`${apiUrl}/api/forms/auxiliary-cost/put/${updatedAuxiliaryCost._id}`,
 				updatedAuxiliaryCost
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.updatedMiscExpense })
+				dispatch({ type: UPDATE, payload: response.data.dataUpdate })
 				return response.data
 			}
 		} catch (error) {
@@ -144,14 +145,18 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		getAuxiliaryCosts,
 		showAddAuxiliaryCostModal,
 		setShowAddAuxiliaryCostModal,
+
+		updateAuxiliaryCost,
 		showUpdateAuxiliaryCostModal,
 		setShowUpdateAuxiliaryCostModal,
+
+		
 		addAuxiliaryCost,
 		showToast,
 		setShowToast,
 		deleteAuxiliaryCost,
 		findAuxiliaryCost,
-		updateAuxiliaryCost,
+		
 		getAuxiliaryCosts_byidContract,
 		getAuxiliaryCosts_byidContract_Plan1,
 		getAuxiliaryCosts_byidContract_Plan2

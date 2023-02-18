@@ -49,22 +49,6 @@ GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c1d855ce5c8ecc6ce4
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
-### update auxiliary-cost
-### access Public
-###  
-PUT http://localhost:5000/api/forms/auxiliary-cost/put/63a67cbc93b9994f37bd393b
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
-
-{
-  "InventoryDays": 60,
-  "ImplementationDays": 20,
-  "BedtDays": 20,
-  "DebtCollectionDays": 15, 
-  "Note": "A",
-  "ContractID":"HD01"
-}
-
 
 ### Get all Contract tạo bởi user đăng nhập
 ### access public
