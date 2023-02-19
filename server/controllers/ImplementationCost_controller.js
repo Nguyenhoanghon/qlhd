@@ -354,14 +354,14 @@ exports.update_GeneralExpense_Content = async (req, res) => {
   console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
   const { Content,idcontract,idContentCost } = req.body;
-  console.log("idcontract==========", req.params.idcontract)
+  console.log("idcontract==========", req.params.idImplementationCost)
   console.log("idContentCost==========", req.params.idContentCost)
   console.log("Content", req.body.Content)
   
   try {
     const newImplementationCost = await ImplementationCost.updateOne(
       {
-        _id: req.params.idcontract,
+        _id: req.params.idImplementationCost,
         "GeneralExpense": {$elemMatch : {_id:  req.params.idContentCost}}
       },
       {
