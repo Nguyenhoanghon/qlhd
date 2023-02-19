@@ -602,7 +602,7 @@ export const ImplementationCost_byidContract = () => {
 			<AddImplementationCostModal />
 			<AddCostDetailGeneralModal />
 			<AddCostDetailStageImplementModal />
-			<UpdateStageGeneralModal/>
+			{/* <UpdateStageGeneralModal/> !!!! not run */} 
 			{/* !!!! After ImplementationCost is added, show toast */}
 			<Toast
 				show={show}

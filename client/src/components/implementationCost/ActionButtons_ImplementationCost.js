@@ -5,6 +5,8 @@ import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 import { useContext } from 'react'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 export const ActionButtons_ImplementationCost = ( _id ) => {
 	const { deleteImplementationCost,
@@ -40,12 +42,31 @@ export const ActionButtons_Update_Delete_StageGeneral_Expense = ( _id ) => {
 		findImplementationCost(ImplementationCostId)
 		setShowUpdateStageGeneralModal(true)
 	}
+	function submit () {
+		confirmAlert({
+		  title: '',
+		  message: 'Xoá giai đoạn chi phí chung',
+		  buttons: [
+			{
+			  label: 'Có',
+			  onClick: () => delete_StageGeneral_Expense(_id)
+			},
+			{
+			  label: 'Không',
+			  onClick: () => closeDialog()
+			}
+		  ]
+		});
+	  };
+	  const closeDialog = () => {
+		setShowUpdateStageGeneralModal(false)
+	}
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
-			<Button className='post-button' onClick={delete_StageGeneral_Expense.bind(this, _id)}>
+			<Button className='post-button' onClick={submit}>
 				<img src={deleteIcon} alt='delete' width='24' height='24' />
 			</Button>
 		</>
@@ -62,12 +83,31 @@ export const ActionButtons_Update_Delete_StageImplementation = ( _id ) => {
 		findImplementationCost(ImplementationCostId)
 		setShowUpdateImplementationCostModal(true)
 	}
+	function submit () {
+		confirmAlert({
+		  title: '',
+		  message: 'Xoá giai đoạn chi phí triển khai',
+		  buttons: [
+			{
+			  label: 'Có',
+			  onClick: () => delete_StageImplementation(_id)
+			},
+			{
+			  label: 'Không',
+			  onClick: () => closeDialog()
+			}
+		  ]
+		});
+	  };
+	  const closeDialog = () => {
+		setShowUpdateImplementationCostModal(false)
+	}
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
-			<Button className='post-button' onClick={delete_StageImplementation.bind(this, _id)}>
+			<Button className='post-button' onClick={submit}>
 				<img src={deleteIcon} alt='delete' width='24' height='24' />
 			</Button>
 		</>
@@ -85,12 +125,29 @@ export const ActionButtons_Update_Delete_GeneralCostDetail = ( _id ) => {
 		findImplementationCost(ImplementationCostId)
 		setShowUpdateImplementationCostModal(true)
 	}
+	function submit () {
+		confirmAlert({
+		  title: '',
+		  message: 'Xoá chi phí triển khai',
+		  buttons: [
+			{
+			  label: 'Có',
+			  onClick: () => delete_GeneralCostDetail(_id)
+			},
+			{
+			  label: 'Không',
+			  closeOnClick: true
+			}
+		  ]
+		});
+	  };
+	  
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
-			<Button className='post-button' onClick={delete_GeneralCostDetail.bind(this, _id)}>
+			<Button className='post-button' onClick={submit}>
 				<img src={deleteIcon} alt='delete' width='24' height='24' />
 			</Button>
 		</>
@@ -141,7 +198,7 @@ return (
 }
 
 
-//Nut cap nhat - xoá 1 chi phi trong chi phi chung
+//Nut cap nhat - xoá 1 chi phi trong chi phi trien khai
 export const ActionButtons_Update_Delete_StageCostDetail = ( _id ) => {
 	const { deleteImplementationCost,
 		delete_StageCostDetail, findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
@@ -152,12 +209,28 @@ export const ActionButtons_Update_Delete_StageCostDetail = ( _id ) => {
 		findImplementationCost(ImplementationCostId)
 		setShowUpdateImplementationCostModal(true)
 	}
+	function submit () {
+		confirmAlert({
+		  title: '',
+		  message: 'Xoá chi phí triển khai',
+		  buttons: [
+			{
+			  label: 'Có',
+			  onClick: () => delete_StageCostDetail(_id)
+			},
+			{
+			  label: 'Không',
+			  closeOnClick: true
+			}
+		  ]
+		});
+	  };
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
-			<Button className='post-button' onClick={delete_StageCostDetail.bind(this, _id)}>
+			<Button className='post-button' onClick={submit}>
 				<img src={deleteIcon} alt='delete' width='24' height='24' />
 			</Button>
 		</>

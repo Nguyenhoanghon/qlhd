@@ -1,7 +1,8 @@
 
 import * as React from 'react';
-import {BrowserRouter as Routes, Route, useParams} from 'react-router-dom'
-
+import { BrowserRouter as Routes, Route, useParams } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import Button from 'react-bootstrap/Button'
 import editIcon from '../../assets/pencil.svg'
 import deleteIcon from '../../assets/trash.svg'
@@ -13,7 +14,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 export const ActionButtons_Contract = ({ _id }) => {
-	const { deleteContract, findContract, setShowUpdateContractModal,setShowAddContractModal } = useContext(
+	const { deleteContract, findContract, setShowUpdateContractModal, setShowAddContractModal } = useContext(
 		ContractContext
 	)
 
@@ -28,23 +29,23 @@ export const ActionButtons_Contract = ({ _id }) => {
 
 
 	return (
-		<>	
+		<>
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					Cập nhật thông tin hơp đồng 
+						Cập nhật thông tin hơp đồng
 					</Tooltip>
 				}
 			>
-				<Button className='post-button'  onClick={chooseContract.bind(this, _id)}>
-					<img src={editIcon} alt='edit' width='24' height='24' /> 
+				<Button className='post-button' onClick={chooseContract.bind(this, _id)}>
+					<img src={editIcon} alt='edit' width='24' height='24' />
 				</Button>
-        	</OverlayTrigger>
+			</OverlayTrigger>
 
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					 Nhập dữ liệu hợp đồng
+						Nhập dữ liệu hợp đồng
 					</Tooltip>
 				}
 			>
@@ -65,29 +66,47 @@ export const ActionButtons_Update_Delete = ({ _id }) => {
 		findContract(ContractId)
 		setShowUpdateContractModal(true)
 	}
-
+	function submit () {
+		confirmAlert({
+		  title: '',
+		  message: 'Xoá hợp đồng',
+		  buttons: [
+			{
+			  label: 'Có',
+			  onClick: () => deleteContract(_id)
+			},
+			{
+			  label: 'Không',
+			  onClick: () => closeDialog()
+			}
+		  ]
+		});
+	  };
+	  const closeDialog = () => {
+		setShowUpdateContractModal(false)
+	}
 	return (
 		<>
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					 Cập nhật
+						Cập nhật
 					</Tooltip>
 				}
 			>
-				<Button className='post-button'  onClick={chooseContract.bind(this, _id)}>
-					<img src={editIcon} alt='edit' width='24' height='24' /> 
+				<Button className='post-button' onClick={chooseContract.bind(this, _id)}>
+					<img src={editIcon} alt='edit' width='24' height='24' />
 				</Button>
-        	</OverlayTrigger>
+			</OverlayTrigger>
 
 			<OverlayTrigger
 				overlay={
 					<Tooltip>
-					Xoá hợp đồng
+						Xoá hợp đồng
 					</Tooltip>
 				}
 			>
-				<Button className='post-button' onClick={deleteContract.bind(this, _id)}>
+				<Button className='post-button' onClick={submit}>
 					<img src={deleteIcon} alt='delete' width='24' height='24' />
 				</Button>
 			</OverlayTrigger>
