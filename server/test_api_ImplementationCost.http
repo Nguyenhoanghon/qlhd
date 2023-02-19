@@ -22,29 +22,96 @@ GET http://localhost:5000/api/forms/implementation-cost
 ### Get ImplementationCost by idcontract
 ### API access: /api/forms/implementation-cost/:idcontract
 ### Test: ok
-GET http://localhost:5000/api/forms/implementation-cost/63c08c08b1a40f0ce190d6e1
+GET http://localhost:5000/api/forms/implementation-cost/63e40fc862b2ebee52433da7
 
 ### KHOI TAO 1 CHI TRIEN KHAI
 // API access: /api/forms/implementation-cost/post:idcontract
 // access public
-POST http://localhost:5000/api/forms/implementation-cost/post/63c08c08b1a40f0ce190d6e1
+POST http://localhost:5000/api/forms/implementation-cost/post/63e40fc862b2ebee52433da7
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
 
 {
-  "GeneralExpense": "Chi phí chung",
-  "StagesImplementation": "Giai đoạn 1"
+  "GeneralExpense": "Chi phí chung Giai doan 2",
+  "StagesImplementation": "Giai đoạn 2"
 }
 
 ### Them 1 giai doan chi phi chung
 // API access: /api/forms/implementation-cost/general-expense/post/:idcontract
-// Test: ok
+// Test: Loi do sua lai backend
 POST http://localhost:5000/api/forms/implementation-cost/general-expense/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
 {
   "Content": "Chi Phi chung 2"
+}
+
+### CAP NHAT 1 giai doan chi phi chung
+// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
+// Test: OK
+PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/
+Content-Type: application/json
+//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
+
+{
+  "Content": "Chi Phi chung Giai doan 1 update cap nhat sfssffsdfsf",
+  "idcontract": "63e40fc862b2ebee52433da7",
+  "idContentCost": "63f1dc4640fb6542037857cf"
+}
+
+### CAP NHAT 1 chi phi trong giai doan chi phi CHUNG
+// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
+// Test: OK
+PUT http://localhost:5000/api/forms/implementation-cost/general-expense/cost/put/
+Content-Type: application/json
+//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
+
+{
+  "NameCost": "Chi phí Van chuyen 1 Update",
+  "Units": "Phòng",
+  "UnitPrice": 5000000,
+  "Quantity_days": 1,
+  "Quantity_times": 1,
+  "IntoMoney": 0,
+  "Note": "Ghi chu",
+  "idcontract": "63e40fc862b2ebee52433da7",
+  "idContentCost": "63f1dc4640fb6542037857cf",
+  "idCost": "63f20c90bcf1144ac8c67b78"
+}
+
+### CAP NHAT 1 giai doan chi phi TRIEN KHAI
+// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
+// Test: OK
+PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/
+Content-Type: application/json
+//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
+
+{
+  "Content": "Chi Phi chung Giai doan 1 update cap nhat",
+  "idcontract": "63e40fc862b2ebee52433da7",
+  "idContentCost": "63eda7cbaf94fa8c4dcfac6d"
+}
+
+### CAP NHAT 1 chi phi trong giai doan chi phi TRIEN KHAI
+// API access: /api/forms/implementation-cost/stages-implementation/cost/put/
+// Test: OK
+//Note: Cap nhat xong  idCost bi thay doi !
+PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/cost/put/
+Content-Type: application/json
+//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
+
+{
+  "NameCost": "Chi phí Van chuyen 1 Update",
+  "Units": "Phòng",
+  "UnitPrice": 3000000,
+  "Quantity_days": 1,
+  "Quantity_times": 1,
+  "IntoMoney": 0,
+  "Note": "Ghi chu",
+  "idcontract": "63e40fc862b2ebee52433da7",
+  "idContentCost": "63eda7cbaf94fa8c4dcfac6d",
+  "idCost": "63f20f0fcfe4834b740bf1f5"
 }
 
 ### Them 1 giai doan chi phi trien khai
@@ -93,58 +160,6 @@ Content-Type: application/json
   "Note": ""
 }
 
-
-
-
-###
-// Update stages-implementation Costs cho chi phi giai doan
-// URL access: http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/:idCosts
-//Input Condition : 
-//            _id: ImplementationCost_Id,
-//            "GeneralExpense._id": ContentCostId,
-//            "GeneralExpense.Costs._id": req.params.id
-// access public
-
-PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/63e491000370ac01a9397c99
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
-
-{
-  "NameCost": "Chi phí ve may bay new",
-  "Units": "Phong",
-  "UnitPrice": 400000,
-  "Quantity_days": 1,
-  "Quantity_times": 4,
-  "IntoMoney": 0,
-  "Note": "Ghi chu",
-  "ImplementationCost_Id": "63e928afada883181b15498b",
-  "ContentCostId": "63e928af11446b81cb88ec83"
-}
-
-###
-// Update Cost General Expense cho chi phi chung
-// URL access: http://localhost:5000/api/forms/implementation-cost/general-expense/put/:idCosts
-//Input Condition : 
-//            _id: ImplementationCost_Id,
-//            "GeneralExpense._id": ContentCostId,
-//            "GeneralExpense.Costs._id": req.params.id
-// access public
-
-PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/63e6132b7842b21a3213f802
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmZmNTI1ZjMyODc0YWM3NTU1YzhiYSIsImlhdCI6MTY3MzU2MDkxNiwiZXhwIjoxNjczNTY3MzE2fQ.IZ6BsFXeg1aOoAl9vdoFJOQM1qVHL9EmeaNh4YtcZIk
-
-{
-  "NameCost": "Chi phí van chuyen8888 ",
-  "Units": "Phong",
-  "UnitPrice": 3300000,
-  "Quantity_days": 1,
-  "Quantity_times": 4,
-  "IntoMoney": 0,
-  "Note": "Ghi chu",
-  "ImplementationCost_Id": "63e42807ada883181b6b7dfc",
-  "ContentCostId": "63e670c56d383b1edef5a6e4"
-}
 
 ### Get ImplementationCost by id Implementation
 ### access public

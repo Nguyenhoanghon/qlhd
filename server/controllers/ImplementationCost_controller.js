@@ -17,7 +17,7 @@ exports.getImplementationCost_idcontract = async (req, res) => {
     let InputIntoMoney = 0;
     let OutputIntoMoney = 0;
     for (let i = 0; i < ImplementationCost_data.length; i++) {
-      console.log("InputIntoMoney: ",ImplementationCost_data[i].InputIntoMoney)
+      console.log("InputIntoMoney: ", ImplementationCost_data[i].InputIntoMoney)
       InputIntoMoney += ImplementationCost_data[i].InputIntoMoney;
       OutputIntoMoney += ImplementationCost_data[i].OutputIntoMoney;
     }
@@ -136,7 +136,7 @@ exports.createGeneralExpense = async (req, res) => {
       {
         contract: req.body.idcontract,
       },
-      {
+      { 
         $push: {
           GeneralExpense: {
             Content,
@@ -235,8 +235,8 @@ exports.AddCostDetail = async (req, res, _id) => {
     ImplementationCost_Id,
     ContentCostId
   } = req.body;
-  console.log("id chi phí:",req.body.ImplementationCost_Id);
-  console.log("id chi phí:",req.body.ContentCostId);
+  console.log("id chi phí:", req.body.ImplementationCost_Id);
+  console.log("id chi phí:", req.body.ContentCostId);
   try {
     if (req.body.Quantity_times == 0)
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days
@@ -300,7 +300,7 @@ exports.AddCostDetailStage = async (req, res) => {
     ImplementationCost_Id,
     ContentCostId
   } = req.body;
-  
+
   try {
     if (req.body.Quantity_times == 0)
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days
@@ -315,7 +315,7 @@ exports.AddCostDetailStage = async (req, res) => {
         "StagesImplementation._id": req.body.ContentCostId//req.params.idContentCost, //nhan tu tham so
       },
       {
-        $push: {
+        $push: { // !!!!
           "StagesImplementation.$.Costs": {
             NameCost,
             Units,
@@ -346,118 +346,86 @@ exports.AddCostDetailStage = async (req, res) => {
   }
 
 }
-
-// Update ImplementationCost GeneralExpense
+// Cap nhat 1 giai doan chi phi chung
 // @access Public
-exports.updateImplementationCost_CostGeneralExpense = async (req, res) => {
-  console.log("Test route updateImplementationCost_CostGeneralExpense !");
+// Test: Rest ok
 
-  const {
-    NameCost,
-    Units,
-    UnitPrice,
-    Quantity_days,
-    Quantity_times,
-    IntoMoney,
-    Note,
-    ImplementationCost_Id,
-    ContentCostId
-  } = req.body
+exports.update_GeneralExpense_Content = async (req, res) => {
+  console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
-  console.log("Test data recieved ====>>>", req.params.id)
+  const { Content,idcontract,idContentCost } = req.body;
+  console.log("idcontract==========", req.params.idcontract)
+  console.log("idContentCost==========", req.params.idContentCost)
+  console.log("Content", req.body.Content)
+  
   try {
-    let updateImplementationCost = {
-      NameCost,
-      Units,
-      UnitPrice,
-      Quantity_days,
-      Quantity_times,
-      IntoMoney,
-      Note,
-      ImplementationCost_Id,
-      ContentCostId
-    }
-    console.log("Test data get form =====>>>", updateImplementationCost)
-    //xu ly logic dữ liệu
-    if (req.body.Quantity_times == 0)
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days
-    else if (req.body.Quantity_days == 0)
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_times
-    else
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
-
-    console.log("Test data sau xu ly logic =====>>>", updateImplementationCost)
-    console.log("Test ID1 =====>>>", ImplementationCost_Id)
-    console.log("Test ID2 =====>>>", ContentCostId)
-    console.log("Test ID3 =====>>>", req.params.id)
-    //const UpdateCondition = { _id: req.params.id}
-    const generalcost = await ImplementationCost.find(
+    const newImplementationCost = await ImplementationCost.updateOne(
       {
-        _id: ImplementationCost_Id,
-        "GeneralExpense._id": ContentCostId,
-        "GeneralExpense.Costs._id": req.params.id
-      })
-
-    console.log("Get data =====", generalcost);
-
-    updateImplementationCost = await ImplementationCost.updateOne(//findOneAndUpdate(
-      {
-
-        //GeneralExpense: {$elemMatch:
-        //{_id: ImplementationCost_Id,
-        //  "GeneralExpense._id": ContentCostId,
-        //  "GeneralExpense.Costs._id": req.params.id
-        //}}
-        //_id: {$elemMatch: {_id: ImplementationCost_Id}},
-        "GeneralExpense._id": ContentCostId,
-        "GeneralExpense.Costs._id": req.params.id
-
+        _id: req.params.idcontract,
+        "GeneralExpense": {$elemMatch : {_id:  req.params.idContentCost}}
       },
       {
         $set: {
-          //"GeneralExpense.$.Costs.$.NameCost": 'Update 63e4bab5709f670de5b98a4a'
-          "GeneralExpense.$[].Costs": {
-            NameCost,//: req.body.NameCost,
-            Units,//: req.body.Units,
-            UnitPrice,//: req.body.UnitPrice,
-            Quantity_days,//: req.body.Quantity_days,
-            Quantity_times,//: req.body.Quantity_times,
-            IntoMoney,//: req.body.IntoMoney,
-            Note,//: req.body.Note
-          }
+          "GeneralExpense.$.Content":  req.body.Content
         }
-      },
-      {
-        //arrayFilters: [{"el._id": req.params.id}]
       }
     );
-    console.log('sau cap nhat', updateImplementationCost)
-    // User not authorised to update ImplementationCost or ImplementationCost not found
-    if (!updateImplementationCost)
-      return res.status(401).json({
-        success: false,
-        message: 'ImplementationCost not found or user not authorised'
-      })
-    else
-      res.json({
-        success: true,
-        message: 'Update ImplementationCost Successfull !',
-        updateImplementationCost: updateImplementationCost
-      })
 
+    res.json({
+      success: true,
+      message: "Cập nhật thành công giai đoạn chi phí chung",
+      StagesImplementation: newImplementationCost,
+    });
   } catch (error) {
-    console.log(error)
-    res.status(400).json({ success: false, message: 'Internal server error' })
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
-
 }
 
-// Update ImplementationCost StageImplementation costs
+// Cap nhat 1 giai doan chi phi TRIEN KHAI
 // @access Public
-exports.updateImplementationCost_CostDetailStage = async (req, res) => {
-  console.log("Test route updateImplementationCost !");
+// Test: Rest ok
 
-  const {
+exports.update_StagesImplementation_Content = async (req, res) => {
+  console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
+
+  const { Content,idcontract,idContentCost } = req.body;
+  console.log("idcontract==========", req.body.idcontract)
+  console.log("idContentCost==========", req.body.idContentCost)
+  console.log("Content", req.body.Content)
+  
+  try {
+    const newImplementationCost = await ImplementationCost.updateOne(
+      {
+        contract: req.body.idcontract,
+        "StagesImplementation": {$elemMatch : {_id:  req.body.idContentCost}}
+      },
+      {
+        $set: {
+          "StagesImplementation.$.Content":  req.body.Content
+        }
+      }
+    );
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công giai đoạn chi phí chung",
+      StagesImplementation: newImplementationCost,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+// Cap nhat 1 chi phi trong giai doan chi phi chung
+// @access Public
+// Test: 
+
+exports.update_GeneralExpense_Cost = async (req, res) => {
+  console.log("Test route ===> CAP NHAT 1 CHI PHI TRONG Giai doan chi phi CHUNG is called !");
+
+  let {
     NameCost,
     Units,
     UnitPrice,
@@ -466,76 +434,113 @@ exports.updateImplementationCost_CostDetailStage = async (req, res) => {
     IntoMoney,
     Note,
     ImplementationCost_Id,
-    ContentCostId
-  } = req.body
+    ContentCostId,
+    idCost
+  } = req.body;
 
-  console.log("Test data recieved ====>>>", req.params.id)
+  console.log("idcontract==========", req.body.idcontract)
+  console.log("idContentCost==========", req.body.idContentCost)
+  console.log("idCost", req.body.idCost)
   try {
-    let updateImplementationCost = {
-      NameCost,
-      Units,
-      UnitPrice,
-      Quantity_days,
-      Quantity_times,
-      IntoMoney,
-      Note,
-      ImplementationCost_Id,
-      ContentCostId
-    }
-    console.log("Test data get form =====>>>", updateImplementationCost)
-    //xu ly logic dữ liệu
-    if (req.body.Quantity_times == 0)
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days
-    else if (req.body.Quantity_days == 0)
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_times
-    else
-      updateImplementationCost.IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
-
-    console.log("Test data sau xu ly logic =====>>>", updateImplementationCost)
-
-    //const UpdateCondition = { _id: req.params.id}
-    updateImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementationCost = await ImplementationCost.updateOne(
       {
-        _id: ImplementationCost_Id,
-        "StagesImplementation._id": ContentCostId,
-        "StagesImplementation.Costs._id": req.params.id
+        contract: req.body.idcontract,
+        "GeneralExpense": {$elemMatch : {_id:  req.body.idContentCost }},
+        "GeneralExpense.Costs": {$elemMatch : {_id:  req.body.idCost }}
       },
-      {
+      { // !!!!
         $set: {
-          "StagesImplementation.$.Costs": {
-            NameCost,
-            Units,
-            UnitPrice,
-            Quantity_days,
-            Quantity_times,
-            IntoMoney,
-            Note
+          "GeneralExpense.$.Costs": {
+            _id: req.body.idCost,
+            NameCost: req.body.NameCost,
+            Units: req.body.Units,
+            UnitPrice: req.body.UnitPrice,
+            Quantity_days: req.body.Quantity_days,
+            Quantity_times: req.body.Quantity_times,
+            IntoMoney: req.body.IntoMoney,
+            Note: req.body.Note
           },
         }
       },
       {
-        new: true,
-        upsert: true,
+        new: false,
+        upsert: false,
       }
     );
-    // User not authorised to update ImplementationCost or ImplementationCost not found
-    if (!updateImplementationCost)
-      return res.status(401).json({
-        success: false,
-        message: 'ImplementationCost not found or user not authorised'
-      })
-    else
-      res.json({
-        success: true,
-        message: 'Update ImplementationCost Successfull !',
-        updateImplementationCost: updateImplementationCost
-      })
 
+    res.json({
+      success: true,
+      message: "Cập nhật thành công!",
+      StagesImplementation: newImplementationCost,
+    });
   } catch (error) {
-    console.log(error)
-    res.status(400).json({ success: false, message: 'Internal server error' })
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
+
+// Cap nhat 1 chi phi trong giai doan chi phi CHUNG
+// @access Public
+// Test: 
+
+exports.update_StagesImplementation_Cost = async (req, res) => {
+  console.log("Test route ===> CAP NHAT 1 CHI PHI TRONG Giai doan chi phi TRIEN KHAI is called !");
+
+  let {
+    NameCost,
+    Units,
+    UnitPrice,
+    Quantity_days,
+    Quantity_times,
+    IntoMoney,
+    Note,
+    ImplementationCost_Id,
+    ContentCostId,
+    idCost
+  } = req.body;
+
+  console.log("idcontract==========", req.body.idcontract)
+  console.log("idContentCost==========", req.body.idContentCost)
+  console.log("idCost", req.body.idCost)
+  
+  try {
+    const newImplementationCost = await ImplementationCost.updateOne(
+      {
+        contract: req.body.idcontract,
+        "StagesImplementation": {$elemMatch : {_id:  req.body.idContentCost }},
+        "StagesImplementation.Costs": {$elemMatch : {_id:  req.body.idCost }}
+      },
+      { // !!!!
+        $set: {
+          "StagesImplementation.$.Costs": {
+            _id: req.body.idCost,
+            NameCost: req.body.NameCost,
+            Units: req.body.Units,
+            UnitPrice: req.body.UnitPrice,
+            Quantity_days: req.body.Quantity_days,
+            Quantity_times: req.body.Quantity_times,
+            IntoMoney: req.body.IntoMoney,
+            Note: req.body.Note
+          },
+        }
+      },
+      {
+        new: false,
+        upsert: false,
+      }
+    );
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công!",
+      StagesImplementation: newImplementationCost,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
 
 // Delete  ImplementationCost by id
 // @access Public

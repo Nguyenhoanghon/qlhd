@@ -62,17 +62,30 @@ ImplementationCostController.AddCostDetail);
 app.post("/api/forms/implementation-cost/stages-implementation/post",///:idImplementationCost/:idContentCost", //authJwt.verifyToken,
 ImplementationCostController.AddCostDetailStage);
 
-// Update ImplementationCost general-expense  Costs_id 
+// CAP NHAT 1 giai doan chi phi chung
+// @access Public
+// OK
+app.put("/api/forms/implementation-cost/general-expense/put/:idImplementationCost/:idContentCost",
+ImplementationCostController.update_GeneralExpense_Content);
+
+// CAP NHAT 1 giai doan chi phi TRIEN KHAI
+// @access Public
+// !!!!
+app.put("/api/forms/implementation-cost/stages-implementation/put/",
+ImplementationCostController.update_StagesImplementation_Content);
+
+
+// CAP NHAT 1 chi phi trong giai doan chi phi CHUNG voi idcontract/idContentCost/idCost
 // URL access: PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/:id
 // access public
-app.put("/api/forms/implementation-cost/general-expense/put/:id",
-ImplementationCostController.updateImplementationCost_CostGeneralExpense);
+app.put("/api/forms/implementation-cost/general-expense/cost/put/",//:idcontract/:idContentCost/:idCost",
+ImplementationCostController.update_GeneralExpense_Cost);
 
-// Update ImplementationCost stages-implementation Costs_id 
-// URL access: PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/:id
+// CAP NHAT 1 chi phi trong giai doan chi phi CHUNG voi idcontract/idContentCost/idCost
+// URL access: PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/:id
 // access public
-app.put("/api/forms/implementation-cost/stages-implementation/put/:id",
-ImplementationCostController.updateImplementationCost_CostDetailStage);
+app.put("/api/forms/implementation-cost/stages-implementation/cost/put/",//:idcontract/:idContentCost/:idCost",
+ImplementationCostController.update_StagesImplementation_Cost);
 
 
 

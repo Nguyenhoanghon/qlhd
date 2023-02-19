@@ -7,7 +7,7 @@ export const ImplementationCostContext = createContext()
 const ImplementationCostContextProvider = ({ children }) => {
 	// State
 	const [ImplementationCostState, dispatch] = useReducer(ImplementationCostReducer, {
-		ImplementationCost: null,
+		ImplementationCost: [],
 		ImplementationCosts: [],
 		StageImplementation: [],
 		ImplementationCostsLoading: true
@@ -16,6 +16,9 @@ const ImplementationCostContextProvider = ({ children }) => {
 
 	
 	const [showAddStageGeneralModal, setshowAddStageGeneralModal] = useState(false)
+//!!!!
+	const [showUpdateStageGeneralModal, setShowUpdateStageGeneralModal,] = useState(false)
+
 	const [showAddCostDetailGeneralModal, setshowAddCostDetailGeneralModal] = useState(false)
 	
 	const [showAddStageImplementationModal, setshowAddStageImplementationModal] = useState(false)
@@ -25,7 +28,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 	
 	const [dataOn_Click, setdataOn_Click] = useState([])//xu ly nut them
 	
-	const [showUpdateImplementationCostModal, setShowUpdateImplementationCostModal] = useState(false)
+	
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
@@ -184,6 +187,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 	const delete_GeneralCostDetail = async (ImplementationCost) => {
 		try {
 			console.log("ID idImplementationCost", ImplementationCost)
+
 			console.log((`${apiUrl}api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}/${ImplementationCost.Costs_id}`))
 			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}/${ImplementationCost.Costs_id}`)//note
 			if (response.data.success)
@@ -208,18 +212,24 @@ const ImplementationCostContextProvider = ({ children }) => {
 	// Find ImplementationCost when user is updating ImplementationCost ??? Chua test
 	const findImplementationCost = ImplementationCostId => {
 		const ImplementationCost = ImplementationCostState.ImplementationCosts.find(ImplementationCost => ImplementationCost._id === ImplementationCostId)
+		//test
+		console.log("findImplementationCost===",ImplementationCost)
+		
 		dispatch({ type: FIND, payload: ImplementationCost })
 	}
-
-	// Update ImplementationCost ??? Chua test
-	const updateImplementationCost = async updatedImplementationCost => {
+//!!!!
+	// Cap nhat giai doan chi phi chung (ContentCost) - cung ten phia backend
+	const update_GeneralExpense_Content = async ImplementationCost => {
+		console.log("${ImplementationCosts.idImplementationCost}", `${ImplementationCost.idImplementationCost}`)
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/forms/product-Cost/put/${updatedImplementationCost._id}`, //note xem trong server
-				updatedImplementationCost
+				console.log("Test URL",`${apiUrl}/api/forms/implementation-cost/general-expense/put/${ImplementationCost.idImplementationCost}/${ImplementationCost.GeneralExpense_id}`)
+				`${apiUrl}/api/forms/implementation-cost/general-expense/put/${ImplementationCost.idImplementationCost}/${ImplementationCost.GeneralExpense_id}`, //note xem trong server
+				
+				ImplementationCost
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.updateImplementationCost }) //note updateImplementationCost biến trả về từ server
+				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
 				return response.data
 			}
 		} catch (error) {
@@ -234,11 +244,15 @@ const ImplementationCostContextProvider = ({ children }) => {
 		ImplementationCostState,
 		find_ImplementationCosts,
 
+		addImplementationCost,
 		showAddImplementationCostModal,
 		setShowAddImplementationCostModal,
-		showUpdateImplementationCostModal,
-		setShowUpdateImplementationCostModal,
-		addImplementationCost,
+
+		// !!!!
+		update_GeneralExpense_Content,
+		showUpdateStageGeneralModal,
+		setShowUpdateStageGeneralModal,
+		
 
 		showAddStageImplementationModal,
 		setshowAddStageImplementationModal,
@@ -257,7 +271,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 		setShowToast,
 		deleteImplementationCost,
 		findImplementationCost,
-		updateImplementationCost,
+
 		getImplementationCosts_byidContract,
 
 		delete_StageGeneral_Expense, //xoa 1 giai doan chung

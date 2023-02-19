@@ -30,13 +30,15 @@ export const ActionButtons_ImplementationCost = ( _id ) => {
 //Nut cap nhat - xoá 1 giai doan chi phi chung
 export const ActionButtons_Update_Delete_StageGeneral_Expense = ( _id ) => {
 	const { delete_StageGeneral_Expense,
-		findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
+		findImplementationCost,
+		
+		setShowUpdateStageGeneralModal } = useContext(
 		ImplementationCostContext
 	)
 
 	const chooseImplementationCost = ImplementationCostId => {
 		findImplementationCost(ImplementationCostId)
-		setShowUpdateImplementationCostModal(true)
+		setShowUpdateStageGeneralModal(true)
 	}
 	return (
 		<>

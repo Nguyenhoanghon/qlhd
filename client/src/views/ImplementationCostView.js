@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Toast from 'react-bootstrap/Toast'
-
+import Table from 'react-bootstrap/Table'
 /* import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import Col from 'react-bootstrap/Col' 
@@ -30,7 +30,9 @@ import AddStageImplementationModal from '../components/implementationCost/AddSta
 import AddStageGeneralModal from '../components/implementationCost/AddStageGeneralModal'
 import AddCostDetailGeneralModal from '../components/implementationCost/AddCostDetailGeneralModal'
 import AddCostDetailStageImplementModal from '../components/implementationCost/AddCostDetailStageImplementModal'
-import Table from 'react-bootstrap/Table'
+
+import UpdateStageGeneralModal from '../components/implementationCost/UpdateStageGeneralModal'
+
 //View all
 export const ImplementationCost = () => {
 	// Contexts
@@ -290,6 +292,8 @@ export const ImplementationCost_byidContract = () => {
 		showAddCostDetailGeneralModal,
 		setshowAddCostDetailGeneralModal,
 
+		// !!!!
+		update_GeneralExpense_Content,
 		showToast: { show, message, type },
 		setShowToast
 	} = useContext(ImplementationCostContext)
@@ -368,7 +372,7 @@ export const ImplementationCost_byidContract = () => {
 					<td>
 
 					</td>
-					<td>
+					<td> 
 						<Button variant='primary' onClick={setshowAddStageGeneralModal.bind(this, true)}>
 							Thêm giai đoạn
 						</Button>
@@ -598,7 +602,8 @@ export const ImplementationCost_byidContract = () => {
 			<AddImplementationCostModal />
 			<AddCostDetailGeneralModal />
 			<AddCostDetailStageImplementModal />
-			{/* After ImplementationCost is added, show toast */}
+			<UpdateStageGeneralModal/>
+			{/* !!!! After ImplementationCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
