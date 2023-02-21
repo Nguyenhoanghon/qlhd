@@ -5,15 +5,13 @@ import { useContext, useState } from 'react'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 import { useParams } from 'react-router-dom'
 
-//Ham them giai doan
+//Modal them giai doan chi phi chung
 const AddStageGeneralModal = () =>{
 	//Contexts
 	const{
-		showAddStageGeneralModal,
-		setshowAddStageGeneralModal,
-		addStageGeneral,
+		showAdd_Stage_GeneralExpense_Modal, setshowAdd_Stage_GeneralExpense_Modal,
+		add_Stage_GeneralExpense,
 		setShowToast
-
 	} = useContext(ImplementationCostContext)
 	//State luu thong tin 
 	const [newStageImplementation, setnewStageImplementation] = useState({
@@ -30,12 +28,12 @@ const AddStageGeneralModal = () =>{
 
 	const resetAddStageImplementationData = () => {
 		setnewStageImplementation({ Content: '', idcontract: '' })
-		setshowAddStageGeneralModal(false)
+		setshowAdd_Stage_GeneralExpense_Modal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addStageGeneral(newStageImplementation)//newImplementationCost
+		const { success, message } = await add_Stage_GeneralExpense(newStageImplementation)//newImplementationCost
 		resetAddStageImplementationData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
@@ -44,13 +42,13 @@ const AddStageGeneralModal = () =>{
 		resetAddStageImplementationData()
 	}
 	return (
-		<Modal show={showAddStageGeneralModal} onHide={closeDialog}>
+		<Modal show={showAdd_Stage_GeneralExpense_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm giai đoạn CHI PHI CHUNG</Modal.Title>
+				<Modal.Title>Thêm giai đoạn chi phí chung</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Id contract
 						</Form.Text>
@@ -63,14 +61,14 @@ const AddStageGeneralModal = () =>{
 							value={idcontract}
 							onChange={onChangeNewImplementationCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung giai đoạn
 						</Form.Text>
 						<Form.Control
 							type='text'
-							placeholder='Nhập chuỗi'
+							placeholder=''
 							name='Content'
 							required
 							aria-describedby='noidung-help'

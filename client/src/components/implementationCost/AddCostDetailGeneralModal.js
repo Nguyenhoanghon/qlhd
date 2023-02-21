@@ -142,7 +142,6 @@ const AddCostDetailGeneralModal = (_id) => {
 							type='text'
 							placeholder=''
 							name='Units'
-							required
 							aria-describedby='noidung-help'
 							value={Units}
 							onChange={onChangeNewImplementationCostForm}

@@ -17,7 +17,7 @@ import {GuaranteeLetterCost_all, GuaranteeLetterCost_idContract} from './views/G
 import {MiscExpenseCost_all,MiscExpenseCost_byidContract} from './views/MiscExpenseCostView'
 import {CapitalExpenditureCost_all,CapitalExpenditureCost_byidContract} from './views/CapitalExpenditureCostView'
 import {AuxiliaryCost_all,AuxiliaryCost_byidContract,AuxiliaryCost_Plan} from './views/AuxiliaryCostView'
-import {ImplementationCost,ImplementationCost_byidContract,Input_GeneralCost,Input_StageImplement} from './views/ImplementationCostView'
+import {ImplementationCost,ImplementationCost_byidContract} from './views/ImplementationCostView'
 
 //=====contexts
 import AuthContextProvider from './contexts/AuthContext'
@@ -60,8 +60,6 @@ function App() {
 						<ImplementationCostContextProvider>
 							<ProtectedRoute exact path='/implementation-cost' component={ImplementationCost} />
 							<ProtectedRoute exact path='/implementation-cost/contract/:id' component={ImplementationCost_byidContract} />
-							<ProtectedRoute exact path='/implementation-cost/general-cost/:id/:id' component={Input_GeneralCost} />
-							<ProtectedRoute exact path='/implementation-cost/stage-implement/:id' component={Input_StageImplement} />
 						</ImplementationCostContextProvider>
 						</ContractContextProvider>
 

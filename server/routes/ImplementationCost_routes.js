@@ -71,7 +71,7 @@ ImplementationCostController.update_GeneralExpense_Content);
 // CAP NHAT 1 giai doan chi phi TRIEN KHAI
 // @access Public
 // !!!!
-app.put("/api/forms/implementation-cost/stages-implementation/put/",
+app.put("/api/forms/implementation-cost/stages-implementation/put/:idImplementationCost/:idContentCost",
 ImplementationCostController.update_StagesImplementation_Content);
 
 

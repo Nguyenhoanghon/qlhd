@@ -8,50 +8,46 @@ import { ImplementationCostContext } from '../../contexts/ImplementationCostCont
 const UpdateStageGeneralModal = () => {
 	// Contexts
 	const {
-		ImplementationCostState: { ImplementationCosts },
+		Data_GeneralExpense_Content,
+		setData_GeneralExpense_Content,
 		update_GeneralExpense_Content,
-		showUpdateStageGeneralModal,
-		setShowUpdateStageGeneralModal,
-		getImplementationCosts_byidContract,
+		showUpdate_Stage_GeneralExpense_Modal,
+		setShowUpdate_Stage_GeneralExpense_Modal,
 		setShowToast
 	} = useContext(ImplementationCostContext)
-	// State use load on Form
-
-	const [updatedImplementationCost, setupdatedImplementationCost] = useState(ImplementationCosts)
-
-	useEffect(() => setupdatedImplementationCost(ImplementationCosts), [ImplementationCosts])
-	//test data lay dc !!!!
 	
-	console.log("Get data=====>",updatedImplementationCost)
+	const [updatedImplementationCost, setupdatedImplementationCost] = useState(Data_GeneralExpense_Content)
+	
+	useEffect(() => setupdatedImplementationCost(Data_GeneralExpense_Content), [Data_GeneralExpense_Content])
 
-	//Chuan bi du lieu cap nhat
-	const { 
-		Content,
-	 } = updatedImplementationCost //note
-	 
+	let { 
+		_id,
+		GeneralExpense_id,
+		GeneralExpense_Content
+	 } = updatedImplementationCost
 
 	const onChangeUpdatedMiscExpenseCostForm = event =>
-	setupdatedImplementationCost({ ...updatedImplementationCost, [event.target.name]: event.target.value })
+		setupdatedImplementationCost({ ...updatedImplementationCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
 		setupdatedImplementationCost(updatedImplementationCost)
-		setShowUpdateStageGeneralModal(false)
+		setShowUpdate_Stage_GeneralExpense_Modal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await update_GeneralExpense_Content(updatedImplementationCost)
-		setShowUpdateStageGeneralModal(false)
+		const { success, message } = await update_GeneralExpense_Content(updatedImplementationCost,Data_GeneralExpense_Content)
+		setShowUpdate_Stage_GeneralExpense_Modal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	return (
-		<Modal show={showUpdateStageGeneralModal} onHide={closeDialog}>
+		<Modal show={showUpdate_Stage_GeneralExpense_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Cập nhật  {Content}</Modal.Title>
+				<Modal.Title>Cập nhật  {}</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
-			<Modal.Body>
+				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung giai đoạn
@@ -59,12 +55,12 @@ const UpdateStageGeneralModal = () => {
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='Content'
+							name='GeneralExpense_Content'
 							required
 							aria-describedby='noidung-help'
-							value={Content}
+							value={GeneralExpense_Content}
 							onChange={onChangeUpdatedMiscExpenseCostForm}
-						/>						
+						/>
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>

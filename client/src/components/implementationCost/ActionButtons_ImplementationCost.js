@@ -6,13 +6,16 @@ import deleteIcon from '../../assets/trash.svg'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 import { useContext } from 'react'
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
+//Not use
+//
+//StagesImplementation
 
-export const ActionButtons_ImplementationCost = ( _id ) => {
+export const Buttons_ImplementationCost = (ImplementationCost) => {
 	const { deleteImplementationCost,
 		delete_GeneralCostDetail, findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
-		ImplementationCostContext
-	) 
+			ImplementationCostContext
+		)
 
 	const chooseImplementationCost = ImplementationCostId => {
 		findImplementationCost(ImplementationCostId)
@@ -20,50 +23,48 @@ export const ActionButtons_ImplementationCost = ( _id ) => {
 	}
 	return (
 		<>
-			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+			<Button className='post-button' onClick={chooseImplementationCost.bind(this, ImplementationCost)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
-			<Button className='post-button' onClick={delete_GeneralCostDetail.bind(this, _id)}>
+			<Button className='post-button' onClick={delete_GeneralCostDetail.bind(this, ImplementationCost)}>
 				<img src={deleteIcon} alt='delete' width='24' height='24' />
 			</Button>
 		</>
 	)
 }
-//Nut cap nhat - xoá 1 giai doan chi phi chung
-export const ActionButtons_Update_Delete_StageGeneral_Expense = ( _id ) => {
-	const { delete_StageGeneral_Expense,
-		findImplementationCost,
-		
-		setShowUpdateStageGeneralModal } = useContext(
-		ImplementationCostContext
-	)
+//Nut cap nhat - xoá 1 giai doan chi phi chung !!!
+export const Buttons_Update_Delete_GeneralExpense_Content = (GeneralExpense) => {
+	const {
 
-	const chooseImplementationCost = ImplementationCostId => {
-		findImplementationCost(ImplementationCostId)
-		setShowUpdateStageGeneralModal(true)
+		setData_GeneralExpense_Content,
+		setShowUpdate_Stage_GeneralExpense_Modal,
+		delete_Stage_GeneralExpense
+	} = useContext(ImplementationCostContext)
+	//setData_GeneralExpense(GeneralExpense)
+	const click_Button_Update = (GeneralExpense) => {
+		setData_GeneralExpense_Content(GeneralExpense)
+		setShowUpdate_Stage_GeneralExpense_Modal(true)
 	}
-	function submit () {
+
+	function submit() {
 		confirmAlert({
-		  title: '',
-		  message: 'Xoá giai đoạn chi phí chung',
-		  buttons: [
-			{
-			  label: 'Có',
-			  onClick: () => delete_StageGeneral_Expense(_id)
-			},
-			{
-			  label: 'Không',
-			  onClick: () => closeDialog()
-			}
-		  ]
+			title: '',
+			message: 'Xoá giai đoạn chi phí chung',
+			buttons: [
+				{
+					label: 'Có',
+					onClick: () => delete_Stage_GeneralExpense(GeneralExpense)
+				},
+				{
+					label: 'Không',
+					closeOnClick: true
+				}
+			]
 		});
-	  };
-	  const closeDialog = () => {
-		setShowUpdateStageGeneralModal(false)
-	}
+	};
 	return (
 		<>
-			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+			<Button className='post-button' onClick={click_Button_Update.bind(this, GeneralExpense)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
 			<Button className='post-button' onClick={submit}>
@@ -73,38 +74,37 @@ export const ActionButtons_Update_Delete_StageGeneral_Expense = ( _id ) => {
 	)
 }
 //Nut cap nhat - xoá 1 giai doan chi phi Trien khai
-export const ActionButtons_Update_Delete_StageImplementation = ( _id ) => {
-	const { delete_StageImplementation,
-		findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
-		ImplementationCostContext
-	)
+export const Buttons_Update_Delete_StageImplementation_Content = (StageImplementation) => {
+	const {
+		Data_StagesImplementation_Content,
+		setData_StagesImplementation_Content,
+		setshowUpdate_Stage_StagesImplementation_Modal,
+		delete_Stage_StageImplementation
+	} = useContext(ImplementationCostContext)
 
-	const chooseImplementationCost = ImplementationCostId => {
-		findImplementationCost(ImplementationCostId)
-		setShowUpdateImplementationCostModal(true)
+	const click_Button_Update = (StageImplementation) => {
+		setData_StagesImplementation_Content(StageImplementation)
+		setshowUpdate_Stage_StagesImplementation_Modal(true)
 	}
-	function submit () {
+	function submit() {
 		confirmAlert({
-		  title: '',
-		  message: 'Xoá giai đoạn chi phí triển khai',
-		  buttons: [
-			{
-			  label: 'Có',
-			  onClick: () => delete_StageImplementation(_id)
-			},
-			{
-			  label: 'Không',
-			  onClick: () => closeDialog()
-			}
-		  ]
+			title: '',
+			message: 'Xoá giai đoạn chi phí triển khai',
+			buttons: [
+				{
+					label: 'Có',
+					onClick: () => delete_Stage_StageImplementation(StageImplementation)
+				},
+				{
+					label: 'Không',
+					closeOnClick: true
+				}
+			]
 		});
-	  };
-	  const closeDialog = () => {
-		setShowUpdateImplementationCostModal(false)
-	}
+	};
 	return (
 		<>
-			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+			<Button className='post-button' onClick={click_Button_Update.bind(this, StageImplementation)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
 			<Button className='post-button' onClick={submit}>
@@ -115,33 +115,33 @@ export const ActionButtons_Update_Delete_StageImplementation = ( _id ) => {
 }
 
 //Nut cap nhat - xoá 1 chi phi trong chi phi chung
-export const ActionButtons_Update_Delete_GeneralCostDetail = ( _id ) => {
-	const { deleteImplementationCost,
-		delete_GeneralCostDetail, findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
-		ImplementationCostContext
-	)
+export const ActionButtons_Update_Delete_GeneralCostDetail = (_id) => {
+	const {
+		delete_GeneralCostDetail,
+		setGetID,
+		setShowUpdateImplementationCostModal } = useContext(ImplementationCostContext)
 
-	const chooseImplementationCost = ImplementationCostId => {
-		findImplementationCost(ImplementationCostId)
+	const chooseImplementationCost = (_id) => {
+		setGetID(_id)
 		setShowUpdateImplementationCostModal(true)
 	}
-	function submit () {
+	function submit() {
 		confirmAlert({
-		  title: '',
-		  message: 'Xoá chi phí triển khai',
-		  buttons: [
-			{
-			  label: 'Có',
-			  onClick: () => delete_GeneralCostDetail(_id)
-			},
-			{
-			  label: 'Không',
-			  closeOnClick: true
-			}
-		  ]
+			title: '',
+			message: 'Xoá chi phí triển khai',
+			buttons: [
+				{
+					label: 'Có',
+					onClick: () => delete_GeneralCostDetail(_id)
+				},
+				{
+					label: 'Không',
+					closeOnClick: true
+				}
+			]
 		});
-	  };
-	  
+	};
+
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
@@ -154,19 +154,19 @@ export const ActionButtons_Update_Delete_GeneralCostDetail = ( _id ) => {
 	)
 }
 //Nut them chi phi trong chi phi chung
-export const ActionButtons_Add_GeneralCostDetail = ( _id ) => {
+export const ActionButtons_Add_GeneralCostDetail = (_id) => {
 	const {
 		setshowAddCostDetailGeneralModal,
 		setdataOn_Click,
-	 } = useContext(ImplementationCostContext)
+	} = useContext(ImplementationCostContext)
 
 	const Add_GeneralCostDetail = ImplementationCostId => {
 		setshowAddCostDetailGeneralModal(true)//note
 		setdataOn_Click(_id)
 		console.log("ActionButtons_Add_GeneralCostDetail id bat dc", _id)
-			
+
 	}
-return (
+	return (
 		<>
 			<Button className='post-button' onClick={Add_GeneralCostDetail.bind(this, _id)}>
 				<img src={plus_circle_fill} alt='edit' width='34' height='34' />
@@ -176,19 +176,19 @@ return (
 }
 
 //Nut them chi phi trong chi phi trien khai
-export const ActionButtons_Add_StageCostDetail = ( _id ) => {
+export const ActionButtons_Add_StageCostDetail = (_id) => {
 	const {
 		setshowAddCostDetailStageImplementModal,
 		setdataOn_Click,
-	 } = useContext(ImplementationCostContext)
+	} = useContext(ImplementationCostContext)
 
 	const Add_StageCostDetail = ImplementationCostId => {
 		setshowAddCostDetailStageImplementModal(true)//note
 		setdataOn_Click(_id)
 		console.log("ActionButtons_Add_StageCostDetail id bat dc", _id)
-			
+
 	}
-return (
+	return (
 		<>
 			<Button className='post-button' onClick={Add_StageCostDetail.bind(this, _id)}>
 				<img src={plus_circle_fill} alt='edit' width='34' height='34' />
@@ -197,34 +197,38 @@ return (
 	)
 }
 
-
+//!!!
 //Nut cap nhat - xoá 1 chi phi trong chi phi trien khai
-export const ActionButtons_Update_Delete_StageCostDetail = ( _id ) => {
-	const { deleteImplementationCost,
-		delete_StageCostDetail, findImplementationCost, setShowUpdateImplementationCostModal } = useContext(
-		ImplementationCostContext
-	)
+export const ActionButtons_Update_Delete_StageCostDetail = (_id) => {
+	const {
+		delete_StageCostDetail,
+		setdataOn_Click,
+		setShowUpdateImplementationCostModal } = useContext(
+			ImplementationCostContext
+		)
 
-	const chooseImplementationCost = ImplementationCostId => {
-		findImplementationCost(ImplementationCostId)
+	const chooseImplementationCost = (_id) => {
+		setdataOn_Click(_id)
 		setShowUpdateImplementationCostModal(true)
 	}
-	function submit () {
+
+
+	function submit() {
 		confirmAlert({
-		  title: '',
-		  message: 'Xoá chi phí triển khai',
-		  buttons: [
-			{
-			  label: 'Có',
-			  onClick: () => delete_StageCostDetail(_id)
-			},
-			{
-			  label: 'Không',
-			  closeOnClick: true
-			}
-		  ]
+			title: '',
+			message: 'Xoá chi phí triển khai',
+			buttons: [
+				{
+					label: 'Có',
+					onClick: () => delete_StageCostDetail(_id)
+				},
+				{
+					label: 'Không',
+					closeOnClick: true
+				}
+			]
 		});
-	  };
+	};
 	return (
 		<>
 			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>

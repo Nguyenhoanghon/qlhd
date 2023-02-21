@@ -349,14 +349,14 @@ exports.AddCostDetailStage = async (req, res) => {
 // Cap nhat 1 giai doan chi phi chung
 // @access Public
 // Test: Rest ok
-
+// !!!!
 exports.update_GeneralExpense_Content = async (req, res) => {
   console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
-  const { Content,idcontract,idContentCost } = req.body;
+  const { GeneralExpense_Content,idcontract,idContentCost } = req.body;
   console.log("idcontract==========", req.params.idImplementationCost)
   console.log("idContentCost==========", req.params.idContentCost)
-  console.log("Content", req.body.Content)
+  console.log("Content", req.body.GeneralExpense_Content)
   
   try {
     const newImplementationCost = await ImplementationCost.updateOne(
@@ -366,7 +366,7 @@ exports.update_GeneralExpense_Content = async (req, res) => {
       },
       {
         $set: {
-          "GeneralExpense.$.Content":  req.body.Content
+          "GeneralExpense.$.Content":  req.body.GeneralExpense_Content
         }
       }
     );
@@ -389,27 +389,27 @@ exports.update_GeneralExpense_Content = async (req, res) => {
 exports.update_StagesImplementation_Content = async (req, res) => {
   console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
-  const { Content,idcontract,idContentCost } = req.body;
-  console.log("idcontract==========", req.body.idcontract)
-  console.log("idContentCost==========", req.body.idContentCost)
-  console.log("Content", req.body.Content)
+  const { StagesImplementation_Content,idImplementationCost,idContentCost } = req.body;
+  console.log("idcontract==========", req.params.idImplementationCost)
+  console.log("idContentCost==========", req.params.idContentCost)
+  console.log("Content", req.body.StagesImplementation_Content)
   
   try {
     const newImplementationCost = await ImplementationCost.updateOne(
       {
-        contract: req.body.idcontract,
-        "StagesImplementation": {$elemMatch : {_id:  req.body.idContentCost}}
+        _id: req.params.idImplementationCost,
+        "StagesImplementation": {$elemMatch : {_id:  req.params.idContentCost}}
       },
       {
         $set: {
-          "StagesImplementation.$.Content":  req.body.Content
+          "StagesImplementation.$.Content":  req.body.StagesImplementation_Content
         }
       }
     );
 
     res.json({
       success: true,
-      message: "Cập nhật thành công giai đoạn chi phí chung",
+      message: "Cập nhật thành công giai đoạn chi phí  khai",
       StagesImplementation: newImplementationCost,
     });
   } catch (error) {
