@@ -72,8 +72,8 @@ export const MiscExpenseCost_all = () => {
 				<Card className='text-center mx-5 my-5'>
 					<Card.Header as='h2'>Form 6: Chi phí khác</Card.Header>
 					<Card.Body>
-						<Card.Title>CHƯA CÓ DỮ LIỆU CHI PHÍ KHÁC</Card.Title>
-						<Card.Text>
+						<Card.Title>CHƯA CÓ DỮ LIỆU</Card.Title>
+						{/* <Card.Text>
 							Vui lòng bấm thêm! để mới
 						</Card.Text>
 						<Button
@@ -81,7 +81,7 @@ export const MiscExpenseCost_all = () => {
 							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
 						>
 							Thêm!
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>
@@ -117,21 +117,21 @@ export const MiscExpenseCost_all = () => {
 
 								))
 								}
-								<tr>
+								{/* <tr>
 									<td colSpan={2} >Tổng</td>
 									<td>{TotalMiscExpenseCost.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 
-								</tr>
+								</tr> */}
 							</tbody>
 						</Table>
-						<Button
+						{/* <Button
 							variant='primary'
 							onClick={setShowAddMiscExpenseCostModal.bind(this, true)}
 						>
 							Thêm mới
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>

@@ -21,6 +21,36 @@ const ImplementationCostContextProvider = ({ children }) => {
 	})
 	const [showAdd_Stage_GeneralExpense_Modal, setshowAdd_Stage_GeneralExpense_Modal] = useState(false)
 	const [showUpdate_Stage_GeneralExpense_Modal, setShowUpdate_Stage_GeneralExpense_Modal] = useState(false)
+	// Cap nhat  CHI PHI TRONG giai doan chi phi CHUNG
+	const [Data_GeneralExpense_Cost, setData_GeneralExpense_Cost] = useState({
+		NameCost: '',
+		Units: '',
+		UnitPrice: '',
+		Quantity_days: '',
+		Quantity_times: '',
+		IntoMoney: '',
+		Note: '',
+		idcontract: '',
+		ContentCostId: '',
+		idCost: '',
+	})
+	const [showUpdate_GeneralExpense_Cost_Modal, setshowUpdate_GeneralExpense_Cost_Modal] = useState(false)
+	
+	// Cap nhat  CHI PHI TRONG giai doan chi phi TRIEN KHAI
+	const [Data_StagesImplementation_Cost, setData_StagesImplementation_Cost] = useState({
+		NameCost: '',
+		Units: '',
+		UnitPrice: '',
+		Quantity_days: '',
+		Quantity_times: '',
+		IntoMoney: '',
+		Note: '',
+		idcontract: '',
+		ContentCostId: '',
+		idCost: '',
+	})
+	const [showUpdate_StagesImplementation_Cost_Modal, setshowUpdate_StagesImplementation_Cost_Modal] = useState(false)
+	
 	// Cap nhat giai doan chi phi TRIEN KHAI
 	const [Data_StagesImplementation_Content, setData_StagesImplementation_Content] = useState({
 		_id: '',
@@ -201,8 +231,8 @@ const ImplementationCostContextProvider = ({ children }) => {
 		try {
 			console.log("ID idImplementationCost", ImplementationCost)
 
-			console.log((`${apiUrl}api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}/${ImplementationCost.Costs_id}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}/${ImplementationCost.Costs_id}`)//note
+			console.log((`${apiUrl}api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`)//note
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: ImplementationCost })
 		} catch (error) {
@@ -213,8 +243,8 @@ const ImplementationCostContextProvider = ({ children }) => {
 	const delete_StageCostDetail = async (ImplementationCost) => {
 		try {
 			console.log("ID idImplementationCost", ImplementationCost)
-			console.log((`${apiUrl}api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.StagesImplementation_id}/${ImplementationCost.Costs_id}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost._id}/${ImplementationCost.StagesImplementation_id}/${ImplementationCost.Costs_id}`)//note
+			console.log((`${apiUrl}api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`)//note
 			if (response.data.success)
 				dispatch({ type: DELETE, payload: ImplementationCost })
 		} catch (error) {
@@ -269,7 +299,40 @@ const ImplementationCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
-
+	const update_GeneralExpense_Cost = async (dataUpdate, Data_GeneralExpense_Cost) => {
+		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/general-expense/cost/put/${Data_GeneralExpense_Cost.idcontract}/${Data_GeneralExpense_Cost.idContentCost}/${Data_GeneralExpense_Cost.idCost}`)
+		try {
+			const response = await axios.put(
+				`${apiUrl}/api/forms/implementation-cost/general-expense/cost/put/${Data_GeneralExpense_Cost.idcontract}/${Data_GeneralExpense_Cost.idContentCost}/${Data_GeneralExpense_Cost.idCost}`,
+				dataUpdate
+			)
+			if (response.data.success) {
+				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
+				return response.data
+			}
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
+	const update_StagesImplementation_Cost = async (dataUpdate, Data_StagesImplementation_Cost) => {
+		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/stages-implementation/cost/put/${Data_StagesImplementation_Cost.idcontract}/${Data_StagesImplementation_Cost.idContentCost}/${Data_StagesImplementation_Cost.idCost}`)
+		try {
+			const response = await axios.put(
+				`${apiUrl}/api/forms/implementation-cost/stages-implementation/cost/put/${Data_StagesImplementation_Cost.idcontract}/${Data_StagesImplementation_Cost.idContentCost}/${Data_StagesImplementation_Cost.idCost}`,
+				dataUpdate
+			)
+			if (response.data.success) {
+				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
+				return response.data
+			}
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
 	// ImplementationCost context data
 	const ImplementationCostContextData = {
 		ImplementationCostState,
@@ -287,12 +350,18 @@ const ImplementationCostContextProvider = ({ children }) => {
 		showUpdate_Stage_GeneralExpense_Modal, setShowUpdate_Stage_GeneralExpense_Modal,
 		delete_Stage_GeneralExpense,
 		// !!!! CHI PHI TRIEN KHAI
-		Data_StagesImplementation_Content,
-		setData_StagesImplementation_Content,
+		Data_StagesImplementation_Content, setData_StagesImplementation_Content,
 		update_StagesImplementation_Content,
-		showUpdate_Stage_StagesImplementation_Modal,
-		setshowUpdate_Stage_StagesImplementation_Modal,
+		showUpdate_Stage_StagesImplementation_Modal, setshowUpdate_Stage_StagesImplementation_Modal,
 		delete_Stage_StageImplementation, //xoa 1 giai doan chi phi trien khai
+		// !!! 
+		update_GeneralExpense_Cost,
+		Data_GeneralExpense_Cost, setData_GeneralExpense_Cost,
+		showUpdate_GeneralExpense_Cost_Modal, setshowUpdate_GeneralExpense_Cost_Modal,
+		// !!!
+		update_StagesImplementation_Cost,
+		Data_StagesImplementation_Cost, setData_StagesImplementation_Cost,
+		showUpdate_StagesImplementation_Cost_Modal, setshowUpdate_StagesImplementation_Cost_Modal,
 
 		
 		
@@ -304,6 +373,7 @@ const ImplementationCostContextProvider = ({ children }) => {
 		addCostDetailGeneral,
 		showAddCostDetailGeneralModal,
 		setshowAddCostDetailGeneralModal,
+
 
 		showToast,
 		setShowToast,

@@ -1,19 +1,24 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const AuxiliaryCost = mongoose.model(
-  "AuxiliaryCost",
-  new mongoose.Schema({
-    Renevue: Number,
-    Plan: Boolean, // Lua chon gia tri, M 
-    Content: String, 
-    Cost: Number, // = if(Cost<1; Cost*CapitalCost ; Cost)
-    Note: String,
-    contract:
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Contract"
-      }
-  })
-);
+const ContentCost = new Schema({
+  Content: String,
+  Cost: Number,
+  Note: String
+});
 
-module.exports = AuxiliaryCost;
+const AuxiliaryCost = new Schema({
+  Renevue: Number,
+  Plan: Number, // Lua chon gia tri, M 
+  ListCosts: [ContentCost],
+  contract: {
+    type: Schema.Types.ObjectId,
+    ref: "Contract",
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User", // users replace user
+  },
+});
+
+module.exports = mongoose.model("AuxiliaryCost", AuxiliaryCost);

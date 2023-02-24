@@ -78,13 +78,13 @@ ImplementationCostController.update_StagesImplementation_Content);
 // CAP NHAT 1 chi phi trong giai doan chi phi CHUNG voi idcontract/idContentCost/idCost
 // URL access: PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/:id
 // access public
-app.put("/api/forms/implementation-cost/general-expense/cost/put/",//:idcontract/:idContentCost/:idCost",
+app.put("/api/forms/implementation-cost/general-expense/cost/put/:idcontract/:idContentCost/:idCost",
 ImplementationCostController.update_GeneralExpense_Cost);
 
 // CAP NHAT 1 chi phi trong giai doan chi phi CHUNG voi idcontract/idContentCost/idCost
 // URL access: PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/:id
 // access public
-app.put("/api/forms/implementation-cost/stages-implementation/cost/put/",//:idcontract/:idContentCost/:idCost",
+app.put("/api/forms/implementation-cost/stages-implementation/cost/put/:idcontract/:idContentCost/:idCost",
 ImplementationCostController.update_StagesImplementation_Cost);
 
 

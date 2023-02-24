@@ -64,13 +64,13 @@ export const MandayCost_all = () => {
 
 					<Card.Header as='h5'>Form 5: Manday kỹ sư</Card.Header>
 					<Card.Body>
-						<Card.Title>Chưa có dữ liệu vui lòng click Thêm!</Card.Title>
-						<Button
+						<Card.Title>Chưa có dữ liệu !</Card.Title>
+						{/* <Button
 							variant='primary'
 							onClick={setShowAddMandayCostModal.bind(this, true)}
 						>
 							Thêm!
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>
@@ -112,21 +112,21 @@ export const MandayCost_all = () => {
 
 								))
 								}
-								<tr>
+								{/* <tr>
 									<td colSpan={5} >Tổng</td>
 									<td>{tong.toLocaleString()}</td>
 									<td></td>
 									<td></td>
 									<td></td>
-								</tr>
+								</tr> */}
 							</tbody>
 						</Table>
-						<Button
+						{/* <Button
 							variant='primary'
 							onClick={setShowAddMandayCostModal.bind(this, true)}
 						>
 							Thêm mới
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>

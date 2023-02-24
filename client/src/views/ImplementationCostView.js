@@ -33,6 +33,8 @@ import AddCostDetailGeneralModal from '../components/implementationCost/AddCostD
 import AddCostDetailStageImplementModal from '../components/implementationCost/AddCostDetailStageImplementModal'
 import UpdateStage_GeneralExpense_Modal from '../components/implementationCost/UpdateStage_GeneralExpense_Modal'
 import UpdateStage_Implementation_Content_Modal from '../components/implementationCost/UpdateStage_Implementation_Modal'
+import UpdateCost_GeneralExpense_Modal from '../components/implementationCost/UpdateCost_GeneralExpense_Modal'
+import UpdateCost_Implementation_Modal from '../components/implementationCost/UpdateCost_Implementation_Modal'
 
 //View all
 export const ImplementationCost = () => {
@@ -436,7 +438,19 @@ export const ImplementationCost_byidContract = () => {
 								<td>{Costs.Quantity_times}</td>
 								<td>{Costs.IntoMoney.toLocaleString()}</td>
 								<td>{Costs.Note}  </td>
-								<td><ActionButtons_Update_Delete_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Costs_id={Costs._id} />  </td>
+								<td><ActionButtons_Update_Delete_GeneralCostDetail 
+								idcontract={ImplementationCost._id} 
+								idContentCost={ImplementationCost.GeneralExpense[stage]._id} 
+								idCost={Costs._id} 
+								NameCost={Costs.NameCost}
+								Units={Costs.Units}
+								UnitPrice={Costs.UnitPrice}
+								Quantity_days={Costs.Quantity_days}
+								Quantity_times={Costs.Quantity_times}
+								IntoMoney={Costs.IntoMoney}
+								Note={Costs.Note}
+								/>  
+								</td>
 
 							</tr>
 						))}
@@ -488,8 +502,18 @@ export const ImplementationCost_byidContract = () => {
 							<td>{Costs.Quantity_times}</td>
 							<td>{Costs.IntoMoney.toLocaleString()}</td>
 							<td>{Costs.Note}  </td>
-							<td><ActionButtons_Update_Delete_StageCostDetail _id={ImplementationCost._id} StagesImplementation_id={ImplementationCost.StagesImplementation[stage]._id} Costs_id={Costs._id} />
-								{/* Nut sua xoa 1 chi phi */}
+							<td><ActionButtons_Update_Delete_StageCostDetail
+							idcontract={ImplementationCost._id} 
+							idContentCost={ImplementationCost.StagesImplementation[stage]._id} 
+							idCost={Costs._id} 
+							NameCost={Costs.NameCost}
+							Units={Costs.Units}
+							UnitPrice={Costs.UnitPrice}
+							Quantity_days={Costs.Quantity_days}
+							Quantity_times={Costs.Quantity_times}
+							IntoMoney={Costs.IntoMoney}
+							Note={Costs.Note}
+							/>
 							</td>
 						</tr>
 					))}
@@ -614,6 +638,8 @@ export const ImplementationCost_byidContract = () => {
 
 			<UpdateStage_GeneralExpense_Modal/>
 			<UpdateStage_Implementation_Content_Modal/> 
+			<UpdateCost_GeneralExpense_Modal/>
+			<UpdateCost_Implementation_Modal/>
 			{/* {ImplementationCost !== null && <UpdateStage_GeneralExpense_Modal />} */}
 			
 			

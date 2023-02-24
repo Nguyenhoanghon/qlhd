@@ -74,12 +74,12 @@ export const ProductCost_all = () => {
 					<Card.Header as='h1'>CHI TIẾT HÀNG HÓA</Card.Header>
 					<Card.Body>
 						<Card.Title>Chưa có dữ liệu</Card.Title>
-						<Button
+						{/* <Button
 							variant='primary'
 							onClick={setShowAddProductCostModal.bind(this, true)}
 						>
 							Thêm!
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>
@@ -145,7 +145,8 @@ export const ProductCost_all = () => {
 
 								))
 								}
-								<tr>
+								{/*  */}
+								{/* <tr>
 									<td colSpan={5} >Tổng</td>
 									<td>{TotalInputIntoMoney.toLocaleString()}</td>
 									<td></td>
@@ -155,15 +156,15 @@ export const ProductCost_all = () => {
 									<td></td>
 									<td></td>
 									<td></td>
-								</tr>
+								</tr> */}
 							</tbody>
 						</Table>
-						<Button
+						{/* <Button
 							variant='primary'
 							onClick={setShowAddProductCostModal.bind(this, true)}
 						>
 							Thêm mới
-						</Button>
+						</Button> */}
 					</Card.Body>
 				</Card>
 			</>

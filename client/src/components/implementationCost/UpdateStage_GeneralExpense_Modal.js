@@ -9,7 +9,6 @@ const UpdateStageGeneralModal = () => {
 	// Contexts
 	const {
 		Data_GeneralExpense_Content,
-		setData_GeneralExpense_Content,
 		update_GeneralExpense_Content,
 		showUpdate_Stage_GeneralExpense_Modal,
 		setShowUpdate_Stage_GeneralExpense_Modal,

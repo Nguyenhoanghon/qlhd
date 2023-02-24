@@ -40,7 +40,7 @@ export const Buttons_Update_Delete_GeneralExpense_Content = (GeneralExpense) => 
 		setShowUpdate_Stage_GeneralExpense_Modal,
 		delete_Stage_GeneralExpense
 	} = useContext(ImplementationCostContext)
-	//setData_GeneralExpense(GeneralExpense)
+	
 	const click_Button_Update = (GeneralExpense) => {
 		setData_GeneralExpense_Content(GeneralExpense)
 		setShowUpdate_Stage_GeneralExpense_Modal(true)
@@ -118,13 +118,15 @@ export const Buttons_Update_Delete_StageImplementation_Content = (StageImplement
 export const ActionButtons_Update_Delete_GeneralCostDetail = (_id) => {
 	const {
 		delete_GeneralCostDetail,
-		setGetID,
-		setShowUpdateImplementationCostModal } = useContext(ImplementationCostContext)
+		setData_GeneralExpense_Cost,
+		setshowUpdate_GeneralExpense_Cost_Modal
+	} = useContext(ImplementationCostContext)
 
-	const chooseImplementationCost = (_id) => {
-		setGetID(_id)
-		setShowUpdateImplementationCostModal(true)
+	const click_Button_Update = (_id) => {
+		setData_GeneralExpense_Cost(_id)
+		setshowUpdate_GeneralExpense_Cost_Modal(_id)
 	}
+
 	function submit() {
 		confirmAlert({
 			title: '',
@@ -144,7 +146,7 @@ export const ActionButtons_Update_Delete_GeneralCostDetail = (_id) => {
 
 	return (
 		<>
-			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+			<Button className='post-button' onClick={click_Button_Update.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
 			<Button className='post-button' onClick={submit}>
@@ -202,14 +204,13 @@ export const ActionButtons_Add_StageCostDetail = (_id) => {
 export const ActionButtons_Update_Delete_StageCostDetail = (_id) => {
 	const {
 		delete_StageCostDetail,
-		setdataOn_Click,
-		setShowUpdateImplementationCostModal } = useContext(
-			ImplementationCostContext
-		)
+		setData_StagesImplementation_Cost,
+		setshowUpdate_StagesImplementation_Cost_Modal
+	} = useContext(ImplementationCostContext)
 
-	const chooseImplementationCost = (_id) => {
-		setdataOn_Click(_id)
-		setShowUpdateImplementationCostModal(true)
+	const click_Button_Update = (_id) => {
+		setData_StagesImplementation_Cost(_id)
+		setshowUpdate_StagesImplementation_Cost_Modal(true)
 	}
 
 
@@ -231,7 +232,7 @@ export const ActionButtons_Update_Delete_StageCostDetail = (_id) => {
 	};
 	return (
 		<>
-			<Button className='post-button' onClick={chooseImplementationCost.bind(this, _id)}>
+			<Button className='post-button' onClick={click_Button_Update.bind(this, _id)}>
 				<img src={editIcon} alt='edit' width='24' height='24' />
 			</Button>
 			<Button className='post-button' onClick={submit}>

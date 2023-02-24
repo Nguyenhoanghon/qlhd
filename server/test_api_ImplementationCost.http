@@ -22,7 +22,7 @@ GET http://localhost:5000/api/forms/implementation-cost
 ### Get ImplementationCost by idcontract
 ### API access: /api/forms/implementation-cost/:idcontract
 ### Test: ok
-GET http://localhost:5000/api/forms/implementation-cost/63e40fc862b2ebee52433da7
+GET http://localhost:5000/api/forms/implementation-cost/63c08c08b1a40f0ce190d6e1
 
 ### KHOI TAO 1 CHI TRIEN KHAI
 // API access: /api/forms/implementation-cost/post:idcontract

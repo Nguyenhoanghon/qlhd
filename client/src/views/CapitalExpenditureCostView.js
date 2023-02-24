@@ -45,7 +45,6 @@ export const CapitalExpenditureCost_all = () => {
 
   // Start: Get all CapitalExpenditureCosts
   useEffect(() => getCapitalExpenditureCosts(), []);
-
   let body = null;
   let stt = 1;
   //const tongsotienkhachhangtra = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.sotienKHtra)); //note
@@ -63,12 +62,12 @@ export const CapitalExpenditureCost_all = () => {
           <Card.Header as="h1">CHI PHÍ VỐN</Card.Header>
           <Card.Body>
             <Card.Title>Chưa có dữ liệu</Card.Title>
-            <Button
+            {/* <Button
               variant="primary"
               onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
             >
               Thêm!
-            </Button>
+            </Button> */}
           </Card.Body>
         </Card>
       </>
@@ -77,22 +76,10 @@ export const CapitalExpenditureCost_all = () => {
     body = (
       <>
         <Card className="text-center mx-5 my-5">
-          <Card.Header as="h1">CHI PHÍ VỐN</Card.Header>
+          <Card.Header as="h1">DANH SÁCH CHI PHÍ VỐN</Card.Header>
           <Card.Body>
             <Table responsive="sm" striped bordered hover size="sm">
               <thead>
-                {/* <tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giavon.toLocaleString()}</th>
-								 </tr>
-								<tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giaban.toLocaleString()}</th>
-								 </tr>
-								 <tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giatridaura.toLocaleString()}</th>
-								 </tr> */}
                 <tr>
                   <th>STT</th>
                   <th> Giá vốn </th>
@@ -127,7 +114,7 @@ export const CapitalExpenditureCost_all = () => {
                     </td>
                   </tr>
                 ))}
-                <tr>
+                {/* <tr>
                   <td colSpan={3}>Tổng</td>
                   <td>{ }</td>
                   <td>{ }</td>
@@ -137,15 +124,15 @@ export const CapitalExpenditureCost_all = () => {
                   <td></td>
                   <td></td>
                   <td></td>
-                </tr>
+                </tr> */}
               </tbody>
             </Table>
-            <Button
+            {/* <Button
               variant="primary"
               onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
             >
               Thêm mới
-            </Button>
+            </Button> */}
           </Card.Body>
         </Card>
       </>
@@ -210,9 +197,6 @@ export const CapitalExpenditureCost_byidContract = () => {
   useEffect(() => getCapitalExpenditureCosts_byidContract(params.id), []);
 
   let body = null;
-  let stt = 1;
-  //const tongsotienkhachhangtra = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.sotienKHtra)); //note
-  //const tongsotienthanhtoanNTP = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.sotienTTNTP)); //note
   if (CapitalExpenditureCostsLoading) {
     body = (
       <div className="spinner-container">
@@ -243,64 +227,61 @@ export const CapitalExpenditureCost_byidContract = () => {
           <Card.Header as="h1">CHI PHÍ VỐN</Card.Header>
           <Card.Body>
             <Table responsive="sm" striped bordered hover size="sm">
-              <thead>
-                {/* <tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giavon.toLocaleString()}</th>
-								 </tr>
-								<tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giaban.toLocaleString()}</th>
-								 </tr>
-								 <tr className='text-left'>
-									<th>Giá vốn:</th>
-									<th colSpan={10}>{CapitalExpenditureCost.giatridaura.toLocaleString()}</th>
-								 </tr> */}
-                <tr>
-                  <th>STT</th>
-                  <th> Giá vốn </th>
-                  <th>Doanh thu</th>
-                  <th>Chi phí vốn</th>
-                  <th>Số ngày hàng tồn kho</th>
-                  <th>Số ngày triển khai</th>
-                  <th>Số ngày công nợ nhà cung cấp</th>
-                  <th>Số ngày thu nợ</th>
-                  <th>Khách hàng trả trước (đặt cọc)</th>
-                  <th>Đặt cọc cho NTP</th>
-                  <th>Ghi chú</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                {CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
-                  <tr key={CapitalExpenditureCost._id}>
-                    <td>{stt++} </td>
-                    <td>{CapitalExpenditureCost.CapitalCost.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.Revenue.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.CapitalExpense.toLocaleString(2)}</td>
-                    <td>{CapitalExpenditureCost.InventoryDays.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.ImplementationDays.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.BedtDays}</td>
-                    <td>{CapitalExpenditureCost.DebtCollectionDays.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.Deposits.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.DepositsNTP.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.ghichu} </td>
-                    <td>
-                      <ActionButtons_CapitalExpenditureCost _id={CapitalExpenditureCost._id} />
-                    </td>
+              {CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
+                <>
+                  <tr className='text-left' key={CapitalExpenditureCost._id}>
+                    <th>Giá vốn:</th>
+                    <th>{CapitalExpenditureCost.CapitalCost.toLocaleString()}</th>
                   </tr>
-                ))}
-                
-                <tr>
-                  <td colSpan={12}><
-                    Button
-                    variant="primary"
-                    onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
-                  >
-                    Thêm mới
-                  </Button></td>
-                </tr>
-              </tbody>
+                  <tr className='text-left'>
+                    <th>Doanh thu</th>
+                    <th>{CapitalExpenditureCost.Revenue.toLocaleString()}</th>
+                  </tr>
+                  <tr className='text-left'>
+                    <th>Chi phí vốn</th>
+                    <th>{CapitalExpenditureCost.CapitalExpense.toLocaleString(2)}</th>
+                  </tr>
+                  <tr className='text-left'>
+                    <td>Số ngày hàng tồn kho</td>
+                    <td>{CapitalExpenditureCost.InventoryDays.toLocaleString()} </td>
+                  </tr>
+                  <tr className='text-left'>
+                    <td>Số ngày triển khai</td>
+                    <td>{CapitalExpenditureCost.ImplementationDays.toLocaleString()}</td>
+                  </tr>
+                  <tr className='text-left'>
+                    <td>Số ngày công nợ nhà cung cấp</td>
+                    <td>{CapitalExpenditureCost.BedtDays}</td>
+                  </tr>
+                  <tr className='text-left'>
+                    <td>Số ngày thu nợ</td>
+                    <td>{CapitalExpenditureCost.DebtCollectionDays.toLocaleString()}</td>
+                  </tr><tr className='text-left'>
+                    <td>Khách hàng trả trước (đặt cọc)</td>
+                    <td>{CapitalExpenditureCost.Deposits.toLocaleString()}</td>
+                  </tr><tr className='text-left'>
+                    <td>Đặt cọc cho NTP</td>
+                    <td>{CapitalExpenditureCost.DepositsNTP.toLocaleString()}</td>
+                  </tr><tr className='text-left'>
+                    <td>Ghi chú</td>
+                    <td>{CapitalExpenditureCost.ghichu} </td>
+                  </tr>
+                  <tr className='text-left'>
+                    <td>Thao tác</td>
+                    <td><ActionButtons_CapitalExpenditureCost _id={CapitalExpenditureCost._id} /></td>
+                  </tr>
+                </>
+              ))}
+
+              <tr>
+                <td colSpan={2}><
+                  Button
+                  variant="primary"
+                  onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
+                >
+                  Thêm mới
+                </Button></td>
+              </tr>
             </Table>
 
             <a href={`/summary/${params.id}`}>

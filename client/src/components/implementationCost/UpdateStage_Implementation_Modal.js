@@ -9,7 +9,6 @@ const UpdateStage_Implementation_Content_Modal = () => {
 	// Contexts
 	const {
 		Data_StagesImplementation_Content,
-		setData_StagesImplementation_Content,
 		update_StagesImplementation_Content,
 		showUpdate_Stage_StagesImplementation_Modal,
 		setshowUpdate_Stage_StagesImplementation_Modal,

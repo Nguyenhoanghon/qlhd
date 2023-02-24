@@ -16,9 +16,9 @@ import {MandayCost_all,MandayCost_idContract} from './views/MandayCostView'
 import {GuaranteeLetterCost_all, GuaranteeLetterCost_idContract} from './views/GuaranteeLetterCostView'
 import {MiscExpenseCost_all,MiscExpenseCost_byidContract} from './views/MiscExpenseCostView'
 import {CapitalExpenditureCost_all,CapitalExpenditureCost_byidContract} from './views/CapitalExpenditureCostView'
-import {AuxiliaryCost_all,AuxiliaryCost_byidContract,AuxiliaryCost_Plan} from './views/AuxiliaryCostView'
 import {ImplementationCost,ImplementationCost_byidContract} from './views/ImplementationCostView'
 
+import {AuxiliaryCost_all,AuxiliaryCost_byidContract,AuxiliaryCost_Plan} from './views/AuxiliaryCostView'
 //=====contexts
 import AuthContextProvider from './contexts/AuthContext'
 import ContractContextProvider from './contexts/ContractContext'
@@ -89,8 +89,8 @@ function App() {
 						<ProductCostContextProvider>
 						<AuxiliaryCostContextProvider>
 							<ProtectedRoute exact path='/AuxiliaryCost' component={AuxiliaryCost_all} />
-							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id/plan' component={AuxiliaryCost_Plan} />
-							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id' component={AuxiliaryCost_byidContract} />
+							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id' component={AuxiliaryCost_Plan} />
+							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id/plan' component={AuxiliaryCost_byidContract} />
 						</AuxiliaryCostContextProvider>
 						</ProductCostContextProvider>
 

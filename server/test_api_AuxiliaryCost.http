@@ -7,21 +7,67 @@ Content-Type: application/json
   "username": "admin",
   "password": "123"
 }
+### Get all Contract 
+### API access: /api/forms/contract
+### Test: ok
+//GET http://103.88.121.45:5000/api/forms/contract
+GET http://localhost:5000/api/forms/contract
 
 ### Create auxiliary-cost
 ### access Public
-### Not ok
-POST http://localhost:5000/api/forms/auxiliary-cost/post
+### Test : ok
+POST http://localhost:5000/api/forms/auxiliary-cost/post/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-  "Plan": 2,
-  "Content": "Chi phí A",
-  "Cost": 1000000,
-  "Note": "HD01",
-  "ContractID": "HDO2"
+  "Plan": 2
 }
+
+### Update Revenue in AuxiliaryCost by idcontract
+### access Public
+### Test : ok
+PUT http://localhost:5000/api/forms/auxiliary-cost/put/63c08c08b1a40f0ce190d6e1
+
+
+### Update Plan in AuxiliaryCost by idcontract
+### access Public
+### Test : ok
+PUT http://localhost:5000/api/forms/auxiliary-cost/put/plan/63c08c08b1a40f0ce190d6e1
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "Plan": 1
+}
+
+
+### Add Cost to auxiliary-Listcost by idcontract
+### access Public
+### Test : ok
+POST http://localhost:5000/api/forms/auxiliary-cost/post/cost/63e40fc862b2ebee52433da7
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "Content": "Chi phi 3",
+  "Cost": 0.01,
+  "Note": "IDHD 63e40fc862b2ebee52433da7"
+}
+
+### Update Cost in ListCost by idcontract/idcost
+### access Public
+### Recheck : ok
+PUT http://localhost:5000/api/forms/auxiliary-cost/put/cost/63e40fc862b2ebee52433da7/63f8319abe5624e5521b1a76
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
+
+{
+  "Content": "Chi phi A updated",
+  "Cost": 0.05,
+  "Note": "HD Update"
+}
+
 
 
 ### Get all auxiliary-cost
@@ -30,28 +76,36 @@ Content-Type: application/json
 GET http://localhost:5000/api/forms/auxiliary-cost
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-### Get auxiliary-cost by id
+### Get auxiliary by id_auxiliary
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/auxiliary-cost/63c8843200da1d827b48f183
+GET http://localhost:5000/api/forms/auxiliary-cost/63f81da142f7f8f6a19f3436
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Get auxiliary-cost by idContract
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c1d855ce5c8ecc6ce46069
+GET http://localhost:5000/api/forms/auxiliary-cost/contract/63e40fc862b2ebee52433da7
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-### Get auxiliary-cost by idContract and plan
+
+### Delete auxiliary-cost by id_auxiliary
 ### access public
-###ok
-GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c1d855ce5c8ecc6ce46069/1
+###Retest: ok
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/63f8318d42f7f8f6a1aa5b9b
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-
-
-### Get all Contract tạo bởi user đăng nhập
+### Delete auxiliary-cost by id_contract
 ### access public
-###ok
-DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/63a679af1250764e2d878fb1
+###Retest: ok
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63e40fc862b2ebee52433da7
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+### Update Cost in ListCost by idcontract/idcost
+### access Public
+### Recheck : coding
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63e40fc862b2ebee52433da7/63f831a0be5624e5521b1a7a
+
+//==== old ======================================== 
+

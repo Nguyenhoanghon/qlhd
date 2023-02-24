@@ -14,7 +14,6 @@ const AddCostDetailStageImplementModal = (_id) => {
 		showAddCostDetailStageImplementModal,
 		setshowAddCostDetailStageImplementModal,
 		dataOn_Click,
-		setdataOn_Click,
 		addCostDetailStageImplement,
 		setShowToast
 
@@ -136,7 +135,6 @@ const AddCostDetailStageImplementModal = (_id) => {
 							type='text'
 							placeholder=''
 							name='Units'
-							required
 							aria-describedby='noidung-help'
 							value={Units}
 							onChange={onChangeNewImplementationCostForm}

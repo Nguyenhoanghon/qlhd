@@ -54,7 +54,6 @@ const CapitalExpenditureCostContextProvider = ({ children }) => {
 	const getCapitalExpenditureCosts_byidContract = async (idContract) => {
 		try {
 			const response = await axios.get(`${apiUrl}/api/forms/capital-expenditure-cost/contract/${idContract}`)
-			console.log("test",response)
 			if (response.data.success) {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.CapitalExpenditureCost  })
 				

@@ -433,25 +433,32 @@ exports.update_GeneralExpense_Cost = async (req, res) => {
     Quantity_times,
     IntoMoney,
     Note,
-    ImplementationCost_Id,
-    ContentCostId,
-    idCost
+    /* idcontract,
+    idContentCost,
+    idCost */
   } = req.body;
 
-  console.log("idcontract==========", req.body.idcontract)
-  console.log("idContentCost==========", req.body.idContentCost)
-  console.log("idCost", req.body.idCost)
+  console.log("idcontract==========", req.params.idcontract)
+  console.log("idContentCost==========", req.params.idContentCost)
+  console.log("idCost", req.params.idCost)
   try {
+    if (req.body.Quantity_times == 0)
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_days
+    else if (req.body.Quantity_days == 0)
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_times
+    else
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
+
     const newImplementationCost = await ImplementationCost.updateOne(
       {
-        contract: req.body.idcontract,
-        "GeneralExpense": {$elemMatch : {_id:  req.body.idContentCost }},
-        "GeneralExpense.Costs": {$elemMatch : {_id:  req.body.idCost }}
+        _id: req.params.idcontract,
+        "GeneralExpense": {$elemMatch : {_id:  req.params.idContentCost }},
+        "GeneralExpense.Costs": {$elemMatch : {_id:  req.params.idCost }}
       },
       { // !!!!
         $set: {
           "GeneralExpense.$.Costs": {
-            _id: req.body.idCost,
+            _id: req.params.idCost,
             NameCost: req.body.NameCost,
             Units: req.body.Units,
             UnitPrice: req.body.UnitPrice,
@@ -499,21 +506,28 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
     idCost
   } = req.body;
 
-  console.log("idcontract==========", req.body.idcontract)
-  console.log("idContentCost==========", req.body.idContentCost)
-  console.log("idCost", req.body.idCost)
+  console.log("idcontract==========", req.params.idcontract)
+  console.log("idContentCost==========", req.params.idContentCost)
+  console.log("idCost", req.params.idCost)
   
   try {
+    if (req.body.Quantity_times == 0)
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_days
+    else if (req.body.Quantity_days == 0)
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_times
+    else
+      IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
+      
     const newImplementationCost = await ImplementationCost.updateOne(
       {
-        contract: req.body.idcontract,
-        "StagesImplementation": {$elemMatch : {_id:  req.body.idContentCost }},
-        "StagesImplementation.Costs": {$elemMatch : {_id:  req.body.idCost }}
+        _id: req.params.idcontract,
+        "StagesImplementation": {$elemMatch : {_id:  req.params.idContentCost }},
+        "StagesImplementation.Costs": {$elemMatch : {_id:  req.params.idCost }}
       },
       { // !!!!
         $set: {
           "StagesImplementation.$.Costs": {
-            _id: req.body.idCost,
+            _id: req.params.idCost,
             NameCost: req.body.NameCost,
             Units: req.body.Units,
             UnitPrice: req.body.UnitPrice,
