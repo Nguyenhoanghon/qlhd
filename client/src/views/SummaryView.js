@@ -279,38 +279,43 @@ export const Summary_id = () => {
 
 	//=== Get data AuxiliaryCost
 	const {
-		AuxiliaryCostState: { AuxiliaryCost, AuxiliaryCosts, AuxiliaryCostsPlan1, AuxiliaryCostsPlan2, AuxiliaryCostsLoading },
-		getAuxiliaryCosts_byidContract_Plan1,
-		getAuxiliaryCosts_byidContract_Plan2
+		AuxiliaryCostState: { AuxiliaryCosts, AuxiliaryCostsLoading },
+		getAuxiliaryCosts_byidContract
 	} = useContext(AuxiliaryCostContext)
-	//if Cost < 1 = Cost* tong doanh thu
-	function changeCost(value, heso) {
-		let kq = value;
-		if (value < 1)
-			kq = value * heso;
-		return kq
-	}
-	//Ham tinh tong phuong an
-	function sumTotal(mang, heso) {
-		let sum = 0;
-		mang.map(function (value) {
-			sum += changeCost(value, heso);
-		});
-		return sum;
-	}
-	//get data AuxiliaryCostsPlan1 with idContract and Plan 1
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan1(params.id, false), [])
-	// Total Plan1
-	const TotalPlan1 = sumTotal(AuxiliaryCostsPlan1.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
-	const TotalCPXLPlan1 = TotalPlan1 / 0.8 * 0.2
-	const TotalCPgrossPlan1 = TotalPlan1 + TotalCPXLPlan1
+	// Start: Get AuxiliaryCosts by id Contract
+	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[])
+	console.log("AuxiliaryCosts======>>>>>", AuxiliaryCosts)
+	
+	function SumListCost(Auxiliary) {
+		let kq = 0;
+		Auxiliary.map(AuxiliaryCost =>
+			AuxiliaryCost.ListCosts.map(ListCost => (
+				kq += ListCost.Cost
+			)))
 
-	//get data AuxiliaryCosts with idContract and Plan 2
-	useEffect(() => getAuxiliaryCosts_byidContract_Plan2(params.id, true), [])
-	// Total Plan2
-	const TotalPlan2 = sumTotal(AuxiliaryCostsPlan2.map((AuxiliaryCost) => AuxiliaryCost.Cost), TotalOutputIntoMoney)
-	const TotalCPXLPlan2 = TotalPlan1 / 0.75 * 0.25
-	const TotalCPgrossPlan2 = TotalPlan2 + TotalCPXLPlan2
+		return kq;
+	}
+	function FindPlan(Auxiliary) {
+		let kq = 0;
+		Auxiliary.map(AuxiliaryCost => kq=AuxiliaryCost.Plan
+			)
+
+		return kq;
+	}
+	const TotalCost = SumListCost(AuxiliaryCosts) * TotalOutputIntoMoney;
+	let CPXL = 0;
+	let CPgross = 0;
+	const phuongan = FindPlan(AuxiliaryCosts);
+	if (phuongan === 1) {
+		CPXL = TotalCost / 0.8 * 0.2;
+		CPgross = CPXL + TotalCost;
+		console.log("Phuong an 1========", CPXL)
+	}
+	else {
+		CPXL = TotalCost / 0.7 * 0.25;
+		CPgross = CPXL + TotalCost;
+	}
+
 
 	//=== End Get data AuxiliaryCost
 
@@ -373,7 +378,7 @@ export const Summary_id = () => {
 	const ExtraCost = (TotalInsurance + TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost)
 
 	// 3.
-	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - TotalCPgrossPlan1)
+	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - CPgross)
 
 	//===
 	let body = null
@@ -584,7 +589,7 @@ export const Summary_id = () => {
 						<tr>
 							<td>2</td>
 							<td colSpan={6} >Chi phí mua vật tư phụ (dự kiến) </td>
-							<td>{(TotalCPgrossPlan1 / 10).toLocaleString()}</td>
+							<td>{(CPgross / 10).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>

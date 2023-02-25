@@ -113,7 +113,7 @@ exports.create_AuxiliaryCost = async (req, res) => {
     //test
     console.log("Data newAuxiliaryCost.Renevue===:", newAuxiliaryCost)
 
-    if (!req.body.Plan)
+    if (req.body.Plan===null)
         return res.status(400).json({ success: false, message: "Missing Renevue Or Plan" });
     try {
         const response = await AuxiliaryCost.findOneAndUpdate(
@@ -187,7 +187,7 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
     if (!req.body.Content || !req.body.Cost)
         return res.status(400).json({ success: false, message: "Missing Content  dsdsd  or Cost" });
     try {
-        const reponse = await AuxiliaryCost.findOneAndUpdate(
+        const newAuxiliaryCost = await AuxiliaryCost.findOneAndUpdate(
             {
                 contract: req.params.idcontract,
             },
@@ -211,7 +211,7 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
         res.json({
             success: true,
             message: "Thêm thành công !!!",
-            AuxiliaryCost: reponse,
+            AuxiliaryCost: newAuxiliaryCost,
         });
     } catch (error) {
         console.log(error);
@@ -429,7 +429,7 @@ exports.update_AuxiliaryCost_Cost = async (req, res) => {
         res.json({
             success: true,
             message: "Cập nhật thành công !",
-            AuxiliaryCost: response,
+            updateAuxiliaryCost: response,
         });
 
     } catch (error) {

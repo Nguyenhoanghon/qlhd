@@ -7,14 +7,20 @@ import { useContext } from 'react'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
-const ActionButtons_AuxiliaryCost = ({ _id }) => {
-	const { deleteAuxiliaryCost, findAuxiliaryCost, setShowUpdateAuxiliaryCostModal } = useContext(
+const ActionButtons_AuxiliaryCost = (_id) => {
+	const {
+		
+		deleteAuxiliaryCost,
+		updateAuxiliaryCost,
+		setData_AuxiliaryCost_Cost,
+		setshowupdate_AuxiliaryCost_Cost_Modal,
+	 } = useContext(
 		AuxiliaryCostContext
 	) 
 	
 	const chooseAuxiliaryCost = AuxiliaryCostId => {
-		findAuxiliaryCost(AuxiliaryCostId)
-		setShowUpdateAuxiliaryCostModal(true)
+		setData_AuxiliaryCost_Cost(_id)
+		setshowupdate_AuxiliaryCost_Cost_Modal(true)
 	}
 	function submit () {
 		confirmAlert({
@@ -26,15 +32,13 @@ const ActionButtons_AuxiliaryCost = ({ _id }) => {
 			  onClick: () => deleteAuxiliaryCost(_id)
 			},
 			{
-			  label: 'Không',
-			  onClick: () => closeDialog()
+				label: 'Không',
+				closeOnClick: true
 			}
 		  ]
 		});
 	  };
-	  const closeDialog = () => {
-		setShowUpdateAuxiliaryCostModal(false)
-	}
+
 	return (
 		<>
 			<Button className='post-button' onClick={chooseAuxiliaryCost.bind(this, _id)}>

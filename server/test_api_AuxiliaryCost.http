@@ -45,25 +45,25 @@ Content-Type: application/json
 ### Add Cost to auxiliary-Listcost by idcontract
 ### access Public
 ### Test : ok
-POST http://localhost:5000/api/forms/auxiliary-cost/post/cost/63e40fc862b2ebee52433da7
+POST http://localhost:5000/api/forms/auxiliary-cost/post/cost/63c08c08b1a40f0ce190d6e1
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
   "Content": "Chi phi 3",
-  "Cost": 0.01,
-  "Note": "IDHD 63e40fc862b2ebee52433da7"
+  "Cost": 0.03,
+  "Note": "IDHD 63c08c08b1a40f0ce190d6e1"
 }
 
 ### Update Cost in ListCost by idcontract/idcost
 ### access Public
 ### Recheck : ok
-PUT http://localhost:5000/api/forms/auxiliary-cost/put/cost/63e40fc862b2ebee52433da7/63f8319abe5624e5521b1a76
+PUT http://localhost:5000/api/forms/auxiliary-cost/put/cost/63c08c08b1a40f0ce190d6e1/63f83687dcb5b1e75486acf8
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 
 {
-  "Content": "Chi phi A updated",
+  "Content": "Chi phi 3 updated",
   "Cost": 0.05,
   "Note": "HD Update"
 }
@@ -85,7 +85,7 @@ GET http://localhost:5000/api/forms/auxiliary-cost/63f81da142f7f8f6a19f3436
 ### Get auxiliary-cost by idContract
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/auxiliary-cost/contract/63e40fc862b2ebee52433da7
+GET http://localhost:5000/api/forms/auxiliary-cost/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
@@ -98,14 +98,14 @@ DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/63f8318d42f7f8f6a1
 ### Delete auxiliary-cost by id_contract
 ### access public
 ###Retest: ok
-DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63e40fc862b2ebee52433da7
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63c08c08b1a40f0ce190d6e1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
 ### Update Cost in ListCost by idcontract/idcost
 ### access Public
 ### Recheck : coding
-DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63e40fc862b2ebee52433da7/63f831a0be5624e5521b1a7a
+DELETE  http://localhost:5000/api/forms/auxiliary-cost/delete/contract/63c08c08b1a40f0ce190d6e1/63f838e8ee1d28e840fcd822
 
 //==== old ======================================== 
 

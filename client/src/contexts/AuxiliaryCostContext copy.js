@@ -22,17 +22,14 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		AuxiliaryCosts: [],
 		AuxiliaryCostsLoading: true
 	})
+
+	const [showAddAuxiliaryCostModal, setShowAddAuxiliaryCostModal] = useState(false)
+	const [showUpdateAuxiliaryCostModal, setShowUpdateAuxiliaryCostModal] = useState(false)
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
 		type: null
 	})
-	const [showcreate_AuxiliaryCost_Modal, setshowcreate_AuxiliaryCost_Modal] = useState(false)
-
-	const [showadd_AuxiliaryCost_Cost_Modal, setshowadd_AuxiliaryCost_Cost_Modal] = useState(false)
-
-	const [Data_AuxiliaryCost_Cost, setData_AuxiliaryCost_Cost] = useState([])
-	const [showupdate_AuxiliaryCost_Cost_Modal, setshowupdate_AuxiliaryCost_Cost_Modal] = useState(false)
 
 	// Get all AuxiliaryCosts
 	const getAuxiliaryCosts = async () => {
@@ -40,7 +37,7 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 			const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost`)
 			if (response.data.success) {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost })
-
+				
 			}
 			console.log(response.data.AuxiliaryCost);
 		} catch (error) {
@@ -49,46 +46,47 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 	}
 
 	// Get AuxiliaryCosts by idContract
-	//Execute: running
 	const getAuxiliaryCosts_byidContract = async (idcontract) => {
-		console.log("trong getAuxiliaryCosts_byidContract", idcontract)
+		console.log("trong getAuxiliaryCosts_byidContract",idcontract)
 		try {
 			const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idcontract}`)
 			if (response.data.success) {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost })
-
+				
 			}
 			console.log(response.data.AuxiliaryCost);
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
 	}
-
-	// create_AuxiliaryCost
-	//Execute: running
-	const create_AuxiliaryCost = async (newAuxiliaryCost, idcontract) => {
+	// Get AuxiliaryCosts by idContract and Plan
+	const getAuxiliaryCosts_byidContract_Plan1 = async (idContract,Plan) => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/auxiliary-cost/post/${idcontract}`, newAuxiliaryCost)
-
-			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.newAuxiliaryCost })
-				return response.data
-			}
-			else
-				return response.data //Hợp đồng không tồn tại
+				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS_PLAN1, payload: response.data.AuxiliaryCost_data })
+				}
 		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
+			dispatch({ type: LOADED_FAIL })
 		}
 	}
-
-	//add_AuxiliaryCost_Cost
-	//Execute: running
-	const add_AuxiliaryCost_Cost = async (newAuxiliaryCost, idcontract) => {
+	// Get AuxiliaryCosts by idContract and Plan
+	const getAuxiliaryCosts_byidContract_Plan2 = async (idContract,Plan) => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/auxiliary-cost/post/cost/${idcontract}`, newAuxiliaryCost)
-
+				const response = await axios.get(`${apiUrl}/api/forms/auxiliary-cost/contract/${idContract}/${Plan}`)
+				if (response.data.success) {
+					dispatch({ type: LOADED_SUCCESS_PLAN2, payload: response.data.AuxiliaryCost_data })
+				}
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+	
+	// Add AuxiliaryCost
+	const addAuxiliaryCost = async newAuxiliaryCost => {
+		try {
+			const response = await axios.post(`${apiUrl}/api/forms/auxiliary-cost/post`, newAuxiliaryCost)
+			
 			if (response.data.success) {
 				dispatch({ type: ADD, payload: response.data.AuxiliaryCost })
 				return response.data
@@ -103,37 +101,33 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 	}
 
 	// Delete AuxiliaryCost
-	// //Execute: running
-	const deleteAuxiliaryCost = async (IDs) => {
+	
+	const deleteAuxiliaryCost = async AuxiliaryCostId => {
 		try {
-			console.log("IDs======:", IDs)
-			console.log("Url", `${apiUrl}/api/forms/auxiliary-cost/delete/contract/${IDs.idcontract}/${IDs.idCost}`)
-			const response = await axios.delete(`${apiUrl}/api/forms/auxiliary-cost/delete/contract/${IDs.idcontract}/${IDs.idCost}`)
+			const response = await axios.delete(`${apiUrl}/api/forms/auxiliary-cost/delete/${AuxiliaryCostId}`)
 			if (response.data.success)
-				dispatch({ type: DELETE, payload: response })
+				dispatch({ type: DELETE, payload: AuxiliaryCostId })
 		} catch (error) {
 			console.log(error)
 		}
 	}
 
 	// Find AuxiliaryCost when user is updating AuxiliaryCost
-	//Execute: No
 	const findAuxiliaryCost = AuxiliaryCostId => {
 		const AuxiliaryCost = AuxiliaryCostState.AuxiliaryCosts.find(AuxiliaryCost => AuxiliaryCost._id === AuxiliaryCostId)
 		dispatch({ type: FIND, payload: AuxiliaryCost })
 	}
 
 	// Update AuxiliaryCost
-	//Execute: running
-	const updateAuxiliary_Cost = async (Data_AuxiliaryCost_Cost, IDs) => {
-		console.log("IDs===>", IDs)
+	const updateAuxiliaryCost = async updatedAuxiliaryCost => {
+		console.log("===>", updatedAuxiliaryCost._id)
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/forms/auxiliary-cost/put/cost/${IDs.idcontract}/${IDs.idCost}`,
-				Data_AuxiliaryCost_Cost
+				`${apiUrl}/api/forms/auxiliary-cost/put/${updatedAuxiliaryCost._id}`,
+				updatedAuxiliaryCost
 			)
 			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.updateAuxiliaryCost })
+				dispatch({ type: UPDATE, payload: response.data.dataUpdate })
 				return response.data
 			}
 		} catch (error) {
@@ -146,26 +140,24 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 	// AuxiliaryCost context data
 	const AuxiliaryCostContextData = {
 		AuxiliaryCostState,
-		getAuxiliaryCosts_byidContract,
-
-		create_AuxiliaryCost,
-		showcreate_AuxiliaryCost_Modal,
-		setshowcreate_AuxiliaryCost_Modal,
-
-		add_AuxiliaryCost_Cost,
-		showadd_AuxiliaryCost_Cost_Modal, setshowadd_AuxiliaryCost_Cost_Modal,
-
-		deleteAuxiliaryCost,
-
-
-		updateAuxiliary_Cost,
-		Data_AuxiliaryCost_Cost, setData_AuxiliaryCost_Cost,
-		showupdate_AuxiliaryCost_Cost_Modal, setshowupdate_AuxiliaryCost_Cost_Modal,
-
 		getAuxiliaryCosts,
+		showAddAuxiliaryCostModal,
+		setShowAddAuxiliaryCostModal,
+
+		updateAuxiliaryCost,
+		showUpdateAuxiliaryCostModal,
+		setShowUpdateAuxiliaryCostModal,
+
 		
+		addAuxiliaryCost,
 		showToast,
 		setShowToast,
+		deleteAuxiliaryCost,
+		findAuxiliaryCost,
+		
+		getAuxiliaryCosts_byidContract,
+		getAuxiliaryCosts_byidContract_Plan1,
+		getAuxiliaryCosts_byidContract_Plan2
 	}
 
 	return (

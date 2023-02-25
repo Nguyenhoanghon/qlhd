@@ -135,7 +135,7 @@ export const InputForm = () => {
 								<td> Chi phí vật tư phụ</td>
 								<td>{params.id}</td>
 								<td>
-									<a href={`/AuxiliaryCost/contract/${params.id}/plan`}>
+									<a href={`/AuxiliaryCost/contract/${params.id}`}>
 										<Button
 											variant='primary'
 										>
