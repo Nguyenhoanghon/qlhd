@@ -50,7 +50,7 @@ const MandayCostContextProvider = ({ children }) => {
 					dispatch({ type: LOADED_SUCCESS, payload: response.data.MandayCost })
 					
 				}
-				console.log(response.data.MandayCost);
+				//console.log(response.data.MandayCost);
 			} catch (error) {
 				dispatch({ type: LOADED_FAIL })
 			}

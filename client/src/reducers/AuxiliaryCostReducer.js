@@ -16,7 +16,8 @@ export const AuxiliaryCostReducer = (state, action) => {
 			return {
 				...state,
 				AuxiliaryCosts: payload,
-				AuxiliaryCostsLoading: false
+				AuxiliaryCostsLoading: false,
+				Contracts: payload
 			}
 		case LOADED_SUCCESS_PLAN1:
 			return {

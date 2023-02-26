@@ -15,6 +15,10 @@ const AuxiliaryCost = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Contract",
   },
+  /* contractID: {
+    type: Schema.Types.ObjectId,
+    ref: "Contract",
+  }, */
   user: {
     type: Schema.Types.ObjectId,
     ref: "User", // users replace user

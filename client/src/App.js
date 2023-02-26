@@ -86,6 +86,7 @@ function App() {
 							<ProtectedRoute exact path='/MiscExpenseCost/contract/:id' component={MiscExpenseCost_byidContract} />
 						</MiscExpenseCostContextProvider>
 
+						
 						<ProductCostContextProvider>
 						<AuxiliaryCostContextProvider>
 							<ProtectedRoute exact path='/AuxiliaryCost' component={AuxiliaryCost_Contract} />
@@ -93,6 +94,7 @@ function App() {
 							<ProtectedRoute exact path='/AuxiliaryCost/contract/:id' component={AuxiliaryCost_byidContract} />
 						</AuxiliaryCostContextProvider>
 						</ProductCostContextProvider>
+						
 
 						<GuaranteeLetterCostContextProvider>
 							<ProtectedRoute exact path='/guarantee-letter-cost' component={GuaranteeLetterCost_all} />

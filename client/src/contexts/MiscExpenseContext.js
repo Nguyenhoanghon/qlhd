@@ -51,7 +51,7 @@ const MiscExpenseCostContextProvider = ({ children }) => {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.MiscExpense })
 				
 			}
-			console.log(response.data.MiscExpense);
+			//console.log(response.data.MiscExpense);
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}

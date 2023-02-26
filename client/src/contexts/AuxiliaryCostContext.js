@@ -20,6 +20,7 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 	const [AuxiliaryCostState, dispatch] = useReducer(AuxiliaryCostReducer, {
 		AuxiliaryCost: [],
 		AuxiliaryCosts: [],
+		Contracts:[],
 		AuxiliaryCostsLoading: true
 	})
 	const [showToast, setShowToast] = useState({
@@ -48,6 +49,20 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		}
 	}
 
+	// Get all AuxiliaryCosts
+	const getContract_All= async () => {
+		try {
+			const response = await axios.get(`${apiUrl}/api/forms/contract/`)
+			if (response.data.success) {
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.Contracts })
+
+			}
+			console.log(response.data.Contracts);
+		} catch (error) {
+			dispatch({ type: LOADED_FAIL })
+		}
+	}
+
 	// Get AuxiliaryCosts by idContract
 	//Execute: running
 	const getAuxiliaryCosts_byidContract = async (idcontract) => {
@@ -58,7 +73,7 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.AuxiliaryCost })
 
 			}
-			console.log(response.data.AuxiliaryCost);
+			//console.log(response.data.AuxiliaryCost);
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
@@ -163,7 +178,8 @@ const AuxiliaryCostContextProvider = ({ children }) => {
 		showupdate_AuxiliaryCost_Cost_Modal, setshowupdate_AuxiliaryCost_Cost_Modal,
 
 		getAuxiliaryCosts,
-		
+		getContract_All, //not run
+
 		showToast,
 		setShowToast,
 	}

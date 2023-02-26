@@ -209,8 +209,6 @@ export const Summary_id = () => {
 
 	function SumInsurance(mang1, mang2) {
 		let sum = 0;
-		//console.log("Array Insurace =========",mang1)
-		//console.log("Array Insurace =========",mang2)
 		mang1.forEach((element, index) => {
 			if (mang1[index]) {
 				sum += mang2[index];
@@ -225,7 +223,7 @@ export const Summary_id = () => {
 	const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
 	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
 	const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
-
+	console.log("TotalInsurance===: ",TotalInsurance)
 	//=== End Get productcosts with idcontract
 
 	//=== Get MandayCost 
@@ -237,6 +235,7 @@ export const Summary_id = () => {
 	// Start: Get all MandayCost by idContract
 	useEffect(() => getMandayCost_byidContract(params.id), [])
 	const TotalMandayCost = sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))
+	console.log("TotalMandayCost===: ",TotalMandayCost)
 	//=== End Get MandayCost
 
 	//=== Get GuaranteeLetterCost
@@ -249,7 +248,7 @@ export const Summary_id = () => {
 	useEffect(() => getGuaranteeLetterCost_byidContract(params.id), [])
 
 	const TotalGuaranteeLetterCost = sumArray(GuaranteeLetterCosts.map((GuaranteeLetterCost) => GuaranteeLetterCost.IntoMoney))
-
+	console.log("TotalGuaranteeLetterCost===: ",TotalGuaranteeLetterCost)
 	//=== End Get GuaranteeLetterCost
 
 	//=== Get MiscExpenseCosts
@@ -261,7 +260,7 @@ export const Summary_id = () => {
 	// Start: Get all MiscExpenseCosts
 	useEffect(() => getMiscExpenseCost_byidContract(params.id), [])
 	const TotalMiscExpenseCost = sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
-
+	console.log("TotalMiscExpenseCost===: ",TotalMiscExpenseCost)
 	//=== End Get MiscExpenseCosts
 
 	//=== Get data CapitalExpenditureCost chi phi von
@@ -273,8 +272,7 @@ export const Summary_id = () => {
 	// Start: Get all CapitalExpenditureCosts
 	useEffect(() => getCapitalExpenditureCosts_byidContract(params.id), []);
 	const TotalCapitalExpense = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.CapitalExpense))//ch
-
-
+	console.log("TotalCapitalExpense===: ",TotalCapitalExpense)
 	//=== End Get data CapitalExpenditureCost
 
 	//=== Get data AuxiliaryCost
@@ -284,7 +282,6 @@ export const Summary_id = () => {
 	} = useContext(AuxiliaryCostContext)
 	// Start: Get AuxiliaryCosts by id Contract
 	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[])
-	console.log("AuxiliaryCosts======>>>>>", AuxiliaryCosts)
 	
 	function SumListCost(Auxiliary) {
 		let kq = 0;
@@ -306,17 +303,19 @@ export const Summary_id = () => {
 	let CPXL = 0;
 	let CPgross = 0;
 	const phuongan = FindPlan(AuxiliaryCosts);
+	
+
 	if (phuongan === 1) {
 		CPXL = TotalCost / 0.8 * 0.2;
 		CPgross = CPXL + TotalCost;
-		console.log("Phuong an 1========", CPXL)
+		
 	}
 	else {
 		CPXL = TotalCost / 0.7 * 0.25;
 		CPgross = CPXL + TotalCost;
 	}
 
-
+	console.log("CPgross=== : ",CPgross)
 	//=== End Get data AuxiliaryCost
 
 	//=== Get data ImplementationCost
@@ -362,20 +361,20 @@ export const Summary_id = () => {
 		ImplementationCosts.map(ImplementationCost => (
 			ImplementationCost.GeneralExpense.forEach((element, index) => {
 				All_Total += TotalGeneralExpense(index)
-				//console.log("Tong chi chi phi chung;", All_Total);
+				
 			})))
 
 		return All_Total;
 	}
 	const GeneralExpense = All_TotalGeneralExpense(ImplementationCosts);
 	const StageImplementation = All_TotalStageImplementation(ImplementationCosts);
-	const TotalImplementationCost = GeneralExpense + StageImplementation;
+	const TotalImplementationCost = GeneralExpense + StageImplementation + TotalInsurance;
 	//=== End Get data ImplementationCost
 
 
 	//=== Data process
 	// 1. chi phi phat sinh khi thuc hien du an
-	const ExtraCost = (TotalInsurance + TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost)
+	const ExtraCost = (TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost)
 
 	// 3.
 	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - CPgross)

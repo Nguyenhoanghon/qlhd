@@ -28,7 +28,7 @@ exports.getAllContract = async (req,res) => {
   }
 
 
-//Get Contract by id
+//Get Contract by idcontract
 //@Access Public
 exports.getContract = async (req,res) => {
     console.log("getContract is called")

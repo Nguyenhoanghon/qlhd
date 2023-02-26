@@ -156,6 +156,7 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
     console.log("Test route ===> THEM CHI PHI VAO LIST COST !");
 
     const {
+        contractID,
         Content,
         Cost,
         Note } = req.body;
@@ -165,6 +166,7 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
     console.log("Note", req.body.Note)
 
     const newAuxiliaryCost = new AuxiliaryCost({
+        contractID,
         Content,
         Cost,
         Note
@@ -172,19 +174,26 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
 
     try {
         //Kiem tra hop dong co ton tai?
-        Contract.find({ _id: req.params.idcontract }, (err, Contract) => {
-            if (Contract.length != 0)
-                console.log(">>>>>>>>>>> Find Cotract");
+        const contract = await Contract.find({ _id: req.params.idcontract }, (err, Contract) => {
+            if (Contract.length != 0){
+                //set ContractID so hop dong
+                
+                newAuxiliaryCost.contractID = Contract.map(contract => contract.ContractID);
+                console.log(">>>>>>>>>>> Find Cotract ====", newAuxiliaryCost.contractID);
+            
+                
+            }
             else
                 res.json({ success: true, message: "Not found Contract" })
         });
-
+       
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
 
-    if (!req.body.Content || !req.body.Cost)
+    console.log(">>>>>>>>>>> newAuxiliaryCost.contractID: ", newAuxiliaryCost.contractID);
+    if (!req.body.Content || !req.body.Cost ||req.body.contractID )
         return res.status(400).json({ success: false, message: "Missing Content  dsdsd  or Cost" });
     try {
         const newAuxiliaryCost = await AuxiliaryCost.findOneAndUpdate(
@@ -198,9 +207,11 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
                         Cost,
                         Note
                     },
+                    
                 },
-                contract: req.params.idcontract,
-                user: req.userId,
+               contract: req.params.idcontract,
+               contractID: "HD01",
+               user: req.userId,
             },
             {
                 new: true,

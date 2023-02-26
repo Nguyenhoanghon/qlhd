@@ -51,7 +51,7 @@ const GuaranteeLetterCostContextProvider = ({ children }) => {
 				dispatch({ type: LOADED_SUCCESS, payload: response.data.GuaranteeLetterCost })
 				
 			}
-			console.log(response.data.GuaranteeLetterCost);
+			//console.log(response.data.GuaranteeLetterCost);
 		} catch (error) {
 			dispatch({ type: LOADED_FAIL })
 		}
