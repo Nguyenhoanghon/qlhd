@@ -556,3 +556,36 @@ exports.deleteAuxiliaryCost_Cost = async (req, res) => {
     }
 
 }
+
+// Export CSV
+// @access Public
+//
+exports.exportAuxiliaryCost = async (req, res) => {
+    console.log("Test exportAuxiliaryCost_Cost !");
+    try {
+        let Auxiliarycosts = [];
+        /* const newAuxiliaryCost = new AuxiliaryCost({
+            Renevue, Plan, ListCosts, contract, user
+        }) */
+        const AuxiliarycostsData = await AuxiliaryCost.find({});
+        AuxiliarycostsData.forEach((Auxiliarycost) => {
+            const {id, Renevue, Plan, ListCosts, contract, user} = Auxiliarycost;
+            Auxiliarycosts.push({id, Renevue, Plan, ListCosts, contract, user});
+        });
+
+        const csvFields = ["id", "Renevue", "Plan", "ListCosts", "contract", "user"];
+        const csvParser = new CsvParser({csvFields});
+        const csvData = csvParser.parser(Auxiliarycosts);
+        
+        res.setHeader("Content-Type","text/CSV");
+        res.setHeader("Content-Disposition","attatchment: filename=AuxiliarycostsData.csv");
+        res.status(200).end(csvData);
+
+        
+        //res.json({ success: true, message: 'Export Successfull !' })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+
+}

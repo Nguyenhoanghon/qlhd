@@ -92,5 +92,11 @@ AuxiliaryCostController.deleteAuxiliaryCost_Cost);
 
 //==================== Routes Private Access ====================//
 
+// Export CSV
+// URL access: POST http://localhost:5000/api/forms/auxiliary-cost/export
+// access public
+// Test: 
+app.delete("/api/forms/auxiliary-cost/export",
+AuxiliaryCostController.exportAuxiliaryCost);
 
 } //end Routes
