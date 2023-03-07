@@ -34,12 +34,52 @@ exports.getAuxiliaryCost_byid = async (req, res) => {
 //Get AuxiliaryCost by idContract
 //@RepairNew: Not
 exports.getAuxiliaryCost_byidContract = async (req, res) => {
-    console.log("getAllAuxiliaryCost is called")
+    console.log("getAllAuxiliaryCost is called",req.params.id)
+    //!!!
+    
+    //load Renevue
+    let Renevue = 0;
+    try {
+        const ProductCost_data = await ProductCost.find({ contract: req.params.id })
+        for (let i = 0; i < ProductCost_data.length; i++) {
+            Renevue += ProductCost_data[i].OutputIntoMoney;
+        }
+        console.log("Load Renevue===:", Renevue)
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Internal server error' })
+    }
+    //Update Renevue
+    console.log("Data newAuxiliaryCost.Renevue===:", Renevue)
+    try {
+        const response = await AuxiliaryCost.updateOne(
+            {
+                contract: req.params.id,
+            },
+            {
+                $set: {
+                    Renevue: Renevue,
+                },
+                contract: req.params.id,
+                user: req.userId, //note
+            },
+            {
+                new: true,
+                upsert: true,
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: " Internal server error" });
+    }
+    //!!!
     try {
         const AuxiliaryCost_data = await AuxiliaryCost.find({ contract: req.params.id })
         if (AuxiliaryCost_data == null)
             res.json({ success: true, message: "AuxiliaryCost not found !" })
         else
+
             res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data })
         console.log(AuxiliaryCost_data)
 
@@ -380,7 +420,6 @@ exports.update_AuxiliaryCost_Cost = async (req, res) => {
     //Load Tong gia von va tong doanh thu tu Form1
     const {
         Renevue, // Load từ form 1
-        Plan, // Lua chon gia tri, M 
         Content,
         Cost, // = if(Cost<1; Cost*CapitalCost ; Cost)
         Note,
@@ -397,7 +436,6 @@ exports.update_AuxiliaryCost_Cost = async (req, res) => {
     console.log("Test route ===> CAP NHAT CHI  AUXILIARY !");
     console.log("idcontract==========", req.params.idcontract)
     console.log("idContentCost==========", req.params.idCost)
-
     console.log("Test data recieved ====>>>", updatedAuxiliaryCost)
     console.log(req.body.idcontract);
 
