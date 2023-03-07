@@ -36,10 +36,10 @@ const Create_AuxiliaryCost_Modal = () => {
 	const params = useParams();
 	newAuxiliaryCost.idcontract = params.id;
 
-	const [framework, setFramework] = useState(1);
+	const [framework, setPlan] = useState(1);
 
-	const cambioRadioFramework = e => {
-		setFramework(e.target.value);
+	const Set_Plan = e => {
+		setPlan(e.target.value);
 	}
 	newAuxiliaryCost.Plan = framework;
 	
@@ -74,7 +74,7 @@ const Create_AuxiliaryCost_Modal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Chọn Hợp đồng
 						</Form.Text>
@@ -86,31 +86,28 @@ const Create_AuxiliaryCost_Modal = () => {
 							value={idcontract}
 							onChange={onChangeNewAuxiliaryCostForm}
 						/>
-					</Form.Group>
+					</Form.Group> */}
+
 					<Form.Group>
-						<Form.Text id='Plan-help' muted as="h6">
+						<Form.Text id='Plan-help' muted as="h3">
 							Chọn phương án chi
 						</Form.Text>
-						<Form.Control
+						<Form.Check
 							id="radio1"
+							label= "Phương án 1"
 							type="radio"
 							value="1"
 							checked={framework == 1 ? true : false}
-							onChange={cambioRadioFramework}
+							onChange={Set_Plan}
 						/>
-						<Form.Text id='sotien-help' muted as="h6">
-							Phương án 1
-						</Form.Text>
-						<Form.Control
+						<Form.Check
 							id="radio2"
+							label= "Phương án 2"
 							type="radio"
 							value="2"
 							checked={framework == 2 ? true : false}
-							onChange={cambioRadioFramework}
+							onChange={Set_Plan}
 						/>
-						<Form.Text id='sotien-help' muted as="h6">
-							Phương án 2
-						</Form.Text>
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>

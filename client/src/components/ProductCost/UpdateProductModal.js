@@ -121,13 +121,13 @@ const UpdateProductCostModal = () => {
 						<Form.Text id='xuatxu-help' muted as='h6'>
 							Nguồn nhập hàng
 						</Form.Text>
-						<Form.Control className='switch'
+						<Form.Check
 								type='checkbox'
 								checked={EX_W}
 								value={EX_W}
 								onChange={(e) => toggleEX_W(e.target.checked)}
+								label={'Nhập từ nước ngoài'}
 							/>
-							<span>Nhập từ nước ngoài</span>
 					</Form.Group>
 					
 					<Form.Group>
@@ -185,13 +185,13 @@ const UpdateProductCostModal = () => {
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Control className='switch'
+						<Form.Check
 							type='checkbox'
 							checked={Insurance}
 							value={Insurance}
 							onChange={(e) => toggleInsurance(e.target.checked)}
+							label={'Hàng hoá có tính chi phí bảo hiểm'}
 						/>
-						<span>Hàng hoá có tính chi phí bảo hiểm</span>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Incentive-help' muted as='h6'>

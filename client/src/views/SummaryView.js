@@ -277,35 +277,42 @@ export const Summary_id = () => {
 
 	//=== Get data AuxiliaryCost
 	const {
-		AuxiliaryCostState: { AuxiliaryCosts, AuxiliaryCostsLoading },
+		AuxiliaryCostState: { AuxiliaryCosts },
 		getAuxiliaryCosts_byidContract
 	} = useContext(AuxiliaryCostContext)
 	// Start: Get AuxiliaryCosts by id Contract
 	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[])
+
+	// hàm đổi giá trị chi phí % => giá trị tiền tuyệt đối
+	function changeCost(Cost, TotalOutputIntoMoney) {
+		let returnValue = Cost;
+		if (Cost < 1)
+		returnValue = Cost * TotalOutputIntoMoney;
+		return returnValue
+	}
 	
-	function SumListCost(Auxiliary) {
+	function SumListCost(Auxiliary,TotalOutputIntoMoney) {
 		let kq = 0;
 		Auxiliary.map(AuxiliaryCost =>
 			AuxiliaryCost.ListCosts.map(ListCost => (
-				kq += ListCost.Cost
+				kq += changeCost(ListCost.Cost, TotalOutputIntoMoney)
 			)))
 
 		return kq;
 	}
 	function FindPlan(Auxiliary) {
-		let kq = 0;
-		Auxiliary.map(AuxiliaryCost => kq=AuxiliaryCost.Plan
+		let returnPlan = 0;
+		Auxiliary.map(AuxiliaryCost => returnPlan = AuxiliaryCost.Plan
 			)
-
-		return kq;
+		return returnPlan;
 	}
-	const TotalCost = SumListCost(AuxiliaryCosts) * TotalOutputIntoMoney;
+
+	const TotalCost = SumListCost(AuxiliaryCosts, TotalOutputIntoMoney);
+
 	let CPXL = 0;
 	let CPgross = 0;
-	const phuongan = FindPlan(AuxiliaryCosts);
-	
-
-	if (phuongan === 1) {
+	const Auxiliary_Plan = FindPlan(AuxiliaryCosts);
+	if (Auxiliary_Plan === 1) {
 		CPXL = TotalCost / 0.8 * 0.2;
 		CPgross = CPXL + TotalCost;
 		
@@ -317,6 +324,9 @@ export const Summary_id = () => {
 
 	console.log("CPgross=== : ",CPgross)
 	//=== End Get data AuxiliaryCost
+
+
+
 
 	//=== Get data ImplementationCost
 
@@ -623,7 +633,7 @@ export const Summary_id = () => {
 						<tr>
 							<td></td>
 							<td colSpan={6} >Hiệu quả dự án (có Incentive):</td>
-							<td>{(((hieuquaduan + TotalMandayCost) / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
+							<td>{(((hieuquaduan + TotalIncentive + TotalMandayCost) / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
 							<td></td>
 							<td></td>
 						</tr>

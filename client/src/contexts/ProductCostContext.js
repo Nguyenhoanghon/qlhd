@@ -23,6 +23,7 @@ const ProductCostContextProvider = ({ children }) => {
 
 	const [showAddProductCostModal, setShowAddProductCostModal] = useState(false)
 	const [showUpdateProductCostModal, setShowUpdateProductCostModal] = useState(false)
+	const [ShowAdd_Incentive, setShowAdd_Incentive] = useState(false);
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
@@ -153,7 +154,9 @@ const ProductCostContextProvider = ({ children }) => {
 		updateProductCost,
 		getProductCost_byidProductCost,
 		getProductCost_byidContract,
-		addProductCostIdcontract
+		addProductCostIdcontract,
+		ShowAdd_Incentive,
+		setShowAdd_Incentive
 
 	}
 

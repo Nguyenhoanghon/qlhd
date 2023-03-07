@@ -67,7 +67,7 @@ const Add_AuxiliaryCost_Cost_Modal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Id Hợp đồng
 						</Form.Text>
@@ -78,7 +78,7 @@ const Add_AuxiliaryCost_Cost_Modal = () => {
 							value={idcontract}
 							onChange={onChangeNewAuxiliaryCostForm}
 						/>						
-					</Form.Group> 
+					</Form.Group>  */}
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung chi phí

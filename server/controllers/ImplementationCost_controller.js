@@ -453,25 +453,26 @@ exports.update_GeneralExpense_Cost = async (req, res) => {
       {
         _id: req.params.idcontract,
         "GeneralExpense": {$elemMatch : {_id:  req.params.idContentCost }},
-        "GeneralExpense.Costs": {$elemMatch : {_id:  req.params.idCost }}
+        //"GeneralExpense.Costs": {$elemMatch : {_id:  req.params.idCost }}
       },
       { // !!!!
         $set: {
-          "GeneralExpense.$.Costs": {
+          "GeneralExpense.$.Costs.$[elements]": {
             _id: req.params.idCost,
             NameCost: req.body.NameCost,
             Units: req.body.Units,
             UnitPrice: req.body.UnitPrice,
             Quantity_days: req.body.Quantity_days,
             Quantity_times: req.body.Quantity_times,
-            IntoMoney: req.body.IntoMoney,
+            IntoMoney: IntoMoney,
             Note: req.body.Note
           },
         }
       },
       {
-        new: false,
-        upsert: false,
+        arrayFilters:[{"elements._id": req.params.idCost}]
+        /* new: false,
+        upsert: false, */
       }
     );
 
@@ -522,25 +523,26 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
       {
         _id: req.params.idcontract,
         "StagesImplementation": {$elemMatch : {_id:  req.params.idContentCost }},
-        "StagesImplementation.Costs": {$elemMatch : {_id:  req.params.idCost }}
+        //"StagesImplementation.Costs": {$elemMatch : {_id:  req.params.idCost }}
       },
       { // !!!!
         $set: {
-          "StagesImplementation.$.Costs": {
+          "StagesImplementation.$.Costs.$[elements]": {
             _id: req.params.idCost,
             NameCost: req.body.NameCost,
             Units: req.body.Units,
             UnitPrice: req.body.UnitPrice,
             Quantity_days: req.body.Quantity_days,
             Quantity_times: req.body.Quantity_times,
-            IntoMoney: req.body.IntoMoney,
+            IntoMoney: IntoMoney,
             Note: req.body.Note
           },
         }
       },
       {
-        new: false,
-        upsert: false,
+        arrayFilters:[{"elements._id": req.params.idCost}]
+        /* new: false,
+        upsert: false, */
       }
     );
 
