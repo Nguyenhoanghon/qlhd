@@ -485,7 +485,7 @@ export const Summary_id = () => {
 						<tr>
 							<td>1</td>
 							<td colSpan={6} >Chi phí phát sinh khi thực hiện Dự Án </td>
-							<td>{ExtraCost.toLocaleString()}</td>
+							<td>{Math.round(ExtraCost).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 
@@ -526,49 +526,49 @@ export const Summary_id = () => {
 								<tr key={CapitalExpenditureCost._id}>
 									<td>1.2</td>
 									<td colSpan={6} > Chi phí vốn</td>
-									<td>{CapitalExpenditureCost.CapitalExpense.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày hàng tồn kho</td>
-									<td>{CapitalExpenditureCost.InventoryDays.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.InventoryDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày triển khai</td>
-									<td>{CapitalExpenditureCost.ImplementationDays.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.ImplementationDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày công nợ nhà cung cấp</td>
-									<td>{CapitalExpenditureCost.BedtDays}</td>
+									<td>{Math.round(CapitalExpenditureCost.BedtDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} > + Số ngày thu nợ </td>
-									<td>{CapitalExpenditureCost.DebtCollectionDays.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.DebtCollectionDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Khách hàng trả trước (đặt cọc)</td>
-									<td>{CapitalExpenditureCost.Deposits.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.Deposits).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Đặt cọc cho NTP </td>
-									<td>{CapitalExpenditureCost.DepositsNTP.toLocaleString()}</td>
+									<td>{Math.round(CapitalExpenditureCost.DepositsNTP).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -577,35 +577,35 @@ export const Summary_id = () => {
 						<tr >
 							<td>1.3</td>
 							<td colSpan={6} >Manday thực hiện của kỹ sư HPT tham gia</td>
-							<td>{TotalMandayCost.toLocaleString()}</td>
+							<td>{Math.round(TotalMandayCost).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr >
 							<td>1.4</td>
 							<td colSpan={6} >Chi phí làm thư bảo lãnh (BL dự thầu, BL thực hiện HĐ, BL BH)</td>
-							<td>{TotalGuaranteeLetterCost.toLocaleString()}</td>
+							<td>{Math.round(TotalGuaranteeLetterCost).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr >
 							<td>1.5</td>
 							<td colSpan={6} > Chi phí khác</td>
-							<td>{TotalMiscExpenseCost.toLocaleString()}</td>
+							<td>{Math.round(TotalMiscExpenseCost).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>2</td>
 							<td colSpan={6} >Chi phí mua vật tư phụ (dự kiến) </td>
-							<td>{(CPgross / 10).toLocaleString()}</td>
+							<td>{Math.round((CPgross / 10)).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>3</td>
 							<td colSpan={6} >Hiệu quả dự án (giá trị tuyệt đối)</td>
-							<td>{hieuquaduan.toLocaleString()}</td>
+							<td>{Math.round(hieuquaduan).toLocaleString()}</td>
 							<td></td>
 							<td></td>
 						</tr>
@@ -619,7 +619,14 @@ export const Summary_id = () => {
 						<tr>
 							<td></td>
 							<td colSpan={6} >Hiệu quả dự án (chưa trừ  Manday của kỹ sư HPT)</td>
-							<td>{(hieuquaduan + TotalMandayCost).toLocaleString()}</td>
+							<td>{Math.round((hieuquaduan + TotalMandayCost)).toLocaleString()}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colSpan={6} >Hiệu quả dự án (tỉ lệ doanh thu) - chưa trừ  Manday của kỹ sư HPT</td>
+							<td>{(((hieuquaduan + TotalMandayCost)/TotalOutputIntoMoney)*100).toFixed(2) + "%"}</td>
 							<td></td>
 							<td></td>
 						</tr>

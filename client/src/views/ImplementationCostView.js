@@ -131,6 +131,7 @@ export const ImplementationCost = () => {
 							<td>{Costs.UnitPrice.toLocaleString()}</td>
 							<td>{Costs.Quantity_days}</td>
 							<td>{Costs.Quantity_times}</td>
+							
 							<td>{Costs.IntoMoney.toLocaleString()}</td>
 							<td>{Costs.Note}  </td>
 							<td><Buttons_ImplementationCost _id={ImplementationCost._id} />  </td>
@@ -158,8 +159,8 @@ export const ImplementationCost = () => {
 								<td>{Costs.NameCost}</td>
 								<td>{Costs.Units}</td>
 								<td>{Costs.UnitPrice.toLocaleString()}</td>
-								<td>{Costs.Quantity_days}</td>
 								<td>{Costs.Quantity_times}</td>
+								<td>{Costs.Quantity_days}</td>
 								<td>{Costs.IntoMoney.toLocaleString()}</td>
 								<td>{Costs.Note}  </td>
 								<td><Buttons_ImplementationCost _id={ImplementationCost._id} />  </td>
@@ -416,7 +417,7 @@ export const ImplementationCost_byidContract = () => {
 			ImplementationCosts.map(ImplementationCost => (
 				<>
 					<tr key={ImplementationCost._id}>
-						<td colSpan={8} align={'left'} bgcolor={''}>{ImplementationCost.GeneralExpense[stage].Content} {':'} {ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td colSpan={8} align={'left'} bgcolor={''}>{ImplementationCost.GeneralExpense[stage].Content} {/* {':'} {ImplementationCost.GeneralExpense[stage]._id} */}</td>
 						<td>
 							<Buttons_Update_Delete_GeneralExpense_Content
 							_id={ImplementationCost._id} 
@@ -434,8 +435,9 @@ export const ImplementationCost_byidContract = () => {
 								<td>{Costs.NameCost}</td>
 								<td>{Costs.Units}</td>
 								<td>{Costs.UnitPrice.toLocaleString()}</td>
-								<td>{Costs.Quantity_days}</td>
 								<td>{Costs.Quantity_times}</td>
+								<td>{Costs.Quantity_days}</td>
+								
 								<td>{Costs.IntoMoney.toLocaleString()}</td>
 								<td>{Costs.Note}  </td>
 								<td><ActionButtons_Update_Delete_GeneralCostDetail 
@@ -457,7 +459,7 @@ export const ImplementationCost_byidContract = () => {
 
 						<td colSpan={6} align={'left'}>Tổng {ImplementationCost.GeneralExpense.Content}{':'} </td>
 						<td>{TotalGeneralExpense(stage).toLocaleString()}</td>
-						<td>{ImplementationCost.GeneralExpense[stage]._id}</td>
+						<td></td>
 						<td>
 							<ActionButtons_Add_GeneralCostDetail _id={ImplementationCost._id} GeneralExpense_id={ImplementationCost.GeneralExpense[stage]._id} Content_name={ImplementationCost.GeneralExpense[stage].Content} />
 						</td>
@@ -482,7 +484,7 @@ export const ImplementationCost_byidContract = () => {
 			ImplementationCosts.map(ImplementationCost => (
 				<>
 					<tr key={ImplementationCost._id}>
-						<td colSpan={8} align={'left'}>{ImplementationCost.StagesImplementation[stage].Content} {':'} {ImplementationCost.StagesImplementation[stage]._id}</td>
+						<td colSpan={8} align={'left'}>{ImplementationCost.StagesImplementation[stage].Content}{/*  {':'} {ImplementationCost.StagesImplementation[stage]._id} */}</td>
 						<td>
 							<Buttons_Update_Delete_StageImplementation_Content 
 							_id={ImplementationCost._id} 
@@ -498,8 +500,9 @@ export const ImplementationCost_byidContract = () => {
 							<td>{Costs.NameCost}</td>
 							<td>{Costs.Units}</td>
 							<td>{Costs.UnitPrice.toLocaleString()}</td>
-							<td>{Costs.Quantity_days}</td>
 							<td>{Costs.Quantity_times}</td>
+							<td>{Costs.Quantity_days}</td>
+							
 							<td>{Costs.IntoMoney.toLocaleString()}</td>
 							<td>{Costs.Note}  </td>
 							<td><ActionButtons_Update_Delete_StageCostDetail
@@ -519,7 +522,7 @@ export const ImplementationCost_byidContract = () => {
 					))}
 					<td colSpan={6} align={'left'}>Tổng {ImplementationCost.StagesImplementation[stage].Content} {':'} </td>
 					<td>{TotalStageImplementation(stage).toLocaleString()}</td>
-					<td>{ImplementationCost.StagesImplementation[stage]._id}</td>
+					<td></td>
 					<td>
 						<ActionButtons_Add_StageCostDetail _id={ImplementationCost._id} StagesImplementation_id={ImplementationCost.StagesImplementation[stage]._id} Content_name={ImplementationCost.StagesImplementation[stage].Content} />
 					</td>
