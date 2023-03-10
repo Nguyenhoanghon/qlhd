@@ -1,0 +1,100 @@
+### ok 
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+### Get all Contract 
+### access private
+###ok
+GET http://localhost:5000/api/forms/contract
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQ1MjE5MywiZXhwIjoxNjcxNTM4NTkzfQ.G-Vxj5c1EuoFUzQnggRb7BbxyUc1V6eu95PtglyUOz0
+
+### create_Products
+### access Public
+### running ok
+POST http://localhost:5000/api/forms/products/post
+Content-Type: application/json
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
+
+{
+  "Incentive": 1000000,
+  "contract": "6402f614416c1d823c301cc0",
+  "user": "6402f592416c1d823c301cb6"
+}
+
+
+### add_detail_Products
+### access Public
+### Test: ok
+POST http://localhost:5000/api/forms/detailproduct/post
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
+
+{
+  "ProductName": "Server X60 IBM HD02khkknnk",
+  "Quantity": 10,
+  "EX_W": 0, 
+  "FOBCost": 2500, 
+  "RatioUSD": 24000,
+  "InputPrice": 3000000,
+  "OutputPrice": 80000000,
+  "Insurance": 1,
+  "Note": "A",
+  "contract": "6402f614416c1d823c301cc0"
+}
+
+### Update_detail_Products by idcontract/idProduct
+### access Public
+### Not ok
+PUT http://localhost:5000/api/forms/detailproduct/put
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
+
+{
+  "ProductName": "Server X60 IBM",
+  "Quantity": 3,
+  "EX_W": 0, 
+  "FOBCost": 2500, 
+  "RatioUSD": 24000,
+  "InputPrice": 3000000,
+  "OutputPrice": 90000000,
+  "Insurance": 1,
+  "Note": "A",
+  "contract": "64042be3272b3022644b428f",
+  "idProduct": "640aa15d370e911f388ec473"
+}
+
+### Get all products
+### access public
+###ok
+GET http://localhost:5000/api/forms/products
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### Get all products
+### access public
+###Test: ok
+GET http://localhost:5000/api/forms/products/6402f614416c1d823c301cc0
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+### delete by idcontract/idProduct
+### access Public
+### Test: ok
+DELETE  http://localhost:5000/api/forms/detailproduct/delete
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
+
+{
+  "idcontract": "64042be3272b3022644b428f",
+  "idProduct": "640aa7fcddaa422178e8311f"
+}
+
+### delete by /:Products._id
+### access Public
+### Test: ok
+DELETE  http://localhost:5000/api/forms/detailproduct/delete/640a9f2a21826aae6d3e5212
+Content-Type: application/json
+Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
