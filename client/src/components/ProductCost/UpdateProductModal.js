@@ -8,17 +8,18 @@ import { ProductCostContext } from '../../contexts/ProductCostContext'
 const UpdateProductCostModal = () => {
 	// Contexts
 	const {
-		ProductCostState: { ProductCost },
+		ProductCostState: { ProductCost,ProductCosts },
 		showUpdateProductCostModal,
-		setShowUpdateProductCostModal,
-		updateProductCost,
+		setshowUpdateProductCostModal,
+		Data_update,
+		update_ProductCost,
 		setShowToast
 	} = useContext(ProductCostContext)
 
 	// State
-	const [updatedProductCost, setUpdatedProductCost] = useState(ProductCost)
-
-	useEffect(() => setUpdatedProductCost(ProductCost), [ProductCost])
+	console.log("Data update in context",Data_update)
+	const [updatedProductCost, setUpdatedProductCost] = useState(Data_update)
+	useEffect(() => setUpdatedProductCost(Data_update),[Data_update])
 
 	const { 
 		ProductName,
@@ -31,15 +32,14 @@ const UpdateProductCostModal = () => {
 		InputIntoMoney,
 		OutputIntoMoney,
 		Insurance,
-		Incentive,
 		Note,
-		ContractID
+		contract,
+		idProduct
 		} = updatedProductCost //note
 
 	const params = useParams();
 	//Ham Load id contract
-	updatedProductCost.ContractID = params.id
-	
+	setUpdatedProductCost.contract = params.id;
 	//Checkbox nguon nhap
 	const toggleEX_W = event => {
 		setUpdatedProductCost({ ...updatedProductCost, EX_W: event })
@@ -51,23 +51,21 @@ const UpdateProductCostModal = () => {
 		setUpdatedProductCost({ ...updatedProductCost, Insurance: event })
 	};
 
-	setUpdatedProductCost.ContractID = params.id;
-
 	const onChangeUpdatedProductCostForm = event =>
 		setUpdatedProductCost({ ...updatedProductCost, [event.target.name]: event.target.value })
 
 	const closeDialog = () => {
-		setUpdatedProductCost(ProductCost)
-		setShowUpdateProductCostModal(false)
+		setUpdatedProductCost(updatedProductCost)
+		setshowUpdateProductCostModal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateProductCost(updatedProductCost)
-		setShowUpdateProductCostModal(false)
+		const { success, message } = await update_ProductCost(updatedProductCost)
+		setshowUpdateProductCostModal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
-
+	console.log("updatedProductCost update in context",updatedProductCost.ProductName)
 	return (
 		<Modal show={showUpdateProductCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
@@ -192,21 +190,6 @@ const UpdateProductCostModal = () => {
 							onChange={(e) => toggleInsurance(e.target.checked)}
 							label={'Hàng hoá có tính chi phí bảo hiểm'}
 						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='Incentive-help' muted as='h6'>
-							Tiền thưởng từ đối tác
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder=''
-							name='Incentive'
-							required
-							aria-describedby='Incentive-help'
-							value={Incentive}
-							onChange={onChangeUpdatedProductCostForm}
-						/>
-
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Note-help' muted as='h6'>

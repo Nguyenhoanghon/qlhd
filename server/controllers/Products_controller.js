@@ -8,28 +8,28 @@ const Products = db.Products;
 
 //============== Controllers Public Access ==============//
 //Khoi tao Products:  Incentive voi Contract._id
-exports.create_Products = async (req, res) => {
+//Test: ok
+exports.add_Incentive = async (req, res) => {
     //test
-    console.log("Test route create_Products ===> Khoi tao Products !");
-    const { Incentive, contract, user } = req.body; //Thuong du an
-    //test
-    console.log("Incentive==", req.body.Incentive)
-
+    console.log("Test route add_Incentive ===> req.params.contract ",req.params.contract);
+    const { Incentive, contract, user } = req.body; 
     const newProducts = new Products({ Incentive, contract, user })
-
+    console.log("Data newProducts ========:", newProducts)
     try {
         //Kiem tra hop dong co ton tai?
-        Contract.find({ _id: req.body.contract }, (err, Contract) => {
+        Contract.find({ _id: req.params.contract }, (err, Contract) => {
             if (Contract.length != 0) {
-                console.log(">>>>>>>>>>> Find Cotract");
                 //gan idcontract vao Product.contract
                 newProducts.contract = Contract.map(contract => contract._id);
+
             }
             else
                 res.json({ success: true, message: "Not found Contract" })
         });
+
         //Kiem tra nguoi dung co ton tai?
-        User.find({ _id: req.body.user }, (err, User) => {
+        /*
+        User.find({ _id: req.params.user }, (err, User) => {
             if (User.length != 0) {
                 console.log(">>>>>>>>>>> Find User");
                 //gan idUser vao Product.user
@@ -38,19 +38,18 @@ exports.create_Products = async (req, res) => {
             else
                 res.json({ success: true, message: "Not found User" })
         });
-
-        console.log("Data newProducts ========:", newProducts)
-
+        */
         try {
+            
             const response = await Products.findOneAndUpdate(
                 {
-                    contract: req.body.contract,
+                    contract: req.params.contract,
                 },
                 {
                     $push: {
                         ListProducts: []
                     },
-                    Incentive: newProducts.Incentive
+                    Incentive: newProducts.Incentive,
                 },
                 {
                     new: true,
@@ -60,23 +59,23 @@ exports.create_Products = async (req, res) => {
 
             res.json({
                 success: true,
-                message: "Khởi tạo Products",
-                newProducts: response,
+                message: "Thêm Incentive",
+                newProducts: newProducts,
             });
+
+        
         } catch (error) {
             console.log(error);
             res.status(500).json({ success: false, message: " Internal server error" });
         }
-
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
-
-
 }
 //End Khoi tao Products:  Incentive voi Contract._id
 //Them Products
+//Test ok
 exports.addProducts = async (req, res) => {
     console.log("Test route ===> addProducts is called !");
     let {
@@ -90,24 +89,23 @@ exports.addProducts = async (req, res) => {
         InputIntoMoney,
         OutputIntoMoney,
         Insurance,
-        Note,
-        contract
+        Note
     } = req.body
-    console.log("Chi tiet hang hoa ====", req.body.ProductName);
+    console.log("Chi tiet hang hoa EX_W ====", req.body.EX_W);
 
 
     if (!req.body.ProductName || !req.body.Quantity)
         return res.status(400).json({ success: false, message: "Missing ProductName or Quantity" });
     try {
         //xu ly data
-        if (req.body.EX_W === 1) {
+        if (req.body.EX_W === true) {
             console.log("Nhap tu nuoc ngoai");
             InputPrice = req.body.FOBCost * req.body.RatioUSD;
             InputIntoMoney = InputPrice * req.body.Quantity;
             OutputIntoMoney = req.body.OutputPrice * req.body.Quantity;
         }
         else {
-            console.log("NHap trong nuoc", req.body.contract);
+            console.log("NHap trong nuoc", req.params.contract);
             FOBCost = 0;
             RatioUSD = 0;
             InputPrice = req.body.InputPrice
@@ -116,7 +114,7 @@ exports.addProducts = async (req, res) => {
         }
         const response = await Products.findOneAndUpdate(
             {
-                contract: req.body.contract,
+                contract: req.params.contract,
             },
             {
                 $push: {
@@ -135,7 +133,8 @@ exports.addProducts = async (req, res) => {
                     },
 
                 },
-                contract: req.body.contract
+                contract: req.params.contract,
+                //user: req.body.user
             },
             {
                 new: true,
@@ -176,7 +175,7 @@ exports.getAllProducts = async (req, res) => {
 exports.getProducts_idcontract = async (req, res) => {
     console.log("getProducts_idcontract is called")
     try {
-        const Products_data = await Products.find({contract: req.params.idcontract}).populate("contract", "-__v")
+        const Products_data = await Products.find({contract: req.params.idcontract})//.populate("contract", "-__v")
         res.json({ success: true, Products: Products_data })
         console.log(Products_data)
 
@@ -213,7 +212,7 @@ exports.updateProduct_idcontract = async (req, res) => {
     try {
         //xu ly data
 
-        if (req.body.EX_W === 1) {
+        if (req.body.EX_W === true) {
             console.log("Nhap tu nuoc ngoai");
             InputPrice = req.body.FOBCost * req.body.RatioUSD;
             InputIntoMoney = InputPrice * req.body.Quantity;
@@ -270,38 +269,37 @@ exports.updateProduct_idcontract = async (req, res) => {
 
 }
 
-// Delete Products by id
+// Delete Products by id hang hoa
 // @access Public
 // Test: ok
-exports.deleteProduct_idcontract = async (req, res) => {
+exports.deleteProduct_idProduct = async (req, res) => {
     console.log("Test route deleteProduct_idcontract !");
-    console.log("ID idcontract", req.body.idcontract);
-    console.log("ID idProduct", req.body.idProduct);
+    console.log("ID idProduct", req.params.idProduct);
     try {
   
-      const deletedProducts = await Products.updateOne(
+      const response = await Products.updateOne(
         {
             //contract: req.body.idcontract,
-            "ListProducts": { $elemMatch: { _id: req.body.idProduct } }
+            "ListProducts": { $elemMatch: { _id: req.params.idProduct } }
         },
         {
           $pull:
           {
             "ListProducts": {
-              _id: req.body.idProduct
+              _id: req.params.idProduct
             }
           }
         }
       );
   
       // User not authorised or Products not found
-      if (!deletedProducts)
+      if (!response)
         return res.status(401).json({
           success: false,
           message: 'Not found or user not authorised'
         })
   
-      res.json({ success: true, message: 'Delete Successfull !' })
+      res.json({ success: true, message: 'Delete Successfull !', deletedProducts: response })
     } catch (error) {
       console.log(error)
       res.status(500).json({ success: false, message: 'Internal server error' })

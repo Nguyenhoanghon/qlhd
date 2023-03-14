@@ -101,7 +101,7 @@ export const CapitalExpenditureCost_all = () => {
                     <td>{stt++} </td>
                     <td>{CapitalExpenditureCost.CapitalCost.toLocaleString()}</td>
                     <td>{CapitalExpenditureCost.Revenue.toLocaleString()}</td>
-                    <td>{CapitalExpenditureCost.CapitalExpense.toLocaleString(2)}</td>
+                    <td>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString(2)}</td>
                     <td>{CapitalExpenditureCost.InventoryDays.toLocaleString()}</td>
                     <td>{CapitalExpenditureCost.ImplementationDays.toLocaleString()}</td>
                     <td>{CapitalExpenditureCost.BedtDays}</td>
@@ -239,7 +239,7 @@ export const CapitalExpenditureCost_byidContract = () => {
                   </tr>
                   <tr className='text-left'>
                     <th>Chi phí vốn</th>
-                    <th>{CapitalExpenditureCost.CapitalExpense.toLocaleString(2)}</th>
+                    <th>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString(2)}</th>
                   </tr>
                   <tr className='text-left'>
                     <td>Số ngày hàng tồn kho</td>
@@ -273,15 +273,7 @@ export const CapitalExpenditureCost_byidContract = () => {
                 </>
               ))}
 
-              <tr>
-                <td colSpan={2}><
-                  Button
-                  variant="primary"
-                  onClick={setShowAddCapitalExpenditureCostModal.bind(this, true)}
-                >
-                  Thêm mới
-                </Button></td>
-              </tr>
+              
             </Table>
 
             <a href={`/summary/${params.id}`}>

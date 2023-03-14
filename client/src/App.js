@@ -10,8 +10,10 @@ import {Summary,Summary_id} from './views/SummaryView'
 import {InputForm} from './views/InputForm'
 import { ContractView,Inputforms,Contract_id} from './views/ContractView'
 
+//12-3
+import {ProductCost_all,ProductCost_idContract,Products_idContract} from './views/ProductCostView'
 
-import {ProductCost_all,ProductCost_idContract} from './views/ProductCostView'
+
 import {MandayCost_all,MandayCost_idContract} from './views/MandayCostView'
 import {GuaranteeLetterCost_all, GuaranteeLetterCost_idContract} from './views/GuaranteeLetterCostView'
 import {MiscExpenseCost_all,MiscExpenseCost_byidContract} from './views/MiscExpenseCostView'
@@ -53,7 +55,8 @@ function App() {
 
 						<ProductCostContextProvider>
 							<ProtectedRoute exact path='/product-cost' component={ProductCost_all} />
-							<ProtectedRoute exact path='/product-cost/contract/:id' component={ProductCost_idContract} />
+							{/* <ProtectedRoute exact path='/product-cost/contract/:id' component={ProductCost_idContract} /> */}
+							<ProtectedRoute exact path='/product-cost/contract/:idcontract' component={Products_idContract} />
 						</ProductCostContextProvider>
 						
 						<ContractContextProvider>

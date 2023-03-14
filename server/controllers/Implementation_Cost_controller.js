@@ -3,27 +3,54 @@ const jwt = require('jsonwebtoken')
 var bcrypt = require("bcryptjs");
 const db = require("../models");
 const Contract = db.Contract;
-const ImplementationCost = db.ImplementationCost;
+const Implementation_Cost = db.Implementation_Cost;
 
 //============== Controllers Public Access ==============//
 //14/3 VIET LAI CONTROLLER
-// Create ImplementationCost add chi phi chung va 1 giai doan chi phi trien khai, THÊM TÊN DANH MỤC
-// goi ham nay khoi tao 1  ImplementationCost
+// create_Implementation_Category Khoi tao Implementation_Cost: TÊN DANH MỤC / ten giai doan
 // @access Public
 //Test: ok
-exports.create_ImplementationCost = async (req, res) => {
-  console.log("Test route ===> CHi phi trien khai moiw is called !");
-  const { Category, GeneralExpense, StagesImplementation, contract, user } = req.body;
+exports.create_Implementation_Category = async (req, res) => {
+  console.log("Test route ===> create_Implementation_Cost is called !");
+  const { Category, StagesImplementation, contract, user } = req.body;
   console.log("Category: ", req.body.Category)
-  console.log("GeneralExpense: ", req.body.GeneralExpense)
   console.log("StagesImplementation: ", req.body.StagesImplementation)
   console.log("StagesImplementation: ", req.body.contract)
   try {
-
     //Kiem tra hop dong co ton tai?
     Contract.find({ _id: req.body.contract }, (err, Contract) => {
-      if (Contract.length != 0)
-        console.log(">>>>>>>>>>> Find Cotract");
+      if (Contract.length != 0) {
+        if (!req.body.Category || !req.body.StagesImplementation)
+          return res.status(400).json({ success: false, message: "Missing Category Or StagesImplementation" });
+        try {
+          const newImplementation_Cost = new Implementation_Cost({
+            StagesImplementation: {
+              Content: req.body.StagesImplementation,
+            },
+            Category,
+            contract,
+            user,
+          })
+          newImplementation_Cost.save((err, Implementation_Cost) => {
+            if (err) {
+              res.status(500).send({ message: err });
+              return;
+            }
+            newImplementation_Cost.save(err => {
+              if (err) {
+                res.status(500).send({ message: err });
+                return;
+              }
+              res.json({ success: true, message: 'Khởi tạo thành công!', Implementation_Cost: newImplementation_Cost })
+            });
+          });
+
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ success: false, message: " Internal server error" });
+        }
+
+      }
       else
         res.json({ success: true, message: "Hợp đồng không tồn tại! " })
     });
@@ -32,62 +59,86 @@ exports.create_ImplementationCost = async (req, res) => {
     console.log(error)
     res.status(500).json({ success: false, message: 'Internal server error' })
   }
+}
+//End create_Implementation_Category
 
-  if (!req.body.Category || !req.body.GeneralExpense || !req.body.StagesImplementation)
-    return res.status(400).json({ success: false, message: "Missing Category Or GeneralExpense Or StagesImplementation" });
+// Cap nhat DANH MUC CHI PHI
+// @access Public
+// Test: ok
+exports.update_Implementation_Category = async (req, res) => {
+  console.log("Test route ===> update_Implementation_Category is called !");
+
+  const {Category} = req.body;
+  console.log("req.body.idImplementation_Cost", req.params.idImplementation_Cost)
+  console.log("req.body.Content", req.body.Category)
+
+
   try {
-    const newImplementationCost = new ImplementationCost({
-      GeneralExpense: {
-        Content: req.body.GeneralExpense,
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
+      {
+        _id: req.params.idImplementation_Cost
       },
-      StagesImplementation: {
-        Content: req.body.StagesImplementation,
-      },
-      Category,
-      contract,
-      user,
-    })
-
-    newImplementationCost.save((err, Products) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-
-      newImplementationCost.save(err => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
+      {
+        $set: {
+          Category: req.body.Category
         }
-        res.json({ success: true, message: 'newImplementationCost was registered successfully!', ImplementationCost: newImplementationCost })
-      });
+      }
+    );
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công!",
+      StagesImplementation: newImplementation_Cost,
     });
-    
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: " Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
 
+// Xoa DANH MUC CHI PHI
+// @access Public
+//ok
+exports.delete_Implementation_Category = async (req, res) => {
+  console.log("Test route delete_Implementation_Category");
+  console.log("req.params.idImplementation_Cost", req.params.idImplementation_Cost);
+  try {
+    const Implementation_CostDeleteCondition = { _id: req.params.idImplementation_Cost }//, user: req.userId }
+    const deletedImplementation_Cost = await Implementation_Cost.findOneAndDelete(Implementation_CostDeleteCondition)
+
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
+      return res.status(401).json({
+        success: false,
+        message: 'Implementation_Cost not found or user not authorised'
+      })
+
+    res.json({ success: true, message: 'Delete Implementation_Cost Successfull !' })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: 'Internal server error' })
+  }
+
+}
 
 
-//Get all ImplementationCost by idcontract
+//Get all Implementations by idcontract
 //@Access Public
 //ok
-exports.getImplementationCost_idcontract = async (req, res) => {
-  console.log("getImplementationCost_Contract is called >>>>", req.params.idcontract)
+exports.getImplementation_Cost_idcontract = async (req, res) => {
+  console.log("getImplementation_Cost_Contract is called >>>>", req.params.idcontract)
   try {
-    const ImplementationCost_data = await ImplementationCost.find({ contract: req.params.idcontract },)//.populate("contract", "-__v")
-    console.log("getImplementationCost_idcontract", ImplementationCost_data)
+    const Implementation_Cost_data = await Implementation_Cost.find({ contract: req.params.idcontract },)//.populate("contract", "-__v")
+    console.log("getImplementation_Cost_idcontract", Implementation_Cost_data)
     let InputIntoMoney = 0;
     let OutputIntoMoney = 0;
-    for (let i = 0; i < ImplementationCost_data.length; i++) {
-      console.log("InputIntoMoney: ", ImplementationCost_data[i].InputIntoMoney)
-      InputIntoMoney += ImplementationCost_data[i].InputIntoMoney;
-      OutputIntoMoney += ImplementationCost_data[i].OutputIntoMoney;
+    for (let i = 0; i < Implementation_Cost_data.length; i++) {
+      console.log("InputIntoMoney: ", Implementation_Cost_data[i].InputIntoMoney)
+      InputIntoMoney += Implementation_Cost_data[i].InputIntoMoney;
+      OutputIntoMoney += Implementation_Cost_data[i].OutputIntoMoney;
     }
     console.log(">>>>>>>tong", InputIntoMoney, "-", OutputIntoMoney);
-    res.json({ success: true, ImplementationCost: ImplementationCost_data })
+    res.json({ success: true, Implementation_Cost: Implementation_Cost_data })
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false, message: 'Internal server error' })
@@ -95,15 +146,15 @@ exports.getImplementationCost_idcontract = async (req, res) => {
 
 }
 
-//Get all ImplementationCost
+//Get all Implementation_Cost
 //@Access Public
 //Test: ok
-exports.getAllImplementationCost = async (req, res) => {
-  console.log("getAllImplementationCost is called")
+exports.getAllImplementation_Cost = async (req, res) => {
+  console.log("getAllImplementation_Cost is called")
   try {
-    const ImplementationCost_data = await ImplementationCost.find()//.populate("contract", "-__v")
-    res.json({ success: true, ImplementationCost: ImplementationCost_data })
-    console.log(ImplementationCost_data)
+    const Implementation_Cost_data = await Implementation_Cost.find()//.populate("contract", "-__v")
+    res.json({ success: true, Implementation_Cost: Implementation_Cost_data })
+    console.log(Implementation_Cost_data)
 
   } catch (error) {
     console.log(error)
@@ -111,14 +162,136 @@ exports.getAllImplementationCost = async (req, res) => {
   }
 }
 
+// createStagesImplementation -> Them giai doan trien khai voi id Category  idImplementation_Cost
+// @access Public
+// test: ok
+exports.create_StagesImplementation = async (req, res) => {
+  console.log("Test route ===> create_StagesImplementation is called !");
 
-// Create ImplementationCost add chi phi chung va 1 giai doan chi phi trien khai, THÊM TÊN DANH MỤC
-// goi ham nay khoi tao 1  ImplementationCost
+  const { Content } = req.body;
+  console.log("req.body.idImplementation_Cost", req.body.idImplementation_Cost)
+  console.log("req.body.Content", req.body.Content)
+
+  if (!req.body.Content)
+    return res.status(400).json({ success: false, message: "Chưa nhập nội dung!!!" });
+  try {
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
+      {
+        _id: req.body.idImplementation_Cost,
+      },
+      {
+        $push: {
+          StagesImplementation: {
+            Content,
+          },
+        },
+      },
+      {
+        new: true,
+        upsert: true,
+      }
+    );
+    console.log("Kiem tra Them 1 giai doan", newImplementation_Cost)
+    res.json({
+      success: true,
+      message: "Đã thêm thành công giai đoạn!",
+      StagesImplementation: newImplementation_Cost,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+// Cap nhat TEN GIAI DOAN 
+// @access Public
+// Test: ok
+exports.update_Stages_Implementation_Content = async (req, res) => {
+  console.log("Test route ===> update_StagesImplementation_Content is called !");
+
+  const {Content} = req.body;
+  console.log("req.body.idImplementation_Cost", req.params.idImplementation_Cost)
+  console.log("req.body.Content", req.body.Content)
+
+
+  try {
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
+      {
+        _id: req.params.idImplementation_Cost,
+        "StagesImplementation": { $elemMatch: { _id: req.params.idContentCost } }
+      },
+      {
+        $set: {
+          "StagesImplementation.$.Content": req.body.Content
+        }
+      }
+    );
+
+    res.json({
+      success: true,
+      message: "Cập nhật thành công!",
+      StagesImplementation: newImplementation_Cost,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+// Xoa 1 giai doan voi id giaidoan
+// @access Public
+//ok
+exports.delete_Stages_Implementation_Content = async (req, res) => {
+  console.log("Test route delete_Stages_Implementation_Content is called !");
+  console.log("req.params.idImplementation_Cost", req.params.idImplementation_Cost);
+  console.log("req.params.idContentCost", req.params.idContentCost);
+  try {
+
+    const deletedImplementation_Cost = await Implementation_Cost.updateOne(
+      {
+        _id: req.params.idImplementation_Cost
+      },
+      {
+        $pull:
+        {
+          "StagesImplementation": {
+            _id: req.params.idContentCost
+          }
+        }
+      }
+    );
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
+      return res.status(401).json({
+        success: false,
+        message: 'Implementation_Cost not found or user not authorised'
+      })
+    else
+        res.json({ success: true, message: 'Delete Successfull !' })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ success: false, message: 'Internal server error' })
+  }
+
+}
+
+///===
+
+
+
+
+
+
+
+
+
+// Create Implementation_Cost add chi phi chung va 1 giai doan chi phi trien khai, THÊM TÊN DANH MỤC
+// goi ham nay khoi tao 1  Implementation_Cost
 // @access Public
 //Test: ok
-exports.createImplementationCost = async (req, res) => {
+exports.createImplementation_Cost = async (req, res) => {
   console.log("Test route ===> CHi phi trien khai moiw is called !");
-  const {GeneralExpense, StagesImplementation, idcontract, user } = req.body;
+  const { GeneralExpense, StagesImplementation, idcontract, user } = req.body;
   console.log("Category: ", req.body.Category)
   console.log("GeneralExpense: ", req.body.GeneralExpense)
   console.log("StagesImplementation: ", req.body.StagesImplementation)
@@ -141,7 +314,7 @@ exports.createImplementationCost = async (req, res) => {
   if (!req.body.Category || !req.body.GeneralExpense || !req.body.StagesImplementation)
     return res.status(400).json({ success: false, message: "Missing Category Or GeneralExpense Or StagesImplementation" });
   try {
-    const newImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
       {
         contract: req.body.idcontract,
       },
@@ -168,7 +341,7 @@ exports.createImplementationCost = async (req, res) => {
     res.json({
       success: true,
       message: "Khởi tạo thành công chi phí triển khai !",
-      ImplementationCost: newImplementationCost,
+      Implementation_Cost: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -201,7 +374,7 @@ exports.createGeneralExpense = async (req, res) => {
   if (!req.body.Content)
     return res.status(400).json({ success: false, message: "Missing noidung" });
   try {
-    const newImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
       {
         contract: req.body.idcontract,
       },
@@ -223,7 +396,7 @@ exports.createGeneralExpense = async (req, res) => {
     res.json({
       success: true,
       message: "Thêm thành công giai đoạn chi phí chung",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -231,7 +404,7 @@ exports.createGeneralExpense = async (req, res) => {
   }
 }
 
-// Create ImplementationCost -> createStagesImplementation neu co them giai doan
+// Create Implementation_Cost -> createStagesImplementation neu co them giai doan
 // @access Public
 exports.createStagesImplementation = async (req, res) => {
   console.log("Test route ===> Giai doan chi phi Trien khai is called !");
@@ -257,7 +430,7 @@ exports.createStagesImplementation = async (req, res) => {
   if (!req.body.Content)
     return res.status(400).json({ success: false, message: "Chưa nhập nội dung!!!" });
   try {
-    const newImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
       {
         contract: req.body.idcontract,
       },
@@ -275,11 +448,11 @@ exports.createStagesImplementation = async (req, res) => {
         upsert: true,
       }
     );
-    console.log("Kiem tra Them 1 giai doan", newImplementationCost)
+    console.log("Kiem tra Them 1 giai doan", newImplementation_Cost)
     res.json({
       success: true,
       message: "Đã thêm thành công giai đoạn triển khai",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -288,7 +461,7 @@ exports.createStagesImplementation = async (req, res) => {
 }
 
 // them 1 chi phi cho chi phi chung
-// Create ImplementationCost - createGeneralExpense Add them chi phi chung neu can
+// Create Implementation_Cost - createGeneralExpense Add them chi phi chung neu can
 // @access Public
 
 exports.AddCostDetail = async (req, res, _id) => {
@@ -301,10 +474,10 @@ exports.AddCostDetail = async (req, res, _id) => {
     Quantity_times,
     IntoMoney,
     Note,
-    ImplementationCost_Id,
+    Implementation_Cost_Id,
     ContentCostId
   } = req.body;
-  console.log("id chi phí:", req.body.ImplementationCost_Id);
+  console.log("id chi phí:", req.body.Implementation_Cost_Id);
   console.log("id chi phí:", req.body.ContentCostId);
   try {
     if (req.body.Quantity_times == 0)
@@ -314,9 +487,9 @@ exports.AddCostDetail = async (req, res, _id) => {
     else
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
 
-    const newImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
       {
-        _id: req.body.ImplementationCost_Id,//req.params.idImplementationCost,
+        _id: req.body.Implementation_Cost_Id,//req.params.idImplementation_Cost,
         "GeneralExpense._id": req.body.ContentCostId//req.params.idContentCost, //nhan tu tham so
       },
       {
@@ -343,7 +516,7 @@ exports.AddCostDetail = async (req, res, _id) => {
     res.json({
       success: true,
       message: "Đã thêm chi phí vao chi phi chung",
-      ImplementationCost: newImplementationCost,
+      Implementation_Cost: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -353,7 +526,7 @@ exports.AddCostDetail = async (req, res, _id) => {
 }
 
 // them 1 chi phi cho chi phi tung giai doan
-// Create ImplementationCost - createGeneralExpense Add them chi phi chung neu can
+// Create Implementation_Cost - createGeneralExpense Add them chi phi chung neu can
 // @access Public
 
 exports.AddCostDetailStage = async (req, res) => {
@@ -366,7 +539,7 @@ exports.AddCostDetailStage = async (req, res) => {
     Quantity_times,
     IntoMoney,
     Note,
-    ImplementationCost_Id,
+    Implementation_Cost_Id,
     ContentCostId
   } = req.body;
 
@@ -378,9 +551,9 @@ exports.AddCostDetailStage = async (req, res) => {
     else
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
 
-    const newImplementationCost = await ImplementationCost.findOneAndUpdate(
+    const newImplementation_Cost = await Implementation_Cost.findOneAndUpdate(
       {
-        _id: req.body.ImplementationCost_Id,//req.params.idImplementationCost,
+        _id: req.body.Implementation_Cost_Id,//req.params.idImplementation_Cost,
         "StagesImplementation._id": req.body.ContentCostId//req.params.idContentCost, //nhan tu tham so
       },
       {
@@ -407,7 +580,7 @@ exports.AddCostDetailStage = async (req, res) => {
     res.json({
       success: true,
       message: "Đã thêm chi phí vao chi phi giai doan",
-      ImplementationCost: newImplementationCost,
+      Implementation_Cost: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -423,14 +596,14 @@ exports.update_GeneralExpense_Content = async (req, res) => {
   console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
   const { GeneralExpense_Content, idcontract, idContentCost } = req.body;
-  console.log("idcontract==========", req.params.idImplementationCost)
+  console.log("idcontract==========", req.params.idImplementation_Cost)
   console.log("idContentCost==========", req.params.idContentCost)
   console.log("Content", req.body.GeneralExpense_Content)
 
   try {
-    const newImplementationCost = await ImplementationCost.updateOne(
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
       {
-        _id: req.params.idImplementationCost,
+        _id: req.params.idImplementation_Cost,
         "GeneralExpense": { $elemMatch: { _id: req.params.idContentCost } }
       },
       {
@@ -443,7 +616,7 @@ exports.update_GeneralExpense_Content = async (req, res) => {
     res.json({
       success: true,
       message: "Cập nhật thành công giai đoạn chi phí chung",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -458,15 +631,15 @@ exports.update_GeneralExpense_Content = async (req, res) => {
 exports.update_StagesImplementation_Content = async (req, res) => {
   console.log("Test route ===> SUA GIAI ĐOẠN Giai doan chi phi chung is called !");
 
-  const { StagesImplementation_Content, idImplementationCost, idContentCost } = req.body;
-  console.log("idcontract==========", req.params.idImplementationCost)
+  const { StagesImplementation_Content, idImplementation_Cost, idContentCost } = req.body;
+  console.log("idcontract==========", req.params.idImplementation_Cost)
   console.log("idContentCost==========", req.params.idContentCost)
   console.log("Content", req.body.StagesImplementation_Content)
 
   try {
-    const newImplementationCost = await ImplementationCost.updateOne(
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
       {
-        _id: req.params.idImplementationCost,
+        _id: req.params.idImplementation_Cost,
         "StagesImplementation": { $elemMatch: { _id: req.params.idContentCost } }
       },
       {
@@ -479,7 +652,7 @@ exports.update_StagesImplementation_Content = async (req, res) => {
     res.json({
       success: true,
       message: "Cập nhật thành công giai đoạn chi phí  khai",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -518,7 +691,7 @@ exports.update_GeneralExpense_Cost = async (req, res) => {
     else
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
 
-    const newImplementationCost = await ImplementationCost.updateOne(
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
       {
         _id: req.params.idcontract,
         "GeneralExpense": { $elemMatch: { _id: req.params.idContentCost } },
@@ -548,7 +721,7 @@ exports.update_GeneralExpense_Cost = async (req, res) => {
     res.json({
       success: true,
       message: "Cập nhật thành công!",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -571,7 +744,7 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
     Quantity_times,
     IntoMoney,
     Note,
-    ImplementationCost_Id,
+    Implementation_Cost_Id,
     ContentCostId,
     idCost
   } = req.body;
@@ -588,7 +761,7 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
     else
       IntoMoney = req.body.UnitPrice * req.body.Quantity_days * req.body.Quantity_times
 
-    const newImplementationCost = await ImplementationCost.updateOne(
+    const newImplementation_Cost = await Implementation_Cost.updateOne(
       {
         _id: req.params.idcontract,
         "StagesImplementation": { $elemMatch: { _id: req.params.idContentCost } },
@@ -618,7 +791,7 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
     res.json({
       success: true,
       message: "Cập nhật thành công!",
-      StagesImplementation: newImplementationCost,
+      StagesImplementation: newImplementation_Cost,
     });
   } catch (error) {
     console.log(error);
@@ -627,24 +800,24 @@ exports.update_StagesImplementation_Cost = async (req, res) => {
 }
 
 
-// Delete  ImplementationCost by id
+// Delete  Implementation_Cost by id
 // @access Public
 //ok
-exports.deleteImplementationCost = async (req, res) => {
-  console.log("Test route deleteImplementationCost !");
+exports.deleteImplementation_Cost = async (req, res) => {
+  console.log("Test route deleteImplementation_Cost !");
   console.log(req.params.id);
   try {
-    const ImplementationCostDeleteCondition = { contract: req.params.id }//, user: req.userId }
-    const deletedImplementationCost = await ImplementationCost.findOneAndDelete(ImplementationCostDeleteCondition)
+    const Implementation_CostDeleteCondition = { contract: req.params.id }//, user: req.userId }
+    const deletedImplementation_Cost = await Implementation_Cost.findOneAndDelete(Implementation_CostDeleteCondition)
 
-    // User not authorised or ImplementationCost not found
-    if (!deletedImplementationCost)
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
       return res.status(401).json({
         success: false,
-        message: 'ImplementationCost not found or user not authorised'
+        message: 'Implementation_Cost not found or user not authorised'
       })
 
-    res.json({ success: true, message: 'Delete ImplementationCost Successfull !' })
+    res.json({ success: true, message: 'Delete Implementation_Cost Successfull !' })
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false, message: 'Internal server error' })
@@ -655,14 +828,14 @@ exports.deleteImplementationCost = async (req, res) => {
 // Xoa 1 giai doan voi id giaidoan
 // @access Public
 //ok
-exports.deleteImplementationCost_ContentCost = async (req, res) => {
-  console.log("Test route deleteImplementationCost_ContentCost !");
+exports.deleteImplementation_Cost_ContentCost = async (req, res) => {
+  console.log("Test route deleteImplementation_Cost_ContentCost !");
   console.log("ID Giai doan", req.params.idContentCost);
   try {
 
-    const deletedImplementationCost = await ImplementationCost.updateOne(
+    const deletedImplementation_Cost = await Implementation_Cost.updateOne(
       {
-        _id: req.params.idImplementationCost
+        _id: req.params.idImplementation_Cost
       },
       {
         $pull:
@@ -677,11 +850,11 @@ exports.deleteImplementationCost_ContentCost = async (req, res) => {
       }
     );
 
-    // User not authorised or ImplementationCost not found
-    if (!deletedImplementationCost)
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
       return res.status(401).json({
         success: false,
-        message: 'ImplementationCost GeneralExpense not found or user not authorised'
+        message: 'Implementation_Cost GeneralExpense not found or user not authorised'
       })
 
     res.json({ success: true, message: 'Delete GeneralExpense Successfull !' })
@@ -691,19 +864,21 @@ exports.deleteImplementationCost_ContentCost = async (req, res) => {
   }
 
 }
+
+
 // Xoa 1 chi phi trong 1 giai doan chi phi chung 
 // @access Public
 //ok
-exports.deleteImplementationCost_GeneralCostDetail = async (req, res) => {
-  console.log("Test route deleteImplementationCost_GeneralCostDetail !");
-  console.log("ID Chi phi", req.params.idImplementationCost);
+exports.deleteImplementation_Cost_GeneralCostDetail = async (req, res) => {
+  console.log("Test route deleteImplementation_Cost_GeneralCostDetail !");
+  console.log("ID Chi phi", req.params.idImplementation_Cost);
   console.log("ID Giai doan", req.params.idContentCost);
   console.log("ID Cost", req.params.id);
   try {
 
-    const deletedImplementationCost = await ImplementationCost.updateOne(
+    const deletedImplementation_Cost = await Implementation_Cost.updateOne(
       {
-        _id: req.params.idImplementationCost,
+        _id: req.params.idImplementation_Cost,
         "GeneralExpense._id": req.params.idContentCost
       },
       {
@@ -716,8 +891,8 @@ exports.deleteImplementationCost_GeneralCostDetail = async (req, res) => {
       }
     );
 
-    // User not authorised or ImplementationCost not found
-    if (!deletedImplementationCost)
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
       return res.status(401).json({
         success: false,
         message: 'Not found or user not authorised'
@@ -734,16 +909,16 @@ exports.deleteImplementationCost_GeneralCostDetail = async (req, res) => {
 // Xoa 1 chi phi trong 1 giai doan chi phi trien khai
 // @access Public
 //ok
-exports.deleteImplementationCost_StageCostDetail = async (req, res) => {
-  console.log("Test route deleteImplementationCost_StageCostDetail !");
-  console.log("ID Chi phi", req.params.idImplementationCost);
+exports.deleteImplementation_Cost_StageCostDetail = async (req, res) => {
+  console.log("Test route deleteImplementation_Cost_StageCostDetail !");
+  console.log("ID Chi phi", req.params.idImplementation_Cost);
   console.log("ID Giai doan", req.params.idContentCost);
   console.log("ID Cost", req.params.id);
   try {
 
-    const deletedImplementationCost = await ImplementationCost.updateOne(
+    const deletedImplementation_Cost = await Implementation_Cost.updateOne(
       {
-        _id: req.params.idImplementationCost,
+        _id: req.params.idImplementation_Cost,
         "StagesImplementation._id": req.params.idContentCost
       },
       {
@@ -757,8 +932,8 @@ exports.deleteImplementationCost_StageCostDetail = async (req, res) => {
       }
     );
 
-    // User not authorised or ImplementationCost not found
-    if (!deletedImplementationCost)
+    // User not authorised or Implementation_Cost not found
+    if (!deletedImplementation_Cost)
       return res.status(401).json({
         success: false,
         message: 'Not found or user not authorised'

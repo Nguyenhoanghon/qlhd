@@ -25,6 +25,7 @@ const UpdateAuxiliaryCostModal = () => {
 		getAuxiliaryCosts_byidContract,
 		setShowToast
 	} = useContext(AuxiliaryCostContext)
+
 	const {
 		ProductCostState: { ProductCosts },
 		getProductCost_byidContract
@@ -33,6 +34,7 @@ const UpdateAuxiliaryCostModal = () => {
 	// State get data AuxiliaryCost
 	const [updatedAuxiliaryCost, setupdatedAuxiliaryCost] = useState(AuxiliaryCost)
 	useEffect(() => setupdatedAuxiliaryCost(AuxiliaryCost), [AuxiliaryCost])
+	
 	//State get data Tong Doanh thu
 	console.log("=====> id",params.id)
 	useEffect(() => getProductCost_byidContract(params.id), [])

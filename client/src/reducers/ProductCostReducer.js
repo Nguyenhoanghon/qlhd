@@ -43,7 +43,6 @@ export const ProductCostReducer = (state, action) => {
 			const newProductCosts = state.ProductCosts.map(ProductCost =>
 				ProductCost._id === payload._id ? payload : ProductCost
 			)
-
 			return {
 				...state,
 				ProductCosts: newProductCosts

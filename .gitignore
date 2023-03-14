@@ -1,4 +1,7 @@
 server/node_modules
 server/controllers/functions.js
+server/controllers/Products_routes_object.js
+server/controllers/ProductCost_controller.js
+server/test_api_ProductCost.http
 server/Test.txt
 Discussion.txt

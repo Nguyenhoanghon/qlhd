@@ -40,7 +40,7 @@ GET http://localhost:5000/api/forms/capital-expenditure-cost/63b895ad315c46311dd
 ### Get MandayCost by idContract
 ### access public
 ###ok
-GET http://localhost:5000/api/forms/capital-expenditure-cost/contract/63c08c08b1a40f0ce190d6e1
+GET http://localhost:5000/api/forms/capital-expenditure-cost/contract/640d3b9b451dad4ca16782b1
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 
@@ -50,7 +50,7 @@ GET http://localhost:5000/api/forms/capital-expenditure-cost/contract/63c08c08b1
 ### update MandayCost
 ### access Public
 ###  
-PUT http://localhost:5000/api/forms/capital-expenditure-cost/put/63b8e868165f143e28359fb4
+PUT http://localhost:5000/api/forms/capital-expenditure-cost/put/6402f614416c1d823c301cc0
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5MDM1OSwiZXhwIjoxNjcxMzc2NzU5fQ.4WKjVO2EpJrYhAs9L38YaB4kl-P6t4D58HbDDOUXMCU
 

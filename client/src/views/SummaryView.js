@@ -184,7 +184,7 @@ export const Summary_id = () => {
 	//=== Get productcosts with idcontract
 	const {
 		ProductCostState: { ProductCost, ProductCosts, ProductCostsLoading },
-		getProductCost_byidContract,
+		getProductCost_idContract,
 		setShowAddProductCostModal
 	} = useContext(ProductCostContext)
 	// hàm tính tổng thành tiền
@@ -196,34 +196,52 @@ export const Summary_id = () => {
 		});
 		return sum;
 	}
+	// Start: Get ProductCosts by id Contract
+	useEffect(() => getProductCost_idContract(params.id), [])
 
 	//Ham checkbox Insurance
 	const [stateInsurance, setStateInsurance] = useState(false)
-	const toggleTheme = (value) => {
+	const toggleInsurance = (value) => {
 		setStateInsurance(value);
 	};
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_InputIntoMoney(ProductsCost) {
+		let Total_InputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_InputIntoMoney += ListProduct.InputIntoMoney
+			)))
 
-	// Start: Get ProductCosts by id Contract
-	useEffect(() => getProductCost_byidContract(params.id), [])
-	//tính tổng tiền bảo hiểm
-
-	function SumInsurance(mang1, mang2) {
-		let sum = 0;
-		mang1.forEach((element, index) => {
-			if (mang1[index]) {
-				sum += mang2[index];
-			}
-
-
-		});
-
-		return sum;
+		return Total_InputIntoMoney;
 	}
-	const TotalInsurance = 0.0065 * SumInsurance(ProductCosts.map((ProductCost) => ProductCost.Insurance), ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))
-	const TotalInputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.InputIntoMoney))//note
-	const TotalOutputIntoMoney = sumArray(ProductCosts.map((ProductCost) => ProductCost.OutputIntoMoney))//note
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_OutputIntoMoney(ProductsCost) {
+		let Total_OutputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_OutputIntoMoney += ListProduct.OutputIntoMoney
+			)))
+
+		return Total_OutputIntoMoney;
+	}
+
+	//Tinh tong thanh tien gia ban voi Insurance = true
+	function Sum_Insurance(ProductsCost) {
+		let Total_Insurance = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				ListProduct.Insurance === true ? Total_Insurance += ListProduct.OutputIntoMoney : 0
+			)))
+
+		return Total_Insurance;
+	}
+
+	const TotalInsurance = 0.0065 * Sum_Insurance(ProductCosts)
+
+	const TotalInputIntoMoney = Sum_InputIntoMoney(ProductCosts)
+	const TotalOutputIntoMoney = Sum_OutputIntoMoney(ProductCosts)
 	const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
-	console.log("TotalInsurance===: ",TotalInsurance)
+	console.log("TotalInsurance===: ", TotalInsurance)
 	//=== End Get productcosts with idcontract
 
 	//=== Get MandayCost 
@@ -235,7 +253,7 @@ export const Summary_id = () => {
 	// Start: Get all MandayCost by idContract
 	useEffect(() => getMandayCost_byidContract(params.id), [])
 	const TotalMandayCost = sumArray(MandayCosts.map((MandayCost) => MandayCost.IntoMoney))
-	console.log("TotalMandayCost===: ",TotalMandayCost)
+	console.log("TotalMandayCost===: ", TotalMandayCost)
 	//=== End Get MandayCost
 
 	//=== Get GuaranteeLetterCost
@@ -248,7 +266,7 @@ export const Summary_id = () => {
 	useEffect(() => getGuaranteeLetterCost_byidContract(params.id), [])
 
 	const TotalGuaranteeLetterCost = sumArray(GuaranteeLetterCosts.map((GuaranteeLetterCost) => GuaranteeLetterCost.IntoMoney))
-	console.log("TotalGuaranteeLetterCost===: ",TotalGuaranteeLetterCost)
+	console.log("TotalGuaranteeLetterCost===: ", TotalGuaranteeLetterCost)
 	//=== End Get GuaranteeLetterCost
 
 	//=== Get MiscExpenseCosts
@@ -260,7 +278,7 @@ export const Summary_id = () => {
 	// Start: Get all MiscExpenseCosts
 	useEffect(() => getMiscExpenseCost_byidContract(params.id), [])
 	const TotalMiscExpenseCost = sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
-	console.log("TotalMiscExpenseCost===: ",TotalMiscExpenseCost)
+	console.log("TotalMiscExpenseCost===: ", TotalMiscExpenseCost)
 	//=== End Get MiscExpenseCosts
 
 	//=== Get data CapitalExpenditureCost chi phi von
@@ -272,7 +290,7 @@ export const Summary_id = () => {
 	// Start: Get all CapitalExpenditureCosts
 	useEffect(() => getCapitalExpenditureCosts_byidContract(params.id), []);
 	const TotalCapitalExpense = sumArray(CapitalExpenditureCosts.map((CapitalExpenditureCost) => CapitalExpenditureCost.CapitalExpense))//ch
-	console.log("TotalCapitalExpense===: ",TotalCapitalExpense)
+	console.log("TotalCapitalExpense===: ", TotalCapitalExpense)
 	//=== End Get data CapitalExpenditureCost
 
 	//=== Get data AuxiliaryCost
@@ -281,17 +299,17 @@ export const Summary_id = () => {
 		getAuxiliaryCosts_byidContract
 	} = useContext(AuxiliaryCostContext)
 	// Start: Get AuxiliaryCosts by id Contract
-	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[])
+	useEffect(() => getAuxiliaryCosts_byidContract(params.id), [])
 
 	// hàm đổi giá trị chi phí % => giá trị tiền tuyệt đối
 	function changeCost(Cost, TotalOutputIntoMoney) {
 		let returnValue = Cost;
 		if (Cost < 1)
-		returnValue = Cost * TotalOutputIntoMoney;
+			returnValue = Cost * TotalOutputIntoMoney;
 		return returnValue
 	}
-	
-	function SumListCost(Auxiliary,TotalOutputIntoMoney) {
+
+	function SumListCost(Auxiliary, TotalOutputIntoMoney) {
 		let kq = 0;
 		Auxiliary.map(AuxiliaryCost =>
 			AuxiliaryCost.ListCosts.map(ListCost => (
@@ -303,7 +321,7 @@ export const Summary_id = () => {
 	function FindPlan(Auxiliary) {
 		let returnPlan = 0;
 		Auxiliary.map(AuxiliaryCost => returnPlan = AuxiliaryCost.Plan
-			)
+		)
 		return returnPlan;
 	}
 
@@ -315,25 +333,20 @@ export const Summary_id = () => {
 	if (Auxiliary_Plan === 1) {
 		CPXL = TotalCost / 0.8 * 0.2;
 		CPgross = CPXL + TotalCost;
-		
+
 	}
 	else {
 		CPXL = TotalCost / 0.7 * 0.25;
 		CPgross = CPXL + TotalCost;
 	}
 
-	console.log("CPgross=== : ",CPgross)
+	console.log("CPgross=== : ", CPgross)
 	//=== End Get data AuxiliaryCost
 
-
-
-
 	//=== Get data ImplementationCost
-
 	const {
-		ImplementationCostState: { ImplementationCost, ImplementationCosts, ImplementationCostsLoading },
-		getImplementationCosts_byidContract,
-		setShowAddImplementationCostModal
+		ImplementationCostState: { ImplementationCosts },
+		getImplementationCosts_byidContract
 	} = useContext(ImplementationCostContext)
 
 	// Start: Get all ImplementationCosts
@@ -371,7 +384,7 @@ export const Summary_id = () => {
 		ImplementationCosts.map(ImplementationCost => (
 			ImplementationCost.GeneralExpense.forEach((element, index) => {
 				All_Total += TotalGeneralExpense(index)
-				
+
 			})))
 
 		return All_Total;
@@ -396,129 +409,120 @@ export const Summary_id = () => {
 
 	return (
 		<>
-			<Card className='text-center mx-5 my-5' aninmation={false}>
+			<Card className='text-left mx-5 my-5' aninmation={false}>
 				<Card.Header as='h2'>BẢNG PHÂN TÍCH HIỆU QUẢ HỢP ĐỒNG - DỰ ÁN </Card.Header>
 				<Card.Body>
 					<Table striped bordered hover size="sm">
-						<thead >
+						{Contracts.map(Contract => (
+							<>
+						<thead key={Contract._id} >
 							<tr>
-								<th>Số hợp đồng/PO</th>
-								<th>Trung tâm</th>
-								<th>Phòng</th>
-								<th>Khách Hàng</th>
-								<th>Ngày</th>
-								<th>{/* Tỷ giá USD */}</th>
+								<th>Số hợp đồng/PO: {Contract.ContractID}</th>
+							</tr>
+							<tr>
+								<th>Trung tâm: {Contract.Center} </th>
+							</tr>
+							<tr>
+								<th>Phòng: {Contract.Deparment} </th>
+							</tr>
+							<tr>
+								<th>Khách Hàng: {Contract.CustomerID}</th>
+							</tr>
+							<tr>
+								<th>Ngày: {Contract.Date}</th>
 							</tr>
 						</thead>
-						<tbody>
-							{Contracts.map(Contract => (
-								<tr key={Contract._id}>
-									<td>{Contract.ContractID}</td>
-									<td>{Contract.Center}</td>
-									<td>{Contract.Deparment}</td>
-									<td>{Contract.CustomerID}</td>
-									<td>{Contract.Date}</td>
-									<td>{/* {Contract.RatioUSD} */}</td>
-								</tr>
-
-							))
-							}
-
-						</tbody>
+						</>
+						))
+						}
 					</Table>
-					<Table responsive="sm" striped bordered hover size="sm" >
-						<thead>
-							<tr>
-								<th rowSpan="2">STT</th>
-								<th rowSpan="2" width="15%">Tên hàng</th>
-								<th rowSpan="2" width="5%">Số lượng </th>
-								<th colSpan="3">Giá vốn hàng bán Giá kho</th>
-								<th colSpan="2 ">Doanh số Giá bán</th>
-								<th rowSpan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
-								<th rowSpan="2">Ghi chú</th>
-								{/*<th rowSpan="2">Thao tác</th>*/}
-							</tr>
-							<tr>
-								<th width='8%' as='pre'>Đơn giá FOB <br />
-									(EX-W)</th>
-								<th>Đơn giá kho</th>
-								<th>Thành tiền giá kho</th>
-								<th>Đơn giá bán</th>
-								<th>Thành tiền giá bán</th>
-							</tr>
-						</thead>
-						<tbody>
-							{ProductCosts.map(ProductCost => (
-								<tr key={ProductCost._id} >
-									<td>{TT++} </td>
-									<td>{ProductCost.ProductName}</td>
-									<td>{ProductCost.Quantity.toLocaleString()}</td>
-									<td>{ProductCost.FOBCost.toLocaleString()}</td>
-									<td>{ProductCost.InputPrice.toLocaleString()}</td>
-									<td>{ProductCost.InputIntoMoney.toLocaleString()}</td>
-									<td>{ProductCost.OutputPrice.toLocaleString()}</td>
-									<td>{ProductCost.OutputIntoMoney.toLocaleString()}</td>
-									<td>
-										{/* {ProductCost.Insurance} Check data*/}
-										<input
-											type='checkbox'
-											checked={ProductCost.Insurance}
-											onChange={(e) => toggleTheme(e.target.checked)}
-										/>
-									</td>
-									{/* Checkbox */}
-									<td>{ProductCost.Note}  </td>
-								</tr>
+					<Table responsive="sm"  striped bordered hover size="sm" >
+						{ProductCosts.map(ProductCost => (
+							<>
+								<thead className='text-center'>
+									<tr key={ProductCost._id}>
+										<th rowSpan="2">STT</th>
+										<th rowSpan="2" width="15%">Tên hàng</th>
+										<th rowSpan="2" width="5%">Số lượng </th>
+										<th colSpan="3">Giá vốn hàng bán Giá kho</th>
+										<th colSpan="2 ">Doanh số Giá bán</th>
+										<th rowSpan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
+									</tr>
+									<tr>
+										<th width='8%' as='pre'>Đơn giá FOB <br />
+											(EX-W)</th>
+										<th>Đơn giá kho</th>
+										<th>Thành tiền giá kho</th>
+										<th>Đơn giá bán</th>
+										<th>Thành tiền giá bán</th>
+									</tr>
+								</thead>
+								<tbody className='text-right'>
+									{ProductCost.ListProducts.map(ListProduct => (
+										<tr key={ListProduct._id} >
+											<td>{stt++}  </td>
+											<td>{ListProduct.ProductName}</td>
+											<td>{ListProduct.Quantity.toLocaleString()}</td>
+											<td>{ListProduct.FOBCost.toLocaleString()}</td>
+											<td>{ListProduct.InputPrice.toLocaleString()}</td>
+											<td>{ListProduct.InputIntoMoney.toLocaleString()}</td>
+											<td>{ListProduct.OutputPrice.toLocaleString()}</td>
+											<td>{ListProduct.OutputIntoMoney.toLocaleString()}</td>
+											<td>{ListProduct.Insurance}
+												<input
+													type='checkbox'
+													checked={ListProduct.Insurance}
+													onChange={(e) => toggleInsurance((e).target.checked)}
+												/>
+											</td>
 
-							))
-							}
-							<tr>
-								<td colSpan={5} >TỔNG CỘNG</td>
-								<td>{TotalInputIntoMoney.toLocaleString()}</td>
-								<td></td>
-								<td>{TotalOutputIntoMoney.toLocaleString()}</td>
-								<td></td>
-								<td></td>
+										</tr>
 
-							</tr>
-						</tbody>
+									))
+									}
+									<tr>
+										<td colSpan={5} >Tổng</td>
+										<td>{Sum_InputIntoMoney(ProductCosts).toLocaleString()}</td>
+										<td></td>
+										<td>{Sum_OutputIntoMoney(ProductCosts).toLocaleString()}</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={7} > Incentive (nếu có)</td>
+										<td>{ProductCost.Incentive == null ? 0 : ProductCost.Incentive.toLocaleString()}</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</>
+						))}
 						<tr>
 							<td>1</td>
 							<td colSpan={6} >Chi phí phát sinh khi thực hiện Dự Án </td>
-							<td>{Math.round(ExtraCost).toLocaleString()}</td>
+							<td className='text-right'>{Math.round(ExtraCost).toLocaleString()}</td>
 							<td></td>
-							<td></td>
-
 						</tr>
 						<tr >
 							<td>1.1</td>
 							<td colSpan={6} >Chi phí triển khai hợp đồng </td>
-							<td>{TotalImplementationCost.toLocaleString()}</td>
+							<td className='text-right'>{TotalImplementationCost.toLocaleString()}</td>
 							<td></td>
-							<td></td>
-
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí bảo hành phần cứng trích cho TT HSC 0.65%</td>
-							<td>{TotalInsurance.toLocaleString()}</td>
+							<td className='text-right'>{TotalInsurance.toLocaleString()}</td>
 							<td></td>
-							<td></td>
-
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí chung</td>
-							<td>{GeneralExpense.toLocaleString()}</td>
+							<td className='text-right'>{GeneralExpense.toLocaleString()}</td>
 							<td></td>
-							<td></td>
-
 						</tr>
 						<tr>
 							<td colSpan={2} ></td>
 							<td colSpan={5} >+ Chi phí triển khai</td>
-							<td>{StageImplementation.toLocaleString()}</td>
-							<td>{ }</td>
+							<td className='text-right'>{StageImplementation.toLocaleString()}</td>
 							<td></td>
 						</tr>
 						{CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
@@ -526,49 +530,49 @@ export const Summary_id = () => {
 								<tr key={CapitalExpenditureCost._id}>
 									<td>1.2</td>
 									<td colSpan={6} > Chi phí vốn</td>
-									<td>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày hàng tồn kho</td>
-									<td>{Math.round(CapitalExpenditureCost.InventoryDays).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.InventoryDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày triển khai</td>
-									<td>{Math.round(CapitalExpenditureCost.ImplementationDays).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.ImplementationDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Số ngày công nợ nhà cung cấp</td>
-									<td>{Math.round(CapitalExpenditureCost.BedtDays).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.BedtDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} > + Số ngày thu nợ </td>
-									<td>{Math.round(CapitalExpenditureCost.DebtCollectionDays).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.DebtCollectionDays).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Khách hàng trả trước (đặt cọc)</td>
-									<td>{Math.round(CapitalExpenditureCost.Deposits).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.Deposits).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
 								<tr>
 									<td colSpan={2} ></td>
 									<td colSpan={5} >+ Đặt cọc cho NTP </td>
-									<td>{Math.round(CapitalExpenditureCost.DepositsNTP).toLocaleString()}</td>
+									<td className='text-right'>{Math.round(CapitalExpenditureCost.DepositsNTP).toLocaleString()}</td>
 									<td></td>
 									<td></td>
 								</tr>
@@ -577,88 +581,78 @@ export const Summary_id = () => {
 						<tr >
 							<td>1.3</td>
 							<td colSpan={6} >Manday thực hiện của kỹ sư HPT tham gia</td>
-							<td>{Math.round(TotalMandayCost).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{Math.round(TotalMandayCost).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr >
 							<td>1.4</td>
 							<td colSpan={6} >Chi phí làm thư bảo lãnh (BL dự thầu, BL thực hiện HĐ, BL BH)</td>
-							<td>{Math.round(TotalGuaranteeLetterCost).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{Math.round(TotalGuaranteeLetterCost).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr >
 							<td>1.5</td>
 							<td colSpan={6} > Chi phí khác</td>
-							<td>{Math.round(TotalMiscExpenseCost).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{Math.round(TotalMiscExpenseCost).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>2</td>
 							<td colSpan={6} >Chi phí mua vật tư phụ (dự kiến) </td>
-							<td>{Math.round((CPgross / 10)).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{Math.round((CPgross / 10)).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>3</td>
 							<td colSpan={6} >Hiệu quả dự án (giá trị tuyệt đối)</td>
-							<td>{Math.round(hieuquaduan).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{hieuquaduan === null ? 0 : Math.round(hieuquaduan).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td>4</td>
 							<td colSpan={6} >Hiệu quả dự án (tỉ lệ trên doanh thu)</td>
-							<td>{((hieuquaduan / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
-							<td></td>
+							<td className='text-right'>{((hieuquaduan / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td colSpan={6} >Hiệu quả dự án (chưa trừ  Manday của kỹ sư HPT)</td>
-							<td>{Math.round((hieuquaduan + TotalMandayCost)).toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{Math.round((hieuquaduan + TotalMandayCost)).toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td colSpan={6} >Hiệu quả dự án (tỉ lệ doanh thu) - chưa trừ  Manday của kỹ sư HPT</td>
-							<td>{(((hieuquaduan + TotalMandayCost)/TotalOutputIntoMoney)*100).toFixed(2) + "%"}</td>
-							<td></td>
+							<td className='text-right'>{(((hieuquaduan + TotalMandayCost) / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td colSpan={6} >Incentive :</td>
-							<td>{TotalIncentive.toLocaleString()}</td>
-							<td></td>
+							<td className='text-right'>{TotalIncentive.toLocaleString()}</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td colSpan={6} >Hiệu quả dự án (có Incentive):</td>
-							<td>{(((hieuquaduan + TotalIncentive + TotalMandayCost) / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
-							<td></td>
+							<td className='text-right'>{(((hieuquaduan + TotalIncentive + TotalMandayCost) / TotalOutputIntoMoney) * 100).toFixed(2) + "%"}</td>
 							<td></td>
 						</tr>
-						<tr>
+						<tr className='text-center'>
 
 							<td colSpan={10}>
-							<a href={`/inputform/${params.id}`}>
-								<Button>
-									Nhập liệu
-								</Button>
-							</a>
-						</td>
+								<a href={`/inputform/${params.id}`}>
+									<Button>
+										Nhập liệu
+									</Button>
+								</a>
+							</td>
 
-					</tr>
-				</Table>
+						</tr>
+					</Table>
 
-			</Card.Body>
-		</Card>
+				</Card.Body>
+			</Card>
 		</>
 
 	)

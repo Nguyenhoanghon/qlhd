@@ -18,9 +18,12 @@ import addIcon from '../assets/plus-circle-fill.svg'*/
 import AddProductCostModal from '../components/ProductCost/AddProductModal'//Note
 import UpdateProductCostModal from '../components/ProductCost/UpdateProductModal'//Note
 import ActionButtons_ProductCost from '../components/ProductCost/ActionButtons_ProductCost'
-
-
 import Table from 'react-bootstrap/Table'
+
+
+//new 12/3
+import Add_Incentive from '../components/ProductCost/Add_Incentive'
+
 
 //View all product cost
 export const ProductCost_all = () => {
@@ -377,6 +380,261 @@ export const ProductCost_idContract = () => {
 			{body}
 			<AddProductCostModal />
 			{ProductCost !== null && <UpdateProductCostModal />}
+			{/* After ProductCost is added, show toast */}
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${type} text-white`}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
+		</>
+	)
+}
+
+//View product cost by id
+export const Products_idContract = () => {
+	const params = useParams();
+	// Contexts
+
+	const {
+		ProductCostState: {ProductCosts, ProductCostsLoading },
+		getProductCost_idContract,
+
+		setShowAddProductCostModal,
+		showToast: { show, message, type },
+		setShowToast,
+		showToast,
+		setShowAddIncentive_Modal,
+		
+	} = useContext(ProductCostContext)
+
+	// hàm tính tổng thành tiền
+	function sumArray(mang) {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
+	}
+
+	// Start: Get ProductCosts by id Contract
+
+	useEffect(() => getProductCost_idContract(params.idcontract), [showToast])
+	console.log("Test===>ProductCostView review useEffect: ", ProductCosts)
+
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_InputIntoMoney(ProductsCost) {
+		let Total_InputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_InputIntoMoney += ListProduct.InputIntoMoney
+			)))
+
+		return Total_InputIntoMoney;
+	}
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_OutputIntoMoney(ProductsCost) {
+		let Total_OutputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_OutputIntoMoney += ListProduct.OutputIntoMoney
+			)))
+
+		return Total_OutputIntoMoney;
+	}
+
+	//Ham checkbox Insurance
+	const [stateInsurance, setStateInsurance] = useState(false)
+	const toggleInsurance = (value) => {
+		setStateInsurance(value);
+	};
+	let body = null
+	let stt = 1
+	//const TotalInputIntoMoney = Sum_InputIntoMoney(ProductCosts)
+	//const TotalOutputIntoMoney = Sum_OutputIntoMoney(ProductCosts)
+	//const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
+
+	if (ProductCostsLoading) {
+		body = (
+			<div className='spinner-container'>
+				<Spinner animation='border' variant='info' />
+			</div>
+		)
+	} else if (ProductCosts.length === 0) {
+		body = (
+			<>
+				<Card className='text-center mx-5 my-5'>
+					<Card.Header as='h1'>CHI TIẾT HÀNG HÓA</Card.Header>
+					<Card.Body>
+						<Card.Title>Chưa có dữ liệu</Card.Title>
+						<Button
+							variant='primary'
+							onClick={setShowAddProductCostModal.bind(this, true)}
+						>
+							Thêm
+						</Button>
+					</Card.Body>
+				</Card>
+			</>
+		)
+	} else {
+
+		body = (
+			<>
+				<Card className='text-center mx-5 my-5'>
+					<Card.Header as='h1'>CHI TIẾT HÀNG HÓA</Card.Header>
+					<Card.Body>
+						<Table responsive="sm" striped bordered hover size="sm" >
+							{ProductCosts.map(ProductCost => (
+								<>
+									<thead>
+										<tr key={ProductCost._id}>
+											<th rowSpan="2">STT</th>
+											<th rowSpan="2" width="15%">Tên hàng</th>
+											<th rowSpan="2" width="5%">Số lượng </th>
+											<th colSpan="3">Giá vốn hàng bán Giá kho</th>
+											<th colSpan="2 ">Doanh số Giá bán</th>
+											<th rowSpan="2 " width="8%">Có tính Chi Phí Bảo Hiểm  </th>
+
+											<th rowSpan="2">Tỷ giá USD</th>
+											<th rowSpan="2">Ghi chú</th>
+											<th rowSpan="2">Thao tác</th>
+										</tr>
+										<tr>
+											<th width='8%' as='pre'>Đơn giá FOB <br />
+												(EX-W)</th>
+											<th>Đơn giá kho</th>
+											<th>Thành tiền giá kho</th>
+											<th>Đơn giá bán</th>
+											<th>Thành tiền giá bán</th>
+										</tr>
+									</thead>
+									<tbody>
+										{ProductCost.ListProducts.map(ListProduct => (
+											<tr key={ListProduct._id} >
+												<td>{stt++}  </td>
+												<td>{ListProduct.ProductName}</td>
+												<td>{ListProduct.Quantity.toLocaleString()}</td>
+												<td>{ListProduct.FOBCost.toLocaleString()}</td>
+												<td>{ListProduct.InputPrice.toLocaleString()}</td>
+												<td>{ListProduct.InputIntoMoney.toLocaleString()}</td>
+												<td>{ListProduct.OutputPrice.toLocaleString()}</td>
+												<td>{ListProduct.OutputIntoMoney.toLocaleString()}</td>
+												<td>{ListProduct.Insurance}
+													<input
+														type='checkbox'
+														checked={ListProduct.Insurance}
+														onChange={(e) => toggleInsurance((e).target.checked)}
+													/>
+												</td>
+
+												<td>{ListProduct.RatioUSD.toLocaleString()}</td>
+												<td>{ListProduct.Note}
+													<input
+														type='checkbox'
+														checked={ListProduct.EX_W}
+														onChange={(e) => toggleInsurance((e).target.checked)}
+													/>
+												</td>
+
+												<td>
+													<ActionButtons_ProductCost
+													contract={ProductCost.contract}
+													idProduct={ListProduct._id}
+													ProductName={ListProduct.ProductName}
+													Quantity={ListProduct.Quantity}
+													FOBCost={ListProduct.FOBCost}
+													InputPrice={ListProduct.InputPrice}
+													InputIntoMoney={ListProduct.InputIntoMoney}
+													OutputPrice={ListProduct.OutputPrice}
+													OutputIntoMoney={ListProduct.OutputIntoMoney}
+													Insurance={ListProduct.Insurance}
+													RatioUSD={ListProduct.RatioUSD}
+													Note={ListProduct.Note}
+													EX_W={ListProduct.EX_W}
+													/>
+												</td>
+
+											</tr>
+
+										))
+										}
+										<tr>
+											<td colSpan={5} >Tổng</td>
+											<td>{Sum_InputIntoMoney(ProductCosts).toLocaleString()}</td>
+											<td></td>
+											<td>{Sum_OutputIntoMoney(ProductCosts).toLocaleString()}</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td colSpan={7} > Incentive (nếu có)</td>
+											<td>{ProductCost.Incentive == null ? 0 : ProductCost.Incentive.toLocaleString()}</td>
+											<td></td>
+											<td></td>
+											<td colSpan={2}>
+												<Button
+													variant='primary'
+													onClick={setShowAddIncentive_Modal.bind(this, true)}
+												>
+													Nhập Incentive
+												</Button></td>
+										</tr>
+										<tr>
+											<td colSpan={13}>
+												<Button
+													variant='primary'
+													onClick={setShowAddProductCostModal.bind(this, true)}
+												>
+													Thêm hàng hoá
+												</Button>
+											</td>
+										</tr>
+									</tbody>
+								</>
+							))}
+						</Table>
+						<a href={`/summary/${params.idcontract}`}>
+							<Button
+								variant='primary'
+							>
+								Xem PTHD
+							</Button>
+						</a>
+						<span> </span>
+						<a href={`/inputform/${params.idcontract}`}>
+							<Button
+								variant='primary'
+							>
+								Kết thúc
+							</Button>
+						</a>
+					</Card.Body>
+				</Card>
+			</>
+		)
+	}
+	return (
+		<>
+			{body}
+			<AddProductCostModal />
+			{/* //12-3 */}
+			<Add_Incentive />
+			<UpdateProductCostModal/>
+
+			{/* {ProductCost !== null && <UpdateProductCostModal />} */}
 			{/* After ProductCost is added, show toast */}
 			<Toast
 				show={show}

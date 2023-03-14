@@ -30,13 +30,13 @@ ProductsController.getProducts_idcontract);
 // create_Products
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
-app.post("/api/forms/products/post",
-ProductsController.create_Products);
+app.post("/api/forms/products/post/:contract",
+ProductsController.add_Incentive);
 
 // Add ProductCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
-app.post("/api/forms/detailproduct/post",
+app.post("/api/forms/detailproduct/post/:contract",
 ProductsController.addProducts);
 
 
@@ -48,16 +48,16 @@ app.put("/api/forms/detailproduct/put",
 ProductsController.updateProduct_idcontract);
 
 
-// Delete ProductCost by idcontract/idProduct
+// Delete ProductCost by /:idProduct
 // URL access: POST http://localhost:5000/api/forms/detailproduct/delete/
 // access public
-app.delete("/api/forms/detailproduct/delete/",
-ProductsController.deleteProduct_idcontract);
+app.delete("/api/forms/detailproduct/delete/:idProduct",
+ProductsController.deleteProduct_idProduct);
 
 // Delete all Products by idcontract
 // URL access: POST http://localhost:5000/api/forms/detailproduct/delete/
 // access public
-app.delete("/api/forms/detailproduct/delete/:idProducts",
+app.delete("/api/forms/products/delete/:idProducts",
 ProductsController.deleteProduct);
 
 } //end Routes

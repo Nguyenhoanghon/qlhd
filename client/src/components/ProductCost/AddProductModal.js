@@ -11,7 +11,7 @@ const AddProductCostModal = () => {
 	const {
 		showAddProductCostModal,
 		setShowAddProductCostModal,
-		addProductCost,
+		addProducts,
 		setShowToast
 	} = useContext(ProductCostContext)
 
@@ -27,10 +27,9 @@ const AddProductCostModal = () => {
 		InputIntoMoney: '', // Can tinh  = Quantity * InputPrice
 		OutputIntoMoney: '', //Can tinh =  Quantity * OutputPrice
 		Insurance: false,
-		Incentive: 0,
 		Note: '',
 		ContractID: ''
-	}) //note là các biến trong 
+	})
 
 	const {
 		ProductName,
@@ -40,22 +39,18 @@ const AddProductCostModal = () => {
 		RatioUSD,
 		InputPrice,
 		OutputPrice,
-		InputIntoMoney,
-		OutputIntoMoney,
 		Insurance,
-		Incentive,
 		Note,
 		ContractID
-	} = newProductCost //note
-
+	} = newProductCost
 
 	const params = useParams();
-	newProductCost.ContractID = params.id;
-	
+	newProductCost.ContractID = params.idcontract;
+
 	//Checkbox nguon nhap
 	const toggleEX_W = event => {
 		setNewProductCost({ ...newProductCost, EX_W: event })
-		
+
 	};
 
 	//Ham checkbox Insurance
@@ -72,7 +67,7 @@ const AddProductCostModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addProductCost(params.id, newProductCost)
+		const { success, message } = await addProducts(params.idcontract, newProductCost)
 		resetAddProductCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
@@ -89,16 +84,15 @@ const AddProductCostModal = () => {
 			InputIntoMoney: '', // Can tinh  = Quantity * InputPrice
 			OutputIntoMoney: '', //Can tinh =  Quantity * OutputPrice
 			Insurance: false,
-			Incentive: 0,
 			Note: '',
 			ContractID: ''
 		}) //note cần sửa
 		setShowAddProductCostModal(false)
 	}
-	
+
 	return (
 
-		<Modal animation={false}  show={showAddProductCostModal} onHide={closeDialog}>
+		<Modal animation={false} show={showAddProductCostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>Thêm Hàng Hóa</Modal.Title>
 			</Modal.Header>
@@ -118,6 +112,18 @@ const AddProductCostModal = () => {
 							onChange={onChangeNewProductCostForm}
 						/>
 					</Form.Group> */}
+					<Form.Group>
+						<Form.Text id='xuatxu-help' muted as='h6'>
+							Nguồn nhập hàng
+						</Form.Text>
+						<Form.Check
+							type='checkbox'
+							checked={EX_W}
+							value={EX_W}
+							onChange={(e) => toggleEX_W(e.target.checked)}
+							label="Nhập từ nước ngoài"
+						/>
+					</Form.Group>
 					<Form.Group>
 						<Form.Text id='tenhang-help' muted as='h6'>
 							Nhập tên hàng
@@ -146,19 +152,8 @@ const AddProductCostModal = () => {
 							onChange={onChangeNewProductCostForm}
 						/>
 					</Form.Group>
-					<Form.Group>
-						<Form.Text id='xuatxu-help' muted as='h6'>
-							Nguồn nhập hàng
-						</Form.Text>
-						<Form.Check
-								type='checkbox'
-								checked={EX_W}
-								value={EX_W}
-								onChange={(e) => toggleEX_W(e.target.checked)}
-								label="Nhập từ nước ngoài"
-							/>
-					</Form.Group>
-					
+
+
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Đơn giá FOB
@@ -221,21 +216,6 @@ const AddProductCostModal = () => {
 							onChange={(e) => toggleInsurance(e.target.checked)}
 							label="Hàng hoá có tính chi phí bảo hiểm"
 						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='Incentive-help' muted as='h6'>
-							Tiền thưởng từ đối tác
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder=''
-							name='Incentive'
-							required
-							aria-describedby='Incentive-help'
-							value={Incentive}
-							onChange={onChangeNewProductCostForm}
-						/>
-
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Note-help' muted as='h6'>

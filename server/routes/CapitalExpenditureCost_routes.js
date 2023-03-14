@@ -34,7 +34,7 @@ CapitalExpenditureCostController.getCapitalExpenditureCost_byidContract);
 // Create CapitalExpenditureCost 
 // URL access: POST http://localhost:5000/api/forms/manday-cost/post
 // access public
-app.post("/api/forms/capital-expenditure-cost/post",[verifySignUp.checkDuplicateCapitalExpenditureCost],
+app.post("/api/forms/capital-expenditure-cost/post",//[verifySignUp.checkDuplicateCapitalExpenditureCost],
 CapitalExpenditureCostController.addCapitalExpenditureCost);
 
 

@@ -39,11 +39,14 @@ const ActionButtons_CapitalExpenditureCost = ({ _id }) => {
 	return (
 		<>
 			
-			<Button className='post-button' onClick={chooseCapitalExpenditureCost.bind(this, _id)}>
-				<img src={editIcon} alt='edit' width='24' height='24' />
+			<Button variant="primary" onClick={chooseCapitalExpenditureCost.bind(this, _id)}>
+				{/* <img src={editIcon} alt='edit' width='24' height='24' /> */}
+				Cập nhật
 			</Button>
-			<Button className='post-button' onClick={submit}>
-				<img src={deleteIcon} alt='delete' width='24' height='24' />
+			<span> </span>
+			<Button variant="primary" onClick={submit}>
+				{/* <img src={deleteIcon} alt='delete' width='24' height='24' /> */}
+				Xoá
 			</Button>
 		</>
 	)

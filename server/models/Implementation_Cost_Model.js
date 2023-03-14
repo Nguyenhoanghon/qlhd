@@ -16,9 +16,8 @@ const ContentCost = new Schema({
   Costs: [CostDetail],
 });
 
-const ImplementationCost = new Schema({
+const Implementation_Cost = new Schema({
   Category: String,
-  GeneralExpense: [ContentCost],
   StagesImplementation: [ContentCost],
 
   contract: {
@@ -32,4 +31,4 @@ const ImplementationCost = new Schema({
   },
 });
 
-module.exports = mongoose.model("ImplementationCost", ImplementationCost);
+module.exports = mongoose.model("Implementation_Cost", Implementation_Cost);

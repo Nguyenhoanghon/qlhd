@@ -17,12 +17,13 @@ const AddImplementationCostModal = () => {
 
 	// State
 	const [newImplementationCost, setNewImplementationCost] = useState({
+		Category: '',
 		GeneralExpense: '',
 		StagesImplementation: '',
 		idcontract:''
 	})
 
-	const { GeneralExpense, StagesImplementation, idcontract } = newImplementationCost
+	const { Category, GeneralExpense, StagesImplementation, idcontract } = newImplementationCost
 
 	//Load id Implementation
 	const params = useParams();
@@ -43,7 +44,7 @@ const AddImplementationCostModal = () => {
 	}
 
 	const resetAddImplementationCostData = () => {
-		setNewImplementationCost({ GeneralExpense: '', StagesImplementation: '', idcontract:'' })
+		setNewImplementationCost({ Category: '', GeneralExpense: '', StagesImplementation: '', idcontract:'' })
 		setShowAddImplementationCostModal(false)
 	}
 
@@ -65,6 +66,20 @@ const AddImplementationCostModal = () => {
 							required
 							aria-describedby='noidung-help'
 							value={idcontract}
+							onChange={onChangeNewImplementationCostForm}
+						/>						
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='Category-help' muted as="h6">
+							Hạng mục chi phí
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder=''
+							name='Category'
+							required
+							aria-describedby='noidung-help'
+							value={Category}
 							onChange={onChangeNewImplementationCostForm}
 						/>						
 					</Form.Group>

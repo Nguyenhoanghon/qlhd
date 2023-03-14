@@ -40,6 +40,7 @@ export const CapitalExpenditureCostReducer = (state, action) => {
 			return { ...state, CapitalExpenditureCost: payload }
 
 		case UPDATE:
+			
 			const newCapitalExpenditureCosts = state.CapitalExpenditureCosts.map(CapitalExpenditureCost =>
 				CapitalExpenditureCost._id === payload._id ? payload : CapitalExpenditureCost
 			)

@@ -6,7 +6,7 @@ const { update } = require('../models/User_Model');
 const { response } = require('express');
 const Contract = db.Contract;
 const AuxiliaryCost = db.AuxiliaryCost;
-const ProductCost = db.ProductCost;
+const Products = db.Products;
 
 //============== Controllers Public Access ==============//
 
@@ -34,53 +34,59 @@ exports.getAuxiliaryCost_byid = async (req, res) => {
 //Get AuxiliaryCost by idContract
 //@RepairNew: Not
 exports.getAuxiliaryCost_byidContract = async (req, res) => {
-    console.log("getAllAuxiliaryCost is called",req.params.id)
-    //!!!
-    
-    //load Renevue
-    let Renevue = 0;
-    try {
-        const ProductCost_data = await ProductCost.find({ contract: req.params.id })
-        for (let i = 0; i < ProductCost_data.length; i++) {
-            Renevue += ProductCost_data[i].OutputIntoMoney;
-        }
-        console.log("Load Renevue===:", Renevue)
-    }
-    catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
-    //Update Renevue
-    console.log("Data newAuxiliaryCost.Renevue===:", Renevue)
-    try {
-        const response = await AuxiliaryCost.updateOne(
-            {
-                contract: req.params.id,
-            },
-            {
-                $set: {
-                    Renevue: Renevue,
-                },
-                contract: req.params.id,
-                user: req.userId, //note
-            },
-            {
-                new: true,
-                upsert: true,
-            }
-        );
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: " Internal server error" });
-    }
-    //!!!
+    console.log("getAllAuxiliaryCost is called", req.params.id)
+
     try {
         const AuxiliaryCost_data = await AuxiliaryCost.find({ contract: req.params.id })
         if (AuxiliaryCost_data == null)
             res.json({ success: true, message: "AuxiliaryCost not found !" })
-        else
+        else {
+            /*
+            //Start Update Revenue
+            //load Renevue
+            let Renevue = 0;
+            try {
+                const ProductCost_data = await ProductCost.find({ contract: req.params.id })
+                for (let i = 0; i < ProductCost_data.length; i++) {
+                    Renevue += ProductCost_data[i].OutputIntoMoney;
+                }
+                console.log("Load Renevue===:", Renevue)
+            }
+            catch (error) {
+                console.log(error)
+                res.status(500).json({ success: false, message: 'Internal server error' })
+            }
+            //Update Renevue
+            console.log("Data newAuxiliaryCost.Renevue===:", Renevue)
+            try {
+                const response = await AuxiliaryCost.updateOne(
+                    {
+                        contract: req.params.id,
+                    },
+                    {
+                        $set: {
+                            Renevue: Renevue,
+                        },
+                        contract: req.params.id,
+                        user: req.userId, //note
+                    },
+                    {
+                        new: true,
+                        upsert: true,
+                    }
+                );
+            } catch (error) {
+                console.log(error);
+                res.status(500).json({ success: false, message: " Internal server error" });
+            }
+            */
+            //end update Revenue
 
             res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data })
+        }
+
+
+
         console.log(AuxiliaryCost_data)
 
     } catch (error) {
@@ -140,10 +146,12 @@ exports.create_AuxiliaryCost = async (req, res) => {
     //load Renevue
     newAuxiliaryCost.Renevue = 0;
     try {
-        const ProductCost_data = await ProductCost.find({ contract: req.params.idcontract })
-        for (let i = 0; i < ProductCost_data.length; i++) {
-            newAuxiliaryCost.Renevue += ProductCost_data[i].OutputIntoMoney;
-        }
+        const Products_data = await Products.find({ contract: req.params.idcontract })
+
+        Products_data.map(Products =>
+                Products.ListProducts.map(ListProduct => (
+                    newAuxiliaryCost.Renevue += ListProduct.OutputIntoMoney
+                )))
         console.log("Load Renevue===:", newAuxiliaryCost.Renevue)
     }
     catch (error) {
@@ -153,7 +161,7 @@ exports.create_AuxiliaryCost = async (req, res) => {
     //test
     console.log("Data newAuxiliaryCost.Renevue===:", newAuxiliaryCost)
 
-    if (req.body.Plan===null)
+    if (req.body.Plan === null)
         return res.status(400).json({ success: false, message: "Missing Renevue Or Plan" });
     try {
         const response = await AuxiliaryCost.findOneAndUpdate(
@@ -215,25 +223,25 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
     try {
         //Kiem tra hop dong co ton tai?
         const contract = await Contract.find({ _id: req.params.idcontract }, (err, Contract) => {
-            if (Contract.length != 0){
+            if (Contract.length != 0) {
                 //set ContractID so hop dong
-                
+
                 newAuxiliaryCost.contractID = Contract.map(contract => contract.ContractID);
                 console.log(">>>>>>>>>>> Find Cotract ====", newAuxiliaryCost.contractID);
-            
-                
+
+
             }
             else
                 res.json({ success: true, message: "Not found Contract" })
         });
-       
+
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Internal server error' })
     }
 
     console.log(">>>>>>>>>>> newAuxiliaryCost.contractID: ", newAuxiliaryCost.contractID);
-    if (!req.body.Content || !req.body.Cost ||req.body.contractID )
+    if (!req.body.Content || !req.body.Cost || req.body.contractID)
         return res.status(400).json({ success: false, message: "Missing Content  dsdsd  or Cost" });
     try {
         const newAuxiliaryCost = await AuxiliaryCost.findOneAndUpdate(
@@ -247,11 +255,11 @@ exports.add_AuxiliaryCost_Cost = async (req, res) => {
                         Cost,
                         Note
                     },
-                    
+
                 },
-               contract: req.params.idcontract,
-               contractID: "HD01",
-               user: req.userId,
+                contract: req.params.idcontract,
+                contractID: "HD01",
+                user: req.userId,
             },
             {
                 new: true,
@@ -443,11 +451,15 @@ exports.update_AuxiliaryCost_Cost = async (req, res) => {
         // Load data tu Form 1: Lay tong gia von va Doanh thu
         //load Renevue
         updatedAuxiliaryCost.Renevue = 0;
+
         try {
-            const ProductCost_data = await ProductCost.find({ contract: req.params.idcontract })
-            for (let i = 0; i < ProductCost_data.length; i++) {
-                updatedAuxiliaryCost.Renevue += ProductCost_data[i].OutputIntoMoney;
-            }
+            const Products_data = await Products.find({ contract: req.params.idcontract })
+        //doanh thu
+        Products_data.map(Products =>
+            Products.ListProducts.map(ListProduct => (
+                updatedAuxiliaryCost.Renevue += ListProduct.OutputIntoMoney
+            )))
+
             console.log("Load Renevue===:", updatedAuxiliaryCost.Renevue)
 
         }
@@ -563,7 +575,7 @@ exports.deleteAuxiliaryCost_Cost = async (req, res) => {
     console.log("Test route deleteAuxiliaryCost_Cost !");
     console.log("req.params.id", req.params.idcontract);
     console.log("req.params.idCost", req.params.idCost)
-    
+
     try {
 
         const delete_AuxiliaryCost = await AuxiliaryCost.updateOne(
@@ -607,19 +619,19 @@ exports.exportAuxiliaryCost = async (req, res) => {
         }) */
         const AuxiliarycostsData = await AuxiliaryCost.find({});
         AuxiliarycostsData.forEach((Auxiliarycost) => {
-            const {id, Renevue, Plan, ListCosts, contract, user} = Auxiliarycost;
-            Auxiliarycosts.push({id, Renevue, Plan, ListCosts, contract, user});
+            const { id, Renevue, Plan, ListCosts, contract, user } = Auxiliarycost;
+            Auxiliarycosts.push({ id, Renevue, Plan, ListCosts, contract, user });
         });
 
         const csvFields = ["id", "Renevue", "Plan", "ListCosts", "contract", "user"];
-        const csvParser = new CsvParser({csvFields});
+        const csvParser = new CsvParser({ csvFields });
         const csvData = csvParser.parser(Auxiliarycosts);
-        
-        res.setHeader("Content-Type","text/CSV");
-        res.setHeader("Content-Disposition","attatchment: filename=AuxiliarycostsData.csv");
+
+        res.setHeader("Content-Type", "text/CSV");
+        res.setHeader("Content-Disposition", "attatchment: filename=AuxiliarycostsData.csv");
         res.status(200).end(csvData);
 
-        
+
         //res.json({ success: true, message: 'Export Successfull !' })
     } catch (error) {
         console.log(error)

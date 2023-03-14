@@ -16,21 +16,19 @@ GET http://localhost:5000/api/forms/contract
 ### create_Products
 ### access Public
 ### running ok
-POST http://localhost:5000/api/forms/products/post
+POST http://localhost:5000/api/forms/products/post/6402f614416c1d823c301cc0
 Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
 
 {
-  "Incentive": 1000000,
-  "contract": "6402f614416c1d823c301cc0",
-  "user": "6402f592416c1d823c301cb6"
+  "Incentive": 9000000
 }
 
 
 ### add_detail_Products
 ### access Public
 ### Test: ok
-POST http://localhost:5000/api/forms/detailproduct/post
+POST http://localhost:5000/api/forms/detailproduct/post/640cf9cae1052534494d6e7f
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
 
@@ -43,8 +41,7 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMT
   "InputPrice": 3000000,
   "OutputPrice": 80000000,
   "Insurance": 1,
-  "Note": "A",
-  "contract": "6402f614416c1d823c301cc0"
+  "Note": "A"
 }
 
 ### Update_detail_Products by idcontract/idProduct
@@ -77,24 +74,20 @@ GET http://localhost:5000/api/forms/products
 ### Get all products
 ### access public
 ###Test: ok
-GET http://localhost:5000/api/forms/products/6402f614416c1d823c301cc0
+GET http://localhost:5000/api/forms/products/640d3565451dad4ca167827c
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
-### delete by idcontract/idProduct
+### delete 1 hang hon by /:idProduct
 ### access Public
 ### Test: ok
-DELETE  http://localhost:5000/api/forms/detailproduct/delete
+DELETE  http://localhost:5000/api/forms/detailproduct/delete/640d360b451dad4ca1678287
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU
 
-{
-  "idcontract": "64042be3272b3022644b428f",
-  "idProduct": "640aa7fcddaa422178e8311f"
-}
 
 ### delete by /:Products._id
 ### access Public
 ### Test: ok
-DELETE  http://localhost:5000/api/forms/detailproduct/delete/640a9f2a21826aae6d3e5212
+DELETE  http://localhost:5000/api/forms/products/delete/640f1f2e30ea798a00dcf2d3
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjYyOTcwMTg3OGFmMTg2NGVhOGMxNSIsImlhdCI6MTY3MzA1OTIyNiwiZXhwIjoxNjczMDY1NjI2fQ.r8jOYfbpL1t2LM8fb4p2k30XYQ_OFTkLeWbZfGH30qU

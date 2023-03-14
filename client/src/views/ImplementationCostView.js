@@ -298,11 +298,12 @@ export const ImplementationCost_byidContract = () => {
 		// !!!!
 		update_GeneralExpense_Content,
 		showToast: { show, message, type },
-		setShowToast
+		setShowToast,
+		showToast
 	} = useContext(ImplementationCostContext)
 
 	// Start: Get ImplementationCosts by idcontract
-	useEffect(() => getImplementationCosts_byidContract(params.id)) //!!! Bug load lien tuc
+	useEffect(() => getImplementationCosts_byidContract(params.id),[showToast]) //!!! Bug load lien tuc
 	
 
 	//Ham tinh tong chi phi 1 giai doan trien khai

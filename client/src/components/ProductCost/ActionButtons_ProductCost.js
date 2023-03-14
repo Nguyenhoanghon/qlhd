@@ -8,14 +8,16 @@ import { useContext } from 'react'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
-const ActionButtons_ProductCost = ({ _id }) => {
-	const { deleteProductCost, findProductCost, setShowUpdateProductCostModal } = useContext(
+const ActionButtons_ProductCost = (_id) => {
+	const { delete_ProductCost,Data_update, setData_update, setshowUpdateProductCostModal } = useContext(
 		ProductCostContext
 	) 
 
-	const chooseProductCost = ProductCostId => {
-		findProductCost(ProductCostId)
-		setShowUpdateProductCostModal(true)
+	const chooseProductCost = _id => {
+		//findProductCost(ProductCostId)
+		setData_update(_id)
+		console.log("Data in button", Data_update)
+		setshowUpdateProductCostModal(true)
 	}
 	function submit () {
 		confirmAlert({
@@ -24,7 +26,7 @@ const ActionButtons_ProductCost = ({ _id }) => {
 		  buttons: [
 			{
 			  label: 'Có',
-			  onClick: () => deleteProductCost(_id)
+			  onClick: () => delete_ProductCost(_id)
 			},
 			{
 			  label: 'Không',
@@ -34,7 +36,7 @@ const ActionButtons_ProductCost = ({ _id }) => {
 		});
 	  };
 	  const closeDialog = () => {
-		setShowUpdateProductCostModal(false)
+		setshowUpdateProductCostModal(false)
 	}
 	return (
 		<>

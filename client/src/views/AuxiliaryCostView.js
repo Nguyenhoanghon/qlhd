@@ -32,10 +32,11 @@ export const AuxiliaryCost_byidContract = () => {
 		setshowcreate_AuxiliaryCost_Modal,
 		setshowadd_AuxiliaryCost_Cost_Modal,
 		showToast: { show, message, type },
-		setShowToast
+		setShowToast,
+		showToast
 	} = useContext(AuxiliaryCostContext)
 	// Start: Get AuxiliaryCosts by id Contract
-	useEffect(() => getAuxiliaryCosts_byidContract(params.id)) //,id),[]
+	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[showToast])
 	console.log("AuxiliaryCosts======>>>>>", AuxiliaryCosts)
 
 	// Start: Get ProductCosts by id Contract ==>> Load doanh thu

@@ -4,7 +4,7 @@ var bcrypt = require("bcryptjs");
 const db = require("../models");
 const Contract = db.Contract;
 const CapitalExpenditureCost = db.CapitalExpenditureCost;
-const ProductCost = db.ProductCost;
+const Products = db.Products;
 
 //============== Controllers Public Access ==============//
 
@@ -54,15 +54,22 @@ exports.getCapitalExpenditureCost_byidContract = async (req, res) => {
         if (CapitalExpenditureCost_data == null)
             res.json({ success: true, message: "idcontract not found !" })
         else {
+
             //=== Update gia von, doanh thu (CapitalCost, Revenue )
-            const ProductCost_data = await ProductCost.find({ contract: req.params.idcontract })
+            const Products_data = await Products.find({ contract: req.params.idcontract })
+            console.log("ProductCost_data,", req.params.idcontract, Products_data)
             CapitalExpenditureCost_data[0].CapitalCost = 0;
             CapitalExpenditureCost_data[0].Revenue = 0;
-            for (let i = 0; i < ProductCost_data.length; i++) {
-                console.log(ProductCost_data[i].InputIntoMoney)
-                CapitalExpenditureCost_data[0].CapitalCost += ProductCost_data[i].InputIntoMoney;
-                CapitalExpenditureCost_data[0].Revenue += ProductCost_data[i].OutputIntoMoney;
-            }
+            //doanh thu
+            Products_data.map(Products =>
+                Products.ListProducts.map(ListProduct => (
+                    CapitalExpenditureCost_data[0].Revenue += ListProduct.OutputIntoMoney
+                )))
+            //gia von
+            Products_data.map(Products =>
+                Products.ListProducts.map(ListProduct => (
+                    CapitalExpenditureCost_data[0].CapitalCost += ListProduct.InputIntoMoney
+                )))
             //Update Dat coc cua khach hang (Deposits)
             CapitalExpenditureCost_data[0].Deposits = CapitalExpenditureCost_data[0].Revenue * 0.2
             //Update Dat coc NTP (DepositsNTP)
@@ -73,6 +80,7 @@ exports.getCapitalExpenditureCost_byidContract = async (req, res) => {
             CapitalExpenditureCost.findOneAndUpdate({ contract: req.params.idcontract }, CapitalExpenditureCost_data[0], { new: true })
             //=== End Update gia von, doanh thu (CapitalCost, Revenue )
             //Response Client
+
             res.json({ success: true, CapitalExpenditureCost: CapitalExpenditureCost_data })
         }
     }
@@ -89,7 +97,7 @@ exports.getCapitalExpenditureCost_byidContract = async (req, res) => {
 //    - De loc theo hop dong thi code them tra ve _id cua req.body.ContractID
 
 exports.addCapitalExpenditureCost = async (req, res) => {
-    console.log("Test route ===> addCapitalExpenditureCost is called !");
+    console.log("Test route ===> addCapitalExpenditureCost is called !",req.params.idcontract);
 
     //Load Tong gia von va tong doanh thu tu Form1  
 
@@ -103,7 +111,8 @@ exports.addCapitalExpenditureCost = async (req, res) => {
         DebtCollectionDays,
         Deposits,
         DepositsNTP,
-        Note
+        Note,
+        ContractID
     } = req.body
 
     const newCapitalExpenditureCost = new CapitalExpenditureCost({
@@ -123,14 +132,21 @@ exports.addCapitalExpenditureCost = async (req, res) => {
 
     try {
         // Load data tu Form 1: Lay tong gia von va Doanh thu
-        const ProductCost_data = await ProductCost.find({ contract: req.body.ContractID })
         newCapitalExpenditureCost.CapitalCost = 0;
         newCapitalExpenditureCost.Revenue = 0;
-        for (let i = 0; i < ProductCost_data.length; i++) {
-            console.log(ProductCost_data[i].InputIntoMoney)
-            newCapitalExpenditureCost.CapitalCost += ProductCost_data[i].InputIntoMoney;
-            newCapitalExpenditureCost.Revenue += ProductCost_data[i].OutputIntoMoney;
-        }
+        
+        const Products_data = await Products.find({ contract: req.body.ContractID })
+        //doanh thu
+        Products_data.map(Products =>
+            Products.ListProducts.map(ListProduct => (
+                newCapitalExpenditureCost.Revenue += ListProduct.OutputIntoMoney
+            )))
+        //gia von
+        Products_data.map(Products =>
+            Products.ListProducts.map(ListProduct => (
+                newCapitalExpenditureCost.CapitalCost += ListProduct.InputIntoMoney
+            )))
+
         console.log("Sau khi load tu Form 1>>>>>>>CapitalCost: ", newCapitalExpenditureCost.CapitalCost, "- Revenue: ", newCapitalExpenditureCost.Revenue);
         //Tinh Dat coc cua khach hang
         newCapitalExpenditureCost.Deposits = newCapitalExpenditureCost.Revenue * 0.2
@@ -139,7 +155,6 @@ exports.addCapitalExpenditureCost = async (req, res) => {
         console.log("Sau khi load tu Form 1>>>>>>>Deposits: ", newCapitalExpenditureCost.Deposits, "- DepositsNTP: ", newCapitalExpenditureCost.DepositsNTP);
         //Tinh chi phi von
         newCapitalExpenditureCost.CapitalExpense = ((newCapitalExpenditureCost.InventoryDays + newCapitalExpenditureCost.ImplementationDays - newCapitalExpenditureCost.BedtDays) * newCapitalExpenditureCost.CapitalCost + newCapitalExpenditureCost.DebtCollectionDays * (newCapitalExpenditureCost.Revenue - newCapitalExpenditureCost.Deposits + newCapitalExpenditureCost.DepositsNTP)) * 0.1 / 365;
-
 
         //Thuc hien luu vao DB voi dieu kien theo tung Hop dong
         Contract.find({ _id: req.body.ContractID }, (err, Contract) => {
@@ -174,7 +189,7 @@ exports.addCapitalExpenditureCost = async (req, res) => {
 // update CapitalExpenditureCost By id
 // @access Public
 exports.updateCapitalExpenditureCost = async (req, res) => {
-    console.log("Test route ===> addCapitalExpenditureCost is called !");
+    console.log("Test route ===> updateCapitalExpenditureCost is called !");
     //Load Tong gia von va tong doanh thu tu Form1
     const {
         CapitalCost,
@@ -209,16 +224,24 @@ exports.updateCapitalExpenditureCost = async (req, res) => {
     try {
 
         // Load data tu Form 1: Lay tong gia von va Doanh thu
-        const ProductCost_data = await ProductCost.find({ contract: req.body.ContractID })
-        //const ProductCost_data = await ProductCost.find()//.populate("contract", "-__v")
+        
         updatedCapitalExpenditureCost.CapitalCost = 0;
         updatedCapitalExpenditureCost.Revenue = 0;
-        for (let i = 0; i < ProductCost_data.length; i++) {
-            console.log(ProductCost_data[i].InputIntoMoney)
-            updatedCapitalExpenditureCost.CapitalCost += ProductCost_data[i].InputIntoMoney;
-            updatedCapitalExpenditureCost.Revenue += ProductCost_data[i].OutputIntoMoney;
-        }
 
+        //=== Update gia von, doanh thu (CapitalCost, Revenue )
+        const Products_data = await Products.find({ contract: req.body.ContractID })
+        console.log("Products_data======updateCapitalExpenditureCost", Products_data)
+        //doanh thu
+        Products_data.map(Products =>
+            Products.ListProducts.map(ListProduct => (
+                updatedCapitalExpenditureCost.Revenue += ListProduct.OutputIntoMoney
+            )))
+        //gia von
+        Products_data.map(Products =>
+            Products.ListProducts.map(ListProduct => (
+                updatedCapitalExpenditureCost.CapitalCost += ListProduct.InputIntoMoney
+            )))
+        
         console.log("Sau khi load tu Form 1>>>>>>>CapitalCost: ", updatedCapitalExpenditureCost.CapitalCost, "- Revenue: ", updatedCapitalExpenditureCost.Revenue);
         //Dat coc cua khach hang
         updatedCapitalExpenditureCost.Deposits = updatedCapitalExpenditureCost.Revenue * 0.2
