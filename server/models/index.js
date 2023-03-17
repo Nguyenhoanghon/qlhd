@@ -17,7 +17,7 @@ db.Products = require("./Products_Model");
 
 db.CapitalExpenditureCost = require("./CapitalExpenditureCost_Model");
 db.AuxiliaryCost = require("./AuxiliaryCost_Model");
-db.ImplementationCost = require("./ImplementationCost_Model")
+
 
 db.Implementation_Cost = require("./Implementation_Cost_Model")
 

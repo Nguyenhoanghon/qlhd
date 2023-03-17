@@ -22,35 +22,34 @@ Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
 
 {
-  "contract": "6402f614416c1d823c301cc0",
-  "Category": "DANH MUC CHI MOI ",
+  "idcontract": "64042be3272b3022644b428f",
+  "Category": "GIAI DOAN TRIEN KHAI",
   "StagesImplementation": "Giai đoạn 1"
 }
 
 ### 
 //CAP NHAT TÊN DANH MỤC voi idImplementation_Cost
 // @access Public
-PUT http://localhost:5000/api/forms/implementation_category/put/64104075f38941af7c20173a
+//PUT http://localhost:5000/api/forms/implementation_category/put/641183defa83ebd0141e9b41
+PUT http://localhost:5000/api/forms/implementation_category/put/641183defa83ebd0141e9b41
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
 
 {
-  "Category": "DANH MUC CHI MOI 2 UPDATE"
+  "Category": "CHI PHÍ CHUNG UPDATE 77777"
 }
 
 ### 
 //XOA DANH MỤC voi idImplementation_Cost
 // @access Public  http://localhost:5000/api/forms/implementation_category/delete/:id_danh_muc
-DELETE  http://localhost:5000/api/forms/implementation_category/delete/64104075f38941af7c20173a
+DELETE  http://localhost:5000/api/forms/implementation_category/delete/641149eeee229bcdd96e680e
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
-
-
 
 ### Get ImplementationCost by idcontract
 ### API access: /api/forms/implementation-cost/:idcontract
 ### Test: ok
-GET http://localhost:5000/api/forms/implementations/6402f614416c1d823c301cc0
+GET http://localhost:5000/api/forms/implementations/64042be3272b3022644b428f
 
 ### Get all ImplementationCost by idcontract
 ### API access: /api/forms/implementation-cost/:idcontract
@@ -65,165 +64,65 @@ Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
 {
-  "idImplementation_Cost": "64104075f38941af7c20173a",
-  "Content": "Giai doan 2"
+  "idImplementation_Cost": "641183defa83ebd0141e9b41",
+  "Content": "GIAI DOAN 2"
 }
 
 ### CAP NHAT TEN giai doan chi phi voi   :idImplementationCost/:idContentCost
 // API access: http://localhost:5000/api/forms/implementations/stages_implementation/put/:idImplementationCost/:idContentCost
 // Test: OK
-PUT http://localhost:5000/api/forms/implementations/stages_implementation/put/6410256fadc075a72de2c865/6410256fadc075a72de2c866
+PUT http://localhost:5000/api/forms/implementations/stages_implementation/put/64108c9f40f26fb85aee07e4/64108c9f40f26fb85aee07e5
 Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
 {
-  "Content": "Chi Phi chung Giai doan 1 update cap nhat"
+  "Content": "GIAI DOAN 1"
 }
 
-### XOA giai doan chi phi voi   :idcontract/:idContentCost
+### XOA giai doan chi phi voi   :idImplementationCost/:idContentCost
 // API access: http://localhost:5000/api/forms/implementations/stages_implementation/delete/:idImplementationCost/:idContentCost
 // Test: OK
-DELETE  http://localhost:5000/api/forms/implementations/stages_implementation/delete/6410256fadc075a72de2c865/64102d170d45f4a927fa21e2
+DELETE  http://localhost:5000/api/forms/implementations/stages_implementation/delete/641183defa83ebd0141e9b41/6411aef4fa83ebd0141e9b9f
 Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
-
-
-//============================================
-
-
-
-
-
-
-
-
-
-
-
-### Get all  ImplementationCost
-### API access: /api/forms/implementation-cost
 ### Test: ok
-GET http://localhost:5000/api/forms/implementation-cost
+GET http://localhost:5000/api/forms/implementations/640d3565451dad4ca167827c
 
-### Get ImplementationCost by idcontract
-### API access: /api/forms/implementation-cost/:idcontract
-### Test: ok
-GET http://localhost:5000/api/forms/implementation-cost/63c08c08b1a40f0ce190d6e1
 
-### KHOI TAO 1 CHI TRIEN KHAI
-// API access: /api/forms/implementation-cost/post:idcontract
-// access public
-POST http://localhost:5000/api/forms/implementation-cost/post/640d3b9b451dad4ca16782b1
+### Them 1 chi phi vao giai doan chi phi trien khai
+// API access: /api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost
+// Test: ok
+
+POST http://localhost:5000/api/forms/implementations/stages_implementation/CostDetail/post
 Content-Type: application/json
-Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
+//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA5MzhmZWQ2MGYxMTUyMWIwMDg3NSIsImlhdCI6MTY3MzgzMDMwMywiZXhwIjoxNjczODM2NzAzfQ.rCcG8J8svtJelTkt1GOAotImXWm43P7ES4l1OosEElI
 
 {
-  "contract": "640d3b9b451dad4ca16782b1",
-  "Category": "CHI PHÍ TRIỂN KHAI",
-  "GeneralExpense": "Chi phí chung",
-  "StagesImplementation": "Giai đoạn 1"
-}
-
-### Them 1 giai doan chi phi chung
-// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
-// Test: Loi do sua lai backend
-POST http://localhost:5000/api/forms/implementation-cost/general-expense/post/640d3b9b451dad4ca16782b1
-Content-Type: application/json
-//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
-
-{
-  "idcontract": "640d3b9b451dad4ca16782b1",
-  "Content": "Chi Phi chung 6"
-}
-
-### CAP NHAT 1 giai doan chi phi chung
-// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
-// Test: OK
-PUT http://localhost:5000/api/forms/implementation-cost/general-expense/put/
-Content-Type: application/json
-//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
-
-{
-  "Content": "Chi Phi chung Giai doan 1 update cap nhat sfssffsdfsf",
-  "idcontract": "63ed675dada883181b6cd07e",
-  "idContentCost": "63f1d7defc079e408e3c35c6"
-}
-
-### CAP NHAT 1 chi phi trong giai doan chi phi CHUNG
-// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
-// Test: OK
-PUT http://localhost:5000/api/forms/implementation-cost/general-expense/cost/put/
-Content-Type: application/json
-//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
-
-{
-  "NameCost": "Chi phí Van chuyen 1 Update",
-  "Units": "Phòng",
-  "UnitPrice": 5000000,
+  "NameCost": "Chi phí TRIEN KHAI 2",
+  "Units": "Phong",
+  "UnitPrice": 2000000,
   "Quantity_days": 1,
-  "Quantity_times": 1,
+  "Quantity_times": 4,
   "IntoMoney": 0,
-  "Note": "Ghi chu",
-  "idcontract": "63e40fc862b2ebee52433da7",
-  "idContentCost": "63f1dc4640fb6542037857cf",
-  "idCost": "63f20c90bcf1144ac8c67b78"
+  "Note": "",
+  "Implementation_Cost_Id": "641321143f276b087cf0bdbe",
+  "ContentCostId": "641321143f276b087cf0bdbf"
 }
+### Test: ok
+GET http://localhost:5000/api/forms/implementations/640d3565451dad4ca167827c
 
-### CAP NHAT 1 giai doan chi phi TRIEN KHAI
-// API access: /api/forms/implementation-cost/general-expense/post/:idcontract
-// Test: OK
-PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/put/
-Content-Type: application/json
-//Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
-
-{
-  "Content": "Chi Phi chung Giai doan 1 update cap nhat",
-  "idcontract": "63e40fc862b2ebee52433da7",
-  "idContentCost": "63eda7cbaf94fa8c4dcfac6d"
-}
 
 ### CAP NHAT 1 chi phi trong giai doan chi phi TRIEN KHAI
 // API access: /api/forms/implementation-cost/stages-implementation/cost/put/
 // Test: OK
 //Note: Cap nhat xong  idCost bi thay doi !
-PUT http://localhost:5000/api/forms/implementation-cost/stages-implementation/cost/put/
+PUT http://localhost:5000/api/forms/implementations/stages_implementation/CostDetail/put/64105c018bbc21b499f0f99d/64105c018bbc21b499f0f99e/64105c258bbc21b499f0f9a1
 Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
 {
   "NameCost": "Chi phí Van chuyen 1 Update",
-  "Units": "Phòng",
-  "UnitPrice": 3000000,
-  "Quantity_days": 1,
-  "Quantity_times": 1,
-  "IntoMoney": 0,
-  "Note": "Ghi chu",
-  "idcontract": "63e40fc862b2ebee52433da7",
-  "idContentCost": "63eda7cbaf94fa8c4dcfac6d",
-  "idCost": "63f20f0fcfe4834b740bf1f5"
-}
-
-### Them 1 giai doan chi phi trien khai
-// API access: /api/forms/implementation-cost/stages-implementation/post/:idcontract
-// Test: ok
-POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/640d3b9b451dad4ca16782b1
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NDI0MDEzNiwiZXhwIjoxNjc0MjQ2NTM2fQ.JuDz6Z-EHc5QPTXQ3aCo8CME3zP1OmCznc5VWDnensQ
-
-{
-  "Content": "Giai Doan 2"
-}
-
-### Them 1 chi phi vao giai doan chi phi chung
-// API access: /api/forms/implementation-cost/general-expense/post/:idImplementationCost/:idContentCost
-// Test: ok
-POST http://localhost:5000/api/forms/implementation-cost/general-expense/post/63ec468eada883181bd30f23/63ec473d5fd6ef5134f3f259
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NDI0MDEzNiwiZXhwIjoxNjc0MjQ2NTM2fQ.JuDz6Z-EHc5QPTXQ3aCo8CME3zP1OmCznc5VWDnensQ
-
-{
-  "NameCost": "Chi phí Van chuyen 1",
   "Units": "Phòng",
   "UnitPrice": 3000000,
   "Quantity_days": 1,
@@ -232,59 +131,24 @@ Content-Type: application/json
   "Note": "Ghi chu"
 }
 
-### Them 1 chi phi vao giai doan chi phi trien khai
-// API access: /api/forms/implementation-cost/stages-implementation/post/:idImplementationCost/:idContentCost
-// Test: ok
+### Get ImplementationCost by idcontract
+### API access: /api/forms/implementation-cost/:idcontract
+### Test: ok
+GET http://localhost:5000/api/forms/implementations/6402f614416c1d823c301cc0
 
-POST http://localhost:5000/api/forms/implementation-cost/stages-implementation/post/63ec99c4ada883181b030eb4/63ec99c4e540116534618e18
-Content-Type: application/json
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA5MzhmZWQ2MGYxMTUyMWIwMDg3NSIsImlhdCI6MTY3MzgzMDMwMywiZXhwIjoxNjczODM2NzAzfQ.rCcG8J8svtJelTkt1GOAotImXWm43P7ES4l1OosEElI
-
-{
-  "NameCost": "Chi phí Ks 1",
-  "Units": "Phong",
-  "UnitPrice": 1000000,
-  "Quantity_days": 1,
-  "Quantity_times": 4,
-  "IntoMoney": 0,
-  "Note": ""
-}
-
-
-### Get ImplementationCost by id Implementation
-### access public
-###ok
-GET http://localhost:5000/api/forms/implementation-cost/640d3b9b451dad4ca16782b1
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
-
-###Get tat ca chi phi trong 1 giai doan với params_idImplementation  và params id_Stage
-###@Access Public
-###test: chưa
-GET http://localhost:5000/api/forms/implementation-cost/content-cost/63e928afada883181b15498b/63e928af11446b81cb88ec83
-
-### Xoa Chi phi trien khai cua 1 hop dong voi idcontract
-### 
-### access public
-###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/delete/640d3b9b451dad4ca16782b1
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
-### Xoa Giai doan voi id ImplementationCost / id giaidoan
-### access public
-###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/content-cost/delete/63ed675dada883181b6cd07e/63ed8a01e8a6f66fa2bd0904
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
-
-### Xoa 1 chi phi trong giai doan chi phi  chung
-### access public
-###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/general-cost-detail/delete/63ec468eada883181bd30f23/63ec473d5fd6ef5134f3f259/63ec47975fd6ef5134f3f25f
-//Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### Xoa 1 chi phi trong giai doan chi phi  trien khai
 ### access public
 ###ok
-DELETE  http://localhost:5000/api/forms/implementation-cost/stage-cost-detail/delete/63ec468eada883181bd30f23/63ec47595fd6ef5134f3f25c/63ec47b25fd6ef5134f3f261
+DELETE  http://localhost:5000/api/forms/implementations/stages_implementation/CostDetail/delete/64105c018bbc21b499f0f99d/64105c018bbc21b499f0f99e/64105d96b6d7a1b53f42641d
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
+
+
+
+//============================================ 14-2
+
+
+
+
+
 

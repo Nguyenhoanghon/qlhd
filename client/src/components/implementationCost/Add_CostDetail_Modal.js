@@ -1,22 +1,20 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
-import { useParams } from 'react-router-dom'
+
 
 //Ham them giai doan chi phi vao chi phi chung
-const AddCostDetailGeneralModal = (_id) => {
+const Add_CostDetail_Modal = (_id) => {
 	//Contexts
 	
 	const {
-		ImplementationCostState: { ImplementationCosts },
-		showAddCostDetailGeneralModal,
-		setshowAddCostDetailGeneralModal,
-		dataOn_Click,
-		setdataOn_Click,
-		addCostDetailGeneral,
-		getImplementationCosts_byidContract,
+		
+		showAdd_CostDetail_Modal,
+		setshowAdd_CostDetail_Modal,     //Goi modal
+		Data_Click_On_Button,            //Get Params truyen cho Url
+		add_CostDetail_Function,         //Hàm thêm
 		setShowToast
 
 	} = useContext(ImplementationCostContext)
@@ -41,20 +39,15 @@ const AddCostDetailGeneralModal = (_id) => {
 		Quantity_times,
 		IntoMoney,
 		Note,
-		ImplementationCost_Id,
+		Implementation_Cost_Id,
 		ContentCostId,
 		ContentCost
 	} = newStageImplementation
 	//Load id Implementation
-	//const params = useParams();
 	
-	//useEffect(() => getImplementationCosts_byidContract(params.id,[]))
-
-	//console.log("URL showAddCostDetailGeneralModal", showAddCostDetailGeneralModal)
-	//console.log("ID click", dataOn_Click)
-	newStageImplementation.ImplementationCost_Id = dataOn_Click._id //params.id;
-	newStageImplementation.ContentCostId = dataOn_Click.GeneralExpense_id//params.id;
-	newStageImplementation.ContentCost = dataOn_Click.Content_name
+	newStageImplementation.Implementation_Cost_Id = Data_Click_On_Button.Implementation_Cost_Id //params.id;
+	newStageImplementation.ContentCostId = Data_Click_On_Button.ContentCostId//params.id;
+	newStageImplementation.ContentCost = Data_Click_On_Button.ContentCost
 
 	const onChangeNewImplementationCostForm = event =>
 		setnewStageImplementation({ ...newStageImplementation, [event.target.name]: event.target.value })
@@ -68,16 +61,16 @@ const AddCostDetailGeneralModal = (_id) => {
 			Quantity_times: '',
 			IntoMoney: '',
 			Note: '',
-			ImplementationCost_Id: '',
+			Implementation_Cost_Id: '',
 			ContentCostId: '',
 			ContentCost:''
 		})
-		setshowAddCostDetailGeneralModal(false)
+		setshowAdd_CostDetail_Modal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCostDetailGeneral(newStageImplementation)//newImplementationCost
+		const { success, message } = await add_CostDetail_Function(newStageImplementation)//note
 		resetAddStageImplementationData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
@@ -86,29 +79,29 @@ const AddCostDetailGeneralModal = (_id) => {
 		resetAddStageImplementationData()
 	}
 	return (
-		<Modal show={showAddCostDetailGeneralModal} onHide={closeDialog}>
+		<Modal show={showAdd_CostDetail_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm chi phí vào {ContentCost}</Modal.Title>
+				<Modal.Title>Thêm chi phí vào: {ContentCost}</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							ImplementationCost_Id
+							Implementation_Cost_Id
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder=''
-							name='ImplementationCost_Id'
+							name='Implementation_Cost_Id'
 							required
 							aria-describedby='noidung-help'
-							value={ImplementationCost_Id}
+							value={Implementation_Cost_Id}
 							onChange={onChangeNewImplementationCostForm}
 						/>
 					</Form.Group>
 					<Form.Group>
-						<Form.Text id='noidung-help' muted as="h6">
-							id Giai doan GeneralCost
+						<Form.Text id='ContentCostId-help' muted as="h6">
+							idContentCostId
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -215,4 +208,4 @@ const AddCostDetailGeneralModal = (_id) => {
 		</Modal>
 	)
 }
-export default AddCostDetailGeneralModal
+export default Add_CostDetail_Modal

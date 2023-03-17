@@ -1,107 +1,78 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 
-
-//Ham them giai doan chi phi vao chi phi chung
-const AddCostDetailStageImplementModal = (_id) => {
-	//Contexts
-	
+const Update_CostDetail_Modal = () => {
+	// Contexts
 	const {
-		ImplementationCostState: { ImplementationCosts },
-		showAddCostDetailStageImplementModal,
-		setshowAddCostDetailStageImplementModal,
-		dataOn_Click,
-		addCostDetailStageImplement,
-		setShowToast
+		setshowUpdate_CostDetail_Modal, //Goi modal Update
+		showUpdate_CostDetail_Modal,
+		DataUpdate_Click_On_Button,
+		setDataUpdate_Click_On_Button,  //Get Params truyen cho Url Add
+		update_CostDetail_Function,
 
+		setShowToast
 	} = useContext(ImplementationCostContext)
-	//State luu thong tin 
-	const [newStageImplementation, setnewStageImplementation] = useState({
-		NameCost: '',
-		Units: '',
-		UnitPrice: '',
-		Quantity_days: '',
-		Quantity_times: '',
-		IntoMoney: '',
-		Note: '',
-		ImplementationCost_Id: '',
-		ContentCostId: '',
-		ContentCost:''
-	})
-	const { 
+
+	const [updatedImplementationCost, setupdatedImplementationCost] = useState(DataUpdate_Click_On_Button)
+
+	useEffect(() => setupdatedImplementationCost(DataUpdate_Click_On_Button), [DataUpdate_Click_On_Button])
+
+	let {
+		Implementation_Cost_Id,
+		ContentCostId,
+		idCost,
 		NameCost,
 		Units,
 		UnitPrice,
 		Quantity_days,
 		Quantity_times,
 		IntoMoney,
-		Note,
-		ImplementationCost_Id,
-		ContentCostId,
-		ContentCost
-	} = newStageImplementation
-	//Load id Implementation
-	
-	newStageImplementation.ImplementationCost_Id = dataOn_Click._id //params.id;
-	newStageImplementation.ContentCostId = dataOn_Click.StagesImplementation_id//params.id;
-	newStageImplementation.ContentCost = dataOn_Click.Content_name
+		Note
+	} = updatedImplementationCost
 
-	const onChangeNewImplementationCostForm = event =>
-		setnewStageImplementation({ ...newStageImplementation, [event.target.name]: event.target.value })
+	const onChangeForm = event =>
+		setupdatedImplementationCost({ ...updatedImplementationCost, [event.target.name]: event.target.value })
 
-	const resetAddStageImplementationData = () => {
-		setnewStageImplementation({
-			NameCost: '',
-			Units: '',
-			UnitPrice: '',
-			Quantity_days: '',
-			Quantity_times: '',
-			IntoMoney: '',
-			Note: '',
-			ImplementationCost_Id: '',
-			ContentCostId: '',
-			ContentCost:''
-		})
-		setshowAddCostDetailStageImplementModal(false)
+	const closeDialog = () => {
+		setupdatedImplementationCost(updatedImplementationCost)
+		setshowUpdate_CostDetail_Modal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addCostDetailStageImplement(newStageImplementation)//note
-		resetAddStageImplementationData()
+		const { success, message } = await update_CostDetail_Function(updatedImplementationCost, DataUpdate_Click_On_Button)
+		setshowUpdate_CostDetail_Modal(false)
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
-	const closeDialog = () => {
-		resetAddStageImplementationData()
-	}
 	return (
-		<Modal show={showAddCostDetailStageImplementModal} onHide={closeDialog}>
+		<Modal show={showUpdate_CostDetail_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm chi phí vào {ContentCost}</Modal.Title>
+				<Modal.Title>Cập nhật chi phí</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					{/* <Form.Group>
+				<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							ImplementationCost_Id
+							Implementation_Cost_Id
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder=''
-							name='ImplementationCost_Id'
+							name='Implementation_Cost_Id'
 							required
 							aria-describedby='noidung-help'
-							value={ImplementationCost_Id}
-							onChange={onChangeNewImplementationCostForm}
+							value={Implementation_Cost_Id}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							id Giai doan GeneralCost
+							id ContentCostId
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -110,9 +81,23 @@ const AddCostDetailStageImplementModal = (_id) => {
 							required
 							aria-describedby='noidung-help'
 							value={ContentCostId}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
-					</Form.Group> */}
+					</Form.Group>
+					<Form.Group>
+						<Form.Text id='noidung-help' muted as="h6">
+							id Cost
+						</Form.Text>
+						<Form.Control
+							type='text'
+							placeholder=''
+							name='idCost'
+							required
+							aria-describedby='noidung-help'
+							value={idCost}
+							onChange={onChangeForm}
+						/>
+					</Form.Group>
 					<Form.Group>
 						<Form.Text id='NameCost-help' muted as="h6">
 							Nội dung dự trù
@@ -124,7 +109,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							required
 							aria-describedby='noidung-help'
 							value={NameCost}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -137,7 +122,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							name='Units'
 							aria-describedby='noidung-help'
 							value={Units}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -151,7 +136,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							required
 							aria-describedby='noidung-help'
 							value={UnitPrice}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -165,7 +150,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							required
 							aria-describedby='noidung-help'
 							value={Quantity_times}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -179,7 +164,7 @@ const AddCostDetailStageImplementModal = (_id) => {
 							required
 							aria-describedby='noidung-help'
 							value={Quantity_days}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
 					<Form.Group>
@@ -192,20 +177,23 @@ const AddCostDetailStageImplementModal = (_id) => {
 							name='Note'
 							aria-describedby='noidung-help'
 							value={Note}
-							onChange={onChangeNewImplementationCostForm}
+							onChange={onChangeForm}
 						/>
 					</Form.Group>
-					</Modal.Body>
+
+
+				</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={closeDialog}>
 						Hủy
 					</Button>
-					<Button variant='info' type='submit'>
-						Thêm!
+					<Button variant='primary' type='submit'>
+						Cập nhật
 					</Button>
 				</Modal.Footer>
 			</Form>
 		</Modal>
 	)
 }
-export default AddCostDetailStageImplementModal
+
+export default Update_CostDetail_Modal

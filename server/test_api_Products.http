@@ -74,7 +74,7 @@ GET http://localhost:5000/api/forms/products
 ### Get all products
 ### access public
 ###Test: ok
-GET http://localhost:5000/api/forms/products/640d3565451dad4ca167827c
+GET http://localhost:5000/api/forms/products/6402f614416c1d823c301cc0
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTI5NTQwMiwiZXhwIjoxNjcxMzgxODAyfQ.qtLt4F50GDz8olkKMJriYvEvFAavyIxazYzIyRuorcQ
 
 ### delete 1 hang hon by /:idProduct

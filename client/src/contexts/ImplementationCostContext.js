@@ -13,103 +13,29 @@ const ImplementationCostContextProvider = ({ children }) => {
 		ImplementationCostsLoading: true
 	})
 
-	// Cap nhat giai doan chi phi CHUNG
-	const [Data_GeneralExpense_Content, setData_GeneralExpense_Content] = useState({
-		_id: '',
-		GeneralExpense_id: '',
-		GeneralExpense_Content: ''
-	})
-	const [showAdd_Stage_GeneralExpense_Modal, setshowAdd_Stage_GeneralExpense_Modal] = useState(false)
-	const [showUpdate_Stage_GeneralExpense_Modal, setShowUpdate_Stage_GeneralExpense_Modal] = useState(false)
-	// Cap nhat  CHI PHI TRONG giai doan chi phi CHUNG
-	const [Data_GeneralExpense_Cost, setData_GeneralExpense_Cost] = useState({
-		NameCost: '',
-		Units: '',
-		UnitPrice: '',
-		Quantity_days: '',
-		Quantity_times: '',
-		IntoMoney: '',
-		Note: '',
-		idcontract: '',
-		ContentCostId: '',
-		idCost: '',
-	})
-	const [showUpdate_GeneralExpense_Cost_Modal, setshowUpdate_GeneralExpense_Cost_Modal] = useState(false)
-	
-	// Cap nhat  CHI PHI TRONG giai doan chi phi TRIEN KHAI
-	const [Data_StagesImplementation_Cost, setData_StagesImplementation_Cost] = useState({
-		NameCost: '',
-		Units: '',
-		UnitPrice: '',
-		Quantity_days: '',
-		Quantity_times: '',
-		IntoMoney: '',
-		Note: '',
-		idcontract: '',
-		ContentCostId: '',
-		idCost: '',
-	})
-	const [showUpdate_StagesImplementation_Cost_Modal, setshowUpdate_StagesImplementation_Cost_Modal] = useState(false)
-	
-	// Cap nhat giai doan chi phi TRIEN KHAI
-	const [Data_StagesImplementation_Content, setData_StagesImplementation_Content] = useState({
-		_id: '',
-		StagesImplementation_id: '',
-		StagesImplementation_Content: ''
-	})
-	const [showUpdate_Stage_StagesImplementation_Modal, setshowUpdate_Stage_StagesImplementation_Modal] = useState(false)
-	
-
-
-	const [showAddCostDetailGeneralModal, setshowAddCostDetailGeneralModal] = useState(false)
-
-	const [showAddStageImplementationModal, setshowAddStageImplementationModal] = useState(false)
-	const [showAddCostDetailStageImplementModal, setshowAddCostDetailStageImplementModal] = useState(false)
-
-	const [showAddImplementationCostModal, setShowAddImplementationCostModal] = useState(false)
-
-	const [dataOn_Click, setdataOn_Click] = useState([])
-
-
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
 		type: null
 	})
 
-	// Get all ImplementationCosts chua su dung
-	const find_ImplementationCosts = async () => {
+	//*** 15-3 Context for Implementation_Cost_byidContract()
+	//state gọi modal them Category
+	const [showCreate_Implementation_Category_Modal, setshowCreate_Implementation_Category_Modal] = useState(false);
+	//state gọi modal cap nhat Category
+	const [showUpdate_Category_Modal, setshowUpdate_Category_Modal] = useState(false);
+	// data update Implementation_Cost.Category
+	const [Data_update_Category, setData_update_Category] = useState({
+		idImplementation_Cost: '',
+		Category: '',
+	});
+
+	// Function them Category Test: ok
+	const create_Implementation_Category = async (newImplementationCost) => {
 		try {
-			const response = await axios.get(`${apiUrl}/api/forms/implementation-cost/`)//note
+			const response = await axios.post(`${apiUrl}/api/forms/implementation_category/post/`, newImplementationCost) //${idContract}
 			if (response.data.success) {
-				dispatch({ type: LOADED_SUCCESS, payload: response.data.ImplementationCost })//note
-
-			}
-
-		} catch (error) {
-			dispatch({ type: LOADED_FAIL })
-		}
-	}
-	// Get ImplementationCosts by idContract  Test:ok
-	const getImplementationCosts_byidContract = async (idContract) => {
-		try {
-			const response = await axios.get(`${apiUrl}/api/forms/implementation-cost/${idContract}`)//note
-			if (response.data.success) {
-				dispatch({ type: LOADED_SUCCESS, payload: response.data.ImplementationCost })//note
-
-			}
-
-		} catch (error) {
-			dispatch({ type: LOADED_FAIL })
-		}
-	}
-
-	// Add ImplementationCost Test: ok
-	const addImplementationCost = async (newImplementationCost, idContract) => {
-		try {
-			const response = await axios.post(`${apiUrl}/api/forms/implementation-cost/post/${idContract}`, newImplementationCost)
-			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.ImplementationCost })
+				dispatch({ type: ADD, payload: response.data.Implementation_Cost })
 				return response.data
 			}
 			else
@@ -120,10 +46,40 @@ const ImplementationCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
-	// Ham them 1 giai doan trien khai - Test: them duoc, nhung khong auto load sau khi them
-	const addStageImplementation = async (newImplementationCost, idContract) => {
+	// Function cap nhat Category Test:
+	const update_Category = async (updatedImplementationCost, Data_update_Category) => {
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/implementation-cost/stages-implementation/post/:idContract`, newImplementationCost)
+			const response = await axios.put(`${apiUrl}/api/forms/implementation_category/put/${Data_update_Category.idImplementation_Cost}`, updatedImplementationCost) //${idContract}
+			if (response.data.success) {
+				dispatch({ type: UPDATE, payload: response.data.update_Category })
+				return response.data
+			}
+			else
+				return response.data
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
+	// Delete Category voi idImplementationCost / idContentCost
+	const delete_Category = async (Data_update_Category) => {
+		try {
+			console.log("Show Data_GeneralExpense ===>", Data_update_Category)
+			console.log((`${apiUrl}/api/forms/implementation_category/delete/${Data_update_Category.idImplementation_Cost}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementation_category/delete/${Data_update_Category.idImplementation_Cost}`)//note
+			if (response.data.success)
+				dispatch({ type: DELETE, payload: response.data.message })
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	// Ham them 1 giai doan trien khai - Test: them duoc, nhung khong auto load sau khi them
+	const [showAddStage_Modal, setshowAddStage_Modal] = useState(false)
+	const add_StageImplementation = async (newImplementationCost, idContract) => {
+		try {
+			const response = await axios.post(`${apiUrl}/api/forms/implementations/stages_implementation/post/`, newImplementationCost)
 			console.log("StagesImplementation=====;;;;", response.data.StagesImplementation)
 			if (response.data.success) {
 				dispatch({ type: ADDSTAGE, payload: response.data.StagesImplementation })
@@ -137,49 +93,77 @@ const ImplementationCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
-	// Ham them 1 giai doan chi phí chung - Test: them duoc, nhung khong auto load sau khi them
-	const add_Stage_GeneralExpense = async newImplementationCost => {
+
+	//Cap nhat giai doan
+	//state gọi modal cap nhat Category
+	const [showUpdateStage_Modal, setshowUpdateStage_Modal] = useState(false);
+	// data update Implementation_Cost.Category
+	const [Data_update_Stage_Content, setData_update_Stage_Content] = useState({
+		idImplementation_Cost: '',
+		idContentCost: '',
+		Content: '',
+	});
+	//Function cap nhat ten giai doan
+	const update_Stage_Content = async (updateStageImplementation, Data_update_Stage_Content) => {
+		console.log("Test URL", `${apiUrl}/api/forms/implementations/stages_implementation/put/${Data_update_Stage_Content.idImplementation_Cost}/${Data_update_Stage_Content.idContentCost}`)
 		try {
-			const response = await axios.post(`${apiUrl}/api/forms/implementation-cost/general-expense/post/:idcontract`, newImplementationCost)
+			const response = await axios.put(
+				`${apiUrl}/api/forms/implementations/stages_implementation/put/${Data_update_Stage_Content.idImplementation_Cost}/${Data_update_Stage_Content.idContentCost}`, //note xem trong server
+				updateStageImplementation
+			)
 			if (response.data.success) {
-				dispatch({ type: ADDSTAGE, payload: response.data.StagesImplementation })
+				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
 				return response.data
 			}
-			else
-				return response.data
 		} catch (error) {
 			return error.response.data
 				? error.response.data
 				: { success: false, message: 'Server error' }
+		}
+	}
+	// Xoa 1 Giai doan chi phi Trien khai voi idImplementationCost / idContentCost
+	const delete_Stage = async (Data_update_Stage_Content) => {
+		try {
+			console.log("ID idImplementationCost", Data_update_Stage_Content)
+			console.log((`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${Data_update_Stage_Content._id}/${Data_update_Stage_Content.StagesImplementation_id}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementations/stages_implementation/delete/${Data_update_Stage_Content.idImplementation_Cost}/${Data_update_Stage_Content.idContentCost}`)//note
+			if (response.data.success)
+				dispatch({ type: DELETE, payload: response.data.message })
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
-	//Ham them 1 chi phi chí cho 1 giai doan chi phi chung 
-	const addCostDetailGeneral = async (ImplementationCost) => {
+	// Get ImplementationCosts by idContract  Test: ok
+	const getImplementation_Costs_byidContract = async (idContract) => {
 		try {
-			console.log("ID idImplementationCost", ImplementationCost._id, "ImplementationCost.GeneralExpense_id", ImplementationCost.GeneralExpense_id)
-			console.log((`${apiUrl}/api/forms/implementation-cost/general-expense/post/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}`))
-			const response = await axios.post(`${apiUrl}/api/forms/implementation-cost/general-expense/post`, ImplementationCost)///${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}`, ImplementationCost)
+			const response = await axios.get(`${apiUrl}/api/forms/implementations/${idContract}`)//note
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.ImplementationCost })
-				return response.data
+				dispatch({ type: LOADED_SUCCESS, payload: response.data.Implementation_Cost })//note
+
 			}
-			else
-				return response.data
+
 		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
+			dispatch({ type: LOADED_FAIL })
 		}
 	}
+	//** Context them sua xoa CostDetail
+	//State goi Modal Add_CostDetail
+	const [showAdd_CostDetail_Modal, setshowAdd_CostDetail_Modal] = useState(false)
+	// State lay ID
+	const [Data_Click_On_Button, setData_Click_On_Button] = useState({
+		Implementation_Cost_Id: '',
+		ContentCostId: '',
+		ContentCost: ''
+	})
 	//Ham them 1 chi phi chí cho 1 giai doan trien khai
-	const addCostDetailStageImplement = async (ImplementationCost) => {
+	const add_CostDetail_Function = async (newStageImplementation) => {
 		try {
 			//console.log("ID idImplementationCost", ImplementationCost._id, "ImplementationCost.GeneralExpense_id",ImplementationCost.GeneralExpense_id)
 			//console.log((`${apiUrl}/api/forms/implementation-cost/general-expense/post/${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}`))
-			const response = await axios.post(`${apiUrl}/api/forms/implementation-cost/stages-implementation/post`, ImplementationCost)///${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}`, ImplementationCost)
+			const response = await axios.post(`${apiUrl}/api/forms/implementations/stages_implementation/CostDetail/post`, newStageImplementation)///${ImplementationCost._id}/${ImplementationCost.GeneralExpense_id}`, ImplementationCost)
 			if (response.data.success) {
-				dispatch({ type: ADD, payload: response.data.ImplementationCost })
+				dispatch({ type: ADD, payload: response.data.Implementation_Cost })
 				return response.data
 			}
 			else
@@ -190,84 +174,29 @@ const ImplementationCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
-	// Delete ImplementationCost ??? Chua test
-	const deleteImplementationCost = async ImplementationCostId => {
-		try {
-			const response = await axios.delete(`${apiUrl}api/forms/product-Cost/delete/${ImplementationCostId}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: ImplementationCostId })
-		} catch (error) {
-			console.log(error)
-		}
-	}
-	// Delete 1 Giai doan chi phi chung voi idImplementationCost / idContentCost
-	const delete_Stage_GeneralExpense = async (GeneralExpense) => {
-		try {
-			console.log("Show Data_GeneralExpense ===>", GeneralExpense)
-			console.log((`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${GeneralExpense.idImplementationCost}/${GeneralExpense.GeneralExpense_id}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${GeneralExpense._id}/${GeneralExpense.GeneralExpense_id}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: response })
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
-	// Delete 1 Giai doan chi phi Trien khai voi idImplementationCost / idContentCost
-	const delete_Stage_StageImplementation = async (ImplementationCost) => {
-		try {
-			console.log("ID idImplementationCost", ImplementationCost)
-			console.log((`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost._id}/${ImplementationCost.StagesImplementation_id}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/content-cost/delete/${ImplementationCost._id}/${ImplementationCost.StagesImplementation_id}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: ImplementationCost })
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	//State goi Modal Update_CostDetail
+	const [showUpdate_CostDetail_Modal, setshowUpdate_CostDetail_Modal] = useState(false)
+	// State lay ID
+	const [DataUpdate_Click_On_Button, setDataUpdate_Click_On_Button] = useState({
+		Implementation_Cost_Id: '',
+		ContentCostId: '',
+		idCost: '',
+		NameCost: '',
+		Units: '',
+		UnitPrice: '',
+		Quantity_days: '',
+		Quantity_times: '',
+		IntoMoney: '',
+		Note: ''
 
-	// Delete 1chi phi trong chi phi Chung  Test: ok
-	const delete_GeneralCostDetail = async (ImplementationCost) => {
-		try {
-			console.log("ID idImplementationCost", ImplementationCost)
-
-			console.log((`${apiUrl}api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/general-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: ImplementationCost })
-		} catch (error) {
-			console.log(error)
-		}
-	}
-	// Delete 1chi phi trong chi phi Giai doan
-	const delete_StageCostDetail = async (ImplementationCost) => {
-		try {
-			console.log("ID idImplementationCost", ImplementationCost)
-			console.log((`${apiUrl}api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`))
-			const response = await axios.delete(`${apiUrl}/api/forms/implementation-cost/stage-cost-detail/delete/${ImplementationCost.idcontract}/${ImplementationCost.idContentCost}/${ImplementationCost.idCost}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: ImplementationCost })
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	// Find ImplementationCost when user is updating ImplementationCost ??? Chua test
-	const findImplementationCost = ImplementationCostId => {
-		console.log("GetID == ", ImplementationCostId)
-		const ImplementationCost = ImplementationCostState.ImplementationCosts.find(ImplementationCost => ImplementationCost._id === ImplementationCostId.idImplementationCost)
-		//test
-		console.log("findImplementationCost sddadad== ", ImplementationCost)
-		dispatch({ type: FIND, payload: ImplementationCost })
-	}
-
-	//!!!!
-	// Cap nhat giai doan chi phi chung (ContentCost)
-	const update_GeneralExpense_Content = async (updatedImplementationCost, Data_GeneralExpense) => {
-		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/general-expense/put/${Data_GeneralExpense._id}/${Data_GeneralExpense.GeneralExpense_id}`)
+	})
+	// Function Update_CostDetail 
+	const update_CostDetail_Function = async (updatedImplementationCost, DataUpdate_Click_On_Button) => {
+		console.log("Test URL", `${apiUrl}/api/forms/implementations/stages_implementation/CostDetail/put/${DataUpdate_Click_On_Button.Implementation_Cost_Id}/${DataUpdate_Click_On_Button.ContentCostId}/${DataUpdate_Click_On_Button.idCost}`)
 		try {
 			const response = await axios.put(
-				`${apiUrl}/api/forms/implementation-cost/general-expense/put/${Data_GeneralExpense._id}/${Data_GeneralExpense.GeneralExpense_id}`, //note xem trong server
+				`${apiUrl}/api/forms/implementations/stages_implementation/CostDetail/put/${DataUpdate_Click_On_Button.Implementation_Cost_Id}/${DataUpdate_Click_On_Button.ContentCostId}/${DataUpdate_Click_On_Button.idCost}`,
 				updatedImplementationCost
 			)
 			if (response.data.success) {
@@ -280,117 +209,69 @@ const ImplementationCostContextProvider = ({ children }) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
-	//!!!!
-	//
-	const update_StagesImplementation_Content = async (dataUpdate, Data_StagesImplementation) => {
-		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/stages-implementation/put/${Data_StagesImplementation._id}/${Data_StagesImplementation.StagesImplementation_id}`)
+
+	// Ham xoa 1 chi phi trong chi phi Giai doan
+	const delete_CostDetail_Function = async (DataUpdate_Click_On_Button) => {
 		try {
-			const response = await axios.put(
-				`${apiUrl}/api/forms/implementation-cost/stages-implementation/put/${Data_StagesImplementation._id}/${Data_StagesImplementation.StagesImplementation_id}`, //note xem trong server
-				dataUpdate
-			)
-			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
-				return response.data
-			}
+			console.log("ID idImplementationCost", DataUpdate_Click_On_Button)
+			console.log((`${apiUrl}/api/forms/implementations/stages_implementation/CostDetail/delete/${DataUpdate_Click_On_Button.Implementation_Cost_Id}/${DataUpdate_Click_On_Button.ContentCostId}/${DataUpdate_Click_On_Button.idCost}`))
+			const response = await axios.delete(`${apiUrl}/api/forms/implementations/stages_implementation/CostDetail/delete/${DataUpdate_Click_On_Button.Implementation_Cost_Id}/${DataUpdate_Click_On_Button.ContentCostId}/${DataUpdate_Click_On_Button.idCost}`)//note
+			if (response.data.success)
+				dispatch({ type: DELETE, payload: DataUpdate_Click_On_Button })
 		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
+			console.log(error)
 		}
 	}
-	const update_GeneralExpense_Cost = async (dataUpdate, Data_GeneralExpense_Cost) => {
-		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/general-expense/cost/put/${Data_GeneralExpense_Cost.idcontract}/${Data_GeneralExpense_Cost.idContentCost}/${Data_GeneralExpense_Cost.idCost}`)
-		try {
-			const response = await axios.put(
-				`${apiUrl}/api/forms/implementation-cost/general-expense/cost/put/${Data_GeneralExpense_Cost.idcontract}/${Data_GeneralExpense_Cost.idContentCost}/${Data_GeneralExpense_Cost.idCost}`,
-				dataUpdate
-			)
-			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
-				return response.data
-			}
-		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
-		}
-	}
-	const update_StagesImplementation_Cost = async (dataUpdate, Data_StagesImplementation_Cost) => {
-		console.log("Test URL", `${apiUrl}/api/forms/implementation-cost/stages-implementation/cost/put/${Data_StagesImplementation_Cost.idcontract}/${Data_StagesImplementation_Cost.idContentCost}/${Data_StagesImplementation_Cost.idCost}`)
-		try {
-			const response = await axios.put(
-				`${apiUrl}/api/forms/implementation-cost/stages-implementation/cost/put/${Data_StagesImplementation_Cost.idcontract}/${Data_StagesImplementation_Cost.idContentCost}/${Data_StagesImplementation_Cost.idCost}`,
-				dataUpdate
-			)
-			if (response.data.success) {
-				dispatch({ type: UPDATE, payload: response.data.StagesImplementation }) //note updateImplementationCost biến trả về từ server
-				return response.data
-			}
-		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
-		}
-	}
+
+	//*** End Context for Implementation_Cost_byidContract()
+
 	// ImplementationCost context data
 	const ImplementationCostContextData = {
 		ImplementationCostState,
-		find_ImplementationCosts,
+		//state gọi modal them Category
+		showCreate_Implementation_Category_Modal,
+		setshowCreate_Implementation_Category_Modal,
+		create_Implementation_Category,
 
-		addImplementationCost,
-		showAddImplementationCostModal,
-		setShowAddImplementationCostModal,
+		//state gọi modal cap nhat Category
+		showUpdate_Category_Modal,
+		setshowUpdate_Category_Modal,
+		Data_update_Category,
+		setData_update_Category,
+		update_Category,
+		delete_Category,
 
-		// !!!! CHI PHI CHUNG
-		Data_GeneralExpense_Content, setData_GeneralExpense_Content,
-		add_Stage_GeneralExpense,
-		showAdd_Stage_GeneralExpense_Modal, setshowAdd_Stage_GeneralExpense_Modal,
-		update_GeneralExpense_Content,
-		showUpdate_Stage_GeneralExpense_Modal, setShowUpdate_Stage_GeneralExpense_Modal,
-		delete_Stage_GeneralExpense,
-		// !!!! CHI PHI TRIEN KHAI
-		Data_StagesImplementation_Content, setData_StagesImplementation_Content,
-		update_StagesImplementation_Content,
-		showUpdate_Stage_StagesImplementation_Modal, setshowUpdate_Stage_StagesImplementation_Modal,
-		delete_Stage_StageImplementation, //xoa 1 giai doan chi phi trien khai
-		// !!! 
-		update_GeneralExpense_Cost,
-		Data_GeneralExpense_Cost, setData_GeneralExpense_Cost,
-		showUpdate_GeneralExpense_Cost_Modal, setshowUpdate_GeneralExpense_Cost_Modal,
-		// !!!
-		update_StagesImplementation_Cost,
-		Data_StagesImplementation_Cost, setData_StagesImplementation_Cost,
-		showUpdate_StagesImplementation_Cost_Modal, setshowUpdate_StagesImplementation_Cost_Modal,
+		getImplementation_Costs_byidContract,
 
-		
-		
-		showAddStageImplementationModal,
-		setshowAddStageImplementationModal,
-		addStageImplementation,
+		//Context them sua xoa Stage
+		showAddStage_Modal,
+		setshowAddStage_Modal,
+		add_StageImplementation,
+		showUpdateStage_Modal,
+		setshowUpdateStage_Modal,
+		Data_update_Stage_Content,
+		setData_update_Stage_Content,
+		update_Stage_Content,
+		delete_Stage,
 
+		//Context them sua xoa CostDetail
+		showAdd_CostDetail_Modal,
+		setshowAdd_CostDetail_Modal,     //Goi modal Add
+		Data_Click_On_Button,
+		setData_Click_On_Button,		 //Get Params truyen cho Url Add
+		add_CostDetail_Function,         //Hàm thêm
 
-		addCostDetailGeneral,
-		showAddCostDetailGeneralModal,
-		setshowAddCostDetailGeneralModal,
-
-
+		showUpdate_CostDetail_Modal,
+		setshowUpdate_CostDetail_Modal, //Goi modal Update
+		DataUpdate_Click_On_Button,
+		setDataUpdate_Click_On_Button,  //Get Params truyen cho Url Add
+		update_CostDetail_Function,		//Hàm cap nhat
+		delete_CostDetail_Function,		//Hàm xoa
 		showToast,
 		setShowToast,
-		deleteImplementationCost,
-		findImplementationCost,
-
-		getImplementationCosts_byidContract,
+		//*** end component Implementation_Cost_byidContract()
 
 
-		
-
-		delete_GeneralCostDetail,
-		delete_StageCostDetail,
-		dataOn_Click, setdataOn_Click,
-
-		addCostDetailStageImplement,
-		showAddCostDetailStageImplementModal, setshowAddCostDetailStageImplementModal
 
 	}
 

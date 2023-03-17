@@ -24,7 +24,6 @@ import { ImplementationCostContext } from '../contexts/ImplementationCostContext
 import { ActionButtons_Update_Delete } from '../components/contract/ActionButtons_Contract'
 import AddContractModal from '../components/contract/AddContractModal'
 import UpdateContractModal from '../components/contract/UpdateContractModal'
-import { ActionButtons_Add_StageCostDetail } from '../components/implementationCost/ActionButtons_ImplementationCost'
 
 
 
@@ -346,59 +345,34 @@ export const Summary_id = () => {
 	//=== Get data ImplementationCost
 	const {
 		ImplementationCostState: { ImplementationCosts },
-		getImplementationCosts_byidContract
+
+		//17-3
+		getImplementation_Costs_byidContract
+
 	} = useContext(ImplementationCostContext)
-
-	// Start: Get all ImplementationCosts
-	useEffect(() => getImplementationCosts_byidContract(params.id), [])
-	//Function TotalGeneralExpense
-	function TotalStageImplementation(stage) {
-		let Total = 0;
-		ImplementationCosts.map(ImplementationCost => (
-			ImplementationCost.StagesImplementation[stage].Costs.map(Costs => (
-				Total += Costs.IntoMoney))))
-
-		return Total;
-	}
+	// 17-3
+	useEffect(() => getImplementation_Costs_byidContract(params.id), [])
 	// Ham tinh tong tat ca giai doan trien khai
-	function All_TotalStageImplementation(ImplementationCosts) {
+	function TotalStageImplementation(ImplementationCosts) {
 		let All_Total = 0;
-		ImplementationCosts.map(ImplementationCost => (
-			ImplementationCost.StagesImplementation.forEach((element, index) => {
-				All_Total += TotalStageImplementation(index)
-			})))
+		ImplementationCosts.map((element) => (
+			element.StagesImplementation.map((object) => (
+				object.Costs.map((Costs) =>
+					All_Total += Costs.IntoMoney
+				)))))
 		return All_Total;
 	}
-	//Function TotalGeneralExpense
-	function TotalGeneralExpense(stage) {
-		let Total = 0;
-		ImplementationCosts.map(ImplementationCost => (
-			ImplementationCost.GeneralExpense[stage].Costs.map(Costs => (
-				Total += Costs.IntoMoney))))
-
-		return Total;
-	}
-	// Ham tinh tong tat ca giai doan trien khai
-	function All_TotalGeneralExpense(ImplementationCosts) {
-		let All_Total = 0;
-		ImplementationCosts.map(ImplementationCost => (
-			ImplementationCost.GeneralExpense.forEach((element, index) => {
-				All_Total += TotalGeneralExpense(index)
-
-			})))
-
-		return All_Total;
-	}
-	const GeneralExpense = All_TotalGeneralExpense(ImplementationCosts);
-	const StageImplementation = All_TotalStageImplementation(ImplementationCosts);
-	const TotalImplementationCost = GeneralExpense + StageImplementation + TotalInsurance;
+	const ImplementationCost = TotalStageImplementation(ImplementationCosts);
+	// 1.1 Chi phí triển khai hợp đồng + Chi phi Bảo hiểm
+	const TotalImplementationCost = ImplementationCost + TotalInsurance;
 	//=== End Get data ImplementationCost
 
 
 	//=== Data process
 	// 1. chi phi phat sinh khi thuc hien du an
 	const ExtraCost = (TotalImplementationCost + TotalCapitalExpense + TotalMandayCost + TotalGuaranteeLetterCost + TotalMiscExpenseCost)
-
+	
+	
 	// 3.
 	const hieuquaduan = (TotalOutputIntoMoney - TotalInputIntoMoney - ExtraCost - CPgross)
 
@@ -415,28 +389,28 @@ export const Summary_id = () => {
 					<Table striped bordered hover size="sm">
 						{Contracts.map(Contract => (
 							<>
-						<thead key={Contract._id} >
-							<tr>
-								<th>Số hợp đồng/PO: {Contract.ContractID}</th>
-							</tr>
-							<tr>
-								<th>Trung tâm: {Contract.Center} </th>
-							</tr>
-							<tr>
-								<th>Phòng: {Contract.Deparment} </th>
-							</tr>
-							<tr>
-								<th>Khách Hàng: {Contract.CustomerID}</th>
-							</tr>
-							<tr>
-								<th>Ngày: {Contract.Date}</th>
-							</tr>
-						</thead>
-						</>
+								<thead key={Contract._id} >
+									<tr>
+										<th>Số hợp đồng/PO: {Contract.ContractID}</th>
+									</tr>
+									<tr>
+										<th>Trung tâm: {Contract.Center} </th>
+									</tr>
+									<tr>
+										<th>Phòng: {Contract.Deparment} </th>
+									</tr>
+									<tr>
+										<th>Khách Hàng: {Contract.CustomerID}</th>
+									</tr>
+									<tr>
+										<th>Ngày: {Contract.Date}</th>
+									</tr>
+								</thead>
+							</>
 						))
 						}
 					</Table>
-					<Table responsive="sm"  striped bordered hover size="sm" >
+					<Table responsive="sm" striped bordered hover size="sm" >
 						{ProductCosts.map(ProductCost => (
 							<>
 								<thead className='text-center'>
@@ -487,11 +461,11 @@ export const Summary_id = () => {
 										<td>{Sum_OutputIntoMoney(ProductCosts).toLocaleString()}</td>
 										<td></td>
 									</tr>
-									<tr>
+									{/* <tr>
 										<td colSpan={7} > Incentive (nếu có)</td>
 										<td>{ProductCost.Incentive == null ? 0 : ProductCost.Incentive.toLocaleString()}</td>
 										<td></td>
-									</tr>
+									</tr> */}
 								</tbody>
 							</>
 						))}
@@ -513,72 +487,95 @@ export const Summary_id = () => {
 							<td className='text-right'>{TotalInsurance.toLocaleString()}</td>
 							<td></td>
 						</tr>
-						<tr>
-							<td colSpan={2} ></td>
-							<td colSpan={5} >+ Chi phí chung</td>
-							<td className='text-right'>{GeneralExpense.toLocaleString()}</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td colSpan={2} ></td>
-							<td colSpan={5} >+ Chi phí triển khai</td>
-							<td className='text-right'>{StageImplementation.toLocaleString()}</td>
-							<td></td>
-						</tr>
-						{CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
-							<>
-								<tr key={CapitalExpenditureCost._id}>
-									<td>1.2</td>
-									<td colSpan={6} > Chi phí vốn</td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} >+ Số ngày hàng tồn kho</td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.InventoryDays).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} >+ Số ngày triển khai</td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.ImplementationDays).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} >+ Số ngày công nợ nhà cung cấp</td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.BedtDays).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} > + Số ngày thu nợ </td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.DebtCollectionDays).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} >+ Khách hàng trả trước (đặt cọc)</td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.Deposits).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td colSpan={2} ></td>
-									<td colSpan={5} >+ Đặt cọc cho NTP </td>
-									<td className='text-right'>{Math.round(CapitalExpenditureCost.DepositsNTP).toLocaleString()}</td>
-									<td></td>
-									<td></td>
-								</tr>
-							</>
-						))}
-						<tr >
+						{
+							ImplementationCosts.map(
+								(element) => {
+									let TotalCategory = 0;
+									return (
+										<>
+											<tr >
+												<td colSpan="2"></td>
+												<td colSpan="5">
+												{element.Category}
+												</td>
+												<td className='text-right'>
+													{
+													element.StagesImplementation.map((object => {
+
+														let stt = 1;
+														let TotalStage = 0;
+															object.Costs.map((Costs) => {
+																TotalStage += Costs.IntoMoney
+																TotalCategory += Costs.IntoMoney
+															})
+														
+														}))
+													}
+													{TotalCategory.toLocaleString()}
+												</td>
+												<td></td>
+											</tr>
+
+										</>
+									)
+								})
+						}
+						{
+							CapitalExpenditureCosts.map((CapitalExpenditureCost) => (
+								<>
+									<tr key={CapitalExpenditureCost._id}>
+										<td>1.2</td>
+										<td colSpan={6} > Chi phí vốn</td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.CapitalExpense).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} >+ Số ngày hàng tồn kho</td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.InventoryDays).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} >+ Số ngày triển khai</td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.ImplementationDays).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} >+ Số ngày công nợ nhà cung cấp</td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.BedtDays).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} > + Số ngày thu nợ </td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.DebtCollectionDays).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} >+ Khách hàng trả trước (đặt cọc)</td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.Deposits).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td colSpan={2} ></td>
+										<td colSpan={5} >+ Đặt cọc cho NTP </td>
+										<td className='text-right'>{Math.round(CapitalExpenditureCost.DepositsNTP).toLocaleString()}</td>
+										<td></td>
+										<td></td>
+									</tr>
+								</>
+							))
+						}
+						< tr >
 							<td>1.3</td>
 							<td colSpan={6} >Manday thực hiện của kỹ sư HPT tham gia</td>
 							<td className='text-right'>{Math.round(TotalMandayCost).toLocaleString()}</td>

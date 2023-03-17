@@ -1,41 +1,42 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 import { useParams } from 'react-router-dom'
 
 //Ham them giai doan
-const AddStageImplementationModal = () =>{
+const AddStage_Modal = () => {
 	//Contexts
-	const{
-		showAddStageImplementationModal,
-		setshowAddStageImplementationModal,
-		addStageImplementation,
-		setShowToast
+	const {
+		showAddStage_Modal,
+		setshowAddStage_Modal,        //goi modal
+		Data_update_Category,         //Get params truyền cho Url
+		add_StageImplementation,      //Function them
+		setShowToast                  //Show message
 
 	} = useContext(ImplementationCostContext)
+
 	//State luu thong tin 
 	const [newStageImplementation, setnewStageImplementation] = useState({
 		Content: '',
-		idcontract:''
+		idImplementation_Cost: ''
 	})
-	const {Content, idcontract } = newStageImplementation
-  //Load id Implementation
-  const params = useParams();
-  newStageImplementation.idcontract = params.id;
+	const { Content, idImplementation_Cost } = newStageImplementation
+	//Load StagesImplementation_id
+	newStageImplementation.idImplementation_Cost = Data_update_Category.idImplementation_Cost;
 
 	const onChangeNewImplementationCostForm = event =>
 		setnewStageImplementation({ ...newStageImplementation, [event.target.name]: event.target.value })
 
 	const resetAddStageImplementationData = () => {
-		setnewStageImplementation({ Content: '', idcontract: '' })
-		setshowAddStageImplementationModal(false)
+		setnewStageImplementation({ Content: '', idImplementation_Cost: '' })
+		setshowAddStage_Modal(false)
 	}
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addStageImplementation(newStageImplementation,idcontract)//newImplementationCost
+		const { success, message } = await add_StageImplementation(newStageImplementation)//newImplementationCost
 		resetAddStageImplementationData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
@@ -44,25 +45,25 @@ const AddStageImplementationModal = () =>{
 		resetAddStageImplementationData()
 	}
 	return (
-		<Modal show={showAddStageImplementationModal} onHide={closeDialog}>
+		<Modal show={showAddStage_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Thêm giai đoạn triển khai</Modal.Title>
+				<Modal.Title>Thêm giai đoạn</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							ID contract
+							StagesImplementation_id
 						</Form.Text>
 						<Form.Control
 							type='text'
 							placeholder='Nhập chuỗi'
-							name='idcontract'
+							name='idImplementation_Cost'
 							required
 							aria-describedby='noidung-help'
-							value={idcontract}
+							value={idImplementation_Cost}
 							onChange={onChangeNewImplementationCostForm}
-						/>						
+						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
@@ -76,7 +77,7 @@ const AddStageImplementationModal = () =>{
 							aria-describedby='noidung-help'
 							value={Content}
 							onChange={onChangeNewImplementationCostForm}
-						/>						
+						/>
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>
@@ -91,4 +92,4 @@ const AddStageImplementationModal = () =>{
 		</Modal>
 	)
 }
-export default AddStageImplementationModal
+export default AddStage_Modal

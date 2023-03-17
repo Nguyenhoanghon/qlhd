@@ -18,7 +18,8 @@ import {MandayCost_all,MandayCost_idContract} from './views/MandayCostView'
 import {GuaranteeLetterCost_all, GuaranteeLetterCost_idContract} from './views/GuaranteeLetterCostView'
 import {MiscExpenseCost_all,MiscExpenseCost_byidContract} from './views/MiscExpenseCostView'
 import {CapitalExpenditureCost_all,CapitalExpenditureCost_byidContract} from './views/CapitalExpenditureCostView'
-import {ImplementationCost,ImplementationCost_byidContract} from './views/ImplementationCostView'
+
+import {Implementation_Cost_byidContract} from './views/ImplementationCostView'
 
 import {AuxiliaryCost_all,AuxiliaryCost_byidContract,AuxiliaryCost_Contract} from './views/AuxiliaryCostView'
 //=====contexts
@@ -61,8 +62,7 @@ function App() {
 						
 						<ContractContextProvider>
 						<ImplementationCostContextProvider>
-							<ProtectedRoute exact path='/implementation-cost' component={ImplementationCost} />
-							<ProtectedRoute exact path='/implementation-cost/contract/:id' component={ImplementationCost_byidContract} />
+							<ProtectedRoute exact path='/implementation-cost/contract/:id' component={Implementation_Cost_byidContract} />
 						</ImplementationCostContextProvider>
 						</ContractContextProvider>
 

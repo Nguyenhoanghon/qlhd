@@ -6,24 +6,23 @@ import { useParams } from 'react-router-dom'
 import { ImplementationCostContext } from '../../contexts/ImplementationCostContext'
 
 
-const AddImplementationCostModal = () => {
+const Create_Category_Modal = () => {
 	// Contexts
 	const {
-		showAddImplementationCostModal,
-		setShowAddImplementationCostModal,
-		addImplementationCost,
+		showCreate_Implementation_Category_Modal,
+		setshowCreate_Implementation_Category_Modal,
+		create_Implementation_Category,
 		setShowToast
 	} = useContext(ImplementationCostContext)
 
 	// State
 	const [newImplementationCost, setNewImplementationCost] = useState({
 		Category: '',
-		GeneralExpense: '',
 		StagesImplementation: '',
 		idcontract:''
 	})
 
-	const { Category, GeneralExpense, StagesImplementation, idcontract } = newImplementationCost
+	const { Category, StagesImplementation, idcontract } = newImplementationCost
 
 	//Load id Implementation
 	const params = useParams();
@@ -38,20 +37,20 @@ const AddImplementationCostModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addImplementationCost(newImplementationCost,idcontract)//newImplementationCost
+		const { success, message } = await create_Implementation_Category(newImplementationCost)//newImplementationCost
 		resetAddImplementationCostData()
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddImplementationCostData = () => {
-		setNewImplementationCost({ Category: '', GeneralExpense: '', StagesImplementation: '', idcontract:'' })
-		setShowAddImplementationCostModal(false)
+		setNewImplementationCost({ Category: '', StagesImplementation: '', idcontract:'', user:'' })
+		setshowCreate_Implementation_Category_Modal(false)
 	}
 
 	return (
-		<Modal show={showAddImplementationCostModal} onHide={closeDialog}>
+		<Modal show={showCreate_Implementation_Category_Modal} onHide={closeDialog}>
 			<Modal.Header closeButton>
-				<Modal.Title>Nhập nội dung giai đoạn</Modal.Title>
+				<Modal.Title>KHỞI TẠO HẠNG MỤC CHI PHÍ</Modal.Title>
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
@@ -71,7 +70,7 @@ const AddImplementationCostModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='Category-help' muted as="h6">
-							Hạng mục chi phí
+							Nhập thông tin hạng mục
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -85,21 +84,7 @@ const AddImplementationCostModal = () => {
 					</Form.Group>
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
-							Nội dung chi phí chung
-						</Form.Text>
-						<Form.Control
-							type='text'
-							placeholder=''
-							name='GeneralExpense'
-							required
-							aria-describedby='noidung-help'
-							value={GeneralExpense}
-							onChange={onChangeNewImplementationCostForm}
-						/>						
-					</Form.Group>
-					<Form.Group>
-						<Form.Text id='noidung-help' muted as="h6">
-							Nội dung giai đoạn chi phí triển khai
+							Nhập thông tin giai đoạn
 						</Form.Text>
 						<Form.Control
 							type='text'
@@ -125,5 +110,5 @@ const AddImplementationCostModal = () => {
 	)
 }
 
-export default AddImplementationCostModal
+export default Create_Category_Modal
 	
