@@ -21,17 +21,11 @@ const UpdateCapitalExpenditureCostModal = () => {
 	useEffect(() => setUpdatedCapitalExpenditureCost(CapitalExpenditureCost), [CapitalExpenditureCost])
 
 	const {
-		CapitalCost,
-		Revenue,
-		CapitalExpense,
 		InventoryDays,
 		ImplementationDays,
 		BedtDays,
 		DebtCollectionDays,
-		Deposits,
-		DepositsNTP,
-		Note,
-		ContractID
+		Note
 	} = updatedCapitalExpenditureCost
 
 	//load idcontract
@@ -61,7 +55,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
 					
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='ContractID' muted as='h6'>
 							Chọn hợp đồng
 						</Form.Text>
@@ -72,7 +66,7 @@ const UpdateCapitalExpenditureCostModal = () => {
 							value={ContractID}
 							onChange={onChangeUpdatedCapitalExpenditureCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					
 					<Form.Group>
 						<Form.Text id='InventoryDays' muted as='h6'>

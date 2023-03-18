@@ -48,25 +48,16 @@ export const Implementation_Cost_byidContract = () => {
 
 		//*** 15-3 
 		getImplementation_Costs_byidContract, //Function get data for view 
-		showCreate_Implementation_Category_Modal, //goi modal them Category
 		setshowCreate_Implementation_Category_Modal,
 
-		showAddStage_Modal,
-		setshowAddStage_Modal, //Goi modal them giai doan
-
-		showUpdate_Category_Modal,
-		setshowUpdate_Category_Modal,
-		Data_update_Category,
-		setData_update_Category,
-		update_Category,
 
 		showToast: { show, message, type },
 		setShowToast,
-		showToast
+		//showToast
 	} = useContext(ImplementationCostContext)
 
 	// Start: Get ImplementationCosts by idcontract
-	useEffect(() => getImplementation_Costs_byidContract(params.id), [showToast])
+	useEffect(() => getImplementation_Costs_byidContract(params.id))//, [type])
 	console.log("getImplementation_Costs_byidContract", ImplementationCosts)
 
 	function Rendering_ImplementationCosts() {
@@ -124,14 +115,14 @@ export const Implementation_Cost_byidContract = () => {
 										TotalCategory += Costs.IntoMoney;
 										TotalImplementation += Costs.IntoMoney;
 										return (
-											<tr>
+											<tr >
 												<td>{stt++}</td>
 												<td>{Costs.NameCost}</td>
-												<td>{Costs.Units}</td>
-												<td>{Costs.UnitPrice.toLocaleString()}</td>
-												<td>{Costs.Quantity_times}</td>
-												<td>{Costs.Quantity_days}</td>
-												<td>{Costs.IntoMoney.toLocaleString()}</td>
+												<td className='text-center'>{Costs.Units}</td>
+												<td className='text-right'>{Costs.UnitPrice.toLocaleString()}</td>
+												<td className='text-center'>{Costs.Quantity_times}</td>
+												<td className='text-center'>{Costs.Quantity_days}</td>
+												<td className='text-right'>{Costs.IntoMoney.toLocaleString()}</td>
 												<td>{Costs.Note}  </td>
 												<td><Button_Update_Delete_CostDetail
 													Implementation_Cost_Id={element._id}
@@ -153,7 +144,7 @@ export const Implementation_Cost_byidContract = () => {
 										<th colSpan="6">
 											Tổng {object.Content}
 										</th>
-										<th>
+										<th className='text-right'>
 											{TotalStage.toLocaleString()}
 										</th>
 										<th></th>

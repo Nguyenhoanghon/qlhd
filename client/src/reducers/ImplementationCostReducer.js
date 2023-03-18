@@ -37,6 +37,7 @@ export const ImplementationCostReducer = (state, action) => {
 			}
 
 		case DELETE:
+			
 			return {
 				...state,
 				ImplementationCosts: state.ImplementationCosts.filter(ImplementationCost => ImplementationCost._id !== payload)

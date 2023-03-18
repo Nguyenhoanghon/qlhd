@@ -2,9 +2,8 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useParams } from 'react-router-dom'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { MandayCostContext } from '../../contexts/MandayCostContext'
-import { ContractContext } from '../../contexts/ContractContext'
 
 const AddMandayCostModal = () => {
 	// Contexts MandayCostContext
@@ -32,9 +31,7 @@ const AddMandayCostModal = () => {
 		Cost,
 		StaffNumber,
 		ImplementationDay,
-		IntoMoney,
-		Note,
-		ContractID
+		Note
 	} = newMandayCost //note
 	//load idcontract
 	const params = useParams();
@@ -86,7 +83,7 @@ const AddMandayCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Chọn số Hợp đồng.
 						</Form.Text>
@@ -99,7 +96,7 @@ const AddMandayCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewMandayCostForm}
 						/>
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Tỷ giá USD!

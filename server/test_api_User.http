@@ -16,10 +16,10 @@ Content-Type: application/json
 //Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
 
 {
-"username": "Director",
-"email": "Directorn@gmail.com",
+"username": "admin",
+"email": "admin@gmail.com",
 "password": "123",
-"roles[]": "Director"
+"roles[]": "Admin"
 }
 
 ### Get all users public
@@ -61,10 +61,10 @@ Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyYjEyMjFiNjk2YmVkNTQyOTEyZSIsImlhdCI6MTY3MTQzNzkwMiwiZXhwIjoxNjcxNTI0MzAyfQ.QK7nwJ8nQLXYbSuDzBD_CISQbbfjHdrMrbAuqOIJED8
 
 {
-"username": "admin",
-"email": "admin@gmail.com",
+"username": "nhhon",
+"email": "nhhon@gmail.com",
 "password": "123",
-"roles[]": "admins"
+"roles[]": "admin"
 }
 
 

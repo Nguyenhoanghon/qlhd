@@ -31,7 +31,7 @@ Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3Mz
 //CAP NHAT TÊN DANH MỤC voi idImplementation_Cost
 // @access Public
 //PUT http://localhost:5000/api/forms/implementation_category/put/641183defa83ebd0141e9b41
-PUT http://localhost:5000/api/forms/implementation_category/put/641183defa83ebd0141e9b41
+PUT http://localhost:5000/api/forms/implementation_category/put/6414169e9d6360387d471618
 Content-Type: application/json
 Authorization: admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NjQyMzQyNiwiZXhwIjoxNjc2NDI5ODI2fQ.9Y5N7ih0MbzecX_uwy4bMqf0Di3LLFJGMJkqLiqre-U
 
@@ -64,7 +64,7 @@ Content-Type: application/json
 //Authorization: admin admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzA4YmM3MzA4NmJmYmIzNDQxZDNlNCIsImlhdCI6MTY3NTczNTAxMCwiZXhwIjoxNjc1NzQxNDEwfQ.scN6d8whKvzWwl0G95cQteITNug2BTj-aQ61GqypF_0
 
 {
-  "idImplementation_Cost": "641183defa83ebd0141e9b41",
+  "idImplementation_Cost": "6414169e9d6360387d471618",
   "Content": "GIAI DOAN 2"
 }
 

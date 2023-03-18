@@ -30,17 +30,11 @@ const AddCapitalExpenditureCostModal = () => {
 	})
 
 	const { 
-		CapitalCost, 
-        Revenue,
-        CapitalExpense,
         InventoryDays,
         ImplementationDays,
         BedtDays,
         DebtCollectionDays,
-        Deposits,
-        DepositsNTP,
         Note,
-		ContractID
 	} = newCapitalExpenditureCost
 	//load idcontract
 	const params = useParams();
@@ -83,7 +77,7 @@ const AddCapitalExpenditureCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='ContractID' muted as='h6'>
 							Chọn hợp đồng
 						</Form.Text>
@@ -94,7 +88,7 @@ const AddCapitalExpenditureCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewCapitalExpenditureCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='InventoryDays' muted as='h6'>
 							Số ngày hàng tồn kho

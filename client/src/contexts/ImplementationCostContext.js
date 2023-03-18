@@ -68,10 +68,18 @@ const ImplementationCostContextProvider = ({ children }) => {
 			console.log("Show Data_GeneralExpense ===>", Data_update_Category)
 			console.log((`${apiUrl}/api/forms/implementation_category/delete/${Data_update_Category.idImplementation_Cost}`))
 			const response = await axios.delete(`${apiUrl}/api/forms/implementation_category/delete/${Data_update_Category.idImplementation_Cost}`)//note
-			if (response.data.success)
-				dispatch({ type: DELETE, payload: response.data.message })
+			console.log("response.data.delete_Category",response.data.message)
+			
+			if (response.data.success) {
+				dispatch({ type: UPDATE, payload: response.data.message })
+				return response.data
+			}
+			else
+				return response.data
 		} catch (error) {
-			console.log(error)
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
 		}
 	}
 

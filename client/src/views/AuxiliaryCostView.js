@@ -36,7 +36,7 @@ export const AuxiliaryCost_byidContract = () => {
 		showToast
 	} = useContext(AuxiliaryCostContext)
 	// Start: Get AuxiliaryCosts by id Contract
-	useEffect(() => getAuxiliaryCosts_byidContract(params.id),[showToast])
+	useEffect(() => getAuxiliaryCosts_byidContract(params.id))//,[showToast])
 	console.log("AuxiliaryCosts======>>>>>", AuxiliaryCosts)
 
 	// Start: Get ProductCosts by id Contract ==>> Load doanh thu
@@ -273,9 +273,6 @@ export const AuxiliaryCost_Contract = () => {
 		getAuxiliaryCosts,
 		getContract_All
 	} = useContext(AuxiliaryCostContext)
-	/* useEffect(() => getContract_All(), [])
-	console.log("getContract_byid  ====== :",getContract_All); */
-	// Start: Get AuxiliaryCosts by id Contract
 	useEffect(() => getAuxiliaryCosts(), [])
 	console.log("AuxiliaryCosts======>>>>>", AuxiliaryCosts)
 	// hàm đổi giá trị chi phí % => giá trị tiền tuyệt đối
@@ -378,23 +375,23 @@ export const AuxiliaryCost_Contract = () => {
 									<th>Doanh thu</th>
 									<th>Phương án chi</th>
 									<th>Tổng chi phí</th>
-									<th width='25%'>CPXL</th>
-									<th width='25%'>CPgross</th>
-									<th width='25%'> Thao tác </th>
+									<th width='15%'>CPXL</th>
+									<th width='15%'>CPgross</th>
+									<th width='20%'> Thao tác </th>
 								</tr>
 							</thead>
 							<tbody>
 								{AuxiliaryCosts.map(AuxiliaryCost => (
 									< tr key={AuxiliaryCost._id} >
 										<td>{stt++}</td>
-										<td>{AuxiliaryCost.contract}</td>
+										<td>{AuxiliaryCost.contract.ContractID}</td>
 										{/* <td>{AuxiliaryCost._id}</td> */}
-										<td>{AuxiliaryCost.Renevue}</td>
+										<td>{AuxiliaryCost.Renevue.toLocaleString()}</td>
 										<td>{AuxiliaryCost.Plan}</td>
 										<td>{sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue).toLocaleString()}</td>
-										<td>{Find_CPXL(sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue), AuxiliaryCost.Renevue).toLocaleString()}</td>
-										<td>{((sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue) + Find_CPXL(sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue), AuxiliaryCost.Renevue)) / 10).toLocaleString()}</td>
-										<th width='25%'><a href={`/AuxiliaryCost/contract/${AuxiliaryCost.contract}`}>
+										<td>{Math.round(Find_CPXL(sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue), AuxiliaryCost.Renevue)).toLocaleString()}</td>
+										<td>{Math.round(((sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue) + Find_CPXL(sumTotal(AuxiliaryCost.ListCosts.map(ListCost => (ListCost.Cost)), AuxiliaryCost.Renevue), AuxiliaryCost.Renevue)) / 10)).toLocaleString()}</td>
+										<th width='25%'><a href={`/AuxiliaryCost/contract/${AuxiliaryCost.contract._id}`}>
 											<Button
 												variant='primary'
 											>

@@ -24,9 +24,8 @@ const UpdateMandayCostModal = () => {
         Cost,
         StaffNumber,
         ImplementationDay,
-        IntoMoney,
-        Note,
-		ContractID } = updatedMandayCost //note
+        Note
+	 } = updatedMandayCost //note
 
 	const onChangeUpdatedMandayCostForm = event =>
 		setUpdatedMandayCost({ ...updatedMandayCost, [event.target.name]: event.target.value })

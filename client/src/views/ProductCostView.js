@@ -148,18 +148,7 @@ export const ProductCost_all = () => {
 
 								))
 								}
-								{/*  */}
-								{/* <tr>
-									<td colSpan={5} >Tổng</td>
-									<td>{TotalInputIntoMoney.toLocaleString()}</td>
-									<td></td>
-									<td>{TotalOutputIntoMoney.toLocaleString()}</td>
-									<td></td>
-									<td>{TotalIncentive.toLocaleString()}</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr> */}
+								
 							</tbody>
 						</Table>
 						{/* <Button
@@ -429,7 +418,7 @@ export const Products_idContract = () => {
 
 	// Start: Get ProductCosts by id Contract
 
-	useEffect(() => getProductCost_idContract(params.idcontract), [showToast])
+	useEffect(() => getProductCost_idContract(params.idcontract))//, [showToast])
 	console.log("Test===>ProductCostView review useEffect: ", ProductCosts)
 
 	//Ham tinh tong Phan tử trong kieu mang 
@@ -630,12 +619,8 @@ export const Products_idContract = () => {
 		<>
 			{body}
 			<AddProductCostModal />
-			{/* //12-3 */}
 			<Add_Incentive />
 			<UpdateProductCostModal/>
-
-			{/* {ProductCost !== null && <UpdateProductCostModal />} */}
-			{/* After ProductCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}

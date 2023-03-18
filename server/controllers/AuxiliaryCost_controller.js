@@ -506,7 +506,7 @@ exports.update_AuxiliaryCost_Cost = async (req, res) => {
 exports.getAllAuxiliaryCost = async (req, res) => {
     console.log("getAllAuxiliaryCost is called")
     try {
-        const AuxiliaryCost_data = await AuxiliaryCost.find()//.populate("contract", "-__v")    
+        const AuxiliaryCost_data = await AuxiliaryCost.find().populate("contract", "-__v")    
         console.log("Test ====> chi tiet CP vat tu phu", AuxiliaryCost_data)
 
         res.json({ success: true, AuxiliaryCost: AuxiliaryCost_data })

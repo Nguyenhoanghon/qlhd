@@ -22,7 +22,7 @@ const AddMiscExpenseCostModal = () => {
 		ContractID:''
 	})
 
-	const { Content, Cost, Note, ContractID } = newMiscExpenseCost
+	const { Content, Cost, Note } = newMiscExpenseCost
 	//load idcontract
 	const params = useParams();
 	newMiscExpenseCost.ContractID = params.id;
@@ -53,7 +53,7 @@ const AddMiscExpenseCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Chọn Hợp đồng
 						</Form.Text>
@@ -66,7 +66,7 @@ const AddMiscExpenseCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewMiscExpenseCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='noidung-help' muted as="h6">
 							Nội dung chi phí

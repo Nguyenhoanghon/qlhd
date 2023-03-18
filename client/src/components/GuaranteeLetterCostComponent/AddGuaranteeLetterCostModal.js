@@ -30,9 +30,7 @@ const AddGuaranteeLetterCostModal = () => {
 		Cost,
 		QuantityMonths,
 		RatioCost,
-		IntoMoney,
-		Note,
-		ContractID
+		Note
 	} = newGuaranteeLetterCost
 
 	//load idcontract
@@ -73,7 +71,7 @@ const AddGuaranteeLetterCostModal = () => {
 			</Modal.Header>
 			<Form onSubmit={onSubmit}>
 				<Modal.Body>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Chọn số Hợp đồng.
 						</Form.Text>
@@ -86,7 +84,7 @@ const AddGuaranteeLetterCostModal = () => {
 							value={ContractID}
 							onChange={onChangeNewGuaranteeLetterCostForm}
 						/>						
-					</Form.Group>
+					</Form.Group> */}
 					<Form.Group>
 						<Form.Text id='title-help' muted as='h6'>
 							Nội dung chi phí

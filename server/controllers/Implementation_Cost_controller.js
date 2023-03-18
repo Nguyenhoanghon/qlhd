@@ -110,16 +110,14 @@ exports.delete_Implementation_Category = async (req, res) => {
     const deletedImplementation_Cost = await Implementation_Cost.findOneAndDelete(Implementation_CostDeleteCondition)
 
     // User not authorised or ImplementationCost not found
-    if (!deletedImplementation_Cost)
-      return res.status(401).json({
-        success: false,
-        message: 'ImplementationCost  not found or user not authorised'
-      })
-
-    res.json({ success: true, message: 'Delete  Successfull !' })
+    res.json({
+      success: true,
+      message: "Xoá thành công!",
+      delete_Category: deletedImplementation_Cost,
+    });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ success: false, message: 'Internal server error' })
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 
 }

@@ -41,7 +41,7 @@ export const InputForm = () => {
 							<tr>
 								<th>STT</th>
 								<th>Tên Form </th>
-								<th>ID Hợp đồng</th>
+								{/* <th>ID Hợp đồng</th> */}
 								<th>Thao tác</th>
 							</tr>
 						</thead>
@@ -49,7 +49,7 @@ export const InputForm = () => {
 							<tr>
 								<td>1</td>
 								<td> Chi tiết hàng hoá</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/product-cost/contract/${params.id}`}>
 										<Button
@@ -63,7 +63,7 @@ export const InputForm = () => {
 							<tr>
 								<td>2</td>
 								<td> Chi tiết triển khai</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/implementation-cost/contract/${params.id}`}>
 										<Button
@@ -77,7 +77,7 @@ export const InputForm = () => {
 							<tr>
 								<td>3</td>
 								<td> Chi phí vốn</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/CapitalExpenditureCost/contract/${params.id}`}>
 										<Button
@@ -91,7 +91,7 @@ export const InputForm = () => {
 							<tr>
 								<td>4</td>
 								<td> Manday kỹ sư</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/manday-cost/contract/${params.id}`}>
 										<Button
@@ -105,7 +105,7 @@ export const InputForm = () => {
 							<tr>
 								<td>5</td>
 								<td> Chi phí làm thư bảo lãnh</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/guarantee-letter-cost/contract/${params.id}`}>
 										<Button
@@ -119,7 +119,7 @@ export const InputForm = () => {
 							<tr>
 								<td>6</td>
 								<td> Chi phí khác</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/MiscExpenseCost/contract/${params.id}`}>
 										<Button
@@ -133,7 +133,7 @@ export const InputForm = () => {
 							<tr>
 								<td>7</td>
 								<td> Chi phí vật tư phụ</td>
-								<td>{params.id}</td>
+								{/* <td>{params.id}</td> */}
 								<td>
 									<a href={`/AuxiliaryCost/contract/${params.id}`}>
 										<Button
