@@ -2,13 +2,9 @@ import { ProductCostContext } from '../contexts/ProductCostContext'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-
-/* import { useState } from 'react' */
-import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
 import Toast from 'react-bootstrap/Toast'
 /* import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
@@ -19,10 +15,13 @@ import AddProductCostModal from '../components/ProductCost/AddProductModal'//Not
 import UpdateProductCostModal from '../components/ProductCost/UpdateProductModal'//Note
 import ActionButtons_ProductCost from '../components/ProductCost/ActionButtons_ProductCost'
 import Table from 'react-bootstrap/Table'
-
-
-//new 12/3
+//button add Incentive
 import Add_Incentive from '../components/ProductCost/Add_Incentive'
+
+//Export excel
+import ReactExport from 'react-data-export';
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
 //View all product cost
@@ -148,7 +147,7 @@ export const ProductCost_all = () => {
 
 								))
 								}
-								
+
 							</tbody>
 						</Table>
 						{/* <Button
@@ -396,7 +395,7 @@ export const Products_idContract = () => {
 	// Contexts
 
 	const {
-		ProductCostState: {ProductCosts, ProductCostsLoading },
+		ProductCostState: { ProductCosts, ProductCostsLoading },
 		getProductCost_idContract,
 
 		setShowAddProductCostModal,
@@ -404,7 +403,7 @@ export const Products_idContract = () => {
 		setShowToast,
 		showToast,
 		setShowAddIncentive_Modal,
-		
+
 	} = useContext(ProductCostContext)
 
 	// hàm tính tổng thành tiền
@@ -418,8 +417,8 @@ export const Products_idContract = () => {
 
 	// Start: Get ProductCosts by id Contract
 
-	useEffect(() => getProductCost_idContract(params.idcontract))//, [showToast])
-	console.log("Test===>ProductCostView review useEffect: ", ProductCosts)
+	useEffect(() => getProductCost_idContract(params.idcontract), [showToast])//, [showToast])
+	console.log("Export ==================== ", ProductCosts)
 
 	//Ham tinh tong Phan tử trong kieu mang 
 	function Sum_InputIntoMoney(ProductsCost) {
@@ -447,11 +446,42 @@ export const Products_idContract = () => {
 	const toggleInsurance = (value) => {
 		setStateInsurance(value);
 	};
+
+	//*** Export excel
+	let stt = 1;
+	const title = [
+		{ title: "STT", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 125 } }, // width in pixels
+		{ title: "contract", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 125 } }, // width in pixels
+		{ title: "Incentive", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wch: 30 } }, // width in characters
+		{ title: "_id", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 100 } }, // width in pixels
+
+	]
+	const Datarows = ProductCosts.map((element) => [
+		{ value: stt++, style: { font: { sz: "14" } } },
+		{ value: element.contract, style: { font: { sz: "14" } } },
+		{ value: element.Incentive, style: { font: { sz: "14" } } },
+		{ value: element._id, style: { font: { sz: "14" } } },
+
+	])
+	const RowTongchiphi = [
+		{ value: "", style: { font: { sz: "14" } } },
+		{ value: "TỔNG", style: { font: { sz: "14" } } },
+		{ value: "Tong", style: { font: { sz: "14" } } },
+		{ value: "", style: { font: { sz: "14" } } },
+
+	]
+	Datarows.push(RowTongchiphi)
+	//console.log("RowTongchiphiRowTongchiphi", Datarows)
+	const DataSetExport = [
+		{
+			columns: title,
+			data: Datarows
+		}
+	]
+	//*** end Export excel
+
 	let body = null
-	let stt = 1
-	//const TotalInputIntoMoney = Sum_InputIntoMoney(ProductCosts)
-	//const TotalOutputIntoMoney = Sum_OutputIntoMoney(ProductCosts)
-	//const TotalIncentive = sumArray(ProductCosts.map((ProductCost) => ProductCost.Incentive))//note
+	stt = 1
 
 	if (ProductCostsLoading) {
 		body = (
@@ -538,19 +568,19 @@ export const Products_idContract = () => {
 
 												<td>
 													<ActionButtons_ProductCost
-													contract={ProductCost.contract}
-													idProduct={ListProduct._id}
-													ProductName={ListProduct.ProductName}
-													Quantity={ListProduct.Quantity}
-													FOBCost={ListProduct.FOBCost}
-													InputPrice={ListProduct.InputPrice}
-													InputIntoMoney={ListProduct.InputIntoMoney}
-													OutputPrice={ListProduct.OutputPrice}
-													OutputIntoMoney={ListProduct.OutputIntoMoney}
-													Insurance={ListProduct.Insurance}
-													RatioUSD={ListProduct.RatioUSD}
-													Note={ListProduct.Note}
-													EX_W={ListProduct.EX_W}
+														contract={ProductCost.contract}
+														idProduct={ListProduct._id}
+														ProductName={ListProduct.ProductName}
+														Quantity={ListProduct.Quantity}
+														FOBCost={ListProduct.FOBCost}
+														InputPrice={ListProduct.InputPrice}
+														InputIntoMoney={ListProduct.InputIntoMoney}
+														OutputPrice={ListProduct.OutputPrice}
+														OutputIntoMoney={ListProduct.OutputIntoMoney}
+														Insurance={ListProduct.Insurance}
+														RatioUSD={ListProduct.RatioUSD}
+														Note={ListProduct.Note}
+														EX_W={ListProduct.EX_W}
 													/>
 												</td>
 
@@ -589,6 +619,13 @@ export const Products_idContract = () => {
 												>
 													Thêm hàng hoá
 												</Button>
+												{ProductCosts.length !== 0 ? (
+											<ExcelFile
+												filename="ProductCosts"
+												element={<button type="button" className="btn btn-success float-right m-3">Export Data</button>}>
+												<ExcelSheet dataSet={DataSetExport} name="ProductCosts" />
+											</ExcelFile>
+										) : null}
 											</td>
 										</tr>
 									</tbody>
@@ -620,7 +657,7 @@ export const Products_idContract = () => {
 			{body}
 			<AddProductCostModal />
 			<Add_Incentive />
-			<UpdateProductCostModal/>
+			<UpdateProductCostModal />
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}
