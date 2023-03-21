@@ -111,6 +111,13 @@ const MiscExpenseCostContextProvider = ({ children }) => {
 		}
 	}
 
+	const sumArray = (mang) => {
+		let sum = 0;
+		mang.map(function (value) {
+			sum += value;
+		});
+		return sum;
+	}
 	// MiscExpenseCost context data
 	const MiscExpenseCostContextData = {
 		MiscExpenseCostState,
