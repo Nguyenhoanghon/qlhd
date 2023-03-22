@@ -107,6 +107,27 @@ const ProductCostContextProvider = ({ children }) => {
 		}
 	}
 
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_InputIntoMoney(ProductsCost) {
+		let Total_InputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_InputIntoMoney += ListProduct.InputIntoMoney
+			)))
+
+		return Total_InputIntoMoney;
+	}
+	//Ham tinh tong Phan tử trong kieu mang 
+	function Sum_OutputIntoMoney(ProductsCost) {
+		let Total_OutputIntoMoney = 0;
+		ProductsCost.map(Products =>
+			Products.ListProducts.map(ListProduct => (
+				Total_OutputIntoMoney += ListProduct.OutputIntoMoney
+			)))
+
+		return Total_OutputIntoMoney;
+	}
+
 	// ProductCost context data
 	const ProductCostContextData = {
 		ProductCostState,
@@ -128,6 +149,9 @@ const ProductCostContextProvider = ({ children }) => {
 		update_ProductCost,
 		showUpdateProductCostModal,
 		setshowUpdateProductCostModal,
+		Sum_InputIntoMoney, //function
+		Sum_OutputIntoMoney, //function
+
 
 
 	}
