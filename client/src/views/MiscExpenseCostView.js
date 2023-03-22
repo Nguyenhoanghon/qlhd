@@ -18,14 +18,9 @@ import UpdateMiscExpenseCostModal from '../components/MiscExpenseCost/UpdateMisc
 
 import addIcon from '../assets/plus_circle_fill.svg'
 import Table from 'react-bootstrap/Table'
-//import ActionButtons from '../components/posts/ActionButtons'
 import ActionButtons_MiscExpenseCost from '../components/MiscExpenseCost/ActionButtons_MiscExpenseCost'
-
 //Export excel
-import ReactExport from 'react-data-export';
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-
+import MisExpense_export from '../exportData/MisExpense_export' //component
 
 //View all MiscExpenseCost
 export const MiscExpenseCost_all = () => {
@@ -197,53 +192,12 @@ export const MiscExpenseCost_byidContract = () => {
 		});
 		return sum;
 	}
-	//Định dạng hiển thị số
-	function formatCash(str) {
-		return str.split('').reverse().reduce((prev, next, index) => {
-			return ((index % 3) ? next : (next + ',')) + prev
-		})
-	}
-
 	// Start: Get all MiscExpenseCosts
 	useEffect(() => getMiscExpenseCost_byidContract(params.id), [])
 	const TotalMiscExpenseCost = sumArray(MiscExpenseCosts.map((MiscExpenseCost) => MiscExpenseCost.Cost))
 	//console.log(MiscExpenseCosts);
-
-	//*** Export excel
-	let stt = 1;
-	const title = [
-		{ title: "STT", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 125 } }, // width in pixels
-		{ title: "Nội dung", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 125 } }, // width in pixels
-		{ title: "Số tiền", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wch: 30 } }, // width in characters
-		{ title: "Chi phí", style: { font: { sz: "18", bold: true, color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } }, width: { wpx: 100 } }, // width in pixels
-		
-	]
-	const Datarows = MiscExpenseCosts.map((MiscExpenseCost) => [
-		{ value: stt++, style: { font: { sz: "14" } } },
-		{ value: MiscExpenseCost.Content, style: { font: { sz: "14" } } },
-		{ value: MiscExpenseCost.Cost, style: { font: { sz: "14" } } },
-		{ value: MiscExpenseCost.Note, style: { font: { sz: "14" } } },
-
-	])
-	const RowTongchiphi = [
-		{ value: "", style: { font: { sz: "14" } } },
-		{ value: "TỔNG", style: { font: { sz: "14" } } },
-		{ value: TotalMiscExpenseCost, style: { font: { sz: "14" } } },
-		{ value: "", style: { font: { sz: "14" } } },
-
-	]
-	Datarows.push(RowTongchiphi)
-	//console.log("RowTongchiphiRowTongchiphi", Datarows)
-	const DataSetExport = [
-		{
-			columns: title,
-			data: Datarows
-		}
-	]
-	//*** end Export excel
-
 	let body = null
-	stt = 1
+	let stt = 1
 	
 	if (MiscExpenseCostsLoading) {
 		body = (
@@ -317,13 +271,7 @@ export const MiscExpenseCost_byidContract = () => {
 										>
 											Thêm mới
 										</Button>
-										{MiscExpenseCosts.length !== 0 ? (
-											<ExcelFile
-												filename="MiscExpenseCosts"
-												element={<button type="button" className="btn btn-success float-right m-3">Export Data</button>}>
-												<ExcelSheet dataSet={DataSetExport} name="MiscExpenseCosts" />
-											</ExcelFile>
-										) : null}
+										<MisExpense_export/>
 									</td>
 								</tr>
 							</tbody>
@@ -354,7 +302,6 @@ export const MiscExpenseCost_byidContract = () => {
 			{body}
 			<AddMiscExpenseCostModal />
 			{MiscExpenseCost !== null && <UpdateMiscExpenseCostModal />}
-			{/* After MiscExpenseCost is added, show toast */}
 			<Toast
 				show={show}
 				style={{ position: 'fixed', top: '20%', right: '10px' }}

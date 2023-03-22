@@ -23,9 +23,9 @@ import { ImplementationCostContext } from '../contexts/ImplementationCostContext
 import { ActionButtons_Contract } from '../components/contract/ActionButtons_Contract'
 import AddContractModal from '../components/contract/AddContractModal'
 import UpdateContractModal from '../components/contract/UpdateContractModal'
-
-
-
+//Export data
+import MisExpense_export from '../exportData/MisExpense_export' //component
+import ProductCost_export from '../exportData/ProductCost_export' //component
 //View list các Forms cần nhập
 export const InputForm = () => {
 	// Contexts
@@ -58,6 +58,9 @@ export const InputForm = () => {
 											Click Nhập
 										</Button>
 									</a>
+								</td>
+								<td>
+									<ProductCost_export/>
 								</td>
 							</tr>
 							<tr>
@@ -128,6 +131,9 @@ export const InputForm = () => {
 											Click Nhập
 										</Button>
 									</a>
+								</td>
+								<td>
+									<MisExpense_export/>
 								</td>
 							</tr>
 							<tr>
